@@ -408,6 +408,14 @@ namespace MGS3_MC_Cheat_Trainer
             ModifyHealthOrStamina(HealthPointerOffset, StaminaOffset, 30000, HealthType.Stamina, true);
         }
 
+        private void Plus100MaxHpValue_Click(object sender, EventArgs e)
+        {
+            ModifyHealthOrStamina(HealthPointerOffset, MaxHealthOffset, 100, HealthType.MaxHealth);
+        }
 
+        private void Minus100MaxHpValue_Click(object sender, EventArgs e)
+        {
+            ModifyHealthOrStamina(HealthPointerOffset, MaxHealthOffset, -100, HealthType.MaxHealth);
+        }
     }
 }

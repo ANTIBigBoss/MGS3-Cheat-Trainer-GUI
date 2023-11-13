@@ -514,6 +514,7 @@
             Plus100MaxHpValue.TabIndex = 498;
             Plus100MaxHpValue.Text = "Increase Max HP by 100";
             Plus100MaxHpValue.UseVisualStyleBackColor = true;
+            Plus100MaxHpValue.Click += Plus100MaxHpValue_Click;
             // 
             // Minus100MaxHpValue
             // 
@@ -523,6 +524,7 @@
             Minus100MaxHpValue.TabIndex = 499;
             Minus100MaxHpValue.Text = "Decrease Max Health by 100";
             Minus100MaxHpValue.UseVisualStyleBackColor = true;
+            Minus100MaxHpValue.Click += Minus100MaxHpValue_Click;
             // 
             // MaxHpTo1
             // 
