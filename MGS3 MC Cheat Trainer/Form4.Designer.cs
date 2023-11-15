@@ -38,7 +38,6 @@
             Plus10000StaminaValue = new Button();
             pictureBox2 = new PictureBox();
             CurrentHpTo1 = new Button();
-            CurrentHpParsesMaxHp = new Button();
             ZeroHP = new Button();
             Minus100HpValue = new Button();
             Plus100HpValue = new Button();
@@ -162,23 +161,13 @@
             // 
             // CurrentHpTo1
             // 
-            CurrentHpTo1.Location = new Point(8, 326);
+            CurrentHpTo1.Location = new Point(8, 302);
             CurrentHpTo1.Name = "CurrentHpTo1";
             CurrentHpTo1.Size = new Size(264, 24);
             CurrentHpTo1.TabIndex = 171;
             CurrentHpTo1.Text = "Set Snake's Current HP to 1";
             CurrentHpTo1.UseVisualStyleBackColor = true;
             CurrentHpTo1.Click += CurrentHpTo1_Click;
-            // 
-            // CurrentHpParsesMaxHp
-            // 
-            CurrentHpParsesMaxHp.Location = new Point(8, 302);
-            CurrentHpParsesMaxHp.Name = "CurrentHpParsesMaxHp";
-            CurrentHpParsesMaxHp.Size = new Size(264, 24);
-            CurrentHpParsesMaxHp.TabIndex = 170;
-            CurrentHpParsesMaxHp.Text = "Fill Snake's Health to Current Max HP";
-            CurrentHpParsesMaxHp.UseVisualStyleBackColor = true;
-            CurrentHpParsesMaxHp.Click += CurrentHpParsesMaxHp_Click;
             // 
             // ZeroHP
             // 
@@ -528,7 +517,7 @@
             // 
             // MaxHpTo1
             // 
-            MaxHpTo1.Location = new Point(8, 350);
+            MaxHpTo1.Location = new Point(8, 326);
             MaxHpTo1.Name = "MaxHpTo1";
             MaxHpTo1.Size = new Size(264, 24);
             MaxHpTo1.TabIndex = 501;
@@ -574,7 +563,6 @@
             Controls.Add(Plus10000StaminaValue);
             Controls.Add(pictureBox2);
             Controls.Add(CurrentHpTo1);
-            Controls.Add(CurrentHpParsesMaxHp);
             Controls.Add(ZeroHP);
             Controls.Add(Minus100HpValue);
             Controls.Add(Plus100HpValue);
@@ -600,7 +588,6 @@
         private Button Plus10000StaminaValue;
         private PictureBox pictureBox2;
         private Button CurrentHpTo1;
-        private Button CurrentHpParsesMaxHp;
         private Button ZeroHP;
         private Button Minus100HpValue;
         private Button Plus100HpValue;

@@ -9,43 +9,44 @@ namespace MGS3_MC_Cheat_Trainer
         static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
         static readonly IntPtr[] WEAPON_AMMO_OFFSETS = new IntPtr[]
         {
-            // Weapons With Surpressors/Ammo/Clip Options
-            (IntPtr)0x1D425DC,  // MK22
-            (IntPtr)0x1D4262C,  // M1911A1         
-            (IntPtr)0x1D427BC,  // XM16E1
+
+            // Weapons With Suppressors/Ammo/Clip Options
+            (IntPtr)0x1D435CC,  // MK22
+            (IntPtr)0x1D4361C,  // M1911A1         
+            (IntPtr)0x1D437AC,  // XM16E1
 
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D4280C,  // AK47
-            (IntPtr)0x1D428FC,  // SVD
-            (IntPtr)0x1D428AC,  // M37
-            (IntPtr)0x1D4299C,  // RPG7
-            (IntPtr)0x1D4285C,  // M63
-            (IntPtr)0x1D4276C,  // Scorpion
-            (IntPtr)0x1D4294C,  // Mosin
-            (IntPtr)0x1D426CC,  // SAA
+            (IntPtr)0x1D437FC,  // AK47
+            (IntPtr)0x1D438EC,  // SVD
+            (IntPtr)0x1D4389C,  // M37
+            (IntPtr)0x1D4398C,  // RPG7
+            (IntPtr)0x1D4384C,  // M63
+            (IntPtr)0x1D4375C,  // Scorpion
+            (IntPtr)0x1D4393C,  // Mosin
+            (IntPtr)0x1D436BC,  // SAA
             
             // Weapons with Ammo Options
-            (IntPtr)0x1D4253C, // Cigspray
-            (IntPtr)0x1D4258C, // Handkerchief
-            (IntPtr)0x1D42A3C, // Greande
-            (IntPtr)0x1D42A8C, // WpGrenade
-            (IntPtr)0x1D42B2C, // ChaffGrenade
-            (IntPtr)0x1D42B7C, // SmokeGrenade
-            (IntPtr)0x1D42ADC, // StunGrenade
-            (IntPtr)0x1D42BCC, // EmptyMagazine
-            (IntPtr)0x1D42D0E, // Book
-            (IntPtr)0x1D42CBC, // Claymore
-            (IntPtr)0x1D42C1C, // TNT
-            (IntPtr)0x1D42C6C, // C3
-            (IntPtr)0x1D42D5C, // Mousetrap
+            (IntPtr)0x1D4352C, // Cigspray
+            (IntPtr)0x1D4357C, // Handkerchief
+            (IntPtr)0x1D43A2C, // Grenade
+            (IntPtr)0x1D43A7C, // WpGrenade
+            (IntPtr)0x1D43B1C, // ChaffGrenade
+            (IntPtr)0x1D43B6C, // SmokeGrenade
+            (IntPtr)0x1D43ACC, // StunGrenade
+            (IntPtr)0x1D43BBC, // EmptyMagazine
+            (IntPtr)0x1D43CFC, // Book
+            (IntPtr)0x1D43CAC, // Claymore
+            (IntPtr)0x1D43C0C, // TNT
+            (IntPtr)0x1D43C5C, // C3
+            (IntPtr)0x1D43D4C, // Mousetrap
 
-            //Weapons with a True or False value Decimal 1 = on -1 = off
-            (IntPtr)0x1D4271C, //PATRIOT
-            (IntPtr)0x1D4267C, //EZGUN
-            (IntPtr)0x1D4249C, //SURVIVAL KNIFE
-            (IntPtr)0x1D424EC, //FORK
-            (IntPtr)0x1D429EC, //TORCH
-            (IntPtr)0x1D42DAC, //DIRECTIONAL_MIC
+            // Weapons with a True or False value Decimal 1 = on -1 = off
+            (IntPtr)0x1D4370C, // PATRIOT
+            (IntPtr)0x1D4366C, // EZGUN
+            (IntPtr)0x1D4348C, // SURVIVAL KNIFE
+            (IntPtr)0x1D434DC, // FORK
+            (IntPtr)0x1D439DC, // TORCH
+            (IntPtr)0x1D43D9C, // DIRECTIONAL_MIC
      
         };
 
@@ -83,43 +84,44 @@ namespace MGS3_MC_Cheat_Trainer
 
         static readonly IntPtr[] WEAPON_CLIP_OFFSETS = new IntPtr[]
             {
-            (IntPtr)0x1D425E0,  // MK22
-            (IntPtr)0x1D42630,  // M1911A1         
-            (IntPtr)0x1D427C0,  // XM16E1
+            // Weapons With Suppressors/Ammo/Clip Options
+            (IntPtr)0x1D435D0,  // MK22
+            (IntPtr)0x1D43620,  // M1911A1         
+            (IntPtr)0x1D437B0,  // XM16E1
 
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D42810,  // AK47
-            (IntPtr)0x1D42900,  // SVD
-            (IntPtr)0x1D428B0,  // M37
-            (IntPtr)0x1D429A0,  // RPG7
-            (IntPtr)0x1D42860,  // M63
-            (IntPtr)0x1D42770,  // Scorpion
-            (IntPtr)0x1D42950,  // Mosin
-            (IntPtr)0x1D426D0,  // SAA
+            (IntPtr)0x1D43800,  // AK47
+            (IntPtr)0x1D438F0,  // SVD
+            (IntPtr)0x1D438A0,  // M37
+            (IntPtr)0x1D43990,  // RPG7
+            (IntPtr)0x1D43850,  // M63
+            (IntPtr)0x1D43760,  // Scorpion
+            (IntPtr)0x1D43940,  // Mosin
+            (IntPtr)0x1D436C0,  // SAA
             };
 
         static readonly IntPtr[] WEAPON_MAX_CLIP_OFFSETS = new IntPtr[]
         {
-            (IntPtr)0x1D425E2,  // MK
-            (IntPtr)0x1D42632,  // M1911A1         
-            (IntPtr)0x1D427C2,  // XM16E1
+            (IntPtr)0x1D435D2,  // MK22
+            (IntPtr)0x1D43622,  // M1911A1         
+            (IntPtr)0x1D437B2,  // XM16E1
 
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D42812,  // AK47
-            (IntPtr)0x1D42902,  // SVD
-            (IntPtr)0x1D428B2,  // M37
-            (IntPtr)0x1D429A2,  // RPG7
-            (IntPtr)0x1D42862,  // M63
-            (IntPtr)0x1D42772,  // Scorpion
-            (IntPtr)0x1D42952,  // Mosin
-            (IntPtr)0x1D426D2,  // SAA
+            (IntPtr)0x1D43802,  // AK47
+            (IntPtr)0x1D438F2,  // SVD
+            (IntPtr)0x1D438A2,  // M37
+            (IntPtr)0x1D43992,  // RPG7
+            (IntPtr)0x1D43852,  // M63
+            (IntPtr)0x1D43762,  // Scorpion
+            (IntPtr)0x1D43942,  // Mosin
+            (IntPtr)0x1D436C2,  // SAA
             };
 
 
         static readonly string[] WEAPON_NAMES = new string[]
         {
             // Weapons With Suppressors/Ammo/Clip Options
-            "MK22",            // Name for MK.22
+            "MK22",           // Name for MK.22
             "M1911A1",       // Name for M1911A1
             "XM16E1",        // Name for XM16E1
 
@@ -160,16 +162,16 @@ namespace MGS3_MC_Cheat_Trainer
         static readonly IntPtr[] SURPRESSOR_TOGGLE = new IntPtr[]
 
             { // Value of 16 = on 0 = off
-            (IntPtr)0x1D425EC,  // MK
-            (IntPtr)0x1D4263C,  // M1911A1         
-            (IntPtr)0x1D427CC,  // XM16E1
+            (IntPtr)0x1D435DC, // MK
+            (IntPtr)0x1D4362C, // M1911A1
+            (IntPtr)0x1D437BC, // XM16E1
             };
 
         static readonly IntPtr[] SURPRESSOR_CAPACITY = new IntPtr[]
         { // We should implement this in a way that increments a value of 30 each way as that is how much a surpressor can hold
-            (IntPtr)0x1D4596C,  // MK
-            (IntPtr)0x1D4591C,  // M1911A1         
-            (IntPtr)0x1D459BC,  // XM16E1
+            (IntPtr)0x1D4695C, // MK
+            (IntPtr)0x1D4690C, // M1911A1
+            (IntPtr)0x1D469AC, // XM16E1
         };
 
         // PInvoke declarations

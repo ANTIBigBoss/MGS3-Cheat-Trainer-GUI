@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿// No usings needed?
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -38,61 +30,61 @@ namespace MGS3_MC_Cheat_Trainer
         static readonly IntPtr[] CAMO_OFFSETS = new IntPtr[]
             {
             // Face Paint options
-            (IntPtr)0x1D464AC, // Woodland
-            (IntPtr)0x1D464FC, // Black
-            (IntPtr)0x1D4654C, // Water
-            (IntPtr)0x1D4659C, // Desert
-            (IntPtr)0x1D465EC, // Splitter
-            (IntPtr)0x1D4663C, // Snow
-            (IntPtr)0x1D4668C, // Kabuki
-            (IntPtr)0x1D466DC, // Zombie
-            (IntPtr)0x1D4672C, // Oyama
-            (IntPtr)0x1D4677C, // Mask
-            (IntPtr)0x1D467CC, // Green
-            (IntPtr)0x1D4681C, // Brown
-            (IntPtr)0x1D4686C, // Infinity
-            (IntPtr)0x1D468BC, // Soviet Union
-            (IntPtr)0x1D4690C, // UK
-            (IntPtr)0x1D4695C, // France
-            (IntPtr)0x1D469AC, // Germany
-            (IntPtr)0x1D469FC, // Italy
-            (IntPtr)0x1D46A4C, // Spain
-            (IntPtr)0x1D46A9C, // Sweden
-            (IntPtr)0x1D46AEC, // Japan
-            (IntPtr)0x1D46B3C, // USA
+            (IntPtr)0x1D4749C, // Woodland
+            (IntPtr)0x1D474EC, // Black
+            (IntPtr)0x1D4753C, // Water
+            (IntPtr)0x1D4758C, // Desert
+            (IntPtr)0x1D475DC, // Splitter
+            (IntPtr)0x1D4762C, // Snow
+            (IntPtr)0x1D4767C, // Kabuki
+            (IntPtr)0x1D476CC, // Zombie
+            (IntPtr)0x1D4771C, // Oyama
+            (IntPtr)0x1D4776C, // Mask
+            (IntPtr)0x1D477BC, // Green
+            (IntPtr)0x1D4780C, // Brown
+            (IntPtr)0x1D4785C, // Infinity
+            (IntPtr)0x1D478AC, // Soviet Union
+            (IntPtr)0x1D478FC, // UK
+            (IntPtr)0x1D4794C, // France
+            (IntPtr)0x1D4799C, // Germany
+            (IntPtr)0x1D479EC, // Italy
+            (IntPtr)0x1D47A3C, // Spain
+            (IntPtr)0x1D47A8C, // Sweden
+            (IntPtr)0x1D47ADC, // Japan
+            (IntPtr)0x1D47B2C, // USA
 
             // Uniform options
-            (IntPtr)0x1D45A0C, // Olive Drab
-            (IntPtr)0x1D45A5C, // Tiger Stripe
-            (IntPtr)0x1D45AAC, // Leaf
-            (IntPtr)0x1D45AFC, // Tree Bark
-            (IntPtr)0x1D45B4C, // Choco Chip
-            (IntPtr)0x1D45B9C, // Splitter
-            (IntPtr)0x1D45BEC, // Raindrop
-            (IntPtr)0x1D45C3C, // Squares
-            (IntPtr)0x1D45C8C, // Water
-            (IntPtr)0x1D45CDC, // Black
-            (IntPtr)0x1D45D2C, // Snow
-            (IntPtr)0x1D45DCC, // Sneaking Suit
-            (IntPtr)0x1D45E1C, // Scientist
-            (IntPtr)0x1D45E6C, // Officer
-            (IntPtr)0x1D45EBC, // Maintenance
-            (IntPtr)0x1D45F0C, // Tuxedo
-            (IntPtr)0x1D45F5C, // Hornet Stripe
-            (IntPtr)0x1D45FAC, // Spider
-            (IntPtr)0x1D45FFC, // Moss
-            (IntPtr)0x1D4604C, // Fire
-            (IntPtr)0x1D4609C, // Spirit
-            (IntPtr)0x1D460EC, // Cold War
-            (IntPtr)0x1D4613C, // Snake
-            (IntPtr)0x1D4618C, // Ga-Ko
-            (IntPtr)0x1D461DC, // Desert Tiger
-            (IntPtr)0x1D4622C, // DPM
-            (IntPtr)0x1D4627C, // Flecktarn
-            (IntPtr)0x1D462CC, // Auscam
-            (IntPtr)0x1D4631C, // Animals
-            (IntPtr)0x1D4636C, // Fly
-            (IntPtr)0x1D463BC, // Banana Camo need to look into mod that adds it in
+            (IntPtr)0x1D469FC, // Olive Drab
+            (IntPtr)0x1D46A4C, // Tiger Stripe
+            (IntPtr)0x1D46A9C, // Leaf
+            (IntPtr)0x1D46AEC, // Tree Bark
+            (IntPtr)0x1D46B3C, // Choco Chip
+            (IntPtr)0x1D46B8C, // Splitter
+            (IntPtr)0x1D46BDC, // Raindrop
+            (IntPtr)0x1D46C2C, // Squares
+            (IntPtr)0x1D46C7C, // Water
+            (IntPtr)0x1D46CCC, // Black
+            (IntPtr)0x1D46D1C, // Snow
+            (IntPtr)0x1D46DBC, // Sneaking Suit
+            (IntPtr)0x1D46E0C, // Scientist
+            (IntPtr)0x1D46E5C, // Officer
+            (IntPtr)0x1D46EAC, // Maintenance
+            (IntPtr)0x1D46EFC, // Tuxedo
+            (IntPtr)0x1D46F4C, // Hornet Stripe
+            (IntPtr)0x1D46F9C, // Spider
+            (IntPtr)0x1D46FEC, // Moss
+            (IntPtr)0x1D4703C, // Fire
+            (IntPtr)0x1D4708C, // Spirit
+            (IntPtr)0x1D470DC, // Cold War
+            (IntPtr)0x1D4712C, // Snake
+            (IntPtr)0x1D4717C, // Ga-Ko
+            (IntPtr)0x1D471CC, // Desert Tiger
+            (IntPtr)0x1D4721C, // DPM
+            (IntPtr)0x1D4726C, // Flecktarn
+            (IntPtr)0x1D472BC, // Auscam
+            (IntPtr)0x1D4730C, // Animals
+            (IntPtr)0x1D4735C, // Fly
+            (IntPtr)0x1D473AC, // Banana Camo (to be checked)
 
             // Potentially add in downloaded camo options here in the future
             
