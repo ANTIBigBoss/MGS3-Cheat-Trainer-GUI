@@ -9,14 +9,8 @@ namespace MGS3_MC_Cheat_Trainer
         static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
         static readonly IntPtr[] WEAPON_AMMO_OFFSETS = new IntPtr[]
         {
-
-            // Weapons With Suppressors/Ammo/Clip Options
-            (IntPtr)0x1D435CC,  // MK22
-            (IntPtr)0x1D4361C,  // M1911A1         
-            (IntPtr)0x1D437AC,  // XM16E1
-
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D437FC,  // AK47
+            
             (IntPtr)0x1D438EC,  // SVD
             (IntPtr)0x1D4389C,  // M37
             (IntPtr)0x1D4398C,  // RPG7
@@ -52,12 +46,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         static readonly IntPtr[] WEAPON_MAX_AMMO_OFFSETS = new IntPtr[]
             {
-            (IntPtr)0x1D425DE,  // MK22
-            (IntPtr)0x1D4262E,  // M1911A1         
-            (IntPtr)0x1D427BE,  // XM16E1
 
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D4280E,  // AK47
             (IntPtr)0x1D428FE,  // SVD
             (IntPtr)0x1D428AE,  // M37
             (IntPtr)0x1D4299E,  // RPG7
@@ -84,13 +74,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         static readonly IntPtr[] WEAPON_CLIP_OFFSETS = new IntPtr[]
             {
-            // Weapons With Suppressors/Ammo/Clip Options
-            (IntPtr)0x1D435D0,  // MK22
-            (IntPtr)0x1D43620,  // M1911A1         
-            (IntPtr)0x1D437B0,  // XM16E1
 
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D43800,  // AK47
+            
             (IntPtr)0x1D438F0,  // SVD
             (IntPtr)0x1D438A0,  // M37
             (IntPtr)0x1D43990,  // RPG7
@@ -102,12 +88,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         static readonly IntPtr[] WEAPON_MAX_CLIP_OFFSETS = new IntPtr[]
         {
-            (IntPtr)0x1D435D2,  // MK22
-            (IntPtr)0x1D43622,  // M1911A1         
-            (IntPtr)0x1D437B2,  // XM16E1
 
             // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D43802,  // AK47
+            
             (IntPtr)0x1D438F2,  // SVD
             (IntPtr)0x1D438A2,  // M37
             (IntPtr)0x1D43992,  // RPG7
@@ -120,10 +103,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         static readonly string[] WEAPON_NAMES = new string[]
         {
-            // Weapons With Suppressors/Ammo/Clip Options
-            "MK22",           // Name for MK.22
-            "M1911A1",       // Name for M1911A1
-            "XM16E1",        // Name for XM16E1
 
             // Weapons with Ammo/Clip Options
             "AK47",          // Name for AK47
@@ -162,16 +141,10 @@ namespace MGS3_MC_Cheat_Trainer
         static readonly IntPtr[] SURPRESSOR_TOGGLE = new IntPtr[]
 
             { // Value of 16 = on 0 = off
-            (IntPtr)0x1D435DC, // MK
-            (IntPtr)0x1D4362C, // M1911A1
-            (IntPtr)0x1D437BC, // XM16E1
             };
 
         static readonly IntPtr[] SURPRESSOR_CAPACITY = new IntPtr[]
         { // We should implement this in a way that increments a value of 30 each way as that is how much a surpressor can hold
-            (IntPtr)0x1D4695C, // MK
-            (IntPtr)0x1D4690C, // M1911A1
-            (IntPtr)0x1D469AC, // XM16E1
         };
 
         // PInvoke declarations
