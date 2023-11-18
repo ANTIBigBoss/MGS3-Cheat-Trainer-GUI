@@ -1,6 +1,6 @@
 ﻿namespace MGS3_MC_Cheat_Trainer
 {
-    partial class Form3
+    partial class CamoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CamoForm));
             WeaponFormSwap = new Button();
             button1 = new Button();
             RemoveWoodland = new Button();

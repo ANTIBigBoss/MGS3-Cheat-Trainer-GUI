@@ -1,6 +1,6 @@
 ﻿namespace MGS3_MC_Cheat_Trainer
 {
-    partial class Form2
+    partial class ItemForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemForm));
             textBox5 = new TextBox();
             AddLifeMed = new Button();
             LifeMedtextBox = new TextBox();
