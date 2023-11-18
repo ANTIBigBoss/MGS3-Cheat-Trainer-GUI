@@ -4,9 +4,8 @@ using System.Runtime.InteropServices;
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    public partial class Form2 : Form
+    public partial class ItemForm : Form
     {
-        const string PROCESS_NAME = "METAL GEAR SOLID3";
         static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
 
         // PInvoke declarations
@@ -29,130 +28,8 @@ namespace MGS3_MC_Cheat_Trainer
             public static extern bool CloseHandle(IntPtr hObject);
         }
 
-        // Going to index by items with a capacity and then ones with a boolean
-        static readonly IntPtr[] ITEM_OFFSETS = new IntPtr[]
-        {
-        // Backpack Items:
-
-        (IntPtr)0x1D45D7C, // LIFE_MEDICINE
-        (IntPtr)0x1D45D7E, // LIFE_MEDICINE_MAX
-        (IntPtr)0x1D464AC, // BUG_JUICE
-        (IntPtr)0x1D464AE, // BUG_JUICE_MAX
-        (IntPtr)0x1D45E1C, // FAKE_DEATH_PILL
-        (IntPtr)0x1D45E1E, // FAKE_DEATH_PILL_MAX
-        (IntPtr)0x1D45DCC, // PENTAZEMIN
-        (IntPtr)0x1D45DCE, // PENTAZEMIN_MAX
-
-        // Medicinal "L2" Items:
-
-        (IntPtr)0x1D4659C, // ANTIDOTE
-        (IntPtr)0x1D4659E, // ANTIDOTE_MAX
-        (IntPtr)0x1D465EC, // COLD_MEDICINE
-        (IntPtr)0x1D465EE, // COLD_MEDICINE_MAX
-        (IntPtr)0x1D4663C, // DIGESTIVE_MEDICINE
-        (IntPtr)0x1D4663E, // DIGESTIVE_MEDICINE_MAX
-        (IntPtr)0x1D4654C, // SERUM
-        (IntPtr)0x1D4654E, // SERUM_MAX
-
-        // Surgical "R2": Items:
-        (IntPtr)0x1D467CC, // BANDAGE
-        (IntPtr)0x1D467CE, // BANDAGE_MAX
-        (IntPtr)0x1D4672C, // DISINFECTANT
-        (IntPtr)0x1D4672E, // DISINFECTANT_MAX
-        (IntPtr)0x1D4668C, // OINTMENT
-        (IntPtr)0x1D4668E, // OINTMENT_MAX
-        (IntPtr)0x1D466DC, // SPLINT
-        (IntPtr)0x1D466DE, // SPLINT_MAX
-        (IntPtr)0x1D4677C, // STYPTIC
-        (IntPtr)0x1D4677E, // STYPTIC_MAX
-        (IntPtr)0x1D4681C, // SUTURE_KIT
-        (IntPtr)0x1D4681E, // SUTURE_KIT_MAX
-
-        // No Capcity will just have a true 1 or false -1 to give/remove
-        (IntPtr)0x1D45E6C, // REVIVAL_PILL
-        (IntPtr)0x1D45EBC, // CIGAR
-        (IntPtr)0x1D45F0C, // BINOCULARS
-        (IntPtr)0x1D45F5C, // THERMAL_GOGGLES
-        (IntPtr)0x1D45FAC, // NIGHT_VISION_GOGGLES
-        (IntPtr)0x1D45FFC, // CAMERA
-        (IntPtr)0x1D4604C, // MOTION_DETECTOR
-        (IntPtr)0x1D4609C, // ACTIVE_SONAR
-        (IntPtr)0x1D460EC, // MINE_DETECTOR
-        (IntPtr)0x1D4613C, // ANTI_PERSONNEL_SENSOR
-        //Boxes have slightly different logic and should be set to 25 or -1 as they have a durability
-        (IntPtr)0x1D4618C, // CBOX_A
-        (IntPtr)0x1D461DC, // CBOX_B
-        (IntPtr)0x1D4622C, // CBOX_C
-        (IntPtr)0x1D4627C, // CBOX_D
-        (IntPtr)0x1D462CC, // CROC_CAP
-        (IntPtr)0x1D4631C, // KEY_A
-        (IntPtr)0x1D4636C, // KEY_B
-        (IntPtr)0x1D463BC, // KEY_C
-        (IntPtr)0x1D4640C, // BANDANA
-        (IntPtr)0x1D4645C, // STEALTH_CAMO
-        (IntPtr)0x1D464FC, // MONKEY_MASK
-        };
-
-
-
-        static readonly string[] ITEM_NAMES = new string[]
-        {
-        // Items and Medicinal Items with a capacity
-        "LIFE MEDICINE",
-        "LIFE MEDICINE MAX",
-        "BUG JUICE",
-        "BUG JUICE MAX",
-        "FAKE DEATH PILL",
-        "FAKE DEATH PILL MAX",
-        "PENTAZEMIN",
-        "PENTAZEMIN MAX",
-        // Medical Items
-        "ANTIDOTE",
-        "ANTIDOTE MAX",
-        "COLD MEDICINE",
-        "COLD MEDICINE MAX",
-        "DIGESTIVE MEDICINE",
-        "DIGESTIVE MEDICINE MAX",
-        "SERUM",
-        "SERUM MAX",
-        "BANDAGE",
-        "BANDAGE MAX",
-        "DISINFECTANT",
-        "DISINFECTANT MAX",
-        "OINTMENT",
-        "OINTMENT MAX",
-        "SPLINT",
-        "SPLINT MAX",
-        "STYPTIC",
-        "STYPTIC MAX",
-        "SUTURE KIT",
-        "SUTURE KIT MAX",
-        // Items with a boolean
-        "REVIVAL PILL",
-        "CIGAR",
-        "BINOCULARS",
-        "THERMAL GOGGLES",
-        "NIGHT VISION GOGGLES",
-        "CAMERA",
-        "MOTION DETECTOR",
-        "ACTIVE_SONAR",
-        "MINE DETECTOR",
-        "ANTI PERSONNEL SENSOR",
-        "CBOX A",
-        "CBOX B",
-        "CBOX C",
-        "CBOX D",
-        "CROC CAP",
-        "KEY A",
-        "KEY B",
-        "KEY C",
-        "BANDANA",
-        "STEALTH CAMO",
-        "MONKEY MASK",
-         };
-
         //Navigation and closing logic functions
-        public Form2()
+        public ItemForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form2_FormClosing);
@@ -160,14 +37,14 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WeaponFormSwap_Click(object sender, EventArgs e) // Form1
         {
-            Form1 form1 = new Form1();
+            WeaponForm form1 = new WeaponForm();
             form1.Show();
             this.Hide();
         }
 
         private void button3_Click(object sender, EventArgs e) // Form3
         {
-            Form3 form3 = new Form3();
+            CamoForm form3 = new CamoForm();
             form3.Show();
             this.Hide();
         }

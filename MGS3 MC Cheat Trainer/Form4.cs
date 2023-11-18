@@ -81,21 +81,21 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WeaponFormSwap_Click(object sender, EventArgs e) // Weapon Form Swap
         {
-            Form1 f1 = new Form1();
+            WeaponForm f1 = new WeaponForm();
             f1.Show();
             this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e) // Item Form Swap
         {
-            Form2 f2 = new Form2();
+            ItemForm f2 = new ItemForm();
             f2.Show();
             this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e) // Camo Form Swap
         {
-            Form3 f3 = new Form3();
+            CamoForm f3 = new CamoForm();
             f3.Show();
             this.Hide();
         }

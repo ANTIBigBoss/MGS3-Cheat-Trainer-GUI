@@ -2,150 +2,10 @@ using System.Diagnostics;
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    public partial class Form1 : Form
+    public partial class WeaponForm : Form
     {
         // Same constants and fields from the CLI version
-        const string PROCESS_NAME = "METAL GEAR SOLID3";
         static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
-        static readonly IntPtr[] WEAPON_AMMO_OFFSETS = new IntPtr[]
-        {
-            // Weapons with Ammo/Clip Options
-            
-            (IntPtr)0x1D438EC,  // SVD
-            (IntPtr)0x1D4389C,  // M37
-            (IntPtr)0x1D4398C,  // RPG7
-            (IntPtr)0x1D4384C,  // M63
-            (IntPtr)0x1D4375C,  // Scorpion
-            (IntPtr)0x1D4393C,  // Mosin
-            (IntPtr)0x1D436BC,  // SAA
-            
-            // Weapons with Ammo Options
-            (IntPtr)0x1D4352C, // Cigspray
-            (IntPtr)0x1D4357C, // Handkerchief
-            (IntPtr)0x1D43A2C, // Grenade
-            (IntPtr)0x1D43A7C, // WpGrenade
-            (IntPtr)0x1D43B1C, // ChaffGrenade
-            (IntPtr)0x1D43B6C, // SmokeGrenade
-            (IntPtr)0x1D43ACC, // StunGrenade
-            (IntPtr)0x1D43BBC, // EmptyMagazine
-            (IntPtr)0x1D43CFC, // Book
-            (IntPtr)0x1D43CAC, // Claymore
-            (IntPtr)0x1D43C0C, // TNT
-            (IntPtr)0x1D43C5C, // C3
-            (IntPtr)0x1D43D4C, // Mousetrap
-
-            // Weapons with a True or False value Decimal 1 = on -1 = off
-            (IntPtr)0x1D4370C, // PATRIOT
-            (IntPtr)0x1D4366C, // EZGUN
-            (IntPtr)0x1D4348C, // SURVIVAL KNIFE
-            (IntPtr)0x1D434DC, // FORK
-            (IntPtr)0x1D439DC, // TORCH
-            (IntPtr)0x1D43D9C, // DIRECTIONAL_MIC
-     
-        };
-
-        static readonly IntPtr[] WEAPON_MAX_AMMO_OFFSETS = new IntPtr[]
-            {
-
-            // Weapons with Ammo/Clip Options
-            (IntPtr)0x1D428FE,  // SVD
-            (IntPtr)0x1D428AE,  // M37
-            (IntPtr)0x1D4299E,  // RPG7
-            (IntPtr)0x1D4285E,  // M63
-            (IntPtr)0x1D4276E,  // Scorpion
-            (IntPtr)0x1D4294E,  // Mosin
-            (IntPtr)0x1D426CE,  // SAA
-            
-            // Weapons with Ammo Options
-            (IntPtr)0x1D4253E, // Cigspray
-            (IntPtr)0x1D4258E, // Handkerchief
-            (IntPtr)0x1D42A3E, // Greande
-            (IntPtr)0x1D42A8E, // WpGrenade
-            (IntPtr)0x1D42B2E, // ChaffGrenade
-            (IntPtr)0x1D42B7E, // SmokeGrenade
-            (IntPtr)0x1D42ADE, // StunGrenade
-            (IntPtr)0x1D42BCE, // EmptyMagazine
-            (IntPtr)0x1D42D0E, // Book
-            (IntPtr)0x1D42CBE, // Claymore
-            (IntPtr)0x1D42C1E, // TNT
-            (IntPtr)0x1D42C6E, // C3
-            (IntPtr)0x1D42D5E, // Mousetrap
-            };
-
-        static readonly IntPtr[] WEAPON_CLIP_OFFSETS = new IntPtr[]
-            {
-
-            // Weapons with Ammo/Clip Options
-            
-            (IntPtr)0x1D438F0,  // SVD
-            (IntPtr)0x1D438A0,  // M37
-            (IntPtr)0x1D43990,  // RPG7
-            (IntPtr)0x1D43850,  // M63
-            (IntPtr)0x1D43760,  // Scorpion
-            (IntPtr)0x1D43940,  // Mosin
-            (IntPtr)0x1D436C0,  // SAA
-            };
-
-        static readonly IntPtr[] WEAPON_MAX_CLIP_OFFSETS = new IntPtr[]
-        {
-
-            // Weapons with Ammo/Clip Options
-            
-            (IntPtr)0x1D438F2,  // SVD
-            (IntPtr)0x1D438A2,  // M37
-            (IntPtr)0x1D43992,  // RPG7
-            (IntPtr)0x1D43852,  // M63
-            (IntPtr)0x1D43762,  // Scorpion
-            (IntPtr)0x1D43942,  // Mosin
-            (IntPtr)0x1D436C2,  // SAA
-            };
-
-
-        static readonly string[] WEAPON_NAMES = new string[]
-        {
-
-            // Weapons with Ammo/Clip Options
-            "AK47",          // Name for AK47
-            "SVD",           // Name for SVD
-            "M37",           // Name for M37
-            "RPG7",          // Name for RPG7
-            "M63",           // Name for M63
-            "Scorpion",      // Name for SCORPION
-            "Mosin",         // Name for Mosin
-            "SAA",           // Name for SAA
-
-            // Weapons with Ammo Options
-            "Cigspray",      // Name for CIGSPRAY
-            "Hankerchief",   // Name for HANKERCHIEF
-            "Grenade",       // Name for GRENADE
-            "Wp Greande",     // Name for WP_GRENADE
-            "Chaff Grenade",  // Name for CHAFF_GRENADE
-            "Smoke Grenade",  // Name for SMOKE_GRENADE
-            "Stun Grenade",   // Name for STUN_GRENADE
-            "Empty Magazine", // Name for EMPTY_MAGAZINE
-            "Book",          // Name for BOOK
-            "Claymore",      // Name for CLAYMORE
-            "TNT",           // Name for TNT
-            "C3",            // Name for C3
-            "Mousetrap",     // Name for MOUSETRAP
-
-            // Weapons with a True or False value Decimal 1 = on -1 = off
-            "Patriot",       // Name for PATRIOT
-            "Ez Gun",         // Name for EZGUN
-            "Survival Knife",// Name for SURVIVAL KNIFE
-            "Fork",          // Name for FORK
-            "Torch",         // Name for TORCH
-            "Directional Microphone",// Name for DIRECTIONAL_MIC    
-        };
-
-        static readonly IntPtr[] SURPRESSOR_TOGGLE = new IntPtr[]
-
-            { // Value of 16 = on 0 = off
-            };
-
-        static readonly IntPtr[] SURPRESSOR_CAPACITY = new IntPtr[]
-        { // We should implement this in a way that increments a value of 30 each way as that is how much a surpressor can hold
-        };
 
         // PInvoke declarations
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
@@ -166,7 +26,7 @@ namespace MGS3_MC_Cheat_Trainer
         [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        public Form1()
+        public WeaponForm()
         {
             InitializeComponent();
         }
@@ -660,14 +520,14 @@ namespace MGS3_MC_Cheat_Trainer
         // Should rename these in the future for better clarity
         private void ItemFormSwap_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
+            ItemForm form2 = new ItemForm();
             form2.Show();
             this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3();
+            CamoForm form3 = new CamoForm();
             form3.Show();
             this.Hide();
         }

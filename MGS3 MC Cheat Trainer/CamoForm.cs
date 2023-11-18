@@ -2,7 +2,7 @@
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    public partial class Form3 : Form
+    public partial class CamoForm : Form
     {
 
         const string PROCESS_NAME = "METAL GEAR SOLID3";
@@ -27,131 +27,7 @@ namespace MGS3_MC_Cheat_Trainer
         [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        static readonly IntPtr[] CAMO_OFFSETS = new IntPtr[]
-            {
-            // Face Paint options
-            (IntPtr)0x1D4749C, // Woodland
-            (IntPtr)0x1D474EC, // Black
-            (IntPtr)0x1D4753C, // Water
-            (IntPtr)0x1D4758C, // Desert
-            (IntPtr)0x1D475DC, // Splitter
-            (IntPtr)0x1D4762C, // Snow
-            (IntPtr)0x1D4767C, // Kabuki
-            (IntPtr)0x1D476CC, // Zombie
-            (IntPtr)0x1D4771C, // Oyama
-            (IntPtr)0x1D4776C, // Mask
-            (IntPtr)0x1D477BC, // Green
-            (IntPtr)0x1D4780C, // Brown
-            (IntPtr)0x1D4785C, // Infinity
-            (IntPtr)0x1D478AC, // Soviet Union
-            (IntPtr)0x1D478FC, // UK
-            (IntPtr)0x1D4794C, // France
-            (IntPtr)0x1D4799C, // Germany
-            (IntPtr)0x1D479EC, // Italy
-            (IntPtr)0x1D47A3C, // Spain
-            (IntPtr)0x1D47A8C, // Sweden
-            (IntPtr)0x1D47ADC, // Japan
-            (IntPtr)0x1D47B2C, // USA
-
-            // Uniform options
-            (IntPtr)0x1D469FC, // Olive Drab
-            (IntPtr)0x1D46A4C, // Tiger Stripe
-            (IntPtr)0x1D46A9C, // Leaf
-            (IntPtr)0x1D46AEC, // Tree Bark
-            (IntPtr)0x1D46B3C, // Choco Chip
-            (IntPtr)0x1D46B8C, // Splitter
-            (IntPtr)0x1D46BDC, // Raindrop
-            (IntPtr)0x1D46C2C, // Squares
-            (IntPtr)0x1D46C7C, // Water
-            (IntPtr)0x1D46CCC, // Black
-            (IntPtr)0x1D46D1C, // Snow
-            (IntPtr)0x1D46DBC, // Sneaking Suit
-            (IntPtr)0x1D46E0C, // Scientist
-            (IntPtr)0x1D46E5C, // Officer
-            (IntPtr)0x1D46EAC, // Maintenance
-            (IntPtr)0x1D46EFC, // Tuxedo
-            (IntPtr)0x1D46F4C, // Hornet Stripe
-            (IntPtr)0x1D46F9C, // Spider
-            (IntPtr)0x1D46FEC, // Moss
-            (IntPtr)0x1D4703C, // Fire
-            (IntPtr)0x1D4708C, // Spirit
-            (IntPtr)0x1D470DC, // Cold War
-            (IntPtr)0x1D4712C, // Snake
-            (IntPtr)0x1D4717C, // Ga-Ko
-            (IntPtr)0x1D471CC, // Desert Tiger
-            (IntPtr)0x1D4721C, // DPM
-            (IntPtr)0x1D4726C, // Flecktarn
-            (IntPtr)0x1D472BC, // Auscam
-            (IntPtr)0x1D4730C, // Animals
-            (IntPtr)0x1D4735C, // Fly
-            (IntPtr)0x1D473AC, // Banana Camo (to be checked)
-
-            // Potentially add in downloaded camo options here in the future
-            
-
-            };
-
-        static readonly string[] CAMO_NAMES = new string[]
-        {
-            // Face Paint options
-            "Woodland",
-            "Black Paint",
-            "Water Paint",
-            "Desert",
-            "Splitter Paint",
-            "Snow Paint",
-            "Kabuki",
-            "Zombie",
-            "Oyama",
-            "Mask",
-            "Green",
-            "Brown",
-            "Infinity",
-            "Soviet Union",
-            "UK",
-            "France",
-            "Germany",
-            "Italy",
-            "Spain",
-            "Sweden",
-            "Japan",
-            "USA",
-
-            // Uniform options
-            "Olive Drab",
-            "Tiger Stripe",
-            "Leaf",
-            "Tree Bark",
-            "Choco Chip",
-            "Splitter Uniform",
-            "Raindrop",
-            "Squares",
-            "Water Uniform",
-            "Black Uniform",
-            "Snow Uniform",
-            "Sneaking Suit",
-            "Scientist",
-            "Officer",
-            "Maintenance",
-            "Tuxedo",
-            "Hornet Stripe",
-            "Spider",
-            "Moss",
-            "Fire",
-            "Spirit",
-            "Cold War",
-            "Snake",
-            "Ga-Ko",
-            "Desert Tiger",
-            "DPM",
-            "Flecktarn",
-            "Auscam",
-            "Animals",
-            "Fly",
-            "Banana Camo",
-        };
-
-        public Form3()
+        public CamoForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form3_FormClosing);
@@ -164,14 +40,14 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WeaponFormSwap_Click(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
+            WeaponForm form1 = new WeaponForm();
             form1.Show();
             this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
+            ItemForm form2 = new ItemForm();
             form2.Show();
             this.Hide();
         }

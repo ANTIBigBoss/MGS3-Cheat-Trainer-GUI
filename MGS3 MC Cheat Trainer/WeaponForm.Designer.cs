@@ -1,6 +1,6 @@
 ﻿namespace MGS3_MC_Cheat_Trainer
 {
-    partial class Form1
+    partial class WeaponForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WeaponForm));
             XM16E1TextBox = new TextBox();
             MK22TextBox = new TextBox();
             M1911A1TextBox = new TextBox();
