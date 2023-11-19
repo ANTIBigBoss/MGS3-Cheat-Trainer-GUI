@@ -405,7 +405,7 @@
             button29.Cursor = Cursors.Hand;
             button29.Name = "button29";
             button29.UseVisualStyleBackColor = true;
-            button29.Click += button29_Click;
+            button29.Click += ToggleXM16E1Suppressor_Click;
             // 
             // textBox21
             // 
@@ -489,7 +489,7 @@
             button12.Cursor = Cursors.Hand;
             button12.Name = "button12";
             button12.UseVisualStyleBackColor = true;
-            button12.Click += button12_Click;
+            button12.Click += ToggleMK22Suppressor_Click;
             // 
             // textBox9
             // 
@@ -553,7 +553,7 @@
             button25.Cursor = Cursors.Hand;
             button25.Name = "button25";
             button25.UseVisualStyleBackColor = true;
-            button25.Click += button25_Click;
+            button25.Click += ToggleM1911A1Suppressor_Click;
             // 
             // textBox11
             // 

@@ -59,7 +59,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button3_Click(object sender, EventArgs e) // Load form4
         {
-            Form4 form4 = new Form4();
+            MiscForm form4 = new MiscForm();
             form4.Show();
             this.Hide();
         }

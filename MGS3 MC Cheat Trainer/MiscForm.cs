@@ -2,36 +2,10 @@
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    public partial class Form4 : Form
+    public partial class MiscForm : Form
     {
-
-        const string PROCESS_NAME = "METAL GEAR SOLID3";
-        static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
         IntPtr processHandle; // Ensure this is correctly initialized
-        private const int HealthPointerOffset = 0x00AE49D8;
-        private const int HealthOffset = 0x684;
-        private const int MaxHealthOffset = 0x686;
-        private const int StaminaOffset = 0xA4A;
-
-        // PInvoke declarations
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref short lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-
-        public static extern bool ReadProcessMemory(
-        IntPtr hProcess,
-        IntPtr lpBaseAddress,
-        byte[] lpBuffer,
-        uint nSize,
-        out int lpNumberOfBytesRead);
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr hObject);
-
+        
         private IntPtr ResolvePointerAddress(IntPtr baseAddress, IntPtr pointerOffset, IntPtr finalOffset)
         {
             byte[] buffer = new byte[IntPtr.Size]; // Corrected here
@@ -50,23 +24,12 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Add(pointerAddress, (int)finalOffset);
         }
 
-
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool WriteProcessMemory(
-        IntPtr hProcess,
-        IntPtr lpBaseAddress,
-        byte[] lpBuffer,
-        uint nSize,
-        out int lpNumberOfBytesWritten);
-
-        public Form4()
+        public MiscForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form4_FormClosing);
 
             // Initialize these here
-            IntPtr baseAddress = PROCESS_BASE_ADDRESS; // Assuming this is already set to the base address of the process
             IntPtr pointerOffset = (IntPtr)0x00AE49D8;
             IntPtr finalOffset = (IntPtr)0x684;
             IntPtr finalDataAddress = ResolvePointerAddress(baseAddress, pointerOffset, finalOffset);
@@ -106,74 +69,14 @@ namespace MGS3_MC_Cheat_Trainer
             Application.Exit();
         }
 
-        static readonly IntPtr[] SNAKES_ANIMATIONS = new IntPtr[]
-        {
-
-            (IntPtr)0x1D4BCBA, // Value of 1 for a long sleep
-            (IntPtr)0x1E2C0BB, // Value of 2 for a quick sleep
-            (IntPtr)0x1E2C0BC, // Value of 1 for puke
-            (IntPtr)0x1E2C0BC, // Value of 200 for fire
-            (IntPtr)0x1E2C0BC, // Value of 255 for puke and fire
-            (IntPtr)0x1E2C0C8, // Value of 3 for a bunny hop
-            (IntPtr)0x1E2C0CA, // Value of 32 to fake death
-        };
-
-        static readonly IntPtr[] HUDandCAMERA = new IntPtr[]
-        {
-            // HUD
-            (IntPtr)0xADB40F, // Value of 63 for normal HUD
-            (IntPtr)0xADB40F, // Value of 64 to shrink HUD
-            (IntPtr)0xADB40F, // Value of 0 to remove HUD
-
-            // CAMERA
-            (IntPtr)0xAE3B37, // Value of 191 for normal camera
-            (IntPtr)0xAE3B37, // Value of 64 for upside down camera
-            // For Camera and HUD I should find the floats for the values and see if I can make a slider for them
-
-        };
-
-        static readonly IntPtr[] ALERT_STATUS = new IntPtr[]
-        {
-            (IntPtr)0x1D9C3D8, // Value of 16 for ALERT trigger
-            // Value of 128 during EVASION but not able to trigger on command just leaving here for dictionary for if I find a way to trigger it in the future
-            (IntPtr)0x1D9C3D8,
-            (IntPtr)0x1D9C3D8, // Value of 32 for CAUTION trigger
-        };
-
-        private void WriteByteToMemory(byte value, IntPtr[] addressArray, int arrayIndex)
-        {
-            var process = Process.GetProcessesByName(PROCESS_NAME).FirstOrDefault();
-            if (process == null)
-            {
-                MessageBox.Show($"Cannot find process: {PROCESS_NAME}");
-                return;
-            }
-
-            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
-            var processHandle = OpenProcess(0x1F0FFF, false, process.Id);
-
-            byte[] buffer = new byte[] { value }; // Value to write
-            IntPtr targetAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)addressArray[arrayIndex]); // Adjusted to add base address
-            int bytesWritten;
-
-            bool success = WriteProcessMemory(processHandle, targetAddress, buffer, (uint)buffer.Length, out bytesWritten);
-
-            if (!success || bytesWritten != buffer.Length)
-            {
-                MessageBox.Show($"Failed to write memory at index {arrayIndex} with value {value}.");
-            }
-
-            CloseHandle(processHandle);
-        }
-
         private void button3_Click(object sender, EventArgs e) // Alert Mode Trigger
         {
-            WriteByteToMemory(16, ALERT_STATUS, 0); // 16 is the value for ALERT MODE, 0 is the index in ALERT_STATUS
+            MemoryManager.ChangeAlertMode((int) Constants.AlertModes.Alert);
         }
 
         private void button9_Click(object sender, EventArgs e) // Caution Mode Trigger
         {
-            WriteByteToMemory(32, ALERT_STATUS, 2); // 32 is the value for CAUTION MODE, 2 is the index in ALERT_STATUS
+            MemoryManager.ChangeAlertMode((int) Constants.AlertModes.Caution);
         }
 
         private void SnakeNapQuick_Click(object sender, EventArgs e)
