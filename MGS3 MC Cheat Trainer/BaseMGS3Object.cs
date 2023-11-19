@@ -3,32 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MGS3_MC_Cheat_Trainer
 {
     #region Base classes
-    public abstract class GameObject
+    public class GameObject
     {
-        protected static string _name = "";
-        protected static IntPtr _memoryOffset;
+        internal string _name = "";
+        internal IntPtr _memoryOffset;
     }
 
-    public abstract class BaseMGS3Object : GameObject
+    public interface IMGS3Object
     {
-        public static string Name { get { return _name; } }
-        public static IntPtr Memory { get { return _memoryOffset; }}
+        private static string name = "";
+
+        //internal GameObject gameObject { get; set; }
+
+        public static string Name { get { return name; } }
+    }
+
+    public abstract class BaseMGS3Object : IMGS3Object
+    {
+        protected GameObject gameObject { get; set; }
+        public string Name { get { return gameObject._name; } }
+        public IntPtr MemoryOffset { get { return gameObject._memoryOffset; } }
 
         public BaseMGS3Object(string name, IntPtr memoryOffset)
         {
-            _name = name;
-            _memoryOffset = memoryOffset;
+            gameObject = new GameObject { _name = name, _memoryOffset = memoryOffset };
         }
     }
 
     public class SuppressableWeapon : ClippedWeapon
     {
-        public static IntPtr SuppressorToggleOffset;
-        public static IntPtr SuppressorCapacityOffset;
+        public IntPtr SuppressorToggleOffset;
+        public IntPtr SuppressorCapacityOffset;
 
         public SuppressableWeapon(string name, IntPtr ammoOffset, IntPtr maxAmmoOffset, IntPtr clipOffset, IntPtr maxClipOffset, IntPtr suppressorToggleOffset, IntPtr suppressorCapacityOffset)
             : base(name, ammoOffset, maxAmmoOffset, clipOffset, maxClipOffset)
@@ -40,8 +50,8 @@ namespace MGS3_MC_Cheat_Trainer
 
     public class ClippedWeapon : AmmoWeapon
     {
-        public static IntPtr ClipOffset;
-        public static IntPtr MaxClipOffset;
+        public IntPtr ClipOffset;
+        public IntPtr MaxClipOffset;
 
         public ClippedWeapon(string name, IntPtr ammoOffset, IntPtr maxAmmoOffset, IntPtr clipOffset, IntPtr maxClipOffset) 
             : base(name, ammoOffset, maxAmmoOffset)
@@ -53,7 +63,7 @@ namespace MGS3_MC_Cheat_Trainer
 
     public class AmmoWeapon : Weapon
     {
-        public static IntPtr MaxAmmoOffset;
+        public IntPtr MaxAmmoOffset;
 
         public AmmoWeapon(string name, IntPtr ammoOffset, IntPtr maxAmmoOffset) 
             : base(name, ammoOffset)
@@ -71,7 +81,7 @@ namespace MGS3_MC_Cheat_Trainer
 
     public class Item : BaseMGS3Object
     {
-        public static IntPtr MaxCapacityOffset;
+        public IntPtr MaxCapacityOffset;
 
         public Item(string name, IntPtr memoryOffset, IntPtr maxCapacityOffset = default) : base(name, memoryOffset)
         {
@@ -86,17 +96,15 @@ namespace MGS3_MC_Cheat_Trainer
 
     public class FacePaint : Camo
     {
-        public FacePaint(string name, IntPtr memoryOffset) : base(name, memoryOffset) {
-            _name = name;
-        }
+        public FacePaint(string name, IntPtr memoryOffset) : base(name, memoryOffset) { }
     }
     public class Uniform : Camo
     {
-        public Uniform(string name, IntPtr memoryOffset) : base(name, memoryOffset) { _name = name;}
+        public Uniform(string name, IntPtr memoryOffset) : base(name, memoryOffset) { }
     }
     #endregion
 
-    public static class MGS3Objects
+    public class MGS3UsableObjects
     {
         #region Weapons
         #region Suppressable Weapons

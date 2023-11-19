@@ -1,6 +1,6 @@
 ﻿namespace MGS3_MC_Cheat_Trainer
 {
-    partial class Form4
+    partial class MiscForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form4));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
             SnakePukes = new Button();
             textBox12 = new TextBox();
             textBox7 = new TextBox();

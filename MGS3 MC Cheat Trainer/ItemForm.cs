@@ -6,27 +6,7 @@ namespace MGS3_MC_Cheat_Trainer
 {
     public partial class ItemForm : Form
     {
-        static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
-
-        // PInvoke declarations
-        public static class NativeMethods
-        {
-            // Declare OpenProcess
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
-
-            // Declare WriteProcessMemory
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref short lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
-
-            // Declare ReadProcessMemory
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, out short lpBuffer, uint size, out int lpNumberOfBytesRead);
-
-            // Declare CloseHandle
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern bool CloseHandle(IntPtr hObject);
-        }
+        
 
         //Navigation and closing logic functions
         public ItemForm()
@@ -51,7 +31,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button70_Click(object sender, EventArgs e) // Load form4
         {
-            Form4 form4 = new Form4();
+            MiscForm form4 = new MiscForm();
             form4.Show();
             this.Hide();
         }
@@ -67,354 +47,288 @@ namespace MGS3_MC_Cheat_Trainer
         private void Form2_Load(object sender, EventArgs e) // Accidently added this lmao
         {
 
-        }
-
-        private void ModifyItemCapacity(int itemIndex, string itemCountStr)
-        {
-            if (!short.TryParse(itemCountStr, out short itemCount))
-            {
-                MessageBox.Show("Invalid item count. Please enter a valid number.");
-                return;
-            }
-
-            var process = Process.GetProcessesByName(PROCESS_NAME).FirstOrDefault();
-            if (process == null)
-            {
-                MessageBox.Show($"Cannot find process: {PROCESS_NAME}");
-                return;
-            }
-
-            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
-            var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
-
-            // Modify current item count
-            IntPtr currentItemAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)ITEM_OFFSETS[itemIndex]);
-            int bytesWritten;
-            NativeMethods.WriteProcessMemory(processHandle, currentItemAddress, ref itemCount, sizeof(short), out bytesWritten);
-
-            // Modify max item count
-            IntPtr maxItemAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)ITEM_OFFSETS[itemIndex + 1]);
-            NativeMethods.WriteProcessMemory(processHandle, maxItemAddress, ref itemCount, sizeof(short), out bytesWritten);
-
-            NativeMethods.CloseHandle(processHandle);
-        }
+        }     
 
 
         private void AddLifeMed_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(0, LifeMedtextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.LifeMed, LifeMedtextBox.Text);
         }
 
 
         private void AddBugJuice_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(2, BugJuicetextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.BugJuice, BugJuicetextBox.Text);
         }
 
         private void AddFDP_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(4, FDPtextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.FakeDeathPill, FDPtextBox.Text);
         }
 
         private void AddPentazemin_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(6, PentazemintextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Pentazemin, PentazemintextBox.Text);
         }
 
         private void AddAntidote_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(8, AntidotetextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Antidote, AntidotetextBox.Text);
         }
 
         private void AddCMed_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(10, CMedtextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.ColdMedicine, CMedtextBox.Text);
         }
 
         private void AddDMed_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(12, DMedtextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.DigestiveMedicine, DMedtextBox.Text);
         }
 
         private void AddSerum_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(14, SerumtextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Serum, SerumtextBox.Text);
         }
 
         private void AddBandage_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(16, BandagetextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Bandage, BandagetextBox.Text);
         }
 
         private void AddDisinfectant_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(18, DisinfectanttextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Disinfectant, DisinfectanttextBox.Text);
         }
 
         private void AddOintment_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(20, OintmenttextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Ointment, OintmenttextBox.Text);
         }
 
         private void AddSplint_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(22, SplinttextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Splint, SplinttextBox.Text);
         }
 
         private void AddStyptic_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(24, StyptictextBox.Text);
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.Styptic, StyptictextBox.Text);
         }
 
         private void AddSutureKit_Click(object sender, EventArgs e)
         {
-            ModifyItemCapacity(26, SutureKittextBox.Text);
-        }
-
-        private void WriteItemValueToMemory(int index, short value)
-        {
-            var process = Process.GetProcessesByName(PROCESS_NAME).FirstOrDefault();
-            if (process == null)
-            {
-                MessageBox.Show($"Cannot find process: {PROCESS_NAME}");
-                return;
-            }
-
-            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
-            var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
-
-            IntPtr address = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)ITEM_OFFSETS[index]);
-            int bytesWritten;
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out bytesWritten);
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-
-        private void ToggleItemState(string itemName, bool addItem)
-        {
-            int itemIndex = Array.IndexOf(ITEM_NAMES, itemName);
-
-            if (itemIndex != -1)
-            {
-                short valueToWrite = addItem ? (short)1 : (short)-1;
-                WriteItemValueToMemory(itemIndex, valueToWrite);
-            }
-            else
-            {
-                MessageBox.Show($"{itemName} not found.");
-            }
+            MemoryManager.ModifyItemCapacity(MGS3UsableObjects.SutureKit, SutureKittextBox.Text);
         }
 
         private void AddRPill_Click(object sender, EventArgs e)
         {
-            ToggleItemState("REVIVAL PILL", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.RevivalPill, true);
         }
 
         private void RemoveRPill_Click(object sender, EventArgs e)
         {
-            ToggleItemState("REVIVAL PILL", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.RevivalPill, false);
         }
 
         private void AddCigar_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CIGAR", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Cigar, true);
         }
 
         private void RemoveCigar_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CIGAR", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Cigar, false);
         }
 
         private void AddBinos_Click(object sender, EventArgs e)
         {
-            ToggleItemState("BINOCULARS", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Binoculars, true);
         }
 
         private void RemoveBinos_Click(object sender, EventArgs e)
         {
-            ToggleItemState("BINOCULARS", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Binoculars, false);
         }
 
         private void AddThermal_Click(object sender, EventArgs e)
         {
-            ToggleItemState("THERMAL GOGGLES", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.ThermalGoggles, true);
         }
 
         private void RemoveThermal_Click(object sender, EventArgs e)
         {
-            ToggleItemState("THERMAL GOGGLES", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.ThermalGoggles, false);
         }
 
         private void AddNVG_Click(object sender, EventArgs e)
         {
-            ToggleItemState("NIGHT VISION GOGGLES", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.NightVisionGoggles, true);
         }
 
         private void RemoveNVG_Click(object sender, EventArgs e)
         {
-            ToggleItemState("NIGHT VISION GOGGLES", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.NightVisionGoggles, false);
         }
 
         private void AddCamera_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CAMERA", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Camera, true);
         }
 
         private void RemoveCamera_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CAMERA", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Camera, false);
         }
 
         private void AddMotionD_Click(object sender, EventArgs e)
         {
-            ToggleItemState("MOTION DETECTOR", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.MotionDetector, true);
         }
 
         private void RemoveMotionD_Click(object sender, EventArgs e)
         {
-            ToggleItemState("MOTION DETECTOR", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.MotionDetector, false);
         }
 
         private void AddSonar_Click(object sender, EventArgs e)
         {
-            ToggleItemState("ACTIVE_SONAR", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.ActiveSonar, true);
         }
 
         private void RemoveSonar_Click(object sender, EventArgs e)
         {
-            ToggleItemState("ACTIVE_SONAR", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.ActiveSonar, false);
         }
 
         private void AddMineD_Click(object sender, EventArgs e)
         {
-            ToggleItemState("MINE DETECTOR", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.MineDetector, true);
         }
 
         private void RemoveMineD_Click(object sender, EventArgs e)
         {
-            ToggleItemState("MINE DETECTOR", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.MineDetector, false);
         }
 
         private void AddApSensor_Click(object sender, EventArgs e)
         {
-            ToggleItemState("ANTI PERSONNEL SENSOR", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.AntiPersonnelSensor, true);
         }
 
         private void RemoveApSensor_Click(object sender, EventArgs e)
         {
-            ToggleItemState("ANTI PERSONNEL SENSOR", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.AntiPersonnelSensor, false);
         }
 
         private void AddBoxA_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX A", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxA, true);
         }
 
         private void RemoveBoxA_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX A", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxA, false);
         }
 
         private void AddBoxB_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX B", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxB, true);
         }
 
         private void RemoveBoxB_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX B", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxB, false);
         }
 
         private void AddBoxC_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX C", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxC, true);
         }
 
         private void RemoveBoxC_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX C", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxC, false);
         }
 
         private void AddBoxD_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX D", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxD, true);
         }
 
         private void RemoveBoxD_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CBOX D", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CBoxD, false);
         }
 
         private void AddCrocCap_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CROC CAP", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CrocCap, true);
         }
 
         private void RemoveCrocCap_Click(object sender, EventArgs e)
         {
-            ToggleItemState("CROC CAP", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.CrocCap, false);
         }
 
         private void AddKeyA_Click(object sender, EventArgs e)
         {
-            ToggleItemState("KEY A", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.KeyA, true);
         }
 
         private void RemoveKeyA_Click(object sender, EventArgs e)
         {
-            ToggleItemState("KEY A", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.KeyA, false);
         }
 
         private void AddKeyB_Click(object sender, EventArgs e)
         {
-            ToggleItemState("KEY B", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.KeyB, true);
         }
 
         private void RemoveKeyB_Click(object sender, EventArgs e)
         {
-            ToggleItemState("KEY B", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.KeyB, false);
         }
 
         private void AddKeyC_Click(object sender, EventArgs e)
         {
-            ToggleItemState("KEY C", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.KeyC, true);
         }
 
         private void RemoveKeyC_Click(object sender, EventArgs e)
         {
-            ToggleItemState("KEY C", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.KeyC, false);
         }
 
         private void AddBandana_Click(object sender, EventArgs e)
         {
-            ToggleItemState("BANDANA", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Bandana, true);
         }
 
         private void RemoveBandana_Click(object sender, EventArgs e)
         {
-            ToggleItemState("BANDANA", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.Bandana, false);
         }
 
         private void AddStealth_Click(object sender, EventArgs e)
         {
-            ToggleItemState("STEALTH CAMO", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.StealthCamo, true);
         }
 
         private void RemoveStealth_Click(object sender, EventArgs e)
         {
-            ToggleItemState("STEALTH CAMO", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.StealthCamo, false);
         }
 
         private void AddMonkey_Click(object sender, EventArgs e)
         {
-            ToggleItemState("MONKEY MASK", true);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.MonkeyMask, true);
         }
 
         private void RemoveMonkey_Click(object sender, EventArgs e)
         {
-            ToggleItemState("MONKEY MASK", false);
+            MemoryManager.ToggleItemState(MGS3UsableObjects.MonkeyMask, false);
         }
     }
 }
