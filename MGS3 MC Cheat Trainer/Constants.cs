@@ -51,15 +51,21 @@ namespace MGS3_MC_Cheat_Trainer
             Caution = 32,
             Evasion = 128
         }
+        public enum HealthType
+        {
+            CurrentHealth,
+            MaxHealth,
+            Stamina
+        }
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
 
 
         public class SnakeAnimation : BaseMGS3Status
         {
             public IntPtr AnimationOffset;
-            public int Value { get; set; }
+            public byte Value { get; set; }
 
-            public SnakeAnimation(string name, IntPtr memoryOffset, int value): base(name, memoryOffset)
+            public SnakeAnimation(string name, IntPtr memoryOffset, byte value): base(name, memoryOffset)
             {
                 AnimationOffset = memoryOffset;
                 Value = value;
