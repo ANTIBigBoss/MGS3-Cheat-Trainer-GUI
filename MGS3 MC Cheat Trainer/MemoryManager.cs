@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using static MGS3_MC_Cheat_Trainer.ItemForm;
+using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -39,11 +34,33 @@ namespace MGS3_MC_Cheat_Trainer
 
         static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
         private const int HealthPointerOffset = 0x00AE49D8;
-        private const int HealthOffset = 0x684;
+        private const int CurrentHealthOffset = 0x684;
         private const int MaxHealthOffset = 0x686;
         private const int StaminaOffset = 0xA4A;
 
         #region Private Functions
+        private IntPtr ResolvePointerAddress(IntPtr baseAddress, IntPtr pointerOffset, IntPtr finalOffset)
+        {
+            // NOTE: Presently, this function has no use.
+
+            byte[] buffer = new byte[IntPtr.Size]; // Corrected here
+            Process process = GetMGS3Process();
+            var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+            NativeMethods.ReadProcessMemory(processHandle, IntPtr.Add(baseAddress, (int)pointerOffset), buffer, (uint)buffer.Length, out _);
+
+            IntPtr pointerAddress;
+            if (IntPtr.Size == 8) // 64-bit
+            {
+                pointerAddress = (IntPtr)BitConverter.ToInt64(buffer, 0);
+            }
+            else // 32-bit
+            {
+                pointerAddress = (IntPtr)BitConverter.ToInt32(buffer, 0);
+            }
+
+            return IntPtr.Add(pointerAddress, (int)finalOffset);
+        }
+
         private static short GetShortFromString(string countString)
         {
             if (!short.TryParse(countString, out short countShort))
@@ -70,6 +87,7 @@ namespace MGS3_MC_Cheat_Trainer
             ModifyShortValueObject(objectCountOffset, value, objectMaxCountOffset);
         }
 
+        #pragma warning disable CS8602 // Dereference of a possibly null reference. Start disable here.
         private static void ModifyByteValueObject(IntPtr objectOffset, byte value)
         {
             Process process;
@@ -84,8 +102,8 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            
-            var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
+            IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
             int bytesWritten;
 
             byte[] buffer = new byte[] { value }; // Value to write
@@ -179,6 +197,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             throw new IOException();
         }
+        #pragma warning disable CS8602 // Dereference of a possibly null reference. End disable here.
         #endregion
 
         #region Internal Functions
@@ -187,9 +206,19 @@ namespace MGS3_MC_Cheat_Trainer
             ModifyByteValueObject(Constants.AlertStatus.AlertStatusOffset, alertMode);
         }
 
-        internal static void TriggerSnakeAnimation(byte animation)
+        internal static void TriggerSnakeAnimation(Constants.SnakeAnimation snakeAnimation)
         {
-            ModifyByteValueObject(Constants.MGS3SnakeAnimations.LongSleep.AnimationOffset, animation); //TODO: fix this, this is not complete/correct
+            ModifyByteValueObject(snakeAnimation.AnimationOffset, snakeAnimation.Value);
+        }
+
+        internal static void ChangeHud(byte hudStatus)
+        {
+            ModifyByteValueObject(Constants.Hud.HudStatusOffset, hudStatus);
+        }
+
+        internal static void ChangeCamera(byte cameraSetting)
+        {
+            ModifyByteValueObject(Constants.Camera.CameraStatusOffset, cameraSetting);
         }
 
         internal static void ToggleWeapon(Weapon weapon, bool enable)
@@ -219,6 +248,68 @@ namespace MGS3_MC_Cheat_Trainer
         {
             ModifyShortObjectWithMaxCount(weapon.MemoryOffset, weapon.MaxAmmoOffset, ammoCount);
         }
+
+        internal static void ModifyHealthOrStamina(Constants.HealthType healthType, int value, bool setExactValue = false)
+        {
+            Process process;
+
+            try
+            {
+                process = GetMGS3Process();
+            }
+            catch
+            {
+                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
+                return;
+            }
+
+            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
+            var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+
+            IntPtr pointerBase = (IntPtr)HealthPointerOffset;
+            IntPtr pointerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)pointerBase);
+            byte[] pointerBuffer = new byte[IntPtr.Size];
+            NativeMethods.ReadProcessMemory(processHandle, pointerAddress, pointerBuffer, (uint)pointerBuffer.Length, out _);
+            IntPtr valuePointer = (IntPtr.Size == 8) ? (IntPtr)BitConverter.ToInt64(pointerBuffer, 0) : (IntPtr)BitConverter.ToInt32(pointerBuffer, 0);
+
+            int valueOffset;
+            // Adjust the valueOffset based on the healthType
+            switch (healthType)
+            {
+                case HealthType.MaxHealth:
+                    valueOffset = MaxHealthOffset;
+                    break;
+                case HealthType.Stamina:
+                    valueOffset = StaminaOffset;
+                    break;
+                default:
+                case HealthType.CurrentHealth:
+                    valueOffset = CurrentHealthOffset;
+                    break;
+            }
+
+            IntPtr valueAddress = IntPtr.Add(valuePointer, valueOffset);
+            byte[] valueBuffer = new byte[sizeof(short)];
+
+            NativeMethods.ReadProcessMemory(processHandle, valueAddress, valueBuffer, (uint)valueBuffer.Length, out _);
+            short currentValue = BitConverter.ToInt16(valueBuffer, 0);
+
+            short newValue;
+            if (setExactValue)
+            {
+                newValue = (short)Math.Max(0, Math.Min(value, short.MaxValue));
+            }
+            else
+            {
+                newValue = (short)Math.Max(0, Math.Min(currentValue + value, short.MaxValue));
+            }
+
+            byte[] newValueBuffer = BitConverter.GetBytes(newValue);
+            NativeMethods.WriteProcessMemory(processHandle, valueAddress, newValueBuffer, (uint)newValueBuffer.Length, out _);
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
         internal static void ToggleSuppressor(SuppressableWeapon suppressableWeapon)
         {
             Process process;
