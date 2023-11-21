@@ -245,7 +245,7 @@ namespace MGS3_MC_Cheat_Trainer
         public static readonly Uniform ColdWar = new("Cold War", (IntPtr)0x1D470DC);
         public static readonly Uniform Snake = new("Snake", (IntPtr)0x1D4712C);
         public static readonly Uniform GaKo = new("Ga-Ko", (IntPtr)0x1D4717C);
-        public static readonly Uniform DesertTiuger = new("DesertTiger", (IntPtr)0x1D471CC);
+        public static readonly Uniform DesertTiger = new("DesertTiger", (IntPtr)0x1D471CC);
         public static readonly Uniform DPM = new("DPM", (IntPtr)0x1D4721C);
         public static readonly Uniform Flecktarn = new("Flecktarn", (IntPtr)0x1D4726C);
         public static readonly Uniform Auscam = new("Auscam", (IntPtr)0x1D472BC);

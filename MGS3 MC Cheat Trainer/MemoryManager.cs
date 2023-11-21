@@ -121,6 +121,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private static void ModifyShortValueObject(IntPtr objectOffset, string value, IntPtr maxCountOffset = default)
         {
+            //TODO: just change value parameter to take in a short instead of a string to get around this...
             short shortValue = GetShortFromString(value);
             
             Process process;
@@ -176,12 +177,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private static void ToggleObjectState(IntPtr objectOffset, bool enableObject)
-        {
-            string stateValue = enableObject ? "1" : "-1";
-            ModifyShortValueObject(objectOffset, stateValue);
-        }
-
         private static short ReadShortFromMemory(IntPtr processHandle, IntPtr address)
         {
             if(NativeMethods.ReadProcessMemory(processHandle, address, out short value, sizeof(short), out int bytesRead))
@@ -223,12 +218,23 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void ToggleWeapon(Weapon weapon, bool enable)
         {
-            ToggleObjectState(weapon.MemoryOffset, enable);
+            //TODO: this can be made straight to short instead of string once ModifyShortValueObject accepts just a short
+            string stateValue = enable ? "1" : "-1";
+            ModifyShortValueObject(weapon.MemoryOffset, stateValue);
         }
 
         internal static void ToggleItemState(Item item, bool enable)
         {
-            ToggleObjectState(item.MemoryOffset, enable);
+            //TODO: this can be made straight to short instead of string once ModifyShortValueObject accepts just a short
+            string stateValue = enable ? "1" : "-1";
+            ModifyShortValueObject(item.MemoryOffset, stateValue);
+        }
+
+        internal static void ToggleCamoState(Camo camo, bool enableCamo)
+        {
+            //TODO: this can be made straight to short instead of string once ModifyShortValueObject accepts just a short
+            string stateValue = enableCamo ? "1" : "0";
+            ModifyShortValueObject(camo.MemoryOffset, stateValue);
         }
 
         internal static void ModifyItemCapacity(Item item, string itemCountStr)

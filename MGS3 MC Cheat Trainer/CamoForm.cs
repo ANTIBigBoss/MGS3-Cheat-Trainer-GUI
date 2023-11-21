@@ -65,7 +65,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         // We should do the same boolean logic for camo only difference is that 1 means camo is obtained and 0 means it is not
-        private void WriteValueToMemory(int index, short value)
+        /*private void WriteValueToMemory(int index, short value)
         {
             var process = System.Diagnostics.Process.GetProcessesByName(PROCESS_NAME).FirstOrDefault();
             if (process == null)
@@ -83,551 +83,536 @@ namespace MGS3_MC_Cheat_Trainer
             bool success = WriteProcessMemory(processHandle, address, ref value, sizeof(short), out bytesWritten);
 
             CloseHandle(processHandle);
-        }
-
-        private void ToggleItemState(string itemName, bool addItem)
-        {
-            int itemIndex = Array.IndexOf(CAMO_NAMES, itemName);
-
-            if (itemIndex != -1)
-            {
-                short valueToWrite = addItem ? (short)1 : (short)0;
-                WriteValueToMemory(itemIndex, valueToWrite);
-            }
-            else
-            {
-                MessageBox.Show($"{itemName} not found.");
-            }
-        }
+        }*/
 
         private void AddWoodland_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Woodland", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Woodland, true);
         }
 
         private void RemoveWoodland_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Woodland", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Woodland, false);
         }
 
         private void AddBlackPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Black Paint", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.BlackFace, true);
         }
 
         private void RemoveBlackPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Black Paint", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.BlackFace, false);
         }
 
         private void AddWater_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Water Paint", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.WaterFace, true);
         }
 
         private void RemoveWaterPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Water Paint", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.WaterFace, false);
         }
 
         private void AddDesert_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Desert", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Desert, true);
         }
 
         private void RemoveDesert_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Desert", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Desert, false);
         }
 
         private void AddSplitterPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Splitter Paint", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SplitterFace, true);
         }
 
         private void RemoveSplitterPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Splitter Paint", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SplitterFace, false);
         }
 
         private void AddSnowPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Snow Paint", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SnowFace, true);
         }
 
         private void RemoveSnowPaint_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Snow Paint", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SnowFace, false);
         }
 
         private void AddKabuki_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Kabuki", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Kabuki, true);
         }
 
         private void RemoveKabuki_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Kabuki", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Kabuki, false);
         }
 
         private void AddZombie_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Zombie", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Zombie, true);
         }
 
         private void RemoveZombie_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Zombie", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Zombie, false);
         }
 
         private void AddOyama_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Oyama", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Oyama, true);
         }
 
         private void RemoveOyama_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Oyama", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Oyama, false);
         }
 
         private void AddMask_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Mask", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Mask, true);
         }
 
         private void RemoveMask_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Mask", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Mask, false);
         }
 
         private void AddGreen_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Green", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Green, true);
         }
 
         private void RemoveGreen_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Green", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Green, false);
         }
 
         private void AddBrown_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Brown", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Brown, true);
         }
 
         private void RemoveBrown_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Brown", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Brown, false);
         }
 
         private void AddInfinity_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Infinity", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Infinity, true);
         }
 
         private void RemoveInfinity_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Infinity", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Infinity, false);
         }
 
         private void AddSovietUnion_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Soviet Union", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SovietUnion, true);
         }
 
         private void RemoveSovietUnion_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Soviet Union", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SovietUnion, false);
         }
 
         private void AddUK_Click(object sender, EventArgs e)
         {
-            ToggleItemState("UK", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.UK, true);
         }
 
         private void RemoveUK_Click(object sender, EventArgs e)
         {
-            ToggleItemState("UK", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.UK, false);
         }
 
         private void AddFrance_Click(object sender, EventArgs e)
         {
-            ToggleItemState("France", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.France, true);
         }
 
         private void RemoveFrance_Click(object sender, EventArgs e)
         {
-            ToggleItemState("France", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.France, false);
         }
 
         private void AddGermany_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Germany", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Germany, true);
         }
 
         private void RemoveGermany_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Germany", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Germany, false);
         }
 
         private void AddItaly_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Italy", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Italy, true);
         }
 
         private void RemoveItaly_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Italy", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Italy, false);
         }
 
         private void AddSpain_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Spain", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Spain, true);
         }
 
         private void RemoveSpain_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Spain", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Spain, false);
         }
 
         private void AddSweden_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Sweden", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Sweden, true);
         }
 
         private void RemoveSweden_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Sweden", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Sweden, false);
         }
 
         private void AddJapan_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Japan", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Japan, true);
         }
 
         private void RemoveJapan_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Japan", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Japan, false);
         }
 
         private void AddUSA_Click(object sender, EventArgs e)
         {
-            ToggleItemState("USA", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.USA, true);
         }
 
         private void RemoveUSA_Click(object sender, EventArgs e)
         {
-            ToggleItemState("USA", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.USA, false);
         }
 
         private void AddOliveDrab_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Olive Drab", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.OliveDrab, true);
         }
 
         private void RemoveOliveDrab_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Olive Drab", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.OliveDrab, false);
         }
 
         private void AddTigerStripe_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Tiger Stripe", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.TigerStripe, true);
         }
 
         private void RemoveTigerStripe_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Tiger Stripe", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.TigerStripe, false);
         }
 
         private void AddLeaf_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Leaf", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Leaf, true);
         }
 
         private void RemoveLeaf_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Leaf", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Leaf, false);
         }
 
         private void AddTreeBark_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Tree Bark", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.TreeBark, true);
         }
 
         private void RemoveTreeBark_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Tree Bark", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.TreeBark, false);
         }
 
         private void AddChocoChip_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Choco Chip", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.ChocoChip, true);
         }
 
         private void RemoveChocoChip_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Choco Chip", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.ChocoChip, false);
         }
 
         private void AddSplitterBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Splitter Uniform", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Splitter, true);
         }
 
         private void RemoveSplitterBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Splitter Uniform", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Splitter, false);
         }
 
         private void AddRaindrop_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Raindrop", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Raindrop, true);
         }
 
         private void RemoveRaindrop_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Raindrop", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Raindrop, false);
         }
 
         private void AddSquare_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Squares", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Squares, true);
         }
 
         private void RemoveSquares_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Squares", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Squares, false);
         }
 
         private void AddWaterBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Water Uniform", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Water, true);
         }
 
         private void RemoveWaterBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Water Uniform", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Water, false);
         }
 
         private void AddBlackBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Black Uniform", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Black, true);
         }
 
         private void RemoveBlackBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Black Uniform", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Black, false);
         }
 
         private void AddSnowBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Snow Uniform", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Snow, true);
         }
 
         private void RemoveSnowBody_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Snow Uniform", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Snow, false);
         }
 
         private void AddSneakingSuit_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Sneaking Suit", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SneakingSuit, true);
         }
 
         private void RemoveSneakingSuit_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Sneaking Suit", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.SneakingSuit, false);
         }
 
         private void AddScientist_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Scientist", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Scientist, true);
         }
 
         private void RemoveScientist_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Scientist", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Scientist, false);
         }
 
         private void AddOfficer_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Officer", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Officer, true);
         }
 
         private void RemoveOfficer_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Officer", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Officer, false);
         }
 
         private void AddMaintenance_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Maintenance", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Maintenance, true);
         }
 
         private void RemoveMaintenance_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Maintenance", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Maintenance, false);
         }
 
         private void AddTuxedo_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Tuxedo", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Tuxedo, true);
         }
 
         private void RemoveTuxedo_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Tuxedo", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Tuxedo, false);
         }
 
         private void AddHornetStripe_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Hornet Stripe", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.HornetStripe, true);
         }
 
         private void RemoveHornetStripe_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Hornet Stripe", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.HornetStripe, false);
         }
 
         private void AddMoss_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Moss", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Moss, true);
         }
 
         private void RemoveMoss_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Moss", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Moss, false);
         }
 
         private void Addfire_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Fire", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Fire, true);
         }
 
         private void RemoveFire_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Fire", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Fire, false);
         }
 
         private void AddSpirit_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Spirit", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Spirit, true);
         }
 
         private void RemoveSpirit_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Spirit", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Spirit, false);
         }
 
         private void AddColdWar_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Cold War", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.ColdWar, true);
         }
 
         private void RemoveColdWar_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Cold War", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.ColdWar, false);
         }
 
         private void AddSnake_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Snake", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Snake, true);
         }
 
         private void RemoveSnake_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Snake", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Snake, false);
         }
 
         private void AddGaKo_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Ga-Ko", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.GaKo, true);
         }
 
         private void RemoveGaKo_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Ga-Ko", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.GaKo, false);
         }
 
         private void AddDesertTiger_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Desert Tiger", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.DesertTiger, true);
         }
 
         private void RemoveDesertTiger_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Desert Tiger", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.DesertTiger, false);
         }
 
         private void AddDPM_Click(object sender, EventArgs e)
         {
-            ToggleItemState("DPM", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.DPM, true);
         }
 
         private void RemoveDPM_Click(object sender, EventArgs e)
         {
-            ToggleItemState("DPM", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.DPM, false);
         }
 
         private void AddFlecktarn_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Flecktarn", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Flecktarn, true);
         }
 
         private void RemoveFlecktarn_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Flecktarn", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Flecktarn, false);
         }
 
         private void AddAuscam_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Auscam", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Auscam, true);
         }
 
         private void RemoveAuscam_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Auscam", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Auscam, false);
         }
 
         private void AddAnimals_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Animals", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Animals, true);
         }
 
         private void RemoveAnimals_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Animals", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Animals, false);
         }
 
         private void AddFly_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Fly", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Fly, true);
         }
 
         private void RemoveFly_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Fly", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Fly, false);
         }
 
         private void AddSpider_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Spider", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Spider, true);
         }
 
         private void RemoveSpider_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Spider", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Spider, false);
         }
 
         private void AddBanana_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Banana Camo", true);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Banana, true);
         }
 
         private void RemoveBanana_Click(object sender, EventArgs e)
         {
-            ToggleItemState("Banana Camo", false);
+            MemoryManager.ToggleCamoState(MGS3UsableObjects.Banana, false);
         }
     }
 }
