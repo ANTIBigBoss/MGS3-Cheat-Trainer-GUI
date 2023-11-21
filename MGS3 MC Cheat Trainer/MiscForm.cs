@@ -116,12 +116,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void NormalCam_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeHud((int)Constants.CameraOptions.Normal);
+            MemoryManager.ChangeCamera((int)Constants.CameraOptions.Normal);
         }
 
         private void UpsideDownCam_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeHud((int)Constants.CameraOptions.UpsideDown);
+            MemoryManager.ChangeCamera((int)Constants.CameraOptions.UpsideDown);
         }
 
         // Health and Stamina along with pointer logic
