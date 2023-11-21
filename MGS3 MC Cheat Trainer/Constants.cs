@@ -57,7 +57,15 @@ namespace MGS3_MC_Cheat_Trainer
             MaxHealth,
             Stamina
         }
+
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
+        internal const int HealthPointerOffset = 0x00AE49D8;
+        internal const int CurrentHealthOffset = 0x684;
+        internal const int MaxHealthOffset = 0x686;
+        internal const int StaminaOffset = 0xA4A;
+        internal static IntPtr HudOffset = (IntPtr)0xADB40F;
+        internal static IntPtr CamOffset = (IntPtr)0xAE3B37;
+        internal static IntPtr AlertStatusOffset = (IntPtr)0x1D9C3D8;
 
 
         public class SnakeAnimation : BaseMGS3Status
@@ -72,41 +80,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        public class Hud : BaseMGS3Status
-        {
-            public static HudOptions HudOption = HudOptions.Normal;
-            public static IntPtr HudStatusOffset { get; set; }
-
-            Hud(string name, HudOptions hudOption) : base(name, (IntPtr)0xADB40F)
-            {
-                HudOption = hudOption;
-                HudStatusOffset = MemoryOffset;
-            }
-        }
-
-        public class Camera : BaseMGS3Status
-        {
-            public static CameraOptions CameraOption = CameraOptions.Normal;
-            public static IntPtr CameraStatusOffset { get; set; }
-
-            Camera(string name, CameraOptions cameraOption) : base(name, (IntPtr)0xAE3B37)
-            {
-                CameraOption = cameraOption;
-                CameraStatusOffset = MemoryOffset;
-            }
-        }
-
-        public class AlertStatus : BaseMGS3Status
-        {
-            public static AlertModes AlertLevel;
-            public static IntPtr AlertStatusOffset { get; set; }
-
-            AlertStatus(string name, AlertModes alertLevel) : base(name, (IntPtr)0x1D9C3D8)
-            {
-                AlertLevel = alertLevel;
-                AlertStatusOffset = MemoryOffset;
-            }
-        }
         public class MGS3SnakeAnimations
         {
             public static readonly SnakeAnimation LongSleep = new("LongSleep", (IntPtr)0x1D4BCBA, 1);

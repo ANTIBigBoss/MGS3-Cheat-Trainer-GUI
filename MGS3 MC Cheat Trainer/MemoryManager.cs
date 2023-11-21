@@ -33,10 +33,6 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
-        private const int HealthPointerOffset = 0x00AE49D8;
-        private const int CurrentHealthOffset = 0x684;
-        private const int MaxHealthOffset = 0x686;
-        private const int StaminaOffset = 0xA4A;
 
         #region Private Functions
         private IntPtr ResolvePointerAddress(IntPtr baseAddress, IntPtr pointerOffset, IntPtr finalOffset)
@@ -198,7 +194,7 @@ namespace MGS3_MC_Cheat_Trainer
         #region Internal Functions
         internal static void ChangeAlertMode(byte alertMode)
         {
-            ModifyByteValueObject(Constants.AlertStatus.AlertStatusOffset, alertMode);
+            ModifyByteValueObject(Constants.AlertStatusOffset, alertMode);
         }
 
         internal static void TriggerSnakeAnimation(Constants.SnakeAnimation snakeAnimation)
@@ -208,12 +204,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void ChangeHud(byte hudStatus)
         {
-            ModifyByteValueObject(Constants.Hud.HudStatusOffset, hudStatus);
+            ModifyByteValueObject(Constants.HudOffset, hudStatus);
         }
 
         internal static void ChangeCamera(byte cameraSetting)
         {
-            ModifyByteValueObject(Constants.Camera.CameraStatusOffset, cameraSetting);
+            ModifyByteValueObject(Constants.CamOffset, cameraSetting);
         }
 
         internal static void ToggleWeapon(Weapon weapon, bool enable)
