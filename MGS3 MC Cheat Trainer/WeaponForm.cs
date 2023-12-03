@@ -275,32 +275,32 @@ namespace MGS3_MC_Cheat_Trainer
         #region Suppressor Capacity Modifiers
         private void Minus30MK22_Click(object sender, EventArgs e)
         {
-            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.MK22, false);
+            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.MK22Surpressor, false);
         }
 
         private void Plus30MK22_Click(object sender, EventArgs e)
         {
-            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.MK22, true);
+            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.MK22Surpressor, true);
         }
 
         private void Minus30M1911A1_Click(object sender, EventArgs e)
         {
-            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.M1911A1, false);
+            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.M1911A1Surpressor, false);
         }
 
         private void Plus30M1911A1_Click(object sender, EventArgs e)
         {
-            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.M1911A1, true);
+            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.M1911A1Surpressor, true);
         }
 
         private void Minus30XM16E1_Click(object sender, EventArgs e)
         {
-            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.XM16E1, false);
+            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.XM16E1Surpressor, false);
         }
 
         private void Plus30XM16E1_Click(object sender, EventArgs e)
         {
-            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.XM16E1, true);
+            MemoryManager.AdjustSuppressorCapacity(MGS3UsableObjects.XM16E1Surpressor, true);
         }
         #endregion
 

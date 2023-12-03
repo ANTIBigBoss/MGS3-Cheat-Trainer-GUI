@@ -57,6 +57,37 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Add(pointerAddress, (int)finalOffset);
         }
 
+        /* Experimental future functions to try and not have to refind the base address every time the game updates
+        Known base addresses: 7FF71CB30000, 
+        public static IntPtr SignatureScan(Process process, byte[] signature, string mask)
+        {
+            IntPtr baseAddress = process.MainModule.BaseAddress;
+            int processSize = process.MainModule.ModuleMemorySize;
+
+            for (int i = 0; i < processSize - signature.Length; i++)
+            {
+                byte[] buffer = new byte[signature.Length];
+                IntPtr address = IntPtr.Add(baseAddress, i);
+                ReadProcessMemory(process.Handle, address, buffer, buffer.Length, out _);
+
+                if (IsMatch(buffer, signature, mask))
+                    return address;
+            }
+
+            return IntPtr.Zero;
+        }
+
+        private static bool IsMatch(byte[] buffer, byte[] signature, string mask)
+        {
+            for (int i = 0; i < signature.Length; i++)
+            {
+                if (mask[i] == 'x' && buffer[i] != signature[i])
+                    return false;
+            }
+            return true;
+        }
+        */
+
         private static short GetShortFromString(string countString)
         {
             if (!short.TryParse(countString, out short countShort))
@@ -226,13 +257,6 @@ namespace MGS3_MC_Cheat_Trainer
             ModifyShortValueObject(item.MemoryOffset, stateValue);
         }
 
-        internal static void ToggleCamoState(Camo camo, bool enableCamo)
-        {
-            //TODO: this can be made straight to short instead of string once ModifyShortValueObject accepts just a short
-            string stateValue = enableCamo ? "1" : "0";
-            ModifyShortValueObject(camo.MemoryOffset, stateValue);
-        }
-
         internal static void ModifyItemCapacity(Item item, string itemCountStr)
         {
             if(item.MaxCapacityOffset != default)
@@ -241,12 +265,12 @@ namespace MGS3_MC_Cheat_Trainer
                 ModifyShortValueObject(item.MemoryOffset, itemCountStr);
         }
 
-        internal static void ModifyClipSize(ClippedWeapon weapon, string clipSize)
+        internal static void ModifyClipSize(Weapon weapon, string clipSize)
         {
             ModifyShortObjectWithMaxCount(weapon.ClipOffset, weapon.MaxClipOffset, clipSize);
         }
 
-        internal static void ModifyAmmo(AmmoWeapon weapon, string ammoCount)
+        internal static void ModifyAmmo(Weapon weapon, string ammoCount)
         {
             ModifyShortObjectWithMaxCount(weapon.MemoryOffset, weapon.MaxAmmoOffset, ammoCount);
         }
@@ -312,7 +336,7 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
         }
 
-        internal static void ToggleSuppressor(SuppressableWeapon suppressableWeapon)
+        internal static void ToggleSuppressor(Weapon suppressableWeapon)
         {
             Process process;
 
@@ -338,7 +362,7 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
         }
 
-        internal static void AdjustSuppressorCapacity(SuppressableWeapon suppressableWeapon, bool increaseCapacity)
+        internal static void AdjustSuppressorCapacity(Item suppressorItem, bool increaseCapacity)
         {
             Process process = GetMGS3Process();
 
@@ -356,7 +380,7 @@ namespace MGS3_MC_Cheat_Trainer
             var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
             int bytesWritten;
 
-            IntPtr suppressorCapacityAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)suppressableWeapon.SuppressorCapacityOffset);
+            IntPtr suppressorCapacityAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)suppressorItem.MemoryOffset);
             short currentValue;
             try
             {
@@ -364,7 +388,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch
             {
-                MessageBox.Show($"Unable to find {suppressableWeapon.Name} in memory.");
+                MessageBox.Show($"Unable to find {suppressorItem.Name} in memory.");
                 return;
             }
 
@@ -379,17 +403,87 @@ namespace MGS3_MC_Cheat_Trainer
                 try
                 {
                     bytesWritten = WriteShortToMemory(processHandle, suppressorCapacityAddress, (short)newValue);
-                    MessageBox.Show($"Suppressor capacity for {suppressableWeapon.Name} set to {newValue}.");
+                    MessageBox.Show($"Suppressor capacity for {suppressorItem.Name} set to {newValue}.");
                 }
                 catch
                 {
-                    MessageBox.Show($"Unable to modify suppressor capacity for {suppressableWeapon.Name}.");
+                    MessageBox.Show($"Unable to modify suppressor capacity for {suppressorItem.Name}.");
                     return;
                 }
             }
 
             NativeMethods.CloseHandle(processHandle);
         }
+
+        // Function checks the timer for alert and if it's 0 we trigger the alert mode address
+        internal static void InfiniteStatus(Constants.AlertModes mode)
+        {
+            Process process;
+            try
+            {
+                process = GetMGS3Process();
+            }
+            catch
+            {
+                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
+                return;
+            }
+
+            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
+            var processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+
+            IntPtr timerAddress;
+            switch (mode)
+            {
+                case Constants.AlertModes.Alert:
+                    timerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)MGS3AlertModes.Alert.AlertTimerOffset);
+                    break;
+
+                /* Evasion kind of useless since Normal status to Evasion just makes the guards moonwalk just 
+                putting it in here incase I find a way to use in the future */
+                case Constants.AlertModes.Evasion:
+                    timerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)MGS3AlertModes.Evasion.AlertTimerOffset);
+                    break;
+
+                case Constants.AlertModes.Caution:
+                    timerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)MGS3AlertModes.Caution.AlertTimerOffset);
+                    break;
+                
+                default:
+                    throw new ArgumentException("Invalid mode");
+            }
+
+            byte timerValue;
+            try
+            {
+                timerValue = ReadByteFromMemory(processHandle, timerAddress);
+            }
+            catch
+            {
+                MessageBox.Show("Failed to read timer value.");
+                return;
+            }
+
+            if (timerValue == 0)
+            {
+                ChangeAlertMode((byte)mode);
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
+        // We just want to be checking the timer so we can trigger the alert again if needed
+        private static byte ReadByteFromMemory(IntPtr processHandle, IntPtr address)
+        {
+            byte[] buffer = new byte[1];
+            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
+            {
+                return buffer[0];
+            }
+
+            throw new IOException("Failed to read byte from memory.");
+        }
+
         #endregion
     }
 }

@@ -33,7 +33,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // For HUD and Camera can we find the floats for the values and see if we can make a slider for them?
+        // Should go and find the float values for HUD and Camera for future use and make it a slider
         public enum HudOptions
         {
             None = 0,
@@ -49,13 +49,14 @@ namespace MGS3_MC_Cheat_Trainer
         {
             Alert = 16,
             Caution = 32,
-            Evasion = 128
+            Evasion = 128 // Doesn't trigger evasion but this is the value for it
         }
         public enum HealthType
         {
             CurrentHealth,
             MaxHealth,
             Stamina
+            // Not sure if the max stamina exists or not or is modifiable
         }
 
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
@@ -90,6 +91,26 @@ namespace MGS3_MC_Cheat_Trainer
             public static readonly SnakeAnimation BunnyHop = new("BunnyHop", (IntPtr)0x1E2C0C8, 3);
             public static readonly SnakeAnimation FakeDeath = new("FakeDeath", (IntPtr)0x1E2C0CA, 32);
         }
+
+        public class MGS3AlertTimers : BaseMGS3Status
+        {
+            public IntPtr AlertTimerOffset;
+            public byte Value { get; set; }
+
+            public MGS3AlertTimers(string name, IntPtr memoryOffset) : base(name, memoryOffset)
+            {
+                AlertTimerOffset = memoryOffset;
+            }
+        }
+        public class MGS3AlertModes
+        {
+            public static readonly MGS3AlertTimers Alert = new("Alert", (IntPtr)0x1D9C384);
+            public static readonly MGS3AlertTimers Evasion = new("Evasion", (IntPtr)0x1D9C39C);
+            public static readonly MGS3AlertTimers Caution = new("Caution", (IntPtr)0x1E36A5C);
+            
+        }
+
+        
         
     }
 }

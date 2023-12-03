@@ -5,21 +5,22 @@ namespace MGS3_MC_Cheat_Trainer
     public partial class MiscForm : Form
     {
         IntPtr processHandle; // Ensure this is correctly initialized
-        
-        
+        private System.Windows.Forms.Timer alertCheckTimer;
+
 
         public MiscForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form4_FormClosing);
+            // Timer stuff here for timer based effects
+            alertCheckTimer = new System.Windows.Forms.Timer();
+            alertCheckTimer.Interval = 1000; // 1 second interval
+            alertCheckTimer.Tick += new EventHandler(AlertCheckTimer_Tick_Tick);
 
-            // Initialize these here
-            /* From what I can tell, doing this doesn't actually... do anything at all.
-            IntPtr pointerOffset = (IntPtr)0x00AE49D8;
-            IntPtr finalOffset = (IntPtr)0x684;
-            IntPtr finalDataAddress = ResolvePointerAddress(baseAddress, pointerOffset, finalOffset);
-            */
-            // Now you can read or write to finalDataAddress
+            CautionCheckTimer = new System.Windows.Forms.Timer();
+            CautionCheckTimer.Interval = 1000; // 1 second interval
+            CautionCheckTimer.Tick += new EventHandler(CautionCheckTimer_Tick);
+
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -56,12 +57,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button3_Click(object sender, EventArgs e) // Alert Mode Trigger
         {
-            MemoryManager.ChangeAlertMode((int) Constants.AlertModes.Alert);
+            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
         }
 
         private void button9_Click(object sender, EventArgs e) // Caution Mode Trigger
         {
-            MemoryManager.ChangeAlertMode((int) Constants.AlertModes.Caution);
+            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
         }
 
         private void SnakeNapQuick_Click(object sender, EventArgs e)
@@ -101,7 +102,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void NormalHUD_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeHud((int) Constants.HudOptions.Normal);
+            MemoryManager.ChangeHud((int)Constants.HudOptions.Normal);
         }
 
         private void ShrinkHUD_Click(object sender, EventArgs e)
@@ -181,6 +182,45 @@ namespace MGS3_MC_Cheat_Trainer
         private void Minus100MaxHpValue_Click(object sender, EventArgs e)
         {
             MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, -100);
+        }
+
+        private void InfiniteAlert_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox != null && checkBox.Checked)
+            {
+                // Trigger the alert and make a check every second to where the alert timer is at
+                MemoryManager.InfiniteStatus(Constants.AlertModes.Alert); 
+                alertCheckTimer.Start();
+            }
+            else // Unchecking the box will stop the timer and check
+            {
+                alertCheckTimer.Stop();
+            }
+        }
+
+        private void AlertCheckTimer_Tick_Tick(object sender, EventArgs e)
+        {
+            MemoryManager.InfiniteStatus(Constants.AlertModes.Alert);
+        }
+
+        private void CautionCheckTimer_Tick(object sender, EventArgs e)
+        {
+            MemoryManager.InfiniteStatus(Constants.AlertModes.Caution);
+        }
+
+        private void InfiniteCaution_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            if (checkBox != null && checkBox.Checked)
+            {
+                MemoryManager.InfiniteStatus(Constants.AlertModes.Caution);
+                CautionCheckTimer.Start();
+            }
+            else
+            {
+                CautionCheckTimer.Stop();
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
             SnakePukes = new Button();
             textBox12 = new TextBox();
@@ -66,6 +67,11 @@
             Plus100MaxHpValue = new Button();
             Minus100MaxHpValue = new Button();
             MaxHpTo1 = new Button();
+            InfiniteAlert = new CheckBox();
+            AlertCheckTimer_Tick = new System.Windows.Forms.Timer(components);
+            InfiniteCaution = new CheckBox();
+            timer1 = new System.Windows.Forms.Timer(components);
+            CautionCheckTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -525,12 +531,54 @@
             MaxHpTo1.UseVisualStyleBackColor = true;
             MaxHpTo1.Click += MaxHpTo1_Click;
             // 
-            // Form4
+            // InfiniteAlert
+            // 
+            InfiniteAlert.AutoSize = true;
+            InfiniteAlert.Location = new Point(335, 271);
+            InfiniteAlert.MaximumSize = new Size(241, 55);
+            InfiniteAlert.MinimumSize = new Size(241, 55);
+            InfiniteAlert.Name = "InfiniteAlert";
+            InfiniteAlert.Size = new Size(241, 55);
+            InfiniteAlert.TabIndex = 502;
+            InfiniteAlert.Text = "Infinite Alert Mode (Checked is on, Unchecked is off)";
+            InfiniteAlert.UseVisualStyleBackColor = true;
+            InfiniteAlert.CheckedChanged += InfiniteAlert_CheckedChanged;
+            // 
+            // AlertCheckTimer_Tick
+            // 
+            AlertCheckTimer_Tick.Interval = 1000;
+            AlertCheckTimer_Tick.Tick += AlertCheckTimer_Tick_Tick;
+            // 
+            // InfiniteCaution
+            // 
+            InfiniteCaution.AutoSize = true;
+            InfiniteCaution.Location = new Point(335, 339);
+            InfiniteCaution.MaximumSize = new Size(241, 55);
+            InfiniteCaution.MinimumSize = new Size(241, 55);
+            InfiniteCaution.Name = "InfiniteCaution";
+            InfiniteCaution.Size = new Size(241, 55);
+            InfiniteCaution.TabIndex = 503;
+            InfiniteCaution.Text = "Infinite Caution Mode (Checked is on, Unchecked is off) Alert and Evasion override this effect";
+            InfiniteCaution.UseVisualStyleBackColor = true;
+            InfiniteCaution.CheckedChanged += InfiniteCaution_CheckedChanged;
+            // 
+            // timer1
+            // 
+            timer1.Interval = 1000;
+            // 
+            // CautionCheckTimer
+            // 
+            CautionCheckTimer.Interval = 1000;
+            CautionCheckTimer.Tick += CautionCheckTimer_Tick;
+            // 
+            // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(InfiniteCaution);
+            Controls.Add(InfiniteAlert);
             Controls.Add(MaxHpTo1);
             Controls.Add(Minus100MaxHpValue);
             Controls.Add(Plus100MaxHpValue);
@@ -569,7 +617,7 @@
             Controls.Add(pictureBox1);
             Controls.Add(button3);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Form4";
+            Name = "MiscForm";
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -616,5 +664,10 @@
         private Button Plus100MaxHpValue;
         private Button Minus100MaxHpValue;
         private Button MaxHpTo1;
+        private CheckBox InfiniteAlert;
+        private System.Windows.Forms.Timer AlertCheckTimer_Tick;
+        private CheckBox InfiniteCaution;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer CautionCheckTimer;
     }
 }

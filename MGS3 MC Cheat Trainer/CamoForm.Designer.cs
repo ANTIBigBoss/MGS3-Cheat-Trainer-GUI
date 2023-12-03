@@ -194,6 +194,9 @@
             AddBanana = new Button();
             pictureBox35 = new PictureBox();
             pictureBox54 = new PictureBox();
+            RemoveDownload = new Button();
+            AddDownload = new Button();
+            pictureBox55 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
@@ -248,6 +251,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox26).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox54).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox55).BeginInit();
             SuspendLayout();
             // 
             // WeaponFormSwap
@@ -2454,12 +2458,55 @@
             pictureBox54.TabIndex = 575;
             pictureBox54.TabStop = false;
             // 
-            // Form3
+            // RemoveDownload
+            // 
+            RemoveDownload.Cursor = Cursors.Hand;
+            RemoveDownload.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            RemoveDownload.ImageAlign = ContentAlignment.TopCenter;
+            RemoveDownload.ImeMode = ImeMode.NoControl;
+            RemoveDownload.Location = new Point(1049, 473);
+            RemoveDownload.Name = "RemoveDownload";
+            RemoveDownload.Size = new Size(85, 22);
+            RemoveDownload.TabIndex = 578;
+            RemoveDownload.Text = "Remove";
+            RemoveDownload.UseVisualStyleBackColor = true;
+            RemoveDownload.Click += RemoveDownload_Click;
+            // 
+            // AddDownload
+            // 
+            AddDownload.Cursor = Cursors.Hand;
+            AddDownload.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            AddDownload.ImageAlign = ContentAlignment.TopCenter;
+            AddDownload.ImeMode = ImeMode.NoControl;
+            AddDownload.Location = new Point(930, 473);
+            AddDownload.Name = "AddDownload";
+            AddDownload.Size = new Size(95, 22);
+            AddDownload.TabIndex = 577;
+            AddDownload.Text = "Add ";
+            AddDownload.UseVisualStyleBackColor = true;
+            AddDownload.Click += AddDownload_Click;
+            // 
+            // pictureBox55
+            // 
+            pictureBox55.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox55.Image = (Image)resources.GetObject("pictureBox55.Image");
+            pictureBox55.ImeMode = ImeMode.NoControl;
+            pictureBox55.Location = new Point(930, 443);
+            pictureBox55.Name = "pictureBox55";
+            pictureBox55.Size = new Size(203, 33);
+            pictureBox55.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox55.TabIndex = 576;
+            pictureBox55.TabStop = false;
+            // 
+            // CamoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1134, 707);
+            Controls.Add(RemoveDownload);
+            Controls.Add(AddDownload);
+            Controls.Add(pictureBox55);
             Controls.Add(pictureBox54);
             Controls.Add(RemoveBanana);
             Controls.Add(AddBanana);
@@ -2626,7 +2673,7 @@
             Controls.Add(button1);
             Controls.Add(WeaponFormSwap);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Form3";
+            Name = "CamoForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "MGS3 Cheat Trainer - Camos - ANTIBigBoss";
             Load += Form3_Load;
@@ -2684,6 +2731,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox26).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox54).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox55).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2854,5 +2902,8 @@
         private Button AddBanana;
         private PictureBox pictureBox35;
         private PictureBox pictureBox54;
+        private Button RemoveDownload;
+        private Button AddDownload;
+        private PictureBox pictureBox55;
     }
 }
