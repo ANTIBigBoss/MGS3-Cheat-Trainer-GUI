@@ -194,9 +194,7 @@
             AddBanana = new Button();
             pictureBox35 = new PictureBox();
             pictureBox54 = new PictureBox();
-            RemoveDownload = new Button();
-            AddDownload = new Button();
-            pictureBox55 = new PictureBox();
+            HealthFormSwap = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
@@ -251,7 +249,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox26).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox54).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox55).BeginInit();
             SuspendLayout();
             // 
             // WeaponFormSwap
@@ -260,11 +257,11 @@
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(212, 3);
+            WeaponFormSwap.Location = new Point(85, 4);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(203, 32);
             WeaponFormSwap.TabIndex = 313;
-            WeaponFormSwap.Text = "Switch to Weapons";
+            WeaponFormSwap.Text = "Weapons";
             WeaponFormSwap.UseVisualStyleBackColor = true;
             WeaponFormSwap.Click += WeaponFormSwap_Click;
             // 
@@ -274,11 +271,11 @@
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button1.ImageAlign = ContentAlignment.TopCenter;
             button1.ImeMode = ImeMode.NoControl;
-            button1.Location = new Point(460, 3);
+            button1.Location = new Point(333, 4);
             button1.Name = "button1";
             button1.Size = new Size(203, 32);
             button1.TabIndex = 314;
-            button1.Text = "Switch to Items";
+            button1.Text = "Items";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -1183,11 +1180,11 @@
             button3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button3.ImageAlign = ContentAlignment.TopCenter;
             button3.ImeMode = ImeMode.NoControl;
-            button3.Location = new Point(717, 3);
+            button3.Location = new Point(590, 4);
             button3.Name = "button3";
             button3.Size = new Size(203, 32);
             button3.TabIndex = 477;
-            button3.Text = "Switch to Stats and Misc";
+            button3.Text = "Misc";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
@@ -2458,45 +2455,18 @@
             pictureBox54.TabIndex = 575;
             pictureBox54.TabStop = false;
             // 
-            // RemoveDownload
+            // HealthFormSwap
             // 
-            RemoveDownload.Cursor = Cursors.Hand;
-            RemoveDownload.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            RemoveDownload.ImageAlign = ContentAlignment.TopCenter;
-            RemoveDownload.ImeMode = ImeMode.NoControl;
-            RemoveDownload.Location = new Point(1049, 473);
-            RemoveDownload.Name = "RemoveDownload";
-            RemoveDownload.Size = new Size(85, 22);
-            RemoveDownload.TabIndex = 578;
-            RemoveDownload.Text = "Remove";
-            RemoveDownload.UseVisualStyleBackColor = true;
-            RemoveDownload.Click += RemoveDownload_Click;
-            // 
-            // AddDownload
-            // 
-            AddDownload.Cursor = Cursors.Hand;
-            AddDownload.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            AddDownload.ImageAlign = ContentAlignment.TopCenter;
-            AddDownload.ImeMode = ImeMode.NoControl;
-            AddDownload.Location = new Point(930, 473);
-            AddDownload.Name = "AddDownload";
-            AddDownload.Size = new Size(95, 22);
-            AddDownload.TabIndex = 577;
-            AddDownload.Text = "Add ";
-            AddDownload.UseVisualStyleBackColor = true;
-            AddDownload.Click += AddDownload_Click;
-            // 
-            // pictureBox55
-            // 
-            pictureBox55.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox55.Image = (Image)resources.GetObject("pictureBox55.Image");
-            pictureBox55.ImeMode = ImeMode.NoControl;
-            pictureBox55.Location = new Point(930, 443);
-            pictureBox55.Name = "pictureBox55";
-            pictureBox55.Size = new Size(203, 33);
-            pictureBox55.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox55.TabIndex = 576;
-            pictureBox55.TabStop = false;
+            HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
+            HealthFormSwap.ImeMode = ImeMode.NoControl;
+            HealthFormSwap.Location = new Point(852, 4);
+            HealthFormSwap.Name = "HealthFormSwap";
+            HealthFormSwap.Size = new Size(203, 33);
+            HealthFormSwap.TabIndex = 576;
+            HealthFormSwap.Text = "Health/Alerts";
+            HealthFormSwap.UseVisualStyleBackColor = true;
             // 
             // CamoForm
             // 
@@ -2504,9 +2474,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1134, 707);
-            Controls.Add(RemoveDownload);
-            Controls.Add(AddDownload);
-            Controls.Add(pictureBox55);
+            Controls.Add(HealthFormSwap);
             Controls.Add(pictureBox54);
             Controls.Add(RemoveBanana);
             Controls.Add(AddBanana);
@@ -2731,7 +2699,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox26).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox35).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox54).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox55).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2902,8 +2869,6 @@
         private Button AddBanana;
         private PictureBox pictureBox35;
         private PictureBox pictureBox54;
-        private Button RemoveDownload;
-        private Button AddDownload;
-        private PictureBox pictureBox55;
+        private Button HealthFormSwap;
     }
 }

@@ -119,7 +119,7 @@
             textBox28 = new TextBox();
             pictureBox25 = new PictureBox();
             textBox29 = new TextBox();
-            button3 = new Button();
+            ItemFormSwap = new Button();
             RemoveMonkey = new Button();
             AddMonkey = new Button();
             textBox7 = new TextBox();
@@ -172,7 +172,8 @@
             AddSutureKit = new Button();
             SutureKittextBox = new TextBox();
             pictureBox35 = new PictureBox();
-            button70 = new Button();
+            MiscFormSwap = new Button();
+            HealthFormSwap = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -259,11 +260,11 @@
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(237, 4);
+            WeaponFormSwap.Location = new Point(102, 4);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(203, 32);
             WeaponFormSwap.TabIndex = 312;
-            WeaponFormSwap.Text = "Switch to Weapons";
+            WeaponFormSwap.Text = "Weapons";
             WeaponFormSwap.UseVisualStyleBackColor = true;
             WeaponFormSwap.Click += WeaponFormSwap_Click;
             // 
@@ -1383,19 +1384,19 @@
             textBox29.TabIndex = 400;
             textBox29.TextAlign = HorizontalAlignment.Center;
             // 
-            // button3
+            // ItemFormSwap
             // 
-            button3.Cursor = Cursors.Hand;
-            button3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.ImeMode = ImeMode.NoControl;
-            button3.Location = new Point(466, 4);
-            button3.Name = "button3";
-            button3.Size = new Size(203, 32);
-            button3.TabIndex = 401;
-            button3.Text = "Switch to Camo";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            ItemFormSwap.Cursor = Cursors.Hand;
+            ItemFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ItemFormSwap.ImageAlign = ContentAlignment.TopCenter;
+            ItemFormSwap.ImeMode = ImeMode.NoControl;
+            ItemFormSwap.Location = new Point(331, 4);
+            ItemFormSwap.Name = "ItemFormSwap";
+            ItemFormSwap.Size = new Size(203, 32);
+            ItemFormSwap.TabIndex = 401;
+            ItemFormSwap.Text = "Camo";
+            ItemFormSwap.UseVisualStyleBackColor = true;
+            ItemFormSwap.Click += ItemFormSwap_Click;
             // 
             // RemoveMonkey
             // 
@@ -1989,27 +1990,42 @@
             pictureBox35.TabIndex = 463;
             pictureBox35.TabStop = false;
             // 
-            // button70
+            // MiscFormSwap
             // 
-            button70.Cursor = Cursors.Hand;
-            button70.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button70.ImageAlign = ContentAlignment.TopCenter;
-            button70.ImeMode = ImeMode.NoControl;
-            button70.Location = new Point(694, 4);
-            button70.Name = "button70";
-            button70.Size = new Size(203, 32);
-            button70.TabIndex = 478;
-            button70.Text = "Switch to Stats and Misc";
-            button70.UseVisualStyleBackColor = true;
-            button70.Click += button70_Click;
+            MiscFormSwap.Cursor = Cursors.Hand;
+            MiscFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            MiscFormSwap.ImageAlign = ContentAlignment.TopCenter;
+            MiscFormSwap.ImeMode = ImeMode.NoControl;
+            MiscFormSwap.Location = new Point(559, 4);
+            MiscFormSwap.Name = "MiscFormSwap";
+            MiscFormSwap.Size = new Size(203, 32);
+            MiscFormSwap.TabIndex = 478;
+            MiscFormSwap.Text = "Misc";
+            MiscFormSwap.UseVisualStyleBackColor = true;
+            MiscFormSwap.Click += MiscFormSwap_Click;
             // 
-            // Form2
+            // HealthFormSwap
+            // 
+            HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
+            HealthFormSwap.ImeMode = ImeMode.NoControl;
+            HealthFormSwap.Location = new Point(789, 4);
+            HealthFormSwap.Name = "HealthFormSwap";
+            HealthFormSwap.Size = new Size(203, 32);
+            HealthFormSwap.TabIndex = 479;
+            HealthFormSwap.Text = "Health/Alerts";
+            HealthFormSwap.UseVisualStyleBackColor = true;
+            HealthFormSwap.Click += HealthFormSwap_Click;
+            // 
+            // ItemForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
-            Controls.Add(button70);
+            Controls.Add(HealthFormSwap);
+            Controls.Add(MiscFormSwap);
             Controls.Add(textBox49);
             Controls.Add(AddSutureKit);
             Controls.Add(SutureKittextBox);
@@ -2062,7 +2078,7 @@
             Controls.Add(AddBandana);
             Controls.Add(textBox30);
             Controls.Add(pictureBox26);
-            Controls.Add(button3);
+            Controls.Add(ItemFormSwap);
             Controls.Add(textBox29);
             Controls.Add(RemoveKeyC);
             Controls.Add(AddKeyC);
@@ -2154,7 +2170,7 @@
             Controls.Add(LifeMedtextBox);
             Controls.Add(pictureBox7);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "Form2";
+            Name = "ItemForm";
             Text = "MGS3 Cheat Trainer - Items - ANTIBigBoss";
             Load += Form2_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
@@ -2287,7 +2303,7 @@
         private TextBox textBox28;
         private PictureBox pictureBox25;
         private TextBox textBox29;
-        private Button button3;
+        private Button ItemFormSwap;
         private Button RemoveMonkey;
         private Button AddMonkey;
         private TextBox textBox7;
@@ -2340,6 +2356,7 @@
         private Button AddSutureKit;
         private TextBox SutureKittextBox;
         private PictureBox pictureBox35;
-        private Button button70;
+        private Button MiscFormSwap;
+        private Button HealthFormSwap;
     }
 }

@@ -329,5 +329,12 @@ namespace MGS3_MC_Cheat_Trainer
             form4.Show();
             this.Hide();
         }
+
+        private void HealthFormSwap_Click(object sender, EventArgs e)
+        {
+            StatsAndAlertForm form5 = new();
+            form5.Show();
+            this.Hide();
+        }
     }
 }

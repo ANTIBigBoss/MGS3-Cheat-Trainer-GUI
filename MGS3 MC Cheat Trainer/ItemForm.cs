@@ -6,7 +6,7 @@ namespace MGS3_MC_Cheat_Trainer
 {
     public partial class ItemForm : Form
     {
-        
+
 
         //Navigation and closing logic functions
         public ItemForm()
@@ -15,24 +15,24 @@ namespace MGS3_MC_Cheat_Trainer
             this.FormClosing += new FormClosingEventHandler(Form2_FormClosing);
         }
 
-        private void WeaponFormSwap_Click(object sender, EventArgs e) // Form1
+        private void WeaponFormSwap_Click(object sender, EventArgs e) // Switch to weapons form
         {
-            WeaponForm form1 = new WeaponForm();
+            WeaponForm form1 = new();
             form1.Show();
             this.Hide();
         }
 
-        private void button3_Click(object sender, EventArgs e) // Form3
+        private void MiscFormSwap_Click(object sender, EventArgs e) // Load Misc form
         {
-            CamoForm form3 = new CamoForm();
-            form3.Show();
+            MiscForm form4 = new();
+            form4.Show();
             this.Hide();
         }
 
-        private void button70_Click(object sender, EventArgs e) // Load form4
+        private void HealthFormSwap_Click(object sender, EventArgs e) // Load Health and Alert form
         {
-            MiscForm form4 = new MiscForm();
-            form4.Show();
+            StatsAndAlertForm form5 = new();
+            form5.Show();
             this.Hide();
         }
 
@@ -47,7 +47,7 @@ namespace MGS3_MC_Cheat_Trainer
         private void Form2_Load(object sender, EventArgs e) // Accidently added this lmao
         {
 
-        }     
+        }
 
 
         private void AddLifeMed_Click(object sender, EventArgs e)
@@ -329,6 +329,13 @@ namespace MGS3_MC_Cheat_Trainer
         private void RemoveMonkey_Click(object sender, EventArgs e)
         {
             MemoryManager.ToggleItemState(MGS3UsableObjects.MonkeyMask, false);
+        }
+
+        private void ItemFormSwap_Click(object sender, EventArgs e)
+        {
+            CamoForm form3 = new();
+            form3.Show();
+            this.Hide();
         }
     }
 }

@@ -3949,13 +3949,13 @@
     <value>NoControl</value>
   </data>
   <data name="ItemFormSwap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>220, 4</value>
+    <value>78, 4</value>
   </data>
   <data name="ItemFormSwap.Size" type="System.Drawing.Size, System.Drawing">
     <value>203, 25</value>
   </data>
   <data name="ItemFormSwap.Text" xml:space="preserve">
-    <value>Switch to Items</value>
+    <value>Items</value>
   </data>
   <data name="button1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt, style=Bold</value>
@@ -3964,7 +3964,7 @@
     <value>NoControl</value>
   </data>
   <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>484, 4</value>
+    <value>342, 4</value>
   </data>
   <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>203, 25</value>
@@ -3973,7 +3973,7 @@
     <value>312</value>
   </data>
   <data name="button1.Text" xml:space="preserve">
-    <value>Switch to Camo</value>
+    <value>Camo</value>
   </data>
   <data name="button70.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 12pt, style=Bold</value>
@@ -3984,11 +3984,29 @@
   <data name="button70.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="button70.Location" type="System.Drawing.Point, System.Drawing">
+    <value>611, 4</value>
+  </data>
   <data name="button70.Size" type="System.Drawing.Size, System.Drawing">
     <value>203, 28</value>
   </data>
   <data name="button70.Text" xml:space="preserve">
-    <value>Switch to Stats and Misc</value>
+    <value>Misc</value>
+  </data>
+  <data name="HealthFormSwap.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt, style=Bold</value>
+  </data>
+  <data name="HealthFormSwap.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="HealthFormSwap.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="HealthFormSwap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 28</value>
+  </data>
+  <data name="HealthFormSwap.Text" xml:space="preserve">
+    <value>Health/Alerts</value>
   </data>
   <data name="$this.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

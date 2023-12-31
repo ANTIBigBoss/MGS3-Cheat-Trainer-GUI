@@ -12,14 +12,14 @@ namespace MGS3_MC_Cheat_Trainer
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form4_FormClosing);
-            // Timer stuff here for timer based effects
-            alertCheckTimer = new System.Windows.Forms.Timer();
-            alertCheckTimer.Interval = 1000; // 1 second interval
-            alertCheckTimer.Tick += new EventHandler(AlertCheckTimer_Tick_Tick);
 
-            CautionCheckTimer = new System.Windows.Forms.Timer();
-            CautionCheckTimer.Interval = 1000; // 1 second interval
-            CautionCheckTimer.Tick += new EventHandler(CautionCheckTimer_Tick);
+            // Range for the model manipulation
+            ModelSlider.Minimum = 0;
+            ModelSlider.Maximum = 255;
+            ModelSlider.Value = 40; // Default byte value and where the slider should start at
+
+            ChangeModelNumber.Click += new EventHandler(ChangeModelNumber_Click);
+            ModelSlider.Scroll += new EventHandler(ModelSlider_Scroll);
 
         }
 
@@ -53,16 +53,6 @@ namespace MGS3_MC_Cheat_Trainer
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
-        }
-
-        private void button3_Click(object sender, EventArgs e) // Alert Mode Trigger
-        {
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
-        }
-
-        private void button9_Click(object sender, EventArgs e) // Caution Mode Trigger
-        {
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
         }
 
         private void SnakeNapQuick_Click(object sender, EventArgs e)
@@ -125,102 +115,90 @@ namespace MGS3_MC_Cheat_Trainer
             MemoryManager.ChangeCamera((int)Constants.CameraOptions.UpsideDown);
         }
 
-        // Health and Stamina along with pointer logic
-        private void Plus100HpValue_Click(object sender, EventArgs e)
+        private void UpdateModelValueTextBox()
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 100);
+            // This method updates the text box with the current value of the slider
+            ModelCurrentValue.Text = ModelSlider.Value.ToString();
         }
 
-        private void Minus100HpValue_Click(object sender, EventArgs e)
+        private void ModelSlider_Scroll(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, -100);
+            // Update the model with the slider's current value
+            byte sliderValue = (byte)ModelSlider.Value;
+            MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, sliderValue);
+            // Update the text box to reflect the current slider value
+            UpdateModelValueTextBox();
         }
 
-        private void CurrentHpTo1_Click(object sender, EventArgs e)
+        private void ResetModelsToNormal_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 1, true);
+            MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, 40);
+
+            // Just so the user knows where the defult location of the slider should be since 0 isn't the default
+            ModelSlider.Value = 40;
+            UpdateModelValueTextBox();
         }
 
-        private void MaxHpTo1_Click(object sender, EventArgs e)
+        private void ChangeModelNumber_Click(object sender, EventArgs e)
         {
+            // Retrieve the value from the textbox
+            string textValue = ModelChangeValue.Text;
 
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, 1, true);
-        }
-
-        private void ZeroHP_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 0, true);
-        }
-
-        private void SetStaminaToZero_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 0, true);
-        }
-
-        // I thought 10000 was a bar at first but it's actually 7500 per bar 
-        // so this function name is misleading LOL will fix in V2
-        private void Plus10000StaminaValue_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 7500);
-        }
-
-        private void Minus10000StaminaValue_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, -7500);
-        }
-
-        private void FullStamina30000Value_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 30000, true);
-        }
-
-        private void Plus100MaxHpValue_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, 100);
-        }
-
-        private void Minus100MaxHpValue_Click(object sender, EventArgs e)
-        {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, -100);
-        }
-
-        private void InfiniteAlert_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if (checkBox != null && checkBox.Checked)
+            // Attempt to parse the value to an integer
+            if (int.TryParse(textValue, out int modelValue))
             {
-                // Trigger the alert and make a check every second to where the alert timer is at
-                MemoryManager.InfiniteStatus(Constants.AlertModes.Alert); 
-                alertCheckTimer.Start();
-            }
-            else // Unchecking the box will stop the timer and check
-            {
-                alertCheckTimer.Stop();
-            }
-        }
+                // Ensure the value is within the acceptable range
+                if (modelValue >= 0 && modelValue <= 255)
+                {
+                    // Call the ModifyModel function with the parsed value
+                    MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)modelValue);
 
-        private void AlertCheckTimer_Tick_Tick(object sender, EventArgs e)
-        {
-            MemoryManager.InfiniteStatus(Constants.AlertModes.Alert);
-        }
-
-        private void CautionCheckTimer_Tick(object sender, EventArgs e)
-        {
-            MemoryManager.InfiniteStatus(Constants.AlertModes.Caution);
-        }
-
-        private void InfiniteCaution_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if (checkBox != null && checkBox.Checked)
-            {
-                MemoryManager.InfiniteStatus(Constants.AlertModes.Caution);
-                CautionCheckTimer.Start();
+                    // Optionally, update the slider to reflect this value
+                    ModelSlider.Value = modelValue;
+                    UpdateModelValueTextBox();
+                }
+                else
+                {
+                    // Value is out of range, notify the user
+                    MessageBox.Show("Please enter a value between 0 and 255.");
+                }
             }
             else
             {
-                CautionCheckTimer.Stop();
+                // Value couldn't be parsed, notify the user
+                MessageBox.Show("Please enter a valid number.");
             }
+        }
+
+        private void Minus1ModelValue_Click(object sender, EventArgs e)
+        {
+            // Decrease the slider value by 1 if it's greater than the minimum
+            if (ModelSlider.Value > ModelSlider.Minimum)
+            {
+                ModelSlider.Value--;
+                MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)ModelSlider.Value);
+                // Update the text box to reflect the current slider value
+                UpdateModelValueTextBox();
+            }
+        }
+
+        private void Plus1ModelValue_Click(object sender, EventArgs e)
+        {
+            // Increase the slider value by 1 if it's less than the maximum
+            if (ModelSlider.Value < ModelSlider.Maximum)
+            {
+                ModelSlider.Value++;
+                MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)ModelSlider.Value);
+                // Update the text box to reflect the current slider value
+                UpdateModelValueTextBox();
+            }
+        }
+
+        private void HealthFormSwap_Click(object sender, EventArgs e)
+        {
+            StatsAndAlertForm form5 = new();
+            form5.Show();
+            this.Hide();
         }
     }
 }

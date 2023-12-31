@@ -47,7 +47,7 @@ namespace MGS3_MC_Cheat_Trainer
                 goes down 19 more addresses for the food items that in the backpack are 
                 also considered weapons 3 live (Caged) foods and 16 non-living foods 
                 */
-                const int StartingAddress = 0x1D4348C;
+                const int StartingAddress = 0x1D4C78C;
                 return (IntPtr)(StartingAddress + WeaponOffset * index);
 
             }
@@ -73,8 +73,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-
-
         public static class ItemAddresses
     {
         const int ItemOffset = 80; // The offset between items
@@ -83,7 +81,7 @@ namespace MGS3_MC_Cheat_Trainer
         public static IntPtr GetAddress(int index)
         {
             // Starting address for Life Medicine i.e first item in backpack
-            const int StartingAddress = 0x1D45D7C;
+            const int StartingAddress = 0x1D4F07C;
             return (IntPtr)(StartingAddress + ItemOffset * index);
             // For reference the last item is the USA face paint
         }
@@ -166,10 +164,9 @@ namespace MGS3_MC_Cheat_Trainer
         I think we are missing surpressor toggle which is 16 bytes after the main index
         */
         #region Weapons
-        public static readonly Weapon SurvivalKnife = new Weapon("Survival Knife", 0, false, false, false);
-        public static readonly Weapon Fork = new Weapon("Fork", 1, false, false, false);
-        public static readonly Weapon CigSpray = new Weapon("Cigspray", 2, true, false, false); // Has ammo but no clip or suppressor
-
+        public static readonly Weapon SurvivalKnife = new ("Survival Knife", 0, false, false, false);
+        public static readonly Weapon Fork = new ("Fork", 1, false, false, false);
+        public static readonly Weapon CigSpray = new ("Cigspray", 2, true, false, false); // Has ammo but no clip or suppressor
         public static readonly Weapon Handkerchief = new("Handkerchief", 3, true, false, false);
         public static readonly Weapon MK22 = new("MK22", 4, true, true, true); // I think missing MK22's suppressor toggle
         public static readonly Weapon M1911A1 = new("M1911A1", 5, true, true, true);

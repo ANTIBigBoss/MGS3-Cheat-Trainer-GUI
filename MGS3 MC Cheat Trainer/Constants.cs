@@ -34,24 +34,25 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         // Should go and find the float values for HUD and Camera for future use and make it a slider
-        public enum HudOptions
+        public enum HudOptions // 0xADB40F options
         {
             None = 0,
             Normal = 63,
             Shrunk = 64
         }
-        public enum CameraOptions
+        public enum CameraOptions // 0xAE3B37 options
         {
             Normal = 191,
             UpsideDown = 64
         }
-        public enum AlertModes
+        public enum AlertModes // 0x1D9C3D8 options
         {
+            Normal = 0,
             Alert = 16,
             Caution = 32,
             Evasion = 128 // Doesn't trigger evasion but this is the value for it
         }
-        public enum HealthType
+        public enum HealthType // Can probably use these enums for boss/eva's stats
         {
             CurrentHealth,
             MaxHealth,
@@ -60,13 +61,15 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
-        internal const int HealthPointerOffset = 0x00AE49D8;
+        internal const int HealthPointerOffset = 0x00AEC9D8;
         internal const int CurrentHealthOffset = 0x684;
         internal const int MaxHealthOffset = 0x686;
         internal const int StaminaOffset = 0xA4A;
-        internal static IntPtr HudOffset = (IntPtr)0xADB40F;
+        internal static IntPtr HudOffset = (IntPtr)0xAE345F;
         internal static IntPtr CamOffset = (IntPtr)0xAE3B37;
-        internal static IntPtr AlertStatusOffset = (IntPtr)0x1D9C3D8;
+        internal static IntPtr AlertStatusOffset = (IntPtr)0x1DA5848;
+
+        // Cobra Unit and Bosses Health and Stamina
 
 
         public class SnakeAnimation : BaseMGS3Status
@@ -83,34 +86,49 @@ namespace MGS3_MC_Cheat_Trainer
 
         public class MGS3SnakeAnimations
         {
-            public static readonly SnakeAnimation LongSleep = new("LongSleep", (IntPtr)0x1D4BCBA, 1);
-            public static readonly SnakeAnimation QuickSleep = new("QuickSleep", (IntPtr)0x1E2C0BB, 2);
-            public static readonly SnakeAnimation Puke = new("Puke", (IntPtr)0x1E2C0BC, 1);
-            public static readonly SnakeAnimation OnFire = new("OnFire", (IntPtr)0x1E2C0BC, 200);
-            public static readonly SnakeAnimation OnFirePuke = new("OnFirePuke", (IntPtr)0x1E2C0BC, 255);
-            public static readonly SnakeAnimation BunnyHop = new("BunnyHop", (IntPtr)0x1E2C0C8, 3);
-            public static readonly SnakeAnimation FakeDeath = new("FakeDeath", (IntPtr)0x1E2C0CA, 32);
+            public static readonly SnakeAnimation LongSleep = new("LongSleep", (IntPtr)0x1D54FBA, 1);
+            public static readonly SnakeAnimation QuickSleep = new("QuickSleep", (IntPtr)0x1E3552B, 2);
+            public static readonly SnakeAnimation Puke = new("Puke", (IntPtr)0x1E3552C, 1);
+            public static readonly SnakeAnimation OnFire = new("OnFire", (IntPtr)0x1E3552C, 200);
+            public static readonly SnakeAnimation OnFirePuke = new("OnFirePuke", (IntPtr)0x1E3552C, 255);
+            public static readonly SnakeAnimation BunnyHop = new("BunnyHop", (IntPtr)0x1E35538, 3);
+            public static readonly SnakeAnimation FakeDeath = new("FakeDeath", (IntPtr)0x1E3553A, 32);
+        }
+
+        public class MGS3Distortion : BaseMGS3Status
+        {
+            public IntPtr ModelManipulationOffset;
+            public byte Value { get; set; }
+
+            public MGS3Distortion(string name, IntPtr memoryOffset, byte value) : base(name, memoryOffset)
+            {
+                ModelManipulationOffset = memoryOffset;
+                Value = value;
+            }
+        }
+
+        public class MGS3DistortionEffects
+        { 
+            public static readonly MGS3Distortion Normal = new("Normal", (IntPtr)0x9E79F, 40);
         }
 
         public class MGS3AlertTimers : BaseMGS3Status
         {
             public IntPtr AlertTimerOffset;
-            public byte Value { get; set; }
+            public short Value { get; set; }
 
             public MGS3AlertTimers(string name, IntPtr memoryOffset) : base(name, memoryOffset)
             {
                 AlertTimerOffset = memoryOffset;
             }
         }
-        public class MGS3AlertModes
+        public class MGS3AlertModes 
         {
-            public static readonly MGS3AlertTimers Alert = new("Alert", (IntPtr)0x1D9C384);
-            public static readonly MGS3AlertTimers Evasion = new("Evasion", (IntPtr)0x1D9C39C);
-            public static readonly MGS3AlertTimers Caution = new("Caution", (IntPtr)0x1E36A5C);
-            
+            public static readonly MGS3AlertTimers Alert = new("Alert", (IntPtr)0x1DA57F4);
+            public static readonly MGS3AlertTimers Evasion = new("Evasion", (IntPtr)0x1DA580C);
+            // Caution is currently just a read only, writing to it has done nothing so far
+            // Might have a jank way to write to it with messing around twith the evasion timer
+            public static readonly MGS3AlertTimers Caution = new("Caution", (IntPtr)0x1DA57F8);
         }
-
-        
-        
     }
 }

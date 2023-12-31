@@ -28,28 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
             SnakePukes = new Button();
-            textBox12 = new TextBox();
-            textBox7 = new TextBox();
-            FullStamina30000Value = new Button();
-            SetStaminaToZero = new Button();
-            Minus10000StaminaValue = new Button();
-            Plus10000StaminaValue = new Button();
-            pictureBox2 = new PictureBox();
-            CurrentHpTo1 = new Button();
-            ZeroHP = new Button();
-            Minus100HpValue = new Button();
-            Plus100HpValue = new Button();
-            pictureBox1 = new PictureBox();
-            button3 = new Button();
             button1 = new Button();
             textBox29 = new TextBox();
             button2 = new Button();
             WeaponFormSwap = new Button();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
             textBox3 = new TextBox();
             textBox4 = new TextBox();
             NormalHUD = new Button();
@@ -63,17 +47,17 @@
             button12 = new Button();
             SnakePukeFire = new Button();
             button23 = new Button();
-            button9 = new Button();
-            Plus100MaxHpValue = new Button();
-            Minus100MaxHpValue = new Button();
-            MaxHpTo1 = new Button();
-            InfiniteAlert = new CheckBox();
-            AlertCheckTimer_Tick = new System.Windows.Forms.Timer(components);
-            InfiniteCaution = new CheckBox();
-            timer1 = new System.Windows.Forms.Timer(components);
-            CautionCheckTimer = new System.Windows.Forms.Timer(components);
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ModelSlider = new TrackBar();
+            textBox5 = new TextBox();
+            ResetModelsToNormal = new Button();
+            ModelChangeValue = new TextBox();
+            ChangeModelNumber = new Button();
+            Minus1ModelValue = new Button();
+            Plus1ModelValue = new Button();
+            ModelCurrentValue = new TextBox();
+            textBox8 = new TextBox();
+            HealthFormSwap = new Button();
+            ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             SuspendLayout();
             // 
             // SnakePukes
@@ -89,152 +73,13 @@
             SnakePukes.UseVisualStyleBackColor = true;
             SnakePukes.Click += SnakePukes_Click;
             // 
-            // textBox12
-            // 
-            textBox12.BackColor = SystemColors.ActiveCaptionText;
-            textBox12.BorderStyle = BorderStyle.None;
-            textBox12.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox12.ForeColor = SystemColors.ActiveCaptionText;
-            textBox12.Location = new Point(8, 432);
-            textBox12.Name = "textBox12";
-            textBox12.PlaceholderText = "Snake's Stamina Modifiers";
-            textBox12.ReadOnly = true;
-            textBox12.Size = new Size(264, 22);
-            textBox12.TabIndex = 178;
-            // 
-            // textBox7
-            // 
-            textBox7.BackColor = SystemColors.ActiveCaptionText;
-            textBox7.BorderStyle = BorderStyle.None;
-            textBox7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox7.ForeColor = SystemColors.ActiveCaptionText;
-            textBox7.Location = new Point(8, 153);
-            textBox7.Name = "textBox7";
-            textBox7.PlaceholderText = "Snake's Health Modifiers";
-            textBox7.ReadOnly = true;
-            textBox7.Size = new Size(264, 22);
-            textBox7.TabIndex = 177;
-            // 
-            // FullStamina30000Value
-            // 
-            FullStamina30000Value.Location = new Point(8, 537);
-            FullStamina30000Value.Name = "FullStamina30000Value";
-            FullStamina30000Value.Size = new Size(264, 24);
-            FullStamina30000Value.TabIndex = 176;
-            FullStamina30000Value.Text = "Fill Snake's Stamina to max";
-            FullStamina30000Value.UseVisualStyleBackColor = true;
-            FullStamina30000Value.Click += FullStamina30000Value_Click;
-            // 
-            // SetStaminaToZero
-            // 
-            SetStaminaToZero.Location = new Point(155, 453);
-            SetStaminaToZero.Name = "SetStaminaToZero";
-            SetStaminaToZero.Size = new Size(117, 24);
-            SetStaminaToZero.TabIndex = 175;
-            SetStaminaToZero.Text = "0 Stamina";
-            SetStaminaToZero.UseVisualStyleBackColor = true;
-            SetStaminaToZero.Click += SetStaminaToZero_Click;
-            // 
-            // Minus10000StaminaValue
-            // 
-            Minus10000StaminaValue.Location = new Point(8, 512);
-            Minus10000StaminaValue.Name = "Minus10000StaminaValue";
-            Minus10000StaminaValue.Size = new Size(264, 24);
-            Minus10000StaminaValue.TabIndex = 174;
-            Minus10000StaminaValue.Text = "Decrease Stamina by 100 (Max is 400)";
-            Minus10000StaminaValue.UseVisualStyleBackColor = true;
-            Minus10000StaminaValue.Click += Minus10000StaminaValue_Click;
-            // 
-            // Plus10000StaminaValue
-            // 
-            Plus10000StaminaValue.Location = new Point(8, 487);
-            Plus10000StaminaValue.Name = "Plus10000StaminaValue";
-            Plus10000StaminaValue.Size = new Size(264, 24);
-            Plus10000StaminaValue.TabIndex = 173;
-            Plus10000StaminaValue.Text = "Increase Stamina by 100 (Max is 400)";
-            Plus10000StaminaValue.UseVisualStyleBackColor = true;
-            Plus10000StaminaValue.Click += Plus10000StaminaValue_Click;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(8, 453);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(264, 32);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 172;
-            pictureBox2.TabStop = false;
-            // 
-            // CurrentHpTo1
-            // 
-            CurrentHpTo1.Location = new Point(8, 302);
-            CurrentHpTo1.Name = "CurrentHpTo1";
-            CurrentHpTo1.Size = new Size(264, 24);
-            CurrentHpTo1.TabIndex = 171;
-            CurrentHpTo1.Text = "Set Snake's Current HP to 1";
-            CurrentHpTo1.UseVisualStyleBackColor = true;
-            CurrentHpTo1.Click += CurrentHpTo1_Click;
-            // 
-            // ZeroHP
-            // 
-            ZeroHP.Location = new Point(155, 175);
-            ZeroHP.Name = "ZeroHP";
-            ZeroHP.Size = new Size(117, 24);
-            ZeroHP.TabIndex = 169;
-            ZeroHP.Text = "Kill Snake (0 HP)";
-            ZeroHP.UseVisualStyleBackColor = true;
-            ZeroHP.Click += ZeroHP_Click;
-            // 
-            // Minus100HpValue
-            // 
-            Minus100HpValue.Location = new Point(8, 231);
-            Minus100HpValue.Name = "Minus100HpValue";
-            Minus100HpValue.Size = new Size(264, 24);
-            Minus100HpValue.TabIndex = 168;
-            Minus100HpValue.Text = "Decrease Health by 100 (Default Max is 400)";
-            Minus100HpValue.UseVisualStyleBackColor = true;
-            Minus100HpValue.Click += Minus100HpValue_Click;
-            // 
-            // Plus100HpValue
-            // 
-            Plus100HpValue.Location = new Point(8, 208);
-            Plus100HpValue.Name = "Plus100HpValue";
-            Plus100HpValue.Size = new Size(264, 24);
-            Plus100HpValue.TabIndex = 167;
-            Plus100HpValue.Text = "Increase HP by 100 (Default Max is 400)";
-            Plus100HpValue.UseVisualStyleBackColor = true;
-            Plus100HpValue.Click += Plus100HpValue_Click;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(8, 175);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(264, 32);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 166;
-            pictureBox1.TabStop = false;
-            // 
-            // button3
-            // 
-            button3.Cursor = Cursors.Hand;
-            button3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.Location = new Point(335, 157);
-            button3.Name = "button3";
-            button3.Size = new Size(241, 50);
-            button3.TabIndex = 161;
-            button3.Text = "Alert On - Should work regardless of alert state";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
             // button1
             // 
             button1.Cursor = Cursors.Hand;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button1.ImageAlign = ContentAlignment.TopCenter;
             button1.ImeMode = ImeMode.NoControl;
-            button1.Location = new Point(710, 12);
+            button1.Location = new Point(598, 12);
             button1.Name = "button1";
             button1.Size = new Size(203, 32);
             button1.TabIndex = 481;
@@ -263,7 +108,7 @@
             button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button2.ImageAlign = ContentAlignment.TopCenter;
             button2.ImeMode = ImeMode.NoControl;
-            button2.Location = new Point(475, 12);
+            button2.Location = new Point(363, 12);
             button2.Name = "button2";
             button2.Size = new Size(203, 32);
             button2.TabIndex = 479;
@@ -277,43 +122,13 @@
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(248, 12);
+            WeaponFormSwap.Location = new Point(136, 12);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(203, 32);
             WeaponFormSwap.TabIndex = 478;
             WeaponFormSwap.Text = "Switch to Weapons";
             WeaponFormSwap.UseVisualStyleBackColor = true;
             WeaponFormSwap.Click += WeaponFormSwap_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.BackColor = SystemColors.ActiveCaptionText;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox1.ForeColor = SystemColors.ActiveCaptionText;
-            textBox1.Location = new Point(20, 117);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Snake's stats";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(241, 34);
-            textBox1.TabIndex = 482;
-            textBox1.TextAlign = HorizontalAlignment.Center;
-            // 
-            // textBox2
-            // 
-            textBox2.BackColor = SystemColors.ActiveCaptionText;
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox2.ForeColor = SystemColors.ActiveCaptionText;
-            textBox2.Location = new Point(335, 117);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.PlaceholderText = "Alert Statuses";
-            textBox2.ReadOnly = true;
-            textBox2.Size = new Size(241, 34);
-            textBox2.TabIndex = 483;
-            textBox2.TextAlign = HorizontalAlignment.Center;
             // 
             // textBox3
             // 
@@ -488,88 +303,125 @@
             button23.UseVisualStyleBackColor = true;
             button23.Click += button23_Click;
             // 
-            // button9
+            // ModelSlider
             // 
-            button9.Cursor = Cursors.Hand;
-            button9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button9.ImageAlign = ContentAlignment.TopCenter;
-            button9.Location = new Point(335, 209);
-            button9.Name = "button9";
-            button9.Size = new Size(241, 55);
-            button9.TabIndex = 497;
-            button9.Text = "Caution On - Doesn't Work during Alert or Evasion";
-            button9.UseVisualStyleBackColor = true;
-            button9.Click += button9_Click;
+            ModelSlider.Location = new Point(926, 602);
+            ModelSlider.Name = "ModelSlider";
+            ModelSlider.Size = new Size(181, 45);
+            ModelSlider.TabIndex = 504;
+            ModelSlider.Scroll += ModelSlider_Scroll;
             // 
-            // Plus100MaxHpValue
+            // textBox5
             // 
-            Plus100MaxHpValue.Location = new Point(8, 254);
-            Plus100MaxHpValue.Name = "Plus100MaxHpValue";
-            Plus100MaxHpValue.Size = new Size(264, 24);
-            Plus100MaxHpValue.TabIndex = 498;
-            Plus100MaxHpValue.Text = "Increase Max HP by 100";
-            Plus100MaxHpValue.UseVisualStyleBackColor = true;
-            Plus100MaxHpValue.Click += Plus100MaxHpValue_Click;
+            textBox5.BackColor = SystemColors.ActiveCaptionText;
+            textBox5.BorderStyle = BorderStyle.None;
+            textBox5.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox5.ForeColor = SystemColors.ActiveCaptionText;
+            textBox5.Location = new Point(885, 501);
+            textBox5.Multiline = true;
+            textBox5.Name = "textBox5";
+            textBox5.PlaceholderText = "Player/Enemy Models";
+            textBox5.ReadOnly = true;
+            textBox5.Size = new Size(260, 34);
+            textBox5.TabIndex = 505;
+            textBox5.TextAlign = HorizontalAlignment.Center;
             // 
-            // Minus100MaxHpValue
+            // ResetModelsToNormal
             // 
-            Minus100MaxHpValue.Location = new Point(8, 278);
-            Minus100MaxHpValue.Name = "Minus100MaxHpValue";
-            Minus100MaxHpValue.Size = new Size(264, 24);
-            Minus100MaxHpValue.TabIndex = 499;
-            Minus100MaxHpValue.Text = "Decrease Max Health by 100";
-            Minus100MaxHpValue.UseVisualStyleBackColor = true;
-            Minus100MaxHpValue.Click += Minus100MaxHpValue_Click;
+            ResetModelsToNormal.Cursor = Cursors.Hand;
+            ResetModelsToNormal.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            ResetModelsToNormal.ImageAlign = ContentAlignment.TopCenter;
+            ResetModelsToNormal.Location = new Point(885, 567);
+            ResetModelsToNormal.Name = "ResetModelsToNormal";
+            ResetModelsToNormal.Size = new Size(260, 29);
+            ResetModelsToNormal.TabIndex = 506;
+            ResetModelsToNormal.Text = "Normal Models (40)";
+            ResetModelsToNormal.UseVisualStyleBackColor = true;
+            ResetModelsToNormal.Click += ResetModelsToNormal_Click;
             // 
-            // MaxHpTo1
+            // ModelChangeValue
             // 
-            MaxHpTo1.Location = new Point(8, 326);
-            MaxHpTo1.Name = "MaxHpTo1";
-            MaxHpTo1.Size = new Size(264, 24);
-            MaxHpTo1.TabIndex = 501;
-            MaxHpTo1.Text = "Set Snake's Max HP to 1";
-            MaxHpTo1.UseVisualStyleBackColor = true;
-            MaxHpTo1.Click += MaxHpTo1_Click;
+            ModelChangeValue.Cursor = Cursors.IBeam;
+            ModelChangeValue.Location = new Point(886, 540);
+            ModelChangeValue.Name = "ModelChangeValue";
+            ModelChangeValue.Size = new Size(32, 23);
+            ModelChangeValue.TabIndex = 507;
             // 
-            // InfiniteAlert
+            // ChangeModelNumber
             // 
-            InfiniteAlert.AutoSize = true;
-            InfiniteAlert.Location = new Point(335, 271);
-            InfiniteAlert.MaximumSize = new Size(241, 55);
-            InfiniteAlert.MinimumSize = new Size(241, 55);
-            InfiniteAlert.Name = "InfiniteAlert";
-            InfiniteAlert.Size = new Size(241, 55);
-            InfiniteAlert.TabIndex = 502;
-            InfiniteAlert.Text = "Infinite Alert Mode (Checked is on, Unchecked is off)";
-            InfiniteAlert.UseVisualStyleBackColor = true;
-            InfiniteAlert.CheckedChanged += InfiniteAlert_CheckedChanged;
+            ChangeModelNumber.Cursor = Cursors.Hand;
+            ChangeModelNumber.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeModelNumber.ImageAlign = ContentAlignment.TopCenter;
+            ChangeModelNumber.Location = new Point(926, 536);
+            ChangeModelNumber.Name = "ChangeModelNumber";
+            ChangeModelNumber.Size = new Size(219, 29);
+            ChangeModelNumber.TabIndex = 508;
+            ChangeModelNumber.Text = "Change to this number";
+            ChangeModelNumber.UseVisualStyleBackColor = true;
+            ChangeModelNumber.Click += ChangeModelNumber_Click;
             // 
-            // AlertCheckTimer_Tick
+            // Minus1ModelValue
             // 
-            AlertCheckTimer_Tick.Interval = 1000;
-            AlertCheckTimer_Tick.Tick += AlertCheckTimer_Tick_Tick;
+            Minus1ModelValue.Cursor = Cursors.Hand;
+            Minus1ModelValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Minus1ModelValue.ImageAlign = ContentAlignment.TopCenter;
+            Minus1ModelValue.Location = new Point(885, 607);
+            Minus1ModelValue.Name = "Minus1ModelValue";
+            Minus1ModelValue.Size = new Size(37, 32);
+            Minus1ModelValue.TabIndex = 509;
+            Minus1ModelValue.Text = "- 1";
+            Minus1ModelValue.UseVisualStyleBackColor = true;
+            Minus1ModelValue.Click += Minus1ModelValue_Click;
             // 
-            // InfiniteCaution
+            // Plus1ModelValue
             // 
-            InfiniteCaution.AutoSize = true;
-            InfiniteCaution.Location = new Point(335, 339);
-            InfiniteCaution.MaximumSize = new Size(241, 55);
-            InfiniteCaution.MinimumSize = new Size(241, 55);
-            InfiniteCaution.Name = "InfiniteCaution";
-            InfiniteCaution.Size = new Size(241, 55);
-            InfiniteCaution.TabIndex = 503;
-            InfiniteCaution.Text = "Infinite Caution Mode (Checked is on, Unchecked is off) Alert and Evasion override this effect";
-            InfiniteCaution.UseVisualStyleBackColor = true;
-            InfiniteCaution.CheckedChanged += InfiniteCaution_CheckedChanged;
+            Plus1ModelValue.Cursor = Cursors.Hand;
+            Plus1ModelValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Plus1ModelValue.ImageAlign = ContentAlignment.TopCenter;
+            Plus1ModelValue.Location = new Point(1109, 607);
+            Plus1ModelValue.Name = "Plus1ModelValue";
+            Plus1ModelValue.Size = new Size(36, 32);
+            Plus1ModelValue.TabIndex = 510;
+            Plus1ModelValue.Text = "+ 1";
+            Plus1ModelValue.UseVisualStyleBackColor = true;
+            Plus1ModelValue.Click += Plus1ModelValue_Click;
             // 
-            // timer1
+            // ModelCurrentValue
             // 
-            timer1.Interval = 1000;
+            ModelCurrentValue.Cursor = Cursors.IBeam;
+            ModelCurrentValue.Location = new Point(1108, 653);
+            ModelCurrentValue.Name = "ModelCurrentValue";
+            ModelCurrentValue.Size = new Size(34, 23);
+            ModelCurrentValue.TabIndex = 511;
             // 
-            // CautionCheckTimer
+            // textBox8
             // 
-            CautionCheckTimer.Interval = 1000;
-            CautionCheckTimer.Tick += CautionCheckTimer_Tick;
+            textBox8.BackColor = SystemColors.ActiveCaptionText;
+            textBox8.BorderStyle = BorderStyle.None;
+            textBox8.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox8.ForeColor = SystemColors.ActiveCaptionText;
+            textBox8.Location = new Point(885, 648);
+            textBox8.Multiline = true;
+            textBox8.Name = "textBox8";
+            textBox8.PlaceholderText = "Current Model # value:";
+            textBox8.ReadOnly = true;
+            textBox8.Size = new Size(218, 33);
+            textBox8.TabIndex = 512;
+            textBox8.TextAlign = HorizontalAlignment.Center;
+            // 
+            // HealthFormSwap
+            // 
+            HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
+            HealthFormSwap.ImeMode = ImeMode.NoControl;
+            HealthFormSwap.Location = new Point(829, 12);
+            HealthFormSwap.Name = "HealthFormSwap";
+            HealthFormSwap.Size = new Size(203, 32);
+            HealthFormSwap.TabIndex = 513;
+            HealthFormSwap.Text = "Switch Health/Alerts";
+            HealthFormSwap.UseVisualStyleBackColor = true;
+            HealthFormSwap.Click += HealthFormSwap_Click;
             // 
             // MiscForm
             // 
@@ -577,12 +429,16 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
-            Controls.Add(InfiniteCaution);
-            Controls.Add(InfiniteAlert);
-            Controls.Add(MaxHpTo1);
-            Controls.Add(Minus100MaxHpValue);
-            Controls.Add(Plus100MaxHpValue);
-            Controls.Add(button9);
+            Controls.Add(HealthFormSwap);
+            Controls.Add(textBox8);
+            Controls.Add(ModelCurrentValue);
+            Controls.Add(Plus1ModelValue);
+            Controls.Add(Minus1ModelValue);
+            Controls.Add(ChangeModelNumber);
+            Controls.Add(ModelChangeValue);
+            Controls.Add(ResetModelsToNormal);
+            Controls.Add(textBox5);
+            Controls.Add(ModelSlider);
             Controls.Add(button23);
             Controls.Add(SnakePukeFire);
             Controls.Add(button12);
@@ -596,57 +452,26 @@
             Controls.Add(textBox4);
             Controls.Add(NormalHUD);
             Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
             Controls.Add(button1);
             Controls.Add(textBox29);
             Controls.Add(button2);
             Controls.Add(WeaponFormSwap);
             Controls.Add(SnakePukes);
-            Controls.Add(textBox12);
-            Controls.Add(textBox7);
-            Controls.Add(FullStamina30000Value);
-            Controls.Add(SetStaminaToZero);
-            Controls.Add(Minus10000StaminaValue);
-            Controls.Add(Plus10000StaminaValue);
-            Controls.Add(pictureBox2);
-            Controls.Add(CurrentHpTo1);
-            Controls.Add(ZeroHP);
-            Controls.Add(Minus100HpValue);
-            Controls.Add(Plus100HpValue);
-            Controls.Add(pictureBox1);
-            Controls.Add(button3);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
             Load += Form4_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private Button SnakePukes;
-        private TextBox textBox12;
-        private TextBox textBox7;
-        private Button FullStamina30000Value;
-        private Button SetStaminaToZero;
-        private Button Minus10000StaminaValue;
-        private Button Plus10000StaminaValue;
-        private PictureBox pictureBox2;
-        private Button CurrentHpTo1;
-        private Button ZeroHP;
-        private Button Minus100HpValue;
-        private Button Plus100HpValue;
-        private PictureBox pictureBox1;
-        private Button button3;
         private Button button1;
         private TextBox textBox29;
         private Button button2;
         private Button WeaponFormSwap;
-        private TextBox textBox1;
-        private TextBox textBox2;
         private TextBox textBox3;
         private TextBox textBox4;
         private Button NormalHUD;
@@ -660,14 +485,15 @@
         private Button button12;
         private Button SnakePukeFire;
         private Button button23;
-        private Button button9;
-        private Button Plus100MaxHpValue;
-        private Button Minus100MaxHpValue;
-        private Button MaxHpTo1;
-        private CheckBox InfiniteAlert;
-        private System.Windows.Forms.Timer AlertCheckTimer_Tick;
-        private CheckBox InfiniteCaution;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Timer CautionCheckTimer;
+        private TrackBar ModelSlider;
+        private TextBox textBox5;
+        private Button ResetModelsToNormal;
+        private TextBox ModelChangeValue;
+        private Button ChangeModelNumber;
+        private Button Minus1ModelValue;
+        private Button Plus1ModelValue;
+        private TextBox ModelCurrentValue;
+        private TextBox textBox8;
+        private Button HealthFormSwap;
     }
 }

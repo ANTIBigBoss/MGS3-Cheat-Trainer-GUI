@@ -57,37 +57,6 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Add(pointerAddress, (int)finalOffset);
         }
 
-        /* Experimental future functions to try and not have to refind the base address every time the game updates
-        Known base addresses: 7FF71CB30000, 
-        public static IntPtr SignatureScan(Process process, byte[] signature, string mask)
-        {
-            IntPtr baseAddress = process.MainModule.BaseAddress;
-            int processSize = process.MainModule.ModuleMemorySize;
-
-            for (int i = 0; i < processSize - signature.Length; i++)
-            {
-                byte[] buffer = new byte[signature.Length];
-                IntPtr address = IntPtr.Add(baseAddress, i);
-                ReadProcessMemory(process.Handle, address, buffer, buffer.Length, out _);
-
-                if (IsMatch(buffer, signature, mask))
-                    return address;
-            }
-
-            return IntPtr.Zero;
-        }
-
-        private static bool IsMatch(byte[] buffer, byte[] signature, string mask)
-        {
-            for (int i = 0; i < signature.Length; i++)
-            {
-                if (mask[i] == 'x' && buffer[i] != signature[i])
-                    return false;
-            }
-            return true;
-        }
-        */
-
         private static short GetShortFromString(string countString)
         {
             if (!short.TryParse(countString, out short countShort))
@@ -99,6 +68,8 @@ namespace MGS3_MC_Cheat_Trainer
             return countShort;
         }
 
+        /* This might need a rework to account for if the game is close while a checkbox is checked 
+        since it'll keep trying to find the process and throw an exception */
         private static Process GetMGS3Process()
         {
             Process? process = Process.GetProcessesByName(Constants.PROCESS_NAME).FirstOrDefault();
@@ -425,7 +396,11 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch
             {
-                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
+                /* Commenting out for now since if the game crashes you'll be stuck in MessageBox loop until you close 
+                the program with task manager since if the checkbox is checked it'll keep trying to find the process 
+                need to find a better way to handle this */
+                //MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
+                //return;
                 return;
             }
 
@@ -484,6 +459,314 @@ namespace MGS3_MC_Cheat_Trainer
             throw new IOException("Failed to read byte from memory.");
         }
 
+        internal static void ModifyModel(Constants.MGS3Distortion model, byte value)
+        {
+            Process process;
+
+            try
+            {
+                process = GetMGS3Process();
+            }
+            catch
+            {
+                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
+                return;
+            }
+
+            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
+            IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+            int bytesWritten;
+
+            byte[] buffer = new byte[] { value }; // Value to write
+            IntPtr targetAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)model.ModelManipulationOffset); // Adjusted to add base address
+
+            bool success = NativeMethods.WriteProcessMemory(processHandle, targetAddress, buffer, (uint)buffer.Length, out bytesWritten);
+
+            if (!success || bytesWritten != buffer.Length)
+            {
+                MessageBox.Show($"Failed to write memory for model {model.Name} with value {value}.");
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+        const int PROCESS_VM_READ = 0x0010;
+
+        internal static int GetAlertTimerValue()
+        {
+            try
+            {
+                Process process = GetMGS3Process();
+                IntPtr processHandle = NativeMethods.OpenProcess(PROCESS_VM_READ, false, process.Id);
+
+                IntPtr alertTimerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)MGS3AlertModes.Alert.AlertTimerOffset);
+
+                if (NativeMethods.ReadProcessMemory(processHandle, alertTimerAddress, out short alertTimerValue, sizeof(short), out int bytesRead) && bytesRead == sizeof(short))
+                {
+                    NativeMethods.CloseHandle(processHandle);
+                    Console.WriteLine($"Alert Timer Value: {alertTimerValue}"); // Logging the value for debugging
+                    return alertTimerValue; // Convert short to int
+                }
+                else
+                {
+                    throw new Exception("Failed to read alert timer value");
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1; // Return an error code or a default value
+            }
+        }
+
+        internal static int GetEvasionTimerValue()
+        {
+            try
+            {
+                Process process = GetMGS3Process();
+                IntPtr processHandle = NativeMethods.OpenProcess(PROCESS_VM_READ, false, process.Id);
+
+                IntPtr evasionTimerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)MGS3AlertModes.Evasion.AlertTimerOffset);
+
+                if (NativeMethods.ReadProcessMemory(processHandle, evasionTimerAddress, out short evasionTimerValue, sizeof(short), out int bytesRead) && bytesRead == sizeof(short))
+                {
+                    NativeMethods.CloseHandle(processHandle);
+                    Console.WriteLine($"Evasion Timer Value: {evasionTimerValue}"); // Logging the value for debugging
+                    return evasionTimerValue; // Convert short to int
+                }
+                else
+                {
+                    throw new Exception("Failed to read evasion timer value");
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1; // Return an error code or a default value
+            }
+        }
+
+        internal static int GetCautionTimerValue()
+        {
+            try
+            {
+                Process process = GetMGS3Process();
+                IntPtr processHandle = NativeMethods.OpenProcess(PROCESS_VM_READ, false, process.Id);
+
+                IntPtr cautionTimerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)MGS3AlertModes.Caution.AlertTimerOffset);
+
+                if (NativeMethods.ReadProcessMemory(processHandle, cautionTimerAddress, out short cautionTimerValue, sizeof(short), out int bytesRead) && bytesRead == sizeof(short))
+                {
+                    NativeMethods.CloseHandle(processHandle);
+                    Console.WriteLine($"Caution Timer Value: {cautionTimerValue}"); // Logging the value for debugging
+                    return cautionTimerValue; // Convert short to int
+                }
+                else
+                {
+                    throw new Exception("Failed to read caution timer value");
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1; // Return an error code or a default value
+            }
+        }
+
+        internal static Constants.AlertModes GetAlertStatus()
+        {
+            try
+            {
+                Process process = GetMGS3Process();
+                IntPtr processHandle = NativeMethods.OpenProcess(PROCESS_VM_READ, false, process.Id);
+
+                // Read the timer values for Alert, Evasion, and Caution
+                short alertTimerValue = ReadTimerValue(processHandle, Constants.MGS3AlertModes.Alert.AlertTimerOffset);
+                short evasionTimerValue = ReadTimerValue(processHandle, Constants.MGS3AlertModes.Evasion.AlertTimerOffset);
+                short cautionTimerValue = ReadTimerValue(processHandle, Constants.MGS3AlertModes.Caution.AlertTimerOffset);
+
+                NativeMethods.CloseHandle(processHandle);
+
+                // Determine which mode is active based on timer values
+                if (alertTimerValue > 0)
+                    return Constants.AlertModes.Alert;
+                else if (evasionTimerValue > 0)
+                    return Constants.AlertModes.Evasion;
+                else if (cautionTimerValue > 0)
+                    return Constants.AlertModes.Caution;
+                else
+                    return Constants.AlertModes.Normal; // Return 'Normal' when no timers are active
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, possibly return a default or error state
+                return Constants.AlertModes.Normal; // Return 'Normal' as a default
+            }
+        }
+
+        private static short ReadTimerValue(IntPtr processHandle, IntPtr timerOffset)
+        {
+            IntPtr timerAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)timerOffset);
+            if (NativeMethods.ReadProcessMemory(processHandle, timerAddress, out short timerValue, sizeof(short), out int bytesRead) && bytesRead == sizeof(short))
+            {
+                return timerValue;
+            }
+            else
+            {
+                throw new Exception("Failed to read timer value");
+            }
+        }
+
+        
+
+
+        private static short SetSpecificBits(short currentValue, int startBit, int endBit, int valueToSet)
+        {
+            int maskLength = endBit - startBit + 1;
+            int mask = ((1 << maskLength) - 1) << startBit;
+            return (short)((currentValue & ~mask) | ((valueToSet << startBit) & mask));
+        }
+
+        internal static void RemoveEvasionAndCaution()
+        {
+            try
+            {
+                Process process = GetMGS3Process();
+                IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+
+                // Use the AlertStatusOffset directly
+                IntPtr address = IntPtr.Add(process.MainModule.BaseAddress, (int)AlertStatusOffset);
+
+                // Read the current 16-bit value
+                byte[] buffer = new byte[2];
+                if (!NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
+                {
+                    MessageBox.Show("Failed to read current value.");
+                    return;
+                }
+
+                // Convert byte array to a 16-bit integer
+                short currentValue = BitConverter.ToInt16(buffer, 0);
+
+                // Modify the bits from Binary6 to 15 with the value 400
+                short modifiedValue = SetSpecificBits(currentValue, 6, 15, 400);
+
+                // Convert the modified value back to a byte array
+                byte[] newValueBytes = BitConverter.GetBytes(modifiedValue);
+
+                // Write the modified 16-bit value back
+                if (!NativeMethods.WriteProcessMemory(processHandle, address, newValueBytes, (uint)newValueBytes.Length, out _))
+                {
+                    MessageBox.Show("Failed to write new value to remove evasion and caution.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception occurred: {ex.Message}");
+            }
+        }
+
+        internal static void SetEvasionBits()
+        {
+            try
+            {
+                Process process = GetMGS3Process();
+                IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+
+                // Use the AlertStatusOffset directly
+                IntPtr address = IntPtr.Add(process.MainModule.BaseAddress, (int)AlertStatusOffset);
+
+                // Read the current 16-bit value
+                byte[] buffer = new byte[2];
+                if (!NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
+                {
+                    MessageBox.Show("Failed to read current value.");
+                    return;
+                }
+
+                // Convert byte array to a 16-bit integer
+                short currentValue = BitConverter.ToInt16(buffer, 0);
+
+                // Modify the bits from Binary5 to 14 with the value 596
+                short modifiedValue = SetSpecificBits(currentValue, 5, 14, 596);
+
+                // Convert the modified value back to a byte array
+                byte[] newValueBytes = BitConverter.GetBytes(modifiedValue);
+
+                // Write the modified 16-bit value back
+                if (!NativeMethods.WriteProcessMemory(processHandle, address, newValueBytes, (uint)newValueBytes.Length, out _))
+                {
+                    MessageBox.Show("Failed to write new evasion value.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception occurred: {ex.Message}");
+            }
+        }
+
+        internal static void FreezeEvasionTimer()
+        {
+            Process process;
+            try
+            {
+                process = GetMGS3Process();
+            }
+            catch
+            {
+                // Handle process not found
+                return;
+            }
+
+            IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+            IntPtr evasionTimerAddress = IntPtr.Add(process.MainModule.BaseAddress, (int)MGS3AlertModes.Evasion.AlertTimerOffset);
+
+            // Value to freeze the timer at 18000
+            short timerValue = 18000;
+            byte[] buffer = BitConverter.GetBytes(timerValue);
+
+            // Write the value
+            if (!NativeMethods.WriteProcessMemory(processHandle, evasionTimerAddress, buffer, (uint)buffer.Length, out _))
+            {
+                // Handle write failure
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
         #endregion
     }
 }
+
+
+
+/* Experimental future functions to try and not have to refind the base address every time the game updates
+        Known base addresses v 1.3.1: 7FF71CB30000, 7FF7407C0000, 7FF703180000 7FF753690000 
+        Known base addresses v 1.4.0: 7FF74C2F0000, 7FF61FA00000, 7FF7F9CB0000
+ */
+
+/*
+public static IntPtr SignatureScan(Process process, byte[] signature, string mask)
+{
+    IntPtr baseAddress = process.MainModule.BaseAddress;
+    int processSize = process.MainModule.ModuleMemorySize;
+
+    for (int i = 0; i < processSize - signature.Length; i++)
+    {
+        byte[] buffer = new byte[signature.Length];
+        IntPtr address = IntPtr.Add(baseAddress, i);
+        ReadProcessMemory(process.Handle, address, buffer, buffer.Length, out _);
+
+        if (IsMatch(buffer, signature, mask))
+            return address;
+    }
+
+    return IntPtr.Zero;
+}
+
+private static bool IsMatch(byte[] buffer, byte[] signature, string mask)
+{
+    for (int i = 0; i < signature.Length; i++)
+    {
+        if (mask[i] == 'x' && buffer[i] != signature[i])
+            return false;
+    }
+    return true;
+}
+*/

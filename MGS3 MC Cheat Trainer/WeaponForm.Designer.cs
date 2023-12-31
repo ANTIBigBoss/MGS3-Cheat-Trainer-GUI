@@ -182,6 +182,7 @@
             ItemFormSwap = new Button();
             button1 = new Button();
             button70 = new Button();
+            HealthFormSwap = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
@@ -1331,11 +1332,20 @@
             button70.UseVisualStyleBackColor = true;
             button70.Click += button70_Click;
             // 
-            // Form1
+            // HealthFormSwap
+            // 
+            resources.ApplyResources(HealthFormSwap, "HealthFormSwap");
+            HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.Name = "HealthFormSwap";
+            HealthFormSwap.UseVisualStyleBackColor = true;
+            HealthFormSwap.Click += HealthFormSwap_Click;
+            // 
+            // WeaponForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
+            Controls.Add(HealthFormSwap);
             Controls.Add(button70);
             Controls.Add(button1);
             Controls.Add(ItemFormSwap);
@@ -1491,7 +1501,7 @@
             Controls.Add(XM16E1TextBox);
             DoubleBuffered = true;
             MaximizeBox = false;
-            Name = "Form1";
+            Name = "WeaponForm";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
@@ -1681,5 +1691,6 @@
         private Button ItemFormSwap;
         private Button button1;
         private Button button70;
+        private Button HealthFormSwap;
     }
 }
