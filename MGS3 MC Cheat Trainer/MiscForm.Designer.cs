@@ -57,6 +57,10 @@
             ModelCurrentValue = new TextBox();
             textBox8 = new TextBox();
             HealthFormSwap = new Button();
+            button3 = new Button();
+            button4 = new Button();
+            button5 = new Button();
+            button6 = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             SuspendLayout();
             // 
@@ -335,7 +339,7 @@
             ResetModelsToNormal.Name = "ResetModelsToNormal";
             ResetModelsToNormal.Size = new Size(260, 29);
             ResetModelsToNormal.TabIndex = 506;
-            ResetModelsToNormal.Text = "Normal Models (40)";
+            ResetModelsToNormal.Text = "Normal Models (80)";
             ResetModelsToNormal.UseVisualStyleBackColor = true;
             ResetModelsToNormal.Click += ResetModelsToNormal_Click;
             // 
@@ -423,12 +427,68 @@
             HealthFormSwap.UseVisualStyleBackColor = true;
             HealthFormSwap.Click += HealthFormSwap_Click;
             // 
+            // button3
+            // 
+            button3.Cursor = Cursors.Hand;
+            button3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button3.ImageAlign = ContentAlignment.TopCenter;
+            button3.Location = new Point(115, 117);
+            button3.Name = "button3";
+            button3.Size = new Size(241, 29);
+            button3.TabIndex = 514;
+            button3.Text = "Testing";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button4
+            // 
+            button4.Cursor = Cursors.Hand;
+            button4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button4.ImageAlign = ContentAlignment.TopCenter;
+            button4.Location = new Point(115, 152);
+            button4.Name = "button4";
+            button4.Size = new Size(241, 29);
+            button4.TabIndex = 515;
+            button4.Text = "Testing";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // button5
+            // 
+            button5.Cursor = Cursors.Hand;
+            button5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button5.ImageAlign = ContentAlignment.TopCenter;
+            button5.Location = new Point(115, 187);
+            button5.Name = "button5";
+            button5.Size = new Size(241, 29);
+            button5.TabIndex = 516;
+            button5.Text = "Testing";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // button6
+            // 
+            button6.Cursor = Cursors.Hand;
+            button6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button6.ImageAlign = ContentAlignment.TopCenter;
+            button6.Location = new Point(115, 222);
+            button6.Name = "button6";
+            button6.Size = new Size(241, 29);
+            button6.TabIndex = 517;
+            button6.Text = "Testing";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(button6);
+            Controls.Add(button5);
+            Controls.Add(button4);
+            Controls.Add(button3);
             Controls.Add(HealthFormSwap);
             Controls.Add(textBox8);
             Controls.Add(ModelCurrentValue);
@@ -495,5 +555,9 @@
         private TextBox ModelCurrentValue;
         private TextBox textBox8;
         private Button HealthFormSwap;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        private Button button6;
     }
 }

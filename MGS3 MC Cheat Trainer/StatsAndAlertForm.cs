@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -76,85 +66,85 @@ namespace MGS3_MC_Cheat_Trainer
         // Health and Stamina along with pointer logic
         private void Plus100HpValue_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 100);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 100);
         }
 
         private void Minus100HpValue_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, -100);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, -100);
         }
 
         private void CurrentHpTo1_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 1, true);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 1, true);
         }
 
         private void MaxHpTo1_Click(object sender, EventArgs e)
         {
 
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, 1, true);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, 1, true);
         }
 
         private void ZeroHP_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 0, true);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.CurrentHealth, 0, true);
         }
 
         private void SetStaminaToZero_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 0, true);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 0, true);
         }
 
         // I thought 10000 was a bar at first but it's actually 7500 per bar 
         // so this function name is misleading LOL will fix in V2
         private void Plus10000StaminaValue_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 7500);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 7500);
         }
 
         private void Minus10000StaminaValue_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, -7500);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, -7500);
         }
 
         private void FullStamina30000Value_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 30000, true);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.Stamina, 30000, true);
         }
 
         private void Plus100MaxHpValue_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, 100);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, 100);
         }
 
         private void Minus100MaxHpValue_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, -100);
+            MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, -100);
         }
 
         private void button3_Click(object sender, EventArgs e) // Alert Mode Trigger
         {
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
+            AlertManager.TriggerAlert(AlertModes.Alert);
         }
         private async void EvasionButton_Click(object sender, EventArgs e) // Evasion Mode Trigger
         {
-            // Roundabout way of triggering evasion mode start by triggering caution
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
+            // Step 1: Trigger caution mode
+            AlertManager.TriggerAlert(AlertModes.Caution);
 
             await Task.Delay(3000);
 
-            //Step 2 modify the bit value to 596 at Binary:5 -> 14 according to Cheat Engine
-            MemoryManager.SetEvasionBits();
+            // Step 2: Modify the evasion bits
+            AlertManager.TriggerAlert(AlertModes.Evasion);
 
             await Task.Delay(750);
 
-            // Step 3 Trigger an alert that seems to end instantly and now we have a hacky evasion mode LOL
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
+            // Step 3: Trigger alert mode
+            AlertManager.TriggerAlert(AlertModes.Alert);
         }
 
         private void button9_Click(object sender, EventArgs e) // Caution Mode Trigger
         {
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
+            AlertManager.TriggerAlert(AlertModes.Caution);
         }
 
         private void InfiniteAlert_CheckedChanged(object sender, EventArgs e)
@@ -163,7 +153,7 @@ namespace MGS3_MC_Cheat_Trainer
             if (checkBox != null && checkBox.Checked)
             {
                 // Trigger the alert and make a check every second to where the alert timer is at
-                MemoryManager.InfiniteStatus(Constants.AlertModes.Alert);
+                AlertManager.InfiniteStatus(Constants.AlertModes.Alert);
                 AlertTimer.Start();
             }
             else // Unchecking the box will stop the timer and check
@@ -175,10 +165,10 @@ namespace MGS3_MC_Cheat_Trainer
         private void AlertCheckTimer_Tick(object sender, EventArgs e)
         {
             // This will re-trigger the alert mode and keep the alert status active.
-            MemoryManager.InfiniteStatus(Constants.AlertModes.Alert);
+            AlertManager.InfiniteStatus(Constants.AlertModes.Alert);
 
             // Update the progress bar with the current alert timer value
-            int alertTimerValue = MemoryManager.GetAlertTimerValue();
+            int alertTimerValue = AlertManager.GetAlertTimerValue();
             if (alertTimerValue >= 0)
             {
                 UpdateProgressBar(AlertProgressBar, alertTimerValue);
@@ -192,9 +182,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void CautionCheckTimer_Tick(object sender, EventArgs e)
         {
-            MemoryManager.InfiniteStatus(Constants.AlertModes.Caution);
+            AlertManager.InfiniteStatus(Constants.AlertModes.Caution);
             // Update the progress bar with the current caution timer value from InfiniteStatus
-            int cautionTimerValue = MemoryManager.GetCautionTimerValue();
+            int cautionTimerValue = AlertManager.GetCautionTimerValue();
             if (cautionTimerValue >= 0)
             {
                 UpdateProgressBar(CautionProgressBar, cautionTimerValue);
@@ -235,21 +225,21 @@ namespace MGS3_MC_Cheat_Trainer
 
         private async Task TriggerEvasionLogic()
         {
-            int CautionTimerValue = MemoryManager.GetCautionTimerValue();
+            int CautionTimerValue = AlertManager.GetCautionTimerValue();
 
             if (CautionTimerValue != 0)
             {
-                MemoryManager.RemoveEvasionAndCaution();
+                AlertManager.RemoveEvasionAndCaution();
                 await Task.Delay(2000); // Clear out caution
             }
 
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
+            AlertManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
             await Task.Delay(3000);
 
-            MemoryManager.SetEvasionBits();
+            AlertManager.SetEvasionBits();
             await Task.Delay(1750);
 
-            MemoryManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
+            AlertManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
         }
 
         private void InfiniteCaution_CheckedChanged(object sender, EventArgs e)
@@ -257,7 +247,7 @@ namespace MGS3_MC_Cheat_Trainer
             CheckBox checkBox = sender as CheckBox;
             if ((checkBox != null && checkBox.Checked))
             {
-                MemoryManager.InfiniteStatus(Constants.AlertModes.Caution);
+                AlertManager.InfiniteStatus(Constants.AlertModes.Caution);
                 CautionTimer.Start();
             }
             else
@@ -294,12 +284,12 @@ namespace MGS3_MC_Cheat_Trainer
         private void ContinuousMonitoringTimer_Tick(object sender, EventArgs e)
         {
             // Check the current alert status
-            var currentAlertStatus = MemoryManager.GetAlertStatus();
+            var currentAlertStatus = AlertManager.GetAlertStatus();
 
             // Handle the Alert mode and update the progress bar accordingly
             if (currentAlertStatus == Constants.AlertModes.Alert)
             {
-                int alertTimerValue = MemoryManager.GetAlertTimerValue();
+                int alertTimerValue = AlertManager.GetAlertTimerValue();
                 if (alertTimerValue >= 0)
                 {
                     UpdateProgressBar(AlertProgressBar, alertTimerValue);
@@ -315,7 +305,7 @@ namespace MGS3_MC_Cheat_Trainer
             // Example for Evasion mode
             if (currentAlertStatus == Constants.AlertModes.Evasion)
             {
-                int evasionTimerValue = MemoryManager.GetEvasionTimerValue();
+                int evasionTimerValue = AlertManager.GetEvasionTimerValue();
                 if (evasionTimerValue >= 0)
                 {
                     UpdateProgressBar(EvasionProgressBar, evasionTimerValue);
@@ -329,7 +319,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (currentAlertStatus == Constants.AlertModes.Caution)
             {
-                int cautionTimerValue = MemoryManager.GetCautionTimerValue();
+                int cautionTimerValue = AlertManager.GetCautionTimerValue();
                 if (cautionTimerValue >= 0)
                 {
                     UpdateProgressBar(CautionProgressBar, cautionTimerValue);
@@ -344,16 +334,17 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ClearCautionAndEvasion_Click(object sender, EventArgs e)
         {
-            MemoryManager.RemoveEvasionAndCaution();
+            AlertManager.RemoveEvasionAndCaution();
         }
 
         /* Here but don't think I'll use it since it sort of just freezes guards in placeat a heightened 
            alert status and the don't keep looking for you sadly atm I might attach to a 
            freeze timer checkbox maybe in the future */
-        private void FreezeEvasionTimer_Tick(object sender, EventArgs e)
+        private void FreezeEvasionTimer_Tick(object sender, EventArgs e) 
         {
+            // Should reuse this for infinite alert however since it works better than what I got for infinite alert atm
             FreezeEvasionTimer.Interval = 1000;
-            FreezeEvasionTimer.Tick += (sender, args) => MemoryManager.FreezeEvasionTimer();
+            FreezeEvasionTimer.Tick += (sender, args) => AlertManager.FreezeAlertTimer();
             FreezeEvasionTimer.Start();
         }
 
@@ -380,7 +371,75 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MiscFormSwap_Click(object sender, EventArgs e)
         {
-
+            MiscForm f4 = new MiscForm();
+            f4.Show();
+            this.Hide();
         }
+
+        private void BurnInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.SevereBurns);
+        }
+
+        private void CutInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.DeepCut);
+        }
+
+        private void GunshotRifleInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.GunshotWoundRifle);
+        }
+
+        private void GunshotShotgunInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.GunshotWoundShotgun);
+        }
+
+        private void BoneFractureInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.BoneFracture);
+        }
+
+        private void BulletBeeInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.BulletBee);
+        }
+
+        private void LeechesInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.Leeches);
+        }
+
+        private void ArrowInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.ArrowWound);
+        }
+
+        private void TranqInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.TranqDart);
+        }
+
+        private void VenomPoisoningInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.Poisoned);
+        }
+
+        private void FoodPoisoningInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.FoodPoisoning);
+        }
+
+        private void CommonColdInjury_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.ApplyInjury(Constants.InjuryType.Cold);
+        }
+
+        private void RemoveInjuries_Click(object sender, EventArgs e)
+        {
+            MainPointerManager.RemoveAllInjuries();
+        }
+
     }
 }

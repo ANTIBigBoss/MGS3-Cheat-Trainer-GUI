@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Buffers;
+using System.Diagnostics;
+using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -6,8 +8,7 @@ namespace MGS3_MC_Cheat_Trainer
     {
         IntPtr processHandle; // Ensure this is correctly initialized
         private System.Windows.Forms.Timer alertCheckTimer;
-
-
+        private MemoryManager memoryManager;
         public MiscForm()
         {
             InitializeComponent();
@@ -17,10 +18,9 @@ namespace MGS3_MC_Cheat_Trainer
             ModelSlider.Minimum = 0;
             ModelSlider.Maximum = 255;
             ModelSlider.Value = 40; // Default byte value and where the slider should start at
-
+            memoryManager = new MemoryManager();
             ChangeModelNumber.Click += new EventHandler(ChangeModelNumber_Click);
             ModelSlider.Scroll += new EventHandler(ModelSlider_Scroll);
-
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -57,62 +57,62 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SnakeNapQuick_Click(object sender, EventArgs e)
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.QuickSleep);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.QuickSleep);
         }
 
         private void SnakeLongNap_Click(object sender, EventArgs e)
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.LongSleep);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.LongSleep);
         }
 
         private void SnakeFakesDeath_Click(object sender, EventArgs e)
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.FakeDeath);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.FakeDeath);
         }
 
         private void SnakePukes_Click(object sender, EventArgs e)
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.Puke);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.Puke);
         }
 
         private void button12_Click(object sender, EventArgs e) // Snake on fire
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.OnFire);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.OnFire);
         }
 
         private void SnakePukeFire_Click(object sender, EventArgs e)
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.OnFirePuke);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.OnFirePuke);
         }
 
         private void button23_Click(object sender, EventArgs e) // Bunny hop
         {
-            MemoryManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.BunnyHop);
+            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.BunnyHop);
         }
 
         private void NormalHUD_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeHud((int)Constants.HudOptions.Normal);
+            ModelManager.ChangeHud((int)Constants.HudOptions.Normal);
         }
 
         private void ShrinkHUD_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeHud((int)Constants.HudOptions.Shrunk);
+            ModelManager.ChangeHud((int)Constants.HudOptions.Shrunk);
         }
 
         private void NoHUD_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeHud((int)Constants.HudOptions.None);
+            ModelManager.ChangeHud((int)Constants.HudOptions.None);
         }
 
         private void NormalCam_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeCamera((int)Constants.CameraOptions.Normal);
+            ModelManager.ChangeCamera((int)Constants.CameraOptions.Normal);
         }
 
         private void UpsideDownCam_Click(object sender, EventArgs e)
         {
-            MemoryManager.ChangeCamera((int)Constants.CameraOptions.UpsideDown);
+            ModelManager.ChangeCamera((int)Constants.CameraOptions.UpsideDown);
         }
 
         private void UpdateModelValueTextBox()
@@ -125,17 +125,17 @@ namespace MGS3_MC_Cheat_Trainer
         {
             // Update the model with the slider's current value
             byte sliderValue = (byte)ModelSlider.Value;
-            MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, sliderValue);
+            ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, sliderValue);
             // Update the text box to reflect the current slider value
             UpdateModelValueTextBox();
         }
 
         private void ResetModelsToNormal_Click(object sender, EventArgs e)
         {
-            MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, 40);
+            ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, 80);
 
             // Just so the user knows where the defult location of the slider should be since 0 isn't the default
-            ModelSlider.Value = 40;
+            ModelSlider.Value = 80;
             UpdateModelValueTextBox();
         }
 
@@ -151,7 +151,7 @@ namespace MGS3_MC_Cheat_Trainer
                 if (modelValue >= 0 && modelValue <= 255)
                 {
                     // Call the ModifyModel function with the parsed value
-                    MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)modelValue);
+                    ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)modelValue);
 
                     // Optionally, update the slider to reflect this value
                     ModelSlider.Value = modelValue;
@@ -176,7 +176,7 @@ namespace MGS3_MC_Cheat_Trainer
             if (ModelSlider.Value > ModelSlider.Minimum)
             {
                 ModelSlider.Value--;
-                MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)ModelSlider.Value);
+                ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)ModelSlider.Value);
                 // Update the text box to reflect the current slider value
                 UpdateModelValueTextBox();
             }
@@ -188,7 +188,7 @@ namespace MGS3_MC_Cheat_Trainer
             if (ModelSlider.Value < ModelSlider.Maximum)
             {
                 ModelSlider.Value++;
-                MemoryManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)ModelSlider.Value);
+                ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, (byte)ModelSlider.Value);
                 // Update the text box to reflect the current slider value
                 UpdateModelValueTextBox();
             }
@@ -200,5 +200,56 @@ namespace MGS3_MC_Cheat_Trainer
             form5.Show();
             this.Hide();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            AlertManager.TriggerAlert(AlertModes.Alert);
+        }
+
+
+        async private void button4_Click(object sender, EventArgs e)
+        {
+            // Step 1: Trigger caution mode
+            AlertManager.TriggerAlert(AlertModes.Caution);
+
+            await Task.Delay(3000);
+
+            // Step 2: Modify the evasion bits
+            AlertManager.TriggerAlert(AlertModes.Evasion);
+
+            await Task.Delay(750);
+
+            // Step 3: Trigger alert mode
+            AlertManager.TriggerAlert(AlertModes.Alert);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            AlertManager.TriggerAlert(AlertModes.Caution);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MemoryManager memoryManager = new MemoryManager();
+            var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
+            var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
+
+            IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
+            if (alertMemoryRegion == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to find alert memory region.");
+                return;
+            }
+
+            short alertTimerValue = AlertManager.ReadAlertTimerValue(alertMemoryRegion);
+            short evasionTimerValue = AlertManager.ReadEvasionTimerValue(alertMemoryRegion);
+            short cautionTimerValue = AlertManager.ReadCautionTimerValue(alertMemoryRegion);
+
+
+            MessageBox.Show($"Alert Timer: {alertTimerValue}, \nEvasion Timer: {evasionTimerValue}, \nCaution Timer: {cautionTimerValue}");
+        }
+
+
+
     }
 }

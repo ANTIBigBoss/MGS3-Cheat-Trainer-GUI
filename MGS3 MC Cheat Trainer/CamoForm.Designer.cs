@@ -2467,6 +2467,7 @@
             HealthFormSwap.TabIndex = 576;
             HealthFormSwap.Text = "Health/Alerts";
             HealthFormSwap.UseVisualStyleBackColor = true;
+            HealthFormSwap.Click += HealthFormSwap_Click;
             // 
             // CamoForm
             // 
