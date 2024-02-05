@@ -4,40 +4,29 @@ namespace MGS3_MC_Cheat_Trainer
 {
     public partial class StatsAndAlertForm : Form
     {
+        private bool infiniteAlertCheckboxState;
+        private bool infiniteEvasionCheckboxState;
+        private bool infiniteCautionCheckboxState;
+
         public StatsAndAlertForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(StatsAndAlertForm_FormClosing);
 
-            // Initialize and set timer intervals
-            AlertTimer = new System.Windows.Forms.Timer
-            {
-                Interval = 1000 // 1 second interval for maintaining alert status
-            };
-            AlertTimer.Tick += new EventHandler(AlertCheckTimer_Tick);
-
-            CautionTimer = new System.Windows.Forms.Timer
-            {
-                Interval = 1000 // 1 second interval for maintaining caution status
-            };
-            CautionTimer.Tick += new EventHandler(CautionCheckTimer_Tick);
-
-            continuousMonitoringTimer = new System.Windows.Forms.Timer
-            {
-                Interval = 50 // Interval in milliseconds, adjust as needed
-            };
-            continuousMonitoringTimer.Tick += new EventHandler(ContinuousMonitoringTimer_Tick);
-
-            continuousMonitoringTimer.Start(); // Start the timer
-
-            InfiniteEvasionTimer = new System.Windows.Forms.Timer
-            {
-                Interval = 38000 // 1 second interval for maintaining evasion status
-            };
-
-            InfiniteEvasionTimer.Tick += new EventHandler(InfiniteEvasionTimer_Tick);
+            // Optionally, re-apply effects when form is shown or focused
+            this.FormClosing += new FormClosingEventHandler(StatsAndAlertForm_FormClosing);
 
             InitializeProgressBars();
+
+            // Set the initial checkbox state based on the infiniteAlertEnabled variable
+            InfiniteAlert.Checked = AlertManager.IsInfiniteAlertEnabled;
+            InfiniteEvasion.Checked = AlertManager.IsInfiniteEvasionEnabled;
+            InfiniteCaution.Checked = AlertManager.IsInfiniteCautionEnabled;
+
+            // Update the class-level variable with the checkbox state
+            infiniteAlertCheckboxState = InfiniteAlert.Checked;
+            infiniteAlertCheckboxState = InfiniteEvasion.Checked;
+            infiniteAlertCheckboxState = InfiniteCaution.Checked;
         }
 
         private void InitializeProgressBars()
@@ -62,7 +51,36 @@ namespace MGS3_MC_Cheat_Trainer
         {
             Application.Exit();
         }
+        #region Form Swaps
+        private void WeaponFormSwap_Click(object sender, EventArgs e)
+        {
+            WeaponForm form1 = new();
+            form1.Show();
+            this.Hide();
+        }
 
+        private void HealthFormSwap_Click(object sender, EventArgs e) // Item form misname
+        {
+            ItemForm f2 = new ItemForm();
+            f2.Show();
+            this.Hide();
+        }
+
+        private void CamoFormSwap_Click(object sender, EventArgs e)
+        {
+            ItemForm f3 = new ItemForm();
+            f3.Show();
+            this.Hide();
+        }
+
+        private void MiscFormSwap_Click(object sender, EventArgs e)
+        {
+            MiscForm f4 = new MiscForm();
+            f4.Show();
+            this.Hide();
+        }
+        #endregion
+        #region Snake's Health and Stamina
         // Health and Stamina along with pointer logic
         private void Plus100HpValue_Click(object sender, EventArgs e)
         {
@@ -121,140 +139,145 @@ namespace MGS3_MC_Cheat_Trainer
         {
             MainPointerManager.ModifyHealthOrStamina(Constants.HealthType.MaxHealth, -100);
         }
+        #endregion
 
+        #region Alert Statuses
         private void button3_Click(object sender, EventArgs e) // Alert Mode Trigger
         {
             AlertManager.TriggerAlert(AlertModes.Alert);
         }
-        private async void EvasionButton_Click(object sender, EventArgs e) // Evasion Mode Trigger
+
+        // This was my workaround fix to stop a double message box from showing when the user tries to check more than one infinite alert mode
+        private bool suppressAlertMessages = false;
+
+        private void InfiniteAlert_CheckedChanged(object sender, EventArgs e)
         {
-            // Step 1: Trigger caution mode
-            AlertManager.TriggerAlert(AlertModes.Caution);
+            // If suppressAlertMessages is true, return without further processing
+            if (suppressAlertMessages)
+            {
+                return;
+            }
 
-            await Task.Delay(3000);
+            if (InfiniteEvasion.Checked)
+            {
+                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                InfiniteAlert.Checked = false;
+                MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Evasion Mode to use this.");
+                suppressAlertMessages = false; // Allow messages to be shown again
+            }
+            else if (InfiniteCaution.Checked)
+            {
+                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                InfiniteAlert.Checked = false;
+                MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Caution Mode to use this.");
+                suppressAlertMessages = false; // Allow messages to be shown again
+            }
+            else
+            {
+                // Update the class-level variable with the checkbox state
+                infiniteAlertCheckboxState = InfiniteAlert.Checked;
 
-            // Step 2: Modify the evasion bits
-            AlertManager.TriggerAlert(AlertModes.Evasion);
+                // Check if the checkbox is checked
+                if (InfiniteAlert.Checked)
+                {
+                    AlertManager.TriggerAlert(AlertModes.Alert);
+                    // Start the alert timer when the checkbox is checked
+                    AlertManager.ToggleInfiniteAlert(true);
+                }
+                else
+                {
+                    // Stop the alert timer when the checkbox is unchecked
+                    AlertManager.ToggleInfiniteAlert(false);
+                }
+            }
+        }
 
-            await Task.Delay(750);
 
-            // Step 3: Trigger alert mode
-            AlertManager.TriggerAlert(AlertModes.Alert);
+        private void InfiniteCaution_CheckedChanged(object sender, EventArgs e)
+        {
+            if (suppressAlertMessages)
+            {
+                return;
+            }
+
+            if (InfiniteEvasion.Checked)
+            {
+                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                InfiniteCaution.Checked = false;
+                MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Evasion Mode to use this.");
+                suppressAlertMessages = false; // Allow messages to be shown again
+            }
+            else if (InfiniteAlert.Checked)
+            {
+                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                InfiniteCaution.Checked = false;
+                MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Alert Mode to use this.");
+                suppressAlertMessages = false; // Allow messages to be shown again
+            }
+            else
+            {
+                AlertManager.ToggleInfiniteCaution(InfiniteCaution.Checked);
+            }
+        }
+
+        private void EvasionButton_Click(object sender, EventArgs e)
+        {
+            // First, find the alert memory region to read the timer values
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            if (alertMemoryRegion == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to find alert memory region.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Read current alert and evasion timer values
+            short alertTimerValue = AlertManager.ReadAlertTimerValue(alertMemoryRegion);
+            short evasionTimerValue = AlertManager.ReadEvasionTimerValue(alertMemoryRegion);
+
+            // Check if either alert or evasion timer indicates an ongoing state
+            if (alertTimerValue > 0 || evasionTimerValue > 0)
+            {
+                MessageBox.Show("Evasion cannot be triggered during active alert or evasion state.", "Action Blocked", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Safe to trigger the evasion sequence
+                AlertManager.StartEvasionSequence();
+            }
+        }
+
+        private void InfiniteEvasion_CheckedChanged(object sender, EventArgs e)
+        {
+            // If suppressAlertMessages is true, return without further processing
+            if (suppressAlertMessages)
+            {
+                return;
+            }
+
+            if (InfiniteAlert.Checked)
+            {
+                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                InfiniteEvasion.Checked = false;
+                MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Alert Mode to use this.");
+                suppressAlertMessages = false; // Allow messages to be shown again
+            }
+            else if (InfiniteCaution.Checked)
+            {
+                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                InfiniteEvasion.Checked = false;
+                MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Caution Mode to use this.");
+                suppressAlertMessages = false; // Allow messages to be shown again
+            }
+            else
+            {
+                AlertManager.ToggleInfiniteEvasion(InfiniteEvasion.Checked);
+            }
         }
 
         private void button9_Click(object sender, EventArgs e) // Caution Mode Trigger
         {
             AlertManager.TriggerAlert(AlertModes.Caution);
-        }
-
-        private void InfiniteAlert_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if (checkBox != null && checkBox.Checked)
-            {
-                // Trigger the alert and make a check every second to where the alert timer is at
-                AlertManager.InfiniteStatus(Constants.AlertModes.Alert);
-                AlertTimer.Start();
-            }
-            else // Unchecking the box will stop the timer and check
-            {
-                AlertTimer.Stop();
-            }
-        }
-
-        private void AlertCheckTimer_Tick(object sender, EventArgs e)
-        {
-            // This will re-trigger the alert mode and keep the alert status active.
-            AlertManager.InfiniteStatus(Constants.AlertModes.Alert);
-
-            // Update the progress bar with the current alert timer value
-            int alertTimerValue = AlertManager.GetAlertTimerValue();
-            if (alertTimerValue >= 0)
-            {
-                UpdateProgressBar(AlertProgressBar, alertTimerValue);
-            }
-            else
-            {
-                // Handle the error case
-                Console.WriteLine("Error reading alert timer value.");
-            }
-        }
-
-        private void CautionCheckTimer_Tick(object sender, EventArgs e)
-        {
-            AlertManager.InfiniteStatus(Constants.AlertModes.Caution);
-            // Update the progress bar with the current caution timer value from InfiniteStatus
-            int cautionTimerValue = AlertManager.GetCautionTimerValue();
-            if (cautionTimerValue >= 0)
-            {
-                UpdateProgressBar(CautionProgressBar, cautionTimerValue);
-            }
-            else
-            {
-                // Handle the error case
-                Console.WriteLine("Error reading caution timer value.");
-            }
-        }
-
-        private async void InfiniteEvasion_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if (checkBox != null)
-            {
-                if (checkBox.Checked)
-                {
-                    // Immediately trigger the evasion logic when checkbox is checked
-                    await TriggerEvasionLogic();
-
-                    // Set timer for subsequent evasion triggers
-                    InfiniteEvasionTimer.Interval = 38000; // 38 seconds
-                    InfiniteEvasionTimer.Start();
-                }
-                else
-                {
-                    InfiniteEvasionTimer.Stop();
-                }
-            }
-        }
-
-        private async void InfiniteEvasionTimer_Tick(object sender, EventArgs e)
-        {
-            // Evasion logic triggered every 38 seconds after the first execution
-            await TriggerEvasionLogic();
-        }
-
-        private async Task TriggerEvasionLogic()
-        {
-            int CautionTimerValue = AlertManager.GetCautionTimerValue();
-
-            if (CautionTimerValue != 0)
-            {
-                AlertManager.RemoveEvasionAndCaution();
-                await Task.Delay(2000); // Clear out caution
-            }
-
-            AlertManager.ChangeAlertMode((int)Constants.AlertModes.Caution);
-            await Task.Delay(3000);
-
-            AlertManager.SetEvasionBits();
-            await Task.Delay(1750);
-
-            AlertManager.ChangeAlertMode((int)Constants.AlertModes.Alert);
-        }
-
-        private void InfiniteCaution_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
-            if ((checkBox != null && checkBox.Checked))
-            {
-                AlertManager.InfiniteStatus(Constants.AlertModes.Caution);
-                CautionTimer.Start();
-            }
-            else
-            {
-                CautionTimer.Stop();
-            }
-        }
+        }       
 
         /* Have the progress bar parse the value of the MGS3AlertTimers for Alert, Evasion and Caution 
          then the checkbox will freeze the progress bar value until we uncheck it the the memory value
@@ -280,102 +303,47 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // This function will update the progress bars every 50 ms
         private void ContinuousMonitoringTimer_Tick(object sender, EventArgs e)
         {
-            // Check the current alert status
-            var currentAlertStatus = AlertManager.GetAlertStatus();
-
-            // Handle the Alert mode and update the progress bar accordingly
-            if (currentAlertStatus == Constants.AlertModes.Alert)
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            if (alertMemoryRegion == IntPtr.Zero)
             {
-                int alertTimerValue = AlertManager.GetAlertTimerValue();
-                if (alertTimerValue >= 0)
-                {
-                    UpdateProgressBar(AlertProgressBar, alertTimerValue);
-                }
-            }
-            else
-            {
-                // If not in Alert mode, reset the Alert progress bar to zero
-                UpdateProgressBar(AlertProgressBar, 0);
+                Console.WriteLine("Error: Alert memory region not found.");
+                return;
             }
 
-            // Add similar logic for Caution and Evasion if needed
-            // Example for Evasion mode
-            if (currentAlertStatus == Constants.AlertModes.Evasion)
-            {
-                int evasionTimerValue = AlertManager.GetEvasionTimerValue();
-                if (evasionTimerValue >= 0)
-                {
-                    UpdateProgressBar(EvasionProgressBar, evasionTimerValue);
-                }
-            }
-            else
-            {
-                // If not in Evasion mode, reset the Evasion progress bar to zero
-                UpdateProgressBar(EvasionProgressBar, 0);
-            }
+            // Read the timer values
+            short alertTimerValue = AlertManager.ReadAlertTimerValue(alertMemoryRegion);
+            short evasionTimerValue = AlertManager.ReadEvasionTimerValue(alertMemoryRegion);
+            short cautionTimerValue = AlertManager.ReadCautionTimerValue(alertMemoryRegion);
 
-            if (currentAlertStatus == Constants.AlertModes.Caution)
+            // Safely update the progress bars on the UI thread otherwise enjoy lag city
+            this.Invoke((MethodInvoker)delegate
             {
-                int cautionTimerValue = AlertManager.GetCautionTimerValue();
-                if (cautionTimerValue >= 0)
-                {
-                    UpdateProgressBar(CautionProgressBar, cautionTimerValue);
-                }
-            }
-            else
-            {
-                // If not in Caution mode, reset the Caution progress bar to zero
-                UpdateProgressBar(CautionProgressBar, 0);
-            }
+                UpdateProgressBar(AlertProgressBar, alertTimerValue);
+                UpdateProgressBar(EvasionProgressBar, evasionTimerValue);
+                UpdateProgressBar(CautionProgressBar, cautionTimerValue);
+            });
         }
+
+        private void UpdateProgressBar(ProgressBar progressBar, int newValue)
+        {
+            if (newValue < progressBar.Minimum) newValue = progressBar.Minimum;
+            if (newValue > progressBar.Maximum) newValue = progressBar.Maximum;
+
+            progressBar.Value = newValue;
+        }
+
 
         private void ClearCautionAndEvasion_Click(object sender, EventArgs e)
         {
             AlertManager.RemoveEvasionAndCaution();
         }
 
-        /* Here but don't think I'll use it since it sort of just freezes guards in placeat a heightened 
-           alert status and the don't keep looking for you sadly atm I might attach to a 
-           freeze timer checkbox maybe in the future */
-        private void FreezeEvasionTimer_Tick(object sender, EventArgs e) 
-        {
-            // Should reuse this for infinite alert however since it works better than what I got for infinite alert atm
-            FreezeEvasionTimer.Interval = 1000;
-            FreezeEvasionTimer.Tick += (sender, args) => AlertManager.FreezeAlertTimer();
-            FreezeEvasionTimer.Start();
-        }
+        #endregion
 
-        private void WeaponFormSwap_Click(object sender, EventArgs e)
-        {
-            WeaponForm form1 = new();
-            form1.Show();
-            this.Hide();
-        }
 
-        private void HealthFormSwap_Click(object sender, EventArgs e) // Item form misname
-        {
-            ItemForm f2 = new ItemForm();
-            f2.Show();
-            this.Hide();
-        }
-
-        private void CamoFormSwap_Click(object sender, EventArgs e)
-        {
-            ItemForm f3 = new ItemForm();
-            f3.Show();
-            this.Hide();
-        }
-
-        private void MiscFormSwap_Click(object sender, EventArgs e)
-        {
-            MiscForm f4 = new MiscForm();
-            f4.Show();
-            this.Hide();
-        }
-
+        #region Snake's Serious Injuries
         private void BurnInjury_Click(object sender, EventArgs e)
         {
             MainPointerManager.ApplyInjury(Constants.InjuryType.SevereBurns);
@@ -440,6 +408,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             MainPointerManager.RemoveAllInjuries();
         }
+        #endregion
 
     }
 }

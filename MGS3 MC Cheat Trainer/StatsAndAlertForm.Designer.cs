@@ -32,7 +32,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatsAndAlertForm));
             MaxHpTo1 = new Button();
             Minus100MaxHpValue = new Button();
@@ -51,12 +50,9 @@
             CautionButton = new Button();
             textBox2 = new TextBox();
             AlertButton = new Button();
-            AlertTimer = new System.Windows.Forms.Timer(components);
-            CautionTimer = new System.Windows.Forms.Timer(components);
             AlertProgressBar = new ColouredProgressBar();
             EvasionProgressBar = new ColouredProgressBar();
             CautionProgressBar = new ColouredProgressBar();
-            continuousMonitoringTimer = new System.Windows.Forms.Timer(components);
             pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
             pictureBox5 = new PictureBox();
@@ -66,9 +62,7 @@
             MiscFormSwap = new Button();
             CamoFormSwap = new Button();
             WeaponFormSwap = new Button();
-            InfiniteEvasionTimer = new System.Windows.Forms.Timer(components);
             ClearCautionAndEvasion = new Button();
-            FreezeEvasionTimer = new System.Windows.Forms.Timer(components);
             textBox3 = new TextBox();
             BurnInjury = new Button();
             CutInjury = new Button();
@@ -291,14 +285,6 @@
             AlertButton.UseVisualStyleBackColor = true;
             AlertButton.Click += button3_Click;
             // 
-            // AlertTimer
-            // 
-            AlertTimer.Interval = 1000;
-            // 
-            // CautionTimer
-            // 
-            CautionTimer.Interval = 1000;
-            // 
             // AlertProgressBar
             // 
             AlertProgressBar.Location = new Point(861, 132);
@@ -322,10 +308,6 @@
             CautionProgressBar.ProgressBarColour = Color.Yellow;
             CautionProgressBar.Size = new Size(239, 23);
             CautionProgressBar.TabIndex = 0;
-            // 
-            // continuousMonitoringTimer
-            // 
-            continuousMonitoringTimer.Interval = 500;
             // 
             // pictureBox3
             // 
@@ -439,11 +421,6 @@
             WeaponFormSwap.UseVisualStyleBackColor = true;
             WeaponFormSwap.Click += WeaponFormSwap_Click;
             // 
-            // InfiniteEvasionTimer
-            // 
-            InfiniteEvasionTimer.Interval = 1000;
-            InfiniteEvasionTimer.Tick += InfiniteEvasionTimer_Tick;
-            // 
             // ClearCautionAndEvasion
             // 
             ClearCautionAndEvasion.Cursor = Cursors.Hand;
@@ -456,10 +433,6 @@
             ClearCautionAndEvasion.Text = "Remove Evasion/Caution State";
             ClearCautionAndEvasion.UseVisualStyleBackColor = true;
             ClearCautionAndEvasion.Click += ClearCautionAndEvasion_Click;
-            // 
-            // FreezeEvasionTimer
-            // 
-            FreezeEvasionTimer.Tick += FreezeEvasionTimer_Tick;
             // 
             // textBox3
             // 
@@ -723,9 +696,6 @@
         private Button CautionButton;
         private TextBox textBox2;
         private Button AlertButton;
-        private System.Windows.Forms.Timer AlertTimer;
-        private System.Windows.Forms.Timer CautionTimer;
-        private System.Windows.Forms.Timer continuousMonitoringTimer;
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
         private PictureBox pictureBox5;
@@ -735,9 +705,7 @@
         private Button MiscFormSwap;
         private Button CamoFormSwap;
         private Button WeaponFormSwap;
-        private System.Windows.Forms.Timer InfiniteEvasionTimer;
         private Button ClearCautionAndEvasion;
-        private System.Windows.Forms.Timer FreezeEvasionTimer;
         private TextBox textBox3;
         private Button BurnInjury;
         private Button CutInjury;

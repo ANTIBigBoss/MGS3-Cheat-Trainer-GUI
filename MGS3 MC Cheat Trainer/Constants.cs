@@ -81,6 +81,13 @@ namespace MGS3_MC_Cheat_Trainer
                 "xx xx xx xx xx xx xx xx xx xx xx xx"
                 )
             },
+            
+            {
+                "TheFearAOB", // 02 00 F0 49 02 00
+                (new byte[] { 0x02, 0x00, 0xF0, 0x49, 0x02, 0x00 },
+                "xx xx xx xx xx xx")
+            },
+
         };
 
 
@@ -180,6 +187,7 @@ namespace MGS3_MC_Cheat_Trainer
             public const int AlertTrigger = 64; // This is what our enum uses to trigger the alert 84 might be the offset??
         }
         
+        // Remove once AOBs fully implemented
         public class MGS3AlertTimers : BaseMGS3Status
         {
             public IntPtr AlertTimerOffset;

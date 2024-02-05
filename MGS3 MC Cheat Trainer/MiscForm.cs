@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Diagnostics;
+using System.Text;
 using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -121,13 +122,14 @@ namespace MGS3_MC_Cheat_Trainer
             ModelCurrentValue.Text = ModelSlider.Value.ToString();
         }
 
+        // Broken from v1.4.1 update
         private void ModelSlider_Scroll(object sender, EventArgs e)
         {
             // Update the model with the slider's current value
-            byte sliderValue = (byte)ModelSlider.Value;
-            ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, sliderValue);
+            //byte sliderValue = (byte)ModelSlider.Value;
+            //ModelManager.ModifyModel(Constants.MGS3DistortionEffects.Normal, sliderValue);
             // Update the text box to reflect the current slider value
-            UpdateModelValueTextBox();
+            //UpdateModelValueTextBox();
         }
 
         private void ResetModelsToNormal_Click(object sender, EventArgs e)
@@ -203,31 +205,29 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button3_Click(object sender, EventArgs e)
         {
-            AlertManager.TriggerAlert(AlertModes.Alert);
+            if (MemoryManager.Instance.FindAndStoreTheFearAOB())
+            {
+                MessageBox.Show($"TheFear AOB found at: 0x{MemoryManager.Instance.FoundTheFearAddress.ToInt64():X}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("TheFear AOB not found.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-
-        async private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            // Step 1: Trigger caution mode
-            AlertManager.TriggerAlert(AlertModes.Caution);
-
-            await Task.Delay(3000);
-
-            // Step 2: Modify the evasion bits
-            AlertManager.TriggerAlert(AlertModes.Evasion);
-
-            await Task.Delay(750);
-
-            // Step 3: Trigger alert mode
-            AlertManager.TriggerAlert(AlertModes.Alert);
+            BossManager.WriteTheFearHealth(0x0100); // Writing example health value
+            MessageBox.Show("Health value written.", "Health Write", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            AlertManager.TriggerAlert(AlertModes.Caution);
+            BossManager.WriteTheFearStamina(0x0100); // Writing example stamina value
+            MessageBox.Show("Stamina value written.", "Stamina Write", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // This was more of a debug button to see the values of the alert timers so I could determine the offsets of the timers
         private void button6_Click(object sender, EventArgs e)
         {
             MemoryManager memoryManager = new MemoryManager();
@@ -245,11 +245,19 @@ namespace MGS3_MC_Cheat_Trainer
             short evasionTimerValue = AlertManager.ReadEvasionTimerValue(alertMemoryRegion);
             short cautionTimerValue = AlertManager.ReadCautionTimerValue(alertMemoryRegion);
 
-
             MessageBox.Show($"Alert Timer: {alertTimerValue}, \nEvasion Timer: {evasionTimerValue}, \nCaution Timer: {cautionTimerValue}");
         }
 
-
+        private void button10_Click(object sender, EventArgs e)
+        {
+            /* 
+            Broke somehow lol
+            List<short> sequence = BossManager.ReadShortSequenceBeforeTheFearAOB(10, 1); // Example: Read 5 shorts starting 20 bytes before the AOB
+                                                                                         // Display the sequence for debugging
+            string sequenceDisplay = string.Join("\n", sequence);
+            MessageBox.Show(sequenceDisplay, "Debug Sequence", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            */
+        }
 
     }
 }

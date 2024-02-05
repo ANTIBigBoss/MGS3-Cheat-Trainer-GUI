@@ -186,7 +186,6 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
-
         public bool IsMatch(byte[] buffer, int position, byte[] pattern, string mask)
         {
             for (int i = 0; i < pattern.Length; i++)
@@ -395,5 +394,41 @@ namespace MGS3_MC_Cheat_Trainer
             MessageBox.Show("Pattern not found in specified range.");
             return IntPtr.Zero;
         }
+        
+        public IntPtr FoundTheFearAddress { get; private set; } = IntPtr.Zero;
+
+        public bool FindAndStoreTheFearAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["TheFearAOB"];
+            IntPtr startAddress = new IntPtr(0x22AFFFF0000); // Example start range
+            IntPtr endAddress = new IntPtr(0x23B00000000); // Example end range
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundTheFearAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

@@ -61,6 +61,10 @@
             button4 = new Button();
             button5 = new Button();
             button6 = new Button();
+            button7 = new Button();
+            button8 = new Button();
+            button9 = new Button();
+            button10 = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             SuspendLayout();
             // 
@@ -462,7 +466,7 @@
             button5.Name = "button5";
             button5.Size = new Size(241, 29);
             button5.TabIndex = 516;
-            button5.Text = "Testing";
+            button5.Text = "WriteTheFearStamina";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
@@ -475,9 +479,58 @@
             button6.Name = "button6";
             button6.Size = new Size(241, 29);
             button6.TabIndex = 517;
-            button6.Text = "Testing";
+            button6.Text = "WriteTheFearHealth";
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
+            // 
+            // button7
+            // 
+            button7.Cursor = Cursors.Hand;
+            button7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button7.ImageAlign = ContentAlignment.TopCenter;
+            button7.Location = new Point(115, 362);
+            button7.Name = "button7";
+            button7.Size = new Size(241, 29);
+            button7.TabIndex = 521;
+            button7.Text = "Testing";
+            button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            button8.Cursor = Cursors.Hand;
+            button8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button8.ImageAlign = ContentAlignment.TopCenter;
+            button8.Location = new Point(115, 327);
+            button8.Name = "button8";
+            button8.Size = new Size(241, 29);
+            button8.TabIndex = 520;
+            button8.Text = "Testing";
+            button8.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            button9.Cursor = Cursors.Hand;
+            button9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button9.ImageAlign = ContentAlignment.TopCenter;
+            button9.Location = new Point(115, 292);
+            button9.Name = "button9";
+            button9.Size = new Size(241, 29);
+            button9.TabIndex = 519;
+            button9.Text = "Testing";
+            button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            button10.Cursor = Cursors.Hand;
+            button10.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button10.ImageAlign = ContentAlignment.TopCenter;
+            button10.Location = new Point(115, 257);
+            button10.Name = "button10";
+            button10.Size = new Size(241, 29);
+            button10.TabIndex = 518;
+            button10.Text = "Testing";
+            button10.UseVisualStyleBackColor = true;
+            button10.Click += button10_Click;
             // 
             // MiscForm
             // 
@@ -485,6 +538,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(button7);
+            Controls.Add(button8);
+            Controls.Add(button9);
+            Controls.Add(button10);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(button4);
@@ -559,5 +616,9 @@
         private Button button4;
         private Button button5;
         private Button button6;
+        private Button button7;
+        private Button button8;
+        private Button button9;
+        private Button button10;
     }
 }
