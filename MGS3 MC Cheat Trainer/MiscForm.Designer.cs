@@ -65,6 +65,7 @@
             button8 = new Button();
             button9 = new Button();
             button10 = new Button();
+            button11 = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             SuspendLayout();
             // 
@@ -83,11 +84,13 @@
             // 
             // button1
             // 
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
             button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button1.ImageAlign = ContentAlignment.TopCenter;
             button1.ImeMode = ImeMode.NoControl;
-            button1.Location = new Point(598, 12);
+            button1.Location = new Point(487, 12);
             button1.Name = "button1";
             button1.Size = new Size(203, 32);
             button1.TabIndex = 481;
@@ -101,22 +104,24 @@
             textBox29.BorderStyle = BorderStyle.None;
             textBox29.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             textBox29.ForeColor = SystemColors.ActiveCaptionText;
-            textBox29.Location = new Point(20, 63);
+            textBox29.Location = new Point(20, 64);
             textBox29.Multiline = true;
             textBox29.Name = "textBox29";
-            textBox29.PlaceholderText = "Random things for fun (Warning may crash game) - Will add more in future updates Share any finding with ANTIBigBoss on Discord";
+            textBox29.PlaceholderText = "Random things for fun (Warning may crash game) - Will add more in future updates share any findings with ANTIBigBoss on Discord";
             textBox29.ReadOnly = true;
-            textBox29.Size = new Size(1125, 31);
+            textBox29.Size = new Size(1125, 30);
             textBox29.TabIndex = 480;
             textBox29.TextAlign = HorizontalAlignment.Center;
             // 
             // button2
             // 
+            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
             button2.Cursor = Cursors.Hand;
+            button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button2.ImageAlign = ContentAlignment.TopCenter;
             button2.ImeMode = ImeMode.NoControl;
-            button2.Location = new Point(363, 12);
+            button2.Location = new Point(255, 12);
             button2.Name = "button2";
             button2.Size = new Size(203, 32);
             button2.TabIndex = 479;
@@ -126,11 +131,13 @@
             // 
             // WeaponFormSwap
             // 
+            WeaponFormSwap.BackgroundImage = (Image)resources.GetObject("WeaponFormSwap.BackgroundImage");
             WeaponFormSwap.Cursor = Cursors.Hand;
+            WeaponFormSwap.FlatStyle = FlatStyle.Flat;
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(136, 12);
+            WeaponFormSwap.Location = new Point(28, 12);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(203, 32);
             WeaponFormSwap.TabIndex = 478;
@@ -419,11 +426,13 @@
             // 
             // HealthFormSwap
             // 
+            HealthFormSwap.BackgroundImage = (Image)resources.GetObject("HealthFormSwap.BackgroundImage");
             HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.FlatStyle = FlatStyle.Flat;
             HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
             HealthFormSwap.ImeMode = ImeMode.NoControl;
-            HealthFormSwap.Location = new Point(829, 12);
+            HealthFormSwap.Location = new Point(717, 12);
             HealthFormSwap.Name = "HealthFormSwap";
             HealthFormSwap.Size = new Size(203, 32);
             HealthFormSwap.TabIndex = 513;
@@ -532,12 +541,28 @@
             button10.UseVisualStyleBackColor = true;
             button10.Click += button10_Click;
             // 
+            // button11
+            // 
+            button11.BackgroundImage = (Image)resources.GetObject("button11.BackgroundImage");
+            button11.Cursor = Cursors.Hand;
+            button11.FlatStyle = FlatStyle.Flat;
+            button11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button11.ImageAlign = ContentAlignment.TopCenter;
+            button11.ImeMode = ImeMode.NoControl;
+            button11.Location = new Point(936, 12);
+            button11.Name = "button11";
+            button11.Size = new Size(203, 32);
+            button11.TabIndex = 552;
+            button11.Text = "Bosses";
+            button11.UseVisualStyleBackColor = true;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(button11);
             Controls.Add(button7);
             Controls.Add(button8);
             Controls.Add(button9);
@@ -620,5 +645,6 @@
         private Button button8;
         private Button button9;
         private Button button10;
+        private Button button11;
     }
 }

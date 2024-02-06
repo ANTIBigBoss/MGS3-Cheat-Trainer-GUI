@@ -11,7 +11,7 @@ namespace MGS3_MC_Cheat_Trainer
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new WeaponForm());
+            Application.Run(new MainMenuForm());
         }
     }
 }

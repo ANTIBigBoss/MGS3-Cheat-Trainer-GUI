@@ -77,6 +77,7 @@
             FoodPoisoningInjury = new Button();
             CommonColdInjury = new Button();
             RemoveInjuries = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -84,10 +85,12 @@
             // 
             // MaxHpTo1
             // 
+            MaxHpTo1.BackgroundImage = (Image)resources.GetObject("MaxHpTo1.BackgroundImage");
+            MaxHpTo1.FlatStyle = FlatStyle.Flat;
             MaxHpTo1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            MaxHpTo1.Location = new Point(13, 263);
+            MaxHpTo1.Location = new Point(13, 323);
             MaxHpTo1.Name = "MaxHpTo1";
-            MaxHpTo1.Size = new Size(228, 24);
+            MaxHpTo1.Size = new Size(228, 31);
             MaxHpTo1.TabIndex = 517;
             MaxHpTo1.Text = "Max HP to 1";
             MaxHpTo1.UseVisualStyleBackColor = true;
@@ -95,10 +98,12 @@
             // 
             // Minus100MaxHpValue
             // 
+            Minus100MaxHpValue.BackgroundImage = (Image)resources.GetObject("Minus100MaxHpValue.BackgroundImage");
+            Minus100MaxHpValue.FlatStyle = FlatStyle.Flat;
             Minus100MaxHpValue.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            Minus100MaxHpValue.Location = new Point(13, 211);
+            Minus100MaxHpValue.Location = new Point(13, 251);
             Minus100MaxHpValue.Name = "Minus100MaxHpValue";
-            Minus100MaxHpValue.Size = new Size(228, 24);
+            Minus100MaxHpValue.Size = new Size(228, 31);
             Minus100MaxHpValue.TabIndex = 516;
             Minus100MaxHpValue.Text = "Decrease Max Health by 100";
             Minus100MaxHpValue.UseVisualStyleBackColor = true;
@@ -106,10 +111,12 @@
             // 
             // Plus100MaxHpValue
             // 
+            Plus100MaxHpValue.BackgroundImage = (Image)resources.GetObject("Plus100MaxHpValue.BackgroundImage");
+            Plus100MaxHpValue.FlatStyle = FlatStyle.Flat;
             Plus100MaxHpValue.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            Plus100MaxHpValue.Location = new Point(13, 185);
+            Plus100MaxHpValue.Location = new Point(13, 215);
             Plus100MaxHpValue.Name = "Plus100MaxHpValue";
-            Plus100MaxHpValue.Size = new Size(228, 24);
+            Plus100MaxHpValue.Size = new Size(228, 31);
             Plus100MaxHpValue.TabIndex = 515;
             Plus100MaxHpValue.Text = "Increase Max HP by 100";
             Plus100MaxHpValue.UseVisualStyleBackColor = true;
@@ -132,10 +139,12 @@
             // 
             // FullStamina30000Value
             // 
+            FullStamina30000Value.BackgroundImage = (Image)resources.GetObject("FullStamina30000Value.BackgroundImage");
+            FullStamina30000Value.FlatStyle = FlatStyle.Flat;
             FullStamina30000Value.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            FullStamina30000Value.Location = new Point(13, 367);
+            FullStamina30000Value.Location = new Point(13, 467);
             FullStamina30000Value.Name = "FullStamina30000Value";
-            FullStamina30000Value.Size = new Size(228, 24);
+            FullStamina30000Value.Size = new Size(228, 31);
             FullStamina30000Value.TabIndex = 511;
             FullStamina30000Value.Text = "Max Stamina";
             FullStamina30000Value.UseVisualStyleBackColor = true;
@@ -143,10 +152,12 @@
             // 
             // SetStaminaToZero
             // 
+            SetStaminaToZero.BackgroundImage = (Image)resources.GetObject("SetStaminaToZero.BackgroundImage");
+            SetStaminaToZero.FlatStyle = FlatStyle.Flat;
             SetStaminaToZero.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SetStaminaToZero.Location = new Point(13, 289);
+            SetStaminaToZero.Location = new Point(13, 359);
             SetStaminaToZero.Name = "SetStaminaToZero";
-            SetStaminaToZero.Size = new Size(228, 24);
+            SetStaminaToZero.Size = new Size(228, 31);
             SetStaminaToZero.TabIndex = 510;
             SetStaminaToZero.Text = "0 Stamina";
             SetStaminaToZero.UseVisualStyleBackColor = true;
@@ -154,10 +165,12 @@
             // 
             // Minus10000StaminaValue
             // 
+            Minus10000StaminaValue.BackgroundImage = (Image)resources.GetObject("Minus10000StaminaValue.BackgroundImage");
+            Minus10000StaminaValue.FlatStyle = FlatStyle.Flat;
             Minus10000StaminaValue.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            Minus10000StaminaValue.Location = new Point(13, 341);
+            Minus10000StaminaValue.Location = new Point(13, 431);
             Minus10000StaminaValue.Name = "Minus10000StaminaValue";
-            Minus10000StaminaValue.Size = new Size(228, 24);
+            Minus10000StaminaValue.Size = new Size(228, 31);
             Minus10000StaminaValue.TabIndex = 509;
             Minus10000StaminaValue.Text = "Decrease Stamina by 100";
             Minus10000StaminaValue.UseVisualStyleBackColor = true;
@@ -165,10 +178,12 @@
             // 
             // Plus10000StaminaValue
             // 
+            Plus10000StaminaValue.BackgroundImage = (Image)resources.GetObject("Plus10000StaminaValue.BackgroundImage");
+            Plus10000StaminaValue.FlatStyle = FlatStyle.Flat;
             Plus10000StaminaValue.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            Plus10000StaminaValue.Location = new Point(13, 315);
+            Plus10000StaminaValue.Location = new Point(13, 395);
             Plus10000StaminaValue.Name = "Plus10000StaminaValue";
-            Plus10000StaminaValue.Size = new Size(228, 24);
+            Plus10000StaminaValue.Size = new Size(228, 31);
             Plus10000StaminaValue.TabIndex = 508;
             Plus10000StaminaValue.Text = "Increase Stamina";
             Plus10000StaminaValue.UseVisualStyleBackColor = true;
@@ -176,10 +191,12 @@
             // 
             // CurrentHpTo1
             // 
+            CurrentHpTo1.BackgroundImage = (Image)resources.GetObject("CurrentHpTo1.BackgroundImage");
+            CurrentHpTo1.FlatStyle = FlatStyle.Flat;
             CurrentHpTo1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            CurrentHpTo1.Location = new Point(13, 237);
+            CurrentHpTo1.Location = new Point(13, 287);
             CurrentHpTo1.Name = "CurrentHpTo1";
-            CurrentHpTo1.Size = new Size(228, 24);
+            CurrentHpTo1.Size = new Size(228, 31);
             CurrentHpTo1.TabIndex = 506;
             CurrentHpTo1.Text = "Current HP to 1";
             CurrentHpTo1.UseVisualStyleBackColor = true;
@@ -187,10 +204,12 @@
             // 
             // ZeroHP
             // 
+            ZeroHP.BackgroundImage = (Image)resources.GetObject("ZeroHP.BackgroundImage");
+            ZeroHP.FlatStyle = FlatStyle.Flat;
             ZeroHP.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ZeroHP.Location = new Point(12, 109);
             ZeroHP.Name = "ZeroHP";
-            ZeroHP.Size = new Size(229, 24);
+            ZeroHP.Size = new Size(228, 31);
             ZeroHP.TabIndex = 505;
             ZeroHP.Text = "Kill Snake (0 HP)";
             ZeroHP.UseVisualStyleBackColor = true;
@@ -198,10 +217,12 @@
             // 
             // Minus100HpValue
             // 
+            Minus100HpValue.BackgroundImage = (Image)resources.GetObject("Minus100HpValue.BackgroundImage");
+            Minus100HpValue.FlatStyle = FlatStyle.Flat;
             Minus100HpValue.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            Minus100HpValue.Location = new Point(13, 160);
+            Minus100HpValue.Location = new Point(13, 180);
             Minus100HpValue.Name = "Minus100HpValue";
-            Minus100HpValue.Size = new Size(228, 24);
+            Minus100HpValue.Size = new Size(228, 31);
             Minus100HpValue.TabIndex = 504;
             Minus100HpValue.Text = "Decrease Health by 100";
             Minus100HpValue.UseVisualStyleBackColor = true;
@@ -209,10 +230,12 @@
             // 
             // Plus100HpValue
             // 
+            Plus100HpValue.BackgroundImage = (Image)resources.GetObject("Plus100HpValue.BackgroundImage");
+            Plus100HpValue.FlatStyle = FlatStyle.Flat;
             Plus100HpValue.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            Plus100HpValue.Location = new Point(13, 135);
+            Plus100HpValue.Location = new Point(13, 145);
             Plus100HpValue.Name = "Plus100HpValue";
-            Plus100HpValue.Size = new Size(228, 24);
+            Plus100HpValue.Size = new Size(228, 31);
             Plus100HpValue.TabIndex = 503;
             Plus100HpValue.Text = "Increase HP by 100";
             Plus100HpValue.UseVisualStyleBackColor = true;
@@ -221,35 +244,43 @@
             // InfiniteCaution
             // 
             InfiniteCaution.AutoSize = true;
-            InfiniteCaution.Location = new Point(859, 643);
+            InfiniteCaution.BackgroundImage = (Image)resources.GetObject("InfiniteCaution.BackgroundImage");
+            InfiniteCaution.FlatStyle = FlatStyle.Flat;
+            InfiniteCaution.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            InfiniteCaution.Location = new Point(859, 573);
             InfiniteCaution.MaximumSize = new Size(241, 55);
             InfiniteCaution.MinimumSize = new Size(241, 55);
             InfiniteCaution.Name = "InfiniteCaution";
             InfiniteCaution.Size = new Size(241, 55);
             InfiniteCaution.TabIndex = 522;
-            InfiniteCaution.Text = "Infinite Caution Mode (Checked is on, Unchecked is off) Alert and Evasion override this effect";
+            InfiniteCaution.Text = "Infinite Caution Mode";
             InfiniteCaution.UseVisualStyleBackColor = true;
             InfiniteCaution.CheckedChanged += InfiniteCaution_CheckedChanged;
             // 
             // InfiniteAlert
             // 
             InfiniteAlert.AutoSize = true;
+            InfiniteAlert.BackgroundImage = (Image)resources.GetObject("InfiniteAlert.BackgroundImage");
+            InfiniteAlert.FlatStyle = FlatStyle.Flat;
+            InfiniteAlert.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             InfiniteAlert.Location = new Point(861, 212);
             InfiniteAlert.MaximumSize = new Size(241, 55);
             InfiniteAlert.MinimumSize = new Size(241, 55);
             InfiniteAlert.Name = "InfiniteAlert";
             InfiniteAlert.Size = new Size(241, 55);
             InfiniteAlert.TabIndex = 521;
-            InfiniteAlert.Text = "Infinite Alert Mode (Checked is on, Unchecked is off)";
+            InfiniteAlert.Text = "Infinite Alert Mode";
             InfiniteAlert.UseVisualStyleBackColor = true;
             InfiniteAlert.CheckedChanged += InfiniteAlert_CheckedChanged;
             // 
             // CautionButton
             // 
+            CautionButton.BackgroundImage = (Image)resources.GetObject("CautionButton.BackgroundImage");
             CautionButton.Cursor = Cursors.Hand;
+            CautionButton.FlatStyle = FlatStyle.Flat;
             CautionButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             CautionButton.ImageAlign = ContentAlignment.TopCenter;
-            CautionButton.Location = new Point(859, 585);
+            CautionButton.Location = new Point(859, 515);
             CautionButton.Name = "CautionButton";
             CautionButton.Size = new Size(241, 55);
             CautionButton.TabIndex = 520;
@@ -274,7 +305,9 @@
             // 
             // AlertButton
             // 
+            AlertButton.BackgroundImage = (Image)resources.GetObject("AlertButton.BackgroundImage");
             AlertButton.Cursor = Cursors.Hand;
+            AlertButton.FlatStyle = FlatStyle.Flat;
             AlertButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             AlertButton.ImageAlign = ContentAlignment.TopCenter;
             AlertButton.Location = new Point(861, 159);
@@ -287,6 +320,7 @@
             // 
             // AlertProgressBar
             // 
+            AlertProgressBar.BackColor = SystemColors.ButtonHighlight;
             AlertProgressBar.Location = new Point(861, 132);
             AlertProgressBar.Name = "AlertProgressBar";
             AlertProgressBar.ProgressBarColour = Color.Red;
@@ -295,7 +329,7 @@
             // 
             // EvasionProgressBar
             // 
-            EvasionProgressBar.Location = new Point(861, 356);
+            EvasionProgressBar.Location = new Point(861, 306);
             EvasionProgressBar.Name = "EvasionProgressBar";
             EvasionProgressBar.ProgressBarColour = Color.Orange;
             EvasionProgressBar.Size = new Size(241, 23);
@@ -303,7 +337,7 @@
             // 
             // CautionProgressBar
             // 
-            CautionProgressBar.Location = new Point(861, 558);
+            CautionProgressBar.Location = new Point(861, 488);
             CautionProgressBar.Name = "CautionProgressBar";
             CautionProgressBar.ProgressBarColour = Color.Yellow;
             CautionProgressBar.Size = new Size(239, 23);
@@ -323,7 +357,7 @@
             // 
             pictureBox4.BackgroundImage = (Image)resources.GetObject("pictureBox4.BackgroundImage");
             pictureBox4.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox4.Location = new Point(861, 323);
+            pictureBox4.Location = new Point(861, 273);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(241, 33);
             pictureBox4.TabIndex = 524;
@@ -333,7 +367,7 @@
             // 
             pictureBox5.BackgroundImage = (Image)resources.GetObject("pictureBox5.BackgroundImage");
             pictureBox5.BackgroundImageLayout = ImageLayout.Stretch;
-            pictureBox5.Location = new Point(861, 524);
+            pictureBox5.Location = new Point(861, 454);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(239, 33);
             pictureBox5.TabIndex = 525;
@@ -341,10 +375,12 @@
             // 
             // EvasionButton
             // 
+            EvasionButton.BackgroundImage = (Image)resources.GetObject("EvasionButton.BackgroundImage");
             EvasionButton.Cursor = Cursors.Hand;
+            EvasionButton.FlatStyle = FlatStyle.Flat;
             EvasionButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             EvasionButton.ImageAlign = ContentAlignment.TopCenter;
-            EvasionButton.Location = new Point(859, 384);
+            EvasionButton.Location = new Point(859, 334);
             EvasionButton.Name = "EvasionButton";
             EvasionButton.Size = new Size(243, 55);
             EvasionButton.TabIndex = 526;
@@ -355,23 +391,28 @@
             // InfiniteEvasion
             // 
             InfiniteEvasion.AutoSize = true;
-            InfiniteEvasion.Location = new Point(861, 443);
+            InfiniteEvasion.BackgroundImage = (Image)resources.GetObject("InfiniteEvasion.BackgroundImage");
+            InfiniteEvasion.FlatStyle = FlatStyle.Flat;
+            InfiniteEvasion.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            InfiniteEvasion.Location = new Point(861, 393);
             InfiniteEvasion.MaximumSize = new Size(241, 55);
             InfiniteEvasion.MinimumSize = new Size(241, 55);
             InfiniteEvasion.Name = "InfiniteEvasion";
             InfiniteEvasion.Size = new Size(241, 55);
             InfiniteEvasion.TabIndex = 527;
-            InfiniteEvasion.Text = "Infinite Evasion Mode (Checked is on, Unchecked is off) Alert overrides this effect";
+            InfiniteEvasion.Text = "Infinite Evasion Mode (Will trigger alert in a building) Alert overrides this effect";
             InfiniteEvasion.UseVisualStyleBackColor = true;
             InfiniteEvasion.CheckedChanged += InfiniteEvasion_CheckedChanged;
             // 
             // HealthFormSwap
             // 
+            HealthFormSwap.BackgroundImage = (Image)resources.GetObject("HealthFormSwap.BackgroundImage");
             HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.FlatStyle = FlatStyle.Flat;
             HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
             HealthFormSwap.ImeMode = ImeMode.NoControl;
-            HealthFormSwap.Location = new Point(359, 12);
+            HealthFormSwap.Location = new Point(254, 12);
             HealthFormSwap.Name = "HealthFormSwap";
             HealthFormSwap.Size = new Size(203, 32);
             HealthFormSwap.TabIndex = 534;
@@ -381,11 +422,13 @@
             // 
             // MiscFormSwap
             // 
+            MiscFormSwap.BackgroundImage = (Image)resources.GetObject("MiscFormSwap.BackgroundImage");
             MiscFormSwap.Cursor = Cursors.Hand;
+            MiscFormSwap.FlatStyle = FlatStyle.Flat;
             MiscFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             MiscFormSwap.ImageAlign = ContentAlignment.TopCenter;
             MiscFormSwap.ImeMode = ImeMode.NoControl;
-            MiscFormSwap.Location = new Point(815, 12);
+            MiscFormSwap.Location = new Point(710, 12);
             MiscFormSwap.Name = "MiscFormSwap";
             MiscFormSwap.Size = new Size(203, 32);
             MiscFormSwap.TabIndex = 533;
@@ -395,11 +438,13 @@
             // 
             // CamoFormSwap
             // 
+            CamoFormSwap.BackgroundImage = (Image)resources.GetObject("CamoFormSwap.BackgroundImage");
             CamoFormSwap.Cursor = Cursors.Hand;
+            CamoFormSwap.FlatStyle = FlatStyle.Flat;
             CamoFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             CamoFormSwap.ImageAlign = ContentAlignment.TopCenter;
             CamoFormSwap.ImeMode = ImeMode.NoControl;
-            CamoFormSwap.Location = new Point(587, 12);
+            CamoFormSwap.Location = new Point(482, 12);
             CamoFormSwap.Name = "CamoFormSwap";
             CamoFormSwap.Size = new Size(203, 32);
             CamoFormSwap.TabIndex = 532;
@@ -409,11 +454,13 @@
             // 
             // WeaponFormSwap
             // 
+            WeaponFormSwap.BackgroundImage = (Image)resources.GetObject("WeaponFormSwap.BackgroundImage");
             WeaponFormSwap.Cursor = Cursors.Hand;
+            WeaponFormSwap.FlatStyle = FlatStyle.Flat;
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(133, 12);
+            WeaponFormSwap.Location = new Point(28, 12);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(203, 32);
             WeaponFormSwap.TabIndex = 531;
@@ -423,12 +470,14 @@
             // 
             // ClearCautionAndEvasion
             // 
+            ClearCautionAndEvasion.BackgroundImage = (Image)resources.GetObject("ClearCautionAndEvasion.BackgroundImage");
             ClearCautionAndEvasion.Cursor = Cursors.Hand;
-            ClearCautionAndEvasion.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ClearCautionAndEvasion.FlatStyle = FlatStyle.Flat;
+            ClearCautionAndEvasion.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ClearCautionAndEvasion.ImageAlign = ContentAlignment.TopCenter;
-            ClearCautionAndEvasion.Location = new Point(859, 292);
+            ClearCautionAndEvasion.Location = new Point(859, 646);
             ClearCautionAndEvasion.Name = "ClearCautionAndEvasion";
-            ClearCautionAndEvasion.Size = new Size(241, 24);
+            ClearCautionAndEvasion.Size = new Size(241, 31);
             ClearCautionAndEvasion.TabIndex = 535;
             ClearCautionAndEvasion.Text = "Remove Evasion/Caution State";
             ClearCautionAndEvasion.UseVisualStyleBackColor = true;
@@ -445,18 +494,20 @@
             textBox3.Name = "textBox3";
             textBox3.PlaceholderText = "Serious Injuries";
             textBox3.ReadOnly = true;
-            textBox3.Size = new Size(220, 34);
+            textBox3.Size = new Size(228, 34);
             textBox3.TabIndex = 536;
             textBox3.TextAlign = HorizontalAlignment.Center;
             // 
             // BurnInjury
             // 
+            BurnInjury.BackgroundImage = (Image)resources.GetObject("BurnInjury.BackgroundImage");
             BurnInjury.Cursor = Cursors.Hand;
+            BurnInjury.FlatStyle = FlatStyle.Flat;
             BurnInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             BurnInjury.ImageAlign = ContentAlignment.TopCenter;
             BurnInjury.Location = new Point(430, 100);
             BurnInjury.Name = "BurnInjury";
-            BurnInjury.Size = new Size(220, 26);
+            BurnInjury.Size = new Size(228, 31);
             BurnInjury.TabIndex = 537;
             BurnInjury.Text = "Serious Burn";
             BurnInjury.UseVisualStyleBackColor = true;
@@ -464,12 +515,14 @@
             // 
             // CutInjury
             // 
+            CutInjury.BackgroundImage = (Image)resources.GetObject("CutInjury.BackgroundImage");
             CutInjury.Cursor = Cursors.Hand;
+            CutInjury.FlatStyle = FlatStyle.Flat;
             CutInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             CutInjury.ImageAlign = ContentAlignment.TopCenter;
-            CutInjury.Location = new Point(430, 129);
+            CutInjury.Location = new Point(430, 139);
             CutInjury.Name = "CutInjury";
-            CutInjury.Size = new Size(220, 26);
+            CutInjury.Size = new Size(228, 31);
             CutInjury.TabIndex = 538;
             CutInjury.Text = "Deep Cut";
             CutInjury.UseVisualStyleBackColor = true;
@@ -477,12 +530,14 @@
             // 
             // GunshotRifleInjury
             // 
+            GunshotRifleInjury.BackgroundImage = (Image)resources.GetObject("GunshotRifleInjury.BackgroundImage");
             GunshotRifleInjury.Cursor = Cursors.Hand;
+            GunshotRifleInjury.FlatStyle = FlatStyle.Flat;
             GunshotRifleInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             GunshotRifleInjury.ImageAlign = ContentAlignment.TopCenter;
-            GunshotRifleInjury.Location = new Point(430, 158);
+            GunshotRifleInjury.Location = new Point(430, 178);
             GunshotRifleInjury.Name = "GunshotRifleInjury";
-            GunshotRifleInjury.Size = new Size(220, 26);
+            GunshotRifleInjury.Size = new Size(228, 31);
             GunshotRifleInjury.TabIndex = 539;
             GunshotRifleInjury.Text = "Gunshot Wound (Rifle)";
             GunshotRifleInjury.UseVisualStyleBackColor = true;
@@ -490,12 +545,14 @@
             // 
             // GunshotShotgunInjury
             // 
+            GunshotShotgunInjury.BackgroundImage = (Image)resources.GetObject("GunshotShotgunInjury.BackgroundImage");
             GunshotShotgunInjury.Cursor = Cursors.Hand;
+            GunshotShotgunInjury.FlatStyle = FlatStyle.Flat;
             GunshotShotgunInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             GunshotShotgunInjury.ImageAlign = ContentAlignment.TopCenter;
-            GunshotShotgunInjury.Location = new Point(430, 188);
+            GunshotShotgunInjury.Location = new Point(430, 218);
             GunshotShotgunInjury.Name = "GunshotShotgunInjury";
-            GunshotShotgunInjury.Size = new Size(220, 26);
+            GunshotShotgunInjury.Size = new Size(228, 31);
             GunshotShotgunInjury.TabIndex = 540;
             GunshotShotgunInjury.Text = "Gunshot Wound (Shotgun)";
             GunshotShotgunInjury.UseVisualStyleBackColor = true;
@@ -503,12 +560,14 @@
             // 
             // BoneFractureInjury
             // 
+            BoneFractureInjury.BackgroundImage = (Image)resources.GetObject("BoneFractureInjury.BackgroundImage");
             BoneFractureInjury.Cursor = Cursors.Hand;
+            BoneFractureInjury.FlatStyle = FlatStyle.Flat;
             BoneFractureInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             BoneFractureInjury.ImageAlign = ContentAlignment.TopCenter;
-            BoneFractureInjury.Location = new Point(430, 218);
+            BoneFractureInjury.Location = new Point(430, 258);
             BoneFractureInjury.Name = "BoneFractureInjury";
-            BoneFractureInjury.Size = new Size(220, 26);
+            BoneFractureInjury.Size = new Size(228, 31);
             BoneFractureInjury.TabIndex = 541;
             BoneFractureInjury.Text = "Bone Fracture";
             BoneFractureInjury.UseVisualStyleBackColor = true;
@@ -516,12 +575,14 @@
             // 
             // BulletBeeInjury
             // 
+            BulletBeeInjury.BackgroundImage = (Image)resources.GetObject("BulletBeeInjury.BackgroundImage");
             BulletBeeInjury.Cursor = Cursors.Hand;
+            BulletBeeInjury.FlatStyle = FlatStyle.Flat;
             BulletBeeInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             BulletBeeInjury.ImageAlign = ContentAlignment.TopCenter;
-            BulletBeeInjury.Location = new Point(430, 249);
+            BulletBeeInjury.Location = new Point(430, 299);
             BulletBeeInjury.Name = "BulletBeeInjury";
-            BulletBeeInjury.Size = new Size(220, 26);
+            BulletBeeInjury.Size = new Size(228, 31);
             BulletBeeInjury.TabIndex = 542;
             BulletBeeInjury.Text = "Bullet Bee";
             BulletBeeInjury.UseVisualStyleBackColor = true;
@@ -529,12 +590,14 @@
             // 
             // LeechesInjury
             // 
+            LeechesInjury.BackgroundImage = (Image)resources.GetObject("LeechesInjury.BackgroundImage");
             LeechesInjury.Cursor = Cursors.Hand;
+            LeechesInjury.FlatStyle = FlatStyle.Flat;
             LeechesInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             LeechesInjury.ImageAlign = ContentAlignment.TopCenter;
-            LeechesInjury.Location = new Point(430, 280);
+            LeechesInjury.Location = new Point(430, 340);
             LeechesInjury.Name = "LeechesInjury";
-            LeechesInjury.Size = new Size(220, 26);
+            LeechesInjury.Size = new Size(228, 31);
             LeechesInjury.TabIndex = 543;
             LeechesInjury.Text = "Leeches";
             LeechesInjury.UseVisualStyleBackColor = true;
@@ -542,12 +605,14 @@
             // 
             // ArrowInjury
             // 
+            ArrowInjury.BackgroundImage = (Image)resources.GetObject("ArrowInjury.BackgroundImage");
             ArrowInjury.Cursor = Cursors.Hand;
+            ArrowInjury.FlatStyle = FlatStyle.Flat;
             ArrowInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ArrowInjury.ImageAlign = ContentAlignment.TopCenter;
-            ArrowInjury.Location = new Point(430, 311);
+            ArrowInjury.Location = new Point(430, 381);
             ArrowInjury.Name = "ArrowInjury";
-            ArrowInjury.Size = new Size(220, 26);
+            ArrowInjury.Size = new Size(228, 31);
             ArrowInjury.TabIndex = 544;
             ArrowInjury.Text = "Arrow Wound";
             ArrowInjury.UseVisualStyleBackColor = true;
@@ -555,12 +620,14 @@
             // 
             // TranqInjury
             // 
+            TranqInjury.BackgroundImage = (Image)resources.GetObject("TranqInjury.BackgroundImage");
             TranqInjury.Cursor = Cursors.Hand;
+            TranqInjury.FlatStyle = FlatStyle.Flat;
             TranqInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             TranqInjury.ImageAlign = ContentAlignment.TopCenter;
-            TranqInjury.Location = new Point(430, 343);
+            TranqInjury.Location = new Point(430, 423);
             TranqInjury.Name = "TranqInjury";
-            TranqInjury.Size = new Size(220, 26);
+            TranqInjury.Size = new Size(228, 31);
             TranqInjury.TabIndex = 545;
             TranqInjury.Text = "Tranqulizer Dart";
             TranqInjury.UseVisualStyleBackColor = true;
@@ -568,12 +635,14 @@
             // 
             // VenomPoisoningInjury
             // 
+            VenomPoisoningInjury.BackgroundImage = (Image)resources.GetObject("VenomPoisoningInjury.BackgroundImage");
             VenomPoisoningInjury.Cursor = Cursors.Hand;
+            VenomPoisoningInjury.FlatStyle = FlatStyle.Flat;
             VenomPoisoningInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             VenomPoisoningInjury.ImageAlign = ContentAlignment.TopCenter;
-            VenomPoisoningInjury.Location = new Point(430, 375);
+            VenomPoisoningInjury.Location = new Point(430, 465);
             VenomPoisoningInjury.Name = "VenomPoisoningInjury";
-            VenomPoisoningInjury.Size = new Size(220, 26);
+            VenomPoisoningInjury.Size = new Size(228, 31);
             VenomPoisoningInjury.TabIndex = 546;
             VenomPoisoningInjury.Text = "Venom Poison";
             VenomPoisoningInjury.UseVisualStyleBackColor = true;
@@ -581,12 +650,14 @@
             // 
             // FoodPoisoningInjury
             // 
+            FoodPoisoningInjury.BackgroundImage = (Image)resources.GetObject("FoodPoisoningInjury.BackgroundImage");
             FoodPoisoningInjury.Cursor = Cursors.Hand;
+            FoodPoisoningInjury.FlatStyle = FlatStyle.Flat;
             FoodPoisoningInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             FoodPoisoningInjury.ImageAlign = ContentAlignment.TopCenter;
-            FoodPoisoningInjury.Location = new Point(430, 406);
+            FoodPoisoningInjury.Location = new Point(430, 506);
             FoodPoisoningInjury.Name = "FoodPoisoningInjury";
-            FoodPoisoningInjury.Size = new Size(220, 26);
+            FoodPoisoningInjury.Size = new Size(228, 31);
             FoodPoisoningInjury.TabIndex = 547;
             FoodPoisoningInjury.Text = "Food Poisoning";
             FoodPoisoningInjury.UseVisualStyleBackColor = true;
@@ -594,12 +665,14 @@
             // 
             // CommonColdInjury
             // 
+            CommonColdInjury.BackgroundImage = (Image)resources.GetObject("CommonColdInjury.BackgroundImage");
             CommonColdInjury.Cursor = Cursors.Hand;
+            CommonColdInjury.FlatStyle = FlatStyle.Flat;
             CommonColdInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             CommonColdInjury.ImageAlign = ContentAlignment.TopCenter;
-            CommonColdInjury.Location = new Point(430, 438);
+            CommonColdInjury.Location = new Point(430, 548);
             CommonColdInjury.Name = "CommonColdInjury";
-            CommonColdInjury.Size = new Size(220, 26);
+            CommonColdInjury.Size = new Size(228, 31);
             CommonColdInjury.TabIndex = 548;
             CommonColdInjury.Text = "Cold";
             CommonColdInjury.UseVisualStyleBackColor = true;
@@ -607,16 +680,33 @@
             // 
             // RemoveInjuries
             // 
+            RemoveInjuries.BackgroundImage = (Image)resources.GetObject("RemoveInjuries.BackgroundImage");
             RemoveInjuries.Cursor = Cursors.Hand;
+            RemoveInjuries.FlatStyle = FlatStyle.Flat;
             RemoveInjuries.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveInjuries.ImageAlign = ContentAlignment.TopCenter;
-            RemoveInjuries.Location = new Point(430, 470);
+            RemoveInjuries.Location = new Point(430, 590);
             RemoveInjuries.Name = "RemoveInjuries";
-            RemoveInjuries.Size = new Size(220, 26);
+            RemoveInjuries.Size = new Size(228, 31);
             RemoveInjuries.TabIndex = 550;
             RemoveInjuries.Text = "Remove All Injuries";
             RemoveInjuries.UseVisualStyleBackColor = true;
             RemoveInjuries.Click += RemoveInjuries_Click;
+            // 
+            // button1
+            // 
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.ImageAlign = ContentAlignment.TopCenter;
+            button1.ImeMode = ImeMode.NoControl;
+            button1.Location = new Point(941, 12);
+            button1.Name = "button1";
+            button1.Size = new Size(203, 32);
+            button1.TabIndex = 551;
+            button1.Text = "Bosses";
+            button1.UseVisualStyleBackColor = true;
             // 
             // StatsAndAlertForm
             // 
@@ -624,6 +714,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(button1);
             Controls.Add(RemoveInjuries);
             Controls.Add(CommonColdInjury);
             Controls.Add(FoodPoisoningInjury);
@@ -722,5 +813,6 @@
         private Button TransmitterInjury;
         private Button FakeDeathPillInjury;
         private Button RemoveInjuries;
+        private Button button1;
     }
 }

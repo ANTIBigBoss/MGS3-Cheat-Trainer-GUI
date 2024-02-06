@@ -174,6 +174,7 @@
             pictureBox35 = new PictureBox();
             MiscFormSwap = new Button();
             HealthFormSwap = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -226,6 +227,8 @@
             // 
             // AddLifeMed
             // 
+            AddLifeMed.BackgroundImage = (Image)resources.GetObject("AddLifeMed.BackgroundImage");
+            AddLifeMed.FlatStyle = FlatStyle.Flat;
             AddLifeMed.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddLifeMed.Location = new Point(103, 141);
             AddLifeMed.Name = "AddLifeMed";
@@ -247,20 +250,22 @@
             // 
             pictureBox7.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox7.Image = (Image)resources.GetObject("pictureBox7.Image");
-            pictureBox7.Location = new Point(8, 138);
+            pictureBox7.Location = new Point(9, 139);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(96, 70);
+            pictureBox7.Size = new Size(94, 69);
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox7.TabIndex = 111;
             pictureBox7.TabStop = false;
             // 
             // WeaponFormSwap
             // 
+            WeaponFormSwap.BackgroundImage = (Image)resources.GetObject("WeaponFormSwap.BackgroundImage");
             WeaponFormSwap.Cursor = Cursors.Hand;
+            WeaponFormSwap.FlatStyle = FlatStyle.Flat;
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(102, 4);
+            WeaponFormSwap.Location = new Point(33, 8);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(203, 32);
             WeaponFormSwap.TabIndex = 312;
@@ -283,6 +288,8 @@
             // 
             // AddBugJuice
             // 
+            AddBugJuice.BackgroundImage = (Image)resources.GetObject("AddBugJuice.BackgroundImage");
+            AddBugJuice.FlatStyle = FlatStyle.Flat;
             AddBugJuice.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddBugJuice.Location = new Point(103, 250);
             AddBugJuice.Name = "AddBugJuice";
@@ -304,9 +311,9 @@
             // 
             pictureBox3.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(8, 248);
+            pictureBox3.Location = new Point(8, 250);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(96, 70);
+            pictureBox3.Size = new Size(94, 68);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 313;
             pictureBox3.TabStop = false;
@@ -326,6 +333,8 @@
             // 
             // AddFDP
             // 
+            AddFDP.BackgroundImage = (Image)resources.GetObject("AddFDP.BackgroundImage");
+            AddFDP.FlatStyle = FlatStyle.Flat;
             AddFDP.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddFDP.Location = new Point(102, 357);
             AddFDP.Name = "AddFDP";
@@ -347,9 +356,9 @@
             // 
             pictureBox4.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox4.Image = (Image)resources.GetObject("pictureBox4.Image");
-            pictureBox4.Location = new Point(8, 355);
+            pictureBox4.Location = new Point(9, 357);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(96, 70);
+            pictureBox4.Size = new Size(93, 68);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 318;
             pictureBox4.TabStop = false;
@@ -369,6 +378,8 @@
             // 
             // AddPentazemin
             // 
+            AddPentazemin.BackgroundImage = (Image)resources.GetObject("AddPentazemin.BackgroundImage");
+            AddPentazemin.FlatStyle = FlatStyle.Flat;
             AddPentazemin.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddPentazemin.Location = new Point(103, 467);
             AddPentazemin.Name = "AddPentazemin";
@@ -390,16 +401,18 @@
             // 
             pictureBox5.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox5.Image = (Image)resources.GetObject("pictureBox5.Image");
-            pictureBox5.Location = new Point(8, 464);
+            pictureBox5.Location = new Point(9, 467);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(96, 70);
+            pictureBox5.Size = new Size(94, 67);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 323;
             pictureBox5.TabStop = false;
             // 
             // RemoveRPill
             // 
+            RemoveRPill.BackgroundImage = (Image)resources.GetObject("RemoveRPill.BackgroundImage");
             RemoveRPill.Cursor = Cursors.Hand;
+            RemoveRPill.FlatStyle = FlatStyle.Flat;
             RemoveRPill.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveRPill.ImageAlign = ContentAlignment.TopCenter;
             RemoveRPill.ImeMode = ImeMode.NoControl;
@@ -413,7 +426,9 @@
             // 
             // AddRPill
             // 
+            AddRPill.BackgroundImage = (Image)resources.GetObject("AddRPill.BackgroundImage");
             AddRPill.Cursor = Cursors.Hand;
+            AddRPill.FlatStyle = FlatStyle.Flat;
             AddRPill.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddRPill.ImageAlign = ContentAlignment.TopCenter;
             AddRPill.ImeMode = ImeMode.NoControl;
@@ -453,7 +468,9 @@
             // 
             // RemoveCigar
             // 
+            RemoveCigar.BackgroundImage = (Image)resources.GetObject("RemoveCigar.BackgroundImage");
             RemoveCigar.Cursor = Cursors.Hand;
+            RemoveCigar.FlatStyle = FlatStyle.Flat;
             RemoveCigar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveCigar.ImageAlign = ContentAlignment.TopCenter;
             RemoveCigar.ImeMode = ImeMode.NoControl;
@@ -467,7 +484,9 @@
             // 
             // AddCigar
             // 
+            AddCigar.BackgroundImage = (Image)resources.GetObject("AddCigar.BackgroundImage");
             AddCigar.Cursor = Cursors.Hand;
+            AddCigar.FlatStyle = FlatStyle.Flat;
             AddCigar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddCigar.ImageAlign = ContentAlignment.TopCenter;
             AddCigar.ImeMode = ImeMode.NoControl;
@@ -507,7 +526,9 @@
             // 
             // RemoveBinos
             // 
+            RemoveBinos.BackgroundImage = (Image)resources.GetObject("RemoveBinos.BackgroundImage");
             RemoveBinos.Cursor = Cursors.Hand;
+            RemoveBinos.FlatStyle = FlatStyle.Flat;
             RemoveBinos.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveBinos.ImageAlign = ContentAlignment.TopCenter;
             RemoveBinos.ImeMode = ImeMode.NoControl;
@@ -521,7 +542,9 @@
             // 
             // AddBinos
             // 
+            AddBinos.BackgroundImage = (Image)resources.GetObject("AddBinos.BackgroundImage");
             AddBinos.Cursor = Cursors.Hand;
+            AddBinos.FlatStyle = FlatStyle.Flat;
             AddBinos.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddBinos.ImageAlign = ContentAlignment.TopCenter;
             AddBinos.ImeMode = ImeMode.NoControl;
@@ -561,7 +584,9 @@
             // 
             // RemoveThermal
             // 
+            RemoveThermal.BackgroundImage = (Image)resources.GetObject("RemoveThermal.BackgroundImage");
             RemoveThermal.Cursor = Cursors.Hand;
+            RemoveThermal.FlatStyle = FlatStyle.Flat;
             RemoveThermal.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveThermal.ImageAlign = ContentAlignment.TopCenter;
             RemoveThermal.ImeMode = ImeMode.NoControl;
@@ -575,7 +600,9 @@
             // 
             // AddThermal
             // 
+            AddThermal.BackgroundImage = (Image)resources.GetObject("AddThermal.BackgroundImage");
             AddThermal.Cursor = Cursors.Hand;
+            AddThermal.FlatStyle = FlatStyle.Flat;
             AddThermal.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddThermal.ImageAlign = ContentAlignment.TopCenter;
             AddThermal.ImeMode = ImeMode.NoControl;
@@ -615,7 +642,9 @@
             // 
             // RemoveNVG
             // 
+            RemoveNVG.BackgroundImage = (Image)resources.GetObject("RemoveNVG.BackgroundImage");
             RemoveNVG.Cursor = Cursors.Hand;
+            RemoveNVG.FlatStyle = FlatStyle.Flat;
             RemoveNVG.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveNVG.ImageAlign = ContentAlignment.TopCenter;
             RemoveNVG.ImeMode = ImeMode.NoControl;
@@ -629,7 +658,9 @@
             // 
             // AddNVG
             // 
+            AddNVG.BackgroundImage = (Image)resources.GetObject("AddNVG.BackgroundImage");
             AddNVG.Cursor = Cursors.Hand;
+            AddNVG.FlatStyle = FlatStyle.Flat;
             AddNVG.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddNVG.ImageAlign = ContentAlignment.TopCenter;
             AddNVG.ImeMode = ImeMode.NoControl;
@@ -669,7 +700,9 @@
             // 
             // RemoveCamera
             // 
+            RemoveCamera.BackgroundImage = (Image)resources.GetObject("RemoveCamera.BackgroundImage");
             RemoveCamera.Cursor = Cursors.Hand;
+            RemoveCamera.FlatStyle = FlatStyle.Flat;
             RemoveCamera.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveCamera.ImageAlign = ContentAlignment.TopCenter;
             RemoveCamera.ImeMode = ImeMode.NoControl;
@@ -683,7 +716,9 @@
             // 
             // AddCamera
             // 
+            AddCamera.BackgroundImage = (Image)resources.GetObject("AddCamera.BackgroundImage");
             AddCamera.Cursor = Cursors.Hand;
+            AddCamera.FlatStyle = FlatStyle.Flat;
             AddCamera.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddCamera.ImageAlign = ContentAlignment.TopCenter;
             AddCamera.ImeMode = ImeMode.NoControl;
@@ -723,7 +758,9 @@
             // 
             // RemoveMotionD
             // 
+            RemoveMotionD.BackgroundImage = (Image)resources.GetObject("RemoveMotionD.BackgroundImage");
             RemoveMotionD.Cursor = Cursors.Hand;
+            RemoveMotionD.FlatStyle = FlatStyle.Flat;
             RemoveMotionD.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveMotionD.ImageAlign = ContentAlignment.TopCenter;
             RemoveMotionD.ImeMode = ImeMode.NoControl;
@@ -737,7 +774,9 @@
             // 
             // AddMotionD
             // 
+            AddMotionD.BackgroundImage = (Image)resources.GetObject("AddMotionD.BackgroundImage");
             AddMotionD.Cursor = Cursors.Hand;
+            AddMotionD.FlatStyle = FlatStyle.Flat;
             AddMotionD.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddMotionD.ImageAlign = ContentAlignment.TopCenter;
             AddMotionD.ImeMode = ImeMode.NoControl;
@@ -777,7 +816,9 @@
             // 
             // RemoveSonar
             // 
+            RemoveSonar.BackgroundImage = (Image)resources.GetObject("RemoveSonar.BackgroundImage");
             RemoveSonar.Cursor = Cursors.Hand;
+            RemoveSonar.FlatStyle = FlatStyle.Flat;
             RemoveSonar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveSonar.ImageAlign = ContentAlignment.TopCenter;
             RemoveSonar.ImeMode = ImeMode.NoControl;
@@ -791,7 +832,9 @@
             // 
             // AddSonar
             // 
+            AddSonar.BackgroundImage = (Image)resources.GetObject("AddSonar.BackgroundImage");
             AddSonar.Cursor = Cursors.Hand;
+            AddSonar.FlatStyle = FlatStyle.Flat;
             AddSonar.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddSonar.ImageAlign = ContentAlignment.TopCenter;
             AddSonar.ImeMode = ImeMode.NoControl;
@@ -831,7 +874,9 @@
             // 
             // RemoveMineD
             // 
+            RemoveMineD.BackgroundImage = (Image)resources.GetObject("RemoveMineD.BackgroundImage");
             RemoveMineD.Cursor = Cursors.Hand;
+            RemoveMineD.FlatStyle = FlatStyle.Flat;
             RemoveMineD.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveMineD.ImageAlign = ContentAlignment.TopCenter;
             RemoveMineD.ImeMode = ImeMode.NoControl;
@@ -845,7 +890,9 @@
             // 
             // AddMineD
             // 
+            AddMineD.BackgroundImage = (Image)resources.GetObject("AddMineD.BackgroundImage");
             AddMineD.Cursor = Cursors.Hand;
+            AddMineD.FlatStyle = FlatStyle.Flat;
             AddMineD.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddMineD.ImageAlign = ContentAlignment.TopCenter;
             AddMineD.ImeMode = ImeMode.NoControl;
@@ -885,7 +932,9 @@
             // 
             // RemoveApSensor
             // 
+            RemoveApSensor.BackgroundImage = (Image)resources.GetObject("RemoveApSensor.BackgroundImage");
             RemoveApSensor.Cursor = Cursors.Hand;
+            RemoveApSensor.FlatStyle = FlatStyle.Flat;
             RemoveApSensor.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveApSensor.ImageAlign = ContentAlignment.TopCenter;
             RemoveApSensor.ImeMode = ImeMode.NoControl;
@@ -899,7 +948,9 @@
             // 
             // AddApSensor
             // 
+            AddApSensor.BackgroundImage = (Image)resources.GetObject("AddApSensor.BackgroundImage");
             AddApSensor.Cursor = Cursors.Hand;
+            AddApSensor.FlatStyle = FlatStyle.Flat;
             AddApSensor.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddApSensor.ImageAlign = ContentAlignment.TopCenter;
             AddApSensor.ImeMode = ImeMode.NoControl;
@@ -939,7 +990,9 @@
             // 
             // RemoveKeyC
             // 
+            RemoveKeyC.BackgroundImage = (Image)resources.GetObject("RemoveKeyC.BackgroundImage");
             RemoveKeyC.Cursor = Cursors.Hand;
+            RemoveKeyC.FlatStyle = FlatStyle.Flat;
             RemoveKeyC.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveKeyC.ImageAlign = ContentAlignment.TopCenter;
             RemoveKeyC.ImeMode = ImeMode.NoControl;
@@ -953,7 +1006,9 @@
             // 
             // AddKeyC
             // 
+            AddKeyC.BackgroundImage = (Image)resources.GetObject("AddKeyC.BackgroundImage");
             AddKeyC.Cursor = Cursors.Hand;
+            AddKeyC.FlatStyle = FlatStyle.Flat;
             AddKeyC.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddKeyC.ImageAlign = ContentAlignment.TopCenter;
             AddKeyC.ImeMode = ImeMode.NoControl;
@@ -993,7 +1048,9 @@
             // 
             // RemoveKeyB
             // 
+            RemoveKeyB.BackgroundImage = (Image)resources.GetObject("RemoveKeyB.BackgroundImage");
             RemoveKeyB.Cursor = Cursors.Hand;
+            RemoveKeyB.FlatStyle = FlatStyle.Flat;
             RemoveKeyB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveKeyB.ImageAlign = ContentAlignment.TopCenter;
             RemoveKeyB.ImeMode = ImeMode.NoControl;
@@ -1007,7 +1064,9 @@
             // 
             // AddKeyB
             // 
+            AddKeyB.BackgroundImage = (Image)resources.GetObject("AddKeyB.BackgroundImage");
             AddKeyB.Cursor = Cursors.Hand;
+            AddKeyB.FlatStyle = FlatStyle.Flat;
             AddKeyB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddKeyB.ImageAlign = ContentAlignment.TopCenter;
             AddKeyB.ImeMode = ImeMode.NoControl;
@@ -1047,7 +1106,9 @@
             // 
             // RemoveKeyA
             // 
+            RemoveKeyA.BackgroundImage = (Image)resources.GetObject("RemoveKeyA.BackgroundImage");
             RemoveKeyA.Cursor = Cursors.Hand;
+            RemoveKeyA.FlatStyle = FlatStyle.Flat;
             RemoveKeyA.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveKeyA.ImageAlign = ContentAlignment.TopCenter;
             RemoveKeyA.ImeMode = ImeMode.NoControl;
@@ -1061,7 +1122,9 @@
             // 
             // AddKeyA
             // 
+            AddKeyA.BackgroundImage = (Image)resources.GetObject("AddKeyA.BackgroundImage");
             AddKeyA.Cursor = Cursors.Hand;
+            AddKeyA.FlatStyle = FlatStyle.Flat;
             AddKeyA.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddKeyA.ImageAlign = ContentAlignment.TopCenter;
             AddKeyA.ImeMode = ImeMode.NoControl;
@@ -1101,7 +1164,9 @@
             // 
             // RemoveCrocCap
             // 
+            RemoveCrocCap.BackgroundImage = (Image)resources.GetObject("RemoveCrocCap.BackgroundImage");
             RemoveCrocCap.Cursor = Cursors.Hand;
+            RemoveCrocCap.FlatStyle = FlatStyle.Flat;
             RemoveCrocCap.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveCrocCap.ImageAlign = ContentAlignment.TopCenter;
             RemoveCrocCap.ImeMode = ImeMode.NoControl;
@@ -1115,7 +1180,9 @@
             // 
             // AddCrocCap
             // 
+            AddCrocCap.BackgroundImage = (Image)resources.GetObject("AddCrocCap.BackgroundImage");
             AddCrocCap.Cursor = Cursors.Hand;
+            AddCrocCap.FlatStyle = FlatStyle.Flat;
             AddCrocCap.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddCrocCap.ImageAlign = ContentAlignment.TopCenter;
             AddCrocCap.ImeMode = ImeMode.NoControl;
@@ -1155,7 +1222,9 @@
             // 
             // RemoveBoxD
             // 
+            RemoveBoxD.BackgroundImage = (Image)resources.GetObject("RemoveBoxD.BackgroundImage");
             RemoveBoxD.Cursor = Cursors.Hand;
+            RemoveBoxD.FlatStyle = FlatStyle.Flat;
             RemoveBoxD.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveBoxD.ImageAlign = ContentAlignment.TopCenter;
             RemoveBoxD.ImeMode = ImeMode.NoControl;
@@ -1169,7 +1238,9 @@
             // 
             // AddBoxD
             // 
+            AddBoxD.BackgroundImage = (Image)resources.GetObject("AddBoxD.BackgroundImage");
             AddBoxD.Cursor = Cursors.Hand;
+            AddBoxD.FlatStyle = FlatStyle.Flat;
             AddBoxD.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddBoxD.ImageAlign = ContentAlignment.TopCenter;
             AddBoxD.ImeMode = ImeMode.NoControl;
@@ -1209,7 +1280,9 @@
             // 
             // RemoveBoxC
             // 
+            RemoveBoxC.BackgroundImage = (Image)resources.GetObject("RemoveBoxC.BackgroundImage");
             RemoveBoxC.Cursor = Cursors.Hand;
+            RemoveBoxC.FlatStyle = FlatStyle.Flat;
             RemoveBoxC.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveBoxC.ImageAlign = ContentAlignment.TopCenter;
             RemoveBoxC.ImeMode = ImeMode.NoControl;
@@ -1223,7 +1296,9 @@
             // 
             // AddBoxC
             // 
+            AddBoxC.BackgroundImage = (Image)resources.GetObject("AddBoxC.BackgroundImage");
             AddBoxC.Cursor = Cursors.Hand;
+            AddBoxC.FlatStyle = FlatStyle.Flat;
             AddBoxC.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddBoxC.ImageAlign = ContentAlignment.TopCenter;
             AddBoxC.ImeMode = ImeMode.NoControl;
@@ -1263,7 +1338,9 @@
             // 
             // RemoveBoxB
             // 
+            RemoveBoxB.BackgroundImage = (Image)resources.GetObject("RemoveBoxB.BackgroundImage");
             RemoveBoxB.Cursor = Cursors.Hand;
+            RemoveBoxB.FlatStyle = FlatStyle.Flat;
             RemoveBoxB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveBoxB.ImageAlign = ContentAlignment.TopCenter;
             RemoveBoxB.ImeMode = ImeMode.NoControl;
@@ -1277,7 +1354,9 @@
             // 
             // AddBoxB
             // 
+            AddBoxB.BackgroundImage = (Image)resources.GetObject("AddBoxB.BackgroundImage");
             AddBoxB.Cursor = Cursors.Hand;
+            AddBoxB.FlatStyle = FlatStyle.Flat;
             AddBoxB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddBoxB.ImageAlign = ContentAlignment.TopCenter;
             AddBoxB.ImeMode = ImeMode.NoControl;
@@ -1317,7 +1396,9 @@
             // 
             // RemoveBoxA
             // 
+            RemoveBoxA.BackgroundImage = (Image)resources.GetObject("RemoveBoxA.BackgroundImage");
             RemoveBoxA.Cursor = Cursors.Hand;
+            RemoveBoxA.FlatStyle = FlatStyle.Flat;
             RemoveBoxA.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveBoxA.ImageAlign = ContentAlignment.TopCenter;
             RemoveBoxA.ImeMode = ImeMode.NoControl;
@@ -1331,7 +1412,9 @@
             // 
             // AddBoxA
             // 
+            AddBoxA.BackgroundImage = (Image)resources.GetObject("AddBoxA.BackgroundImage");
             AddBoxA.Cursor = Cursors.Hand;
+            AddBoxA.FlatStyle = FlatStyle.Flat;
             AddBoxA.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddBoxA.ImageAlign = ContentAlignment.TopCenter;
             AddBoxA.ImeMode = ImeMode.NoControl;
@@ -1375,7 +1458,7 @@
             textBox29.BorderStyle = BorderStyle.None;
             textBox29.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox29.ForeColor = SystemColors.ActiveCaptionText;
-            textBox29.Location = new Point(12, 42);
+            textBox29.Location = new Point(22, 56);
             textBox29.Multiline = true;
             textBox29.Name = "textBox29";
             textBox29.PlaceholderText = "Enter a number between 0-9999 for all Backpack Items and Medical Item textboxes";
@@ -1386,11 +1469,13 @@
             // 
             // ItemFormSwap
             // 
+            ItemFormSwap.BackgroundImage = (Image)resources.GetObject("ItemFormSwap.BackgroundImage");
             ItemFormSwap.Cursor = Cursors.Hand;
+            ItemFormSwap.FlatStyle = FlatStyle.Flat;
             ItemFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             ItemFormSwap.ImageAlign = ContentAlignment.TopCenter;
             ItemFormSwap.ImeMode = ImeMode.NoControl;
-            ItemFormSwap.Location = new Point(331, 4);
+            ItemFormSwap.Location = new Point(262, 8);
             ItemFormSwap.Name = "ItemFormSwap";
             ItemFormSwap.Size = new Size(203, 32);
             ItemFormSwap.TabIndex = 401;
@@ -1400,7 +1485,9 @@
             // 
             // RemoveMonkey
             // 
+            RemoveMonkey.BackgroundImage = (Image)resources.GetObject("RemoveMonkey.BackgroundImage");
             RemoveMonkey.Cursor = Cursors.Hand;
+            RemoveMonkey.FlatStyle = FlatStyle.Flat;
             RemoveMonkey.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveMonkey.ImageAlign = ContentAlignment.TopCenter;
             RemoveMonkey.ImeMode = ImeMode.NoControl;
@@ -1414,7 +1501,9 @@
             // 
             // AddMonkey
             // 
+            AddMonkey.BackgroundImage = (Image)resources.GetObject("AddMonkey.BackgroundImage");
             AddMonkey.Cursor = Cursors.Hand;
+            AddMonkey.FlatStyle = FlatStyle.Flat;
             AddMonkey.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddMonkey.ImageAlign = ContentAlignment.TopCenter;
             AddMonkey.ImeMode = ImeMode.NoControl;
@@ -1454,7 +1543,9 @@
             // 
             // RemoveStealth
             // 
+            RemoveStealth.BackgroundImage = (Image)resources.GetObject("RemoveStealth.BackgroundImage");
             RemoveStealth.Cursor = Cursors.Hand;
+            RemoveStealth.FlatStyle = FlatStyle.Flat;
             RemoveStealth.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveStealth.ImageAlign = ContentAlignment.TopCenter;
             RemoveStealth.ImeMode = ImeMode.NoControl;
@@ -1468,7 +1559,9 @@
             // 
             // AddStealth
             // 
+            AddStealth.BackgroundImage = (Image)resources.GetObject("AddStealth.BackgroundImage");
             AddStealth.Cursor = Cursors.Hand;
+            AddStealth.FlatStyle = FlatStyle.Flat;
             AddStealth.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddStealth.ImageAlign = ContentAlignment.TopCenter;
             AddStealth.ImeMode = ImeMode.NoControl;
@@ -1508,7 +1601,9 @@
             // 
             // RemoveBandana
             // 
+            RemoveBandana.BackgroundImage = (Image)resources.GetObject("RemoveBandana.BackgroundImage");
             RemoveBandana.Cursor = Cursors.Hand;
+            RemoveBandana.FlatStyle = FlatStyle.Flat;
             RemoveBandana.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RemoveBandana.ImageAlign = ContentAlignment.TopCenter;
             RemoveBandana.ImeMode = ImeMode.NoControl;
@@ -1522,7 +1617,9 @@
             // 
             // AddBandana
             // 
+            AddBandana.BackgroundImage = (Image)resources.GetObject("AddBandana.BackgroundImage");
             AddBandana.Cursor = Cursors.Hand;
+            AddBandana.FlatStyle = FlatStyle.Flat;
             AddBandana.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             AddBandana.ImageAlign = ContentAlignment.TopCenter;
             AddBandana.ImeMode = ImeMode.NoControl;
@@ -1575,6 +1672,8 @@
             // 
             // AddSerum
             // 
+            AddSerum.BackgroundImage = (Image)resources.GetObject("AddSerum.BackgroundImage");
+            AddSerum.FlatStyle = FlatStyle.Flat;
             AddSerum.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddSerum.Location = new Point(803, 629);
             AddSerum.Name = "AddSerum";
@@ -1596,9 +1695,9 @@
             // 
             pictureBox27.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox27.Image = (Image)resources.GetObject("pictureBox27.Image");
-            pictureBox27.Location = new Point(708, 626);
+            pictureBox27.Location = new Point(708, 627);
             pictureBox27.Name = "pictureBox27";
-            pictureBox27.Size = new Size(96, 70);
+            pictureBox27.Size = new Size(94, 69);
             pictureBox27.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox27.TabIndex = 433;
             pictureBox27.TabStop = false;
@@ -1618,6 +1717,8 @@
             // 
             // AddDMed
             // 
+            AddDMed.BackgroundImage = (Image)resources.GetObject("AddDMed.BackgroundImage");
+            AddDMed.FlatStyle = FlatStyle.Flat;
             AddDMed.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddDMed.Location = new Point(802, 532);
             AddDMed.Name = "AddDMed";
@@ -1639,9 +1740,9 @@
             // 
             pictureBox28.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox28.Image = (Image)resources.GetObject("pictureBox28.Image");
-            pictureBox28.Location = new Point(708, 530);
+            pictureBox28.Location = new Point(708, 531);
             pictureBox28.Name = "pictureBox28";
-            pictureBox28.Size = new Size(96, 70);
+            pictureBox28.Size = new Size(93, 69);
             pictureBox28.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox28.TabIndex = 428;
             pictureBox28.TabStop = false;
@@ -1661,6 +1762,8 @@
             // 
             // AddCMed
             // 
+            AddCMed.BackgroundImage = (Image)resources.GetObject("AddCMed.BackgroundImage");
+            AddCMed.FlatStyle = FlatStyle.Flat;
             AddCMed.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddCMed.Location = new Point(803, 439);
             AddCMed.Name = "AddCMed";
@@ -1682,9 +1785,9 @@
             // 
             pictureBox29.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox29.Image = (Image)resources.GetObject("pictureBox29.Image");
-            pictureBox29.Location = new Point(708, 437);
+            pictureBox29.Location = new Point(708, 439);
             pictureBox29.Name = "pictureBox29";
-            pictureBox29.Size = new Size(96, 70);
+            pictureBox29.Size = new Size(93, 68);
             pictureBox29.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox29.TabIndex = 423;
             pictureBox29.TabStop = false;
@@ -1704,6 +1807,8 @@
             // 
             // AddAntidote
             // 
+            AddAntidote.BackgroundImage = (Image)resources.GetObject("AddAntidote.BackgroundImage");
+            AddAntidote.FlatStyle = FlatStyle.Flat;
             AddAntidote.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddAntidote.Location = new Point(803, 347);
             AddAntidote.Name = "AddAntidote";
@@ -1725,9 +1830,9 @@
             // 
             pictureBox30.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox30.Image = (Image)resources.GetObject("pictureBox30.Image");
-            pictureBox30.Location = new Point(708, 344);
+            pictureBox30.Location = new Point(708, 347);
             pictureBox30.Name = "pictureBox30";
-            pictureBox30.Size = new Size(96, 70);
+            pictureBox30.Size = new Size(94, 67);
             pictureBox30.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox30.TabIndex = 418;
             pictureBox30.TabStop = false;
@@ -1747,6 +1852,8 @@
             // 
             // AddSplint
             // 
+            AddSplint.BackgroundImage = (Image)resources.GetObject("AddSplint.BackgroundImage");
+            AddSplint.FlatStyle = FlatStyle.Flat;
             AddSplint.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddSplint.Location = new Point(1048, 424);
             AddSplint.Name = "AddSplint";
@@ -1768,9 +1875,9 @@
             // 
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(953, 421);
+            pictureBox1.Location = new Point(953, 424);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(96, 70);
+            pictureBox1.Size = new Size(94, 67);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 453;
             pictureBox1.TabStop = false;
@@ -1790,6 +1897,8 @@
             // 
             // AddOintment
             // 
+            AddOintment.BackgroundImage = (Image)resources.GetObject("AddOintment.BackgroundImage");
+            AddOintment.FlatStyle = FlatStyle.Flat;
             AddOintment.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddOintment.Location = new Point(1047, 327);
             AddOintment.Name = "AddOintment";
@@ -1811,9 +1920,9 @@
             // 
             pictureBox31.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox31.Image = (Image)resources.GetObject("pictureBox31.Image");
-            pictureBox31.Location = new Point(953, 325);
+            pictureBox31.Location = new Point(953, 327);
             pictureBox31.Name = "pictureBox31";
-            pictureBox31.Size = new Size(96, 70);
+            pictureBox31.Size = new Size(92, 68);
             pictureBox31.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox31.TabIndex = 448;
             pictureBox31.TabStop = false;
@@ -1833,6 +1942,8 @@
             // 
             // AddDisinfectant
             // 
+            AddDisinfectant.BackgroundImage = (Image)resources.GetObject("AddDisinfectant.BackgroundImage");
+            AddDisinfectant.FlatStyle = FlatStyle.Flat;
             AddDisinfectant.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddDisinfectant.Location = new Point(1048, 234);
             AddDisinfectant.Name = "AddDisinfectant";
@@ -1854,9 +1965,9 @@
             // 
             pictureBox32.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox32.Image = (Image)resources.GetObject("pictureBox32.Image");
-            pictureBox32.Location = new Point(953, 232);
+            pictureBox32.Location = new Point(953, 234);
             pictureBox32.Name = "pictureBox32";
-            pictureBox32.Size = new Size(96, 70);
+            pictureBox32.Size = new Size(94, 68);
             pictureBox32.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox32.TabIndex = 443;
             pictureBox32.TabStop = false;
@@ -1876,6 +1987,8 @@
             // 
             // AddBandage
             // 
+            AddBandage.BackgroundImage = (Image)resources.GetObject("AddBandage.BackgroundImage");
+            AddBandage.FlatStyle = FlatStyle.Flat;
             AddBandage.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddBandage.Location = new Point(1048, 142);
             AddBandage.Name = "AddBandage";
@@ -1897,9 +2010,9 @@
             // 
             pictureBox33.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox33.Image = (Image)resources.GetObject("pictureBox33.Image");
-            pictureBox33.Location = new Point(953, 139);
+            pictureBox33.Location = new Point(953, 142);
             pictureBox33.Name = "pictureBox33";
-            pictureBox33.Size = new Size(96, 70);
+            pictureBox33.Size = new Size(94, 67);
             pictureBox33.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox33.TabIndex = 438;
             pictureBox33.TabStop = false;
@@ -1919,6 +2032,8 @@
             // 
             // AddStyptic
             // 
+            AddStyptic.BackgroundImage = (Image)resources.GetObject("AddStyptic.BackgroundImage");
+            AddStyptic.FlatStyle = FlatStyle.Flat;
             AddStyptic.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddStyptic.Location = new Point(1048, 521);
             AddStyptic.Name = "AddStyptic";
@@ -1962,6 +2077,8 @@
             // 
             // AddSutureKit
             // 
+            AddSutureKit.BackgroundImage = (Image)resources.GetObject("AddSutureKit.BackgroundImage");
+            AddSutureKit.FlatStyle = FlatStyle.Flat;
             AddSutureKit.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             AddSutureKit.Location = new Point(1048, 630);
             AddSutureKit.Name = "AddSutureKit";
@@ -1983,20 +2100,22 @@
             // 
             pictureBox35.BackgroundImageLayout = ImageLayout.Zoom;
             pictureBox35.Image = (Image)resources.GetObject("pictureBox35.Image");
-            pictureBox35.Location = new Point(953, 627);
+            pictureBox35.Location = new Point(953, 629);
             pictureBox35.Name = "pictureBox35";
-            pictureBox35.Size = new Size(96, 70);
+            pictureBox35.Size = new Size(94, 68);
             pictureBox35.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox35.TabIndex = 463;
             pictureBox35.TabStop = false;
             // 
             // MiscFormSwap
             // 
+            MiscFormSwap.BackgroundImage = (Image)resources.GetObject("MiscFormSwap.BackgroundImage");
             MiscFormSwap.Cursor = Cursors.Hand;
+            MiscFormSwap.FlatStyle = FlatStyle.Flat;
             MiscFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             MiscFormSwap.ImageAlign = ContentAlignment.TopCenter;
             MiscFormSwap.ImeMode = ImeMode.NoControl;
-            MiscFormSwap.Location = new Point(559, 4);
+            MiscFormSwap.Location = new Point(490, 8);
             MiscFormSwap.Name = "MiscFormSwap";
             MiscFormSwap.Size = new Size(203, 32);
             MiscFormSwap.TabIndex = 478;
@@ -2006,11 +2125,13 @@
             // 
             // HealthFormSwap
             // 
+            HealthFormSwap.BackgroundImage = (Image)resources.GetObject("HealthFormSwap.BackgroundImage");
             HealthFormSwap.Cursor = Cursors.Hand;
+            HealthFormSwap.FlatStyle = FlatStyle.Flat;
             HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
             HealthFormSwap.ImeMode = ImeMode.NoControl;
-            HealthFormSwap.Location = new Point(789, 4);
+            HealthFormSwap.Location = new Point(720, 8);
             HealthFormSwap.Name = "HealthFormSwap";
             HealthFormSwap.Size = new Size(203, 32);
             HealthFormSwap.TabIndex = 479;
@@ -2018,12 +2139,28 @@
             HealthFormSwap.UseVisualStyleBackColor = true;
             HealthFormSwap.Click += HealthFormSwap_Click;
             // 
+            // button1
+            // 
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            button1.Cursor = Cursors.Hand;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.ImageAlign = ContentAlignment.TopCenter;
+            button1.ImeMode = ImeMode.NoControl;
+            button1.Location = new Point(943, 8);
+            button1.Name = "button1";
+            button1.Size = new Size(203, 32);
+            button1.TabIndex = 480;
+            button1.Text = "Bosses";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // ItemForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(button1);
             Controls.Add(HealthFormSwap);
             Controls.Add(MiscFormSwap);
             Controls.Add(textBox49);
@@ -2358,5 +2495,6 @@
         private PictureBox pictureBox35;
         private Button MiscFormSwap;
         private Button HealthFormSwap;
+        private Button button1;
     }
 }
