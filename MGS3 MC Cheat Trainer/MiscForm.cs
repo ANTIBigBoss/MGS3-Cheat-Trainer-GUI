@@ -217,14 +217,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button4_Click(object sender, EventArgs e)
         {
-            BossManager.WriteTheFearHealth(0x0100); // Writing example health value
-            MessageBox.Show("Health value written.", "Health Write", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            BossManager.WriteTheFearStamina(0x0100); // Writing example stamina value
-            MessageBox.Show("Stamina value written.", "Stamina Write", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         // This was more of a debug button to see the values of the alert timers so I could determine the offsets of the timers

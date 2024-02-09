@@ -124,6 +124,51 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (weaponAddress != IntPtr.Zero)
             {
+                IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
+                MemoryManager.Instance.WriteShortToMemory(clipSizeAddress, newSize);
+            }
+            else
+            {
+                MessageBox.Show($"{weapon.Name} address not found in memory.");
+            }
+        }
+
+        internal static void ModifyMaxClipSize(Weapon weapon, string clipSize)
+        {
+            short newSize;
+            if (!short.TryParse(clipSize, out newSize))
+            {
+                MessageBox.Show("Invalid clip size.");
+                return;
+            }
+
+            IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
+
+            if (weaponAddress != IntPtr.Zero)
+            {
+                IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
+                MemoryManager.Instance.WriteShortToMemory(maxClipSizeAddress, newSize);
+            }
+            else
+            {
+                MessageBox.Show($"{weapon.Name} address not found in memory.");
+            }
+        }
+
+        internal static void ModifyCurrentAndMaxClipSize(Weapon weapon, string clipSize)
+        {
+            short newSize;
+            if (!short.TryParse(clipSize, out newSize))
+            {
+                MessageBox.Show("Invalid clip size.");
+                return;
+            }
+
+            // Retrieve the updated base address for the weapon
+            IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
+
+            if (weaponAddress != IntPtr.Zero)
+            {
                 // Calculate specific addresses for clip size and maximum clip size
                 IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
                 IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
@@ -154,12 +199,10 @@ namespace MGS3_MC_Cheat_Trainer
             if (weaponAddress != IntPtr.Zero)
             {
                 // Calculate specific addresses for current ammo, max ammo, and clip
-                IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
-                IntPtr maxAmmoAddress = IntPtr.Add(weaponAddress, weapon.MaxAmmoOffset.ToInt32());                
+                IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);              
 
                 // Write the ammo value to the calculated addresses
                 MemoryManager.Instance.WriteShortToMemory(currentAmmoAddress, ammoValue);
-                MemoryManager.Instance.WriteShortToMemory(maxAmmoAddress, ammoValue);
                 // You can also update the clip if needed
                 // MemoryManager.Instance.WriteShortToMemory(clipAddress, ammoValue);
             }
@@ -190,6 +233,36 @@ namespace MGS3_MC_Cheat_Trainer
 
                 // Write the ammo value to the calculated address
                 MemoryManager.Instance.WriteShortToMemory(ammoAddress, ammoValue);
+            }
+            else
+            {
+                MessageBox.Show($"{weapon.Name} address not found in memory.");
+            }
+        }
+
+        internal static void ModifyCurrentAndMaxAmmo(Weapon weapon, string ammoCount)
+        {
+            short ammoValue;
+            if (!short.TryParse(ammoCount, out ammoValue))
+            {
+                MessageBox.Show("Invalid ammo count.");
+                return;
+            }
+
+            // Retrieve the updated base address for the weapon
+            IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
+
+            if (weaponAddress != IntPtr.Zero)
+            {
+                // Calculate specific addresses for current ammo, max ammo, and clip
+                IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
+                IntPtr maxAmmoAddress = IntPtr.Add(weaponAddress, weapon.MaxAmmoOffset.ToInt32());
+
+                // Write the ammo value to the calculated addresses
+                MemoryManager.Instance.WriteShortToMemory(currentAmmoAddress, ammoValue);
+                MemoryManager.Instance.WriteShortToMemory(maxAmmoAddress, ammoValue);
+                // You can also update the clip if needed
+                // MemoryManager.Instance.WriteShortToMemory(clipAddress, ammoValue);
             }
             else
             {
@@ -283,8 +356,5 @@ namespace MGS3_MC_Cheat_Trainer
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
-
-
-
     }
 }

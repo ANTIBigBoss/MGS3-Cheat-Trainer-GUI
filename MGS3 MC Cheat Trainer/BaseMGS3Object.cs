@@ -275,7 +275,6 @@ namespace MGS3_MC_Cheat_Trainer
             // Was never able to find a static address for current battery in Cheat Engine
             public static readonly Item Knife = new("KNIFE", 35, "ItemsTable", false); // No use but listing for completeness of table
             public static readonly Item Battery = new("BATTERY", 36, "ItemsTable", false); // Need to look into exactly what this controls
-                                                                             // Need to shift around logic for suppressor toggle since I think somewhere in code still thinks it's a weapon
             public static readonly Item M1911A1Surpressor = new("M1911A1 SURPRESSOR", 37, "ItemsTable", false);
             public static readonly Item MK22Surpressor = new("MK22 SURPRESSOR", 38, "ItemsTable", false);
             public static readonly Item XM16E1Surpressor = new("XM16E1 SURPRESSOR", 39, "ItemsTable", false);

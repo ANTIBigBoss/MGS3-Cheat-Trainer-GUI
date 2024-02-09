@@ -16,7 +16,8 @@ namespace MGS3_MC_Cheat_Trainer
         {
             {
                 InitializeComponent();
-                this.FormClosing += new FormClosingEventHandler(MainMenuForm_FormClosing);
+                this.FormClosing += new FormClosingEventHandler(MainMenuForm_FormClosing);     
+                
             }
         }
 

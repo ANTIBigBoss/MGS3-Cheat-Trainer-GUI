@@ -29,163 +29,129 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WeaponForm));
-            XM16E1TextBox = new TextBox();
             MK22TextBox = new TextBox();
             M1911A1TextBox = new TextBox();
             M37TextBox = new TextBox();
-            XM16E1Button = new Button();
-            M37Button = new Button();
-            M1911A1Button = new Button();
-            MK22Button = new Button();
-            RPG7Button = new Button();
             RPG7TextBox = new TextBox();
-            SVDButton = new Button();
             SVDTextBox = new TextBox();
-            M63Button = new Button();
             M63TextBox = new TextBox();
             pictureBox15 = new PictureBox();
-            pictureBox9 = new PictureBox();
-            textBox8 = new TextBox();
-            textBox10 = new TextBox();
-            textBox1 = new TextBox();
             AddEz = new Button();
             RemoveEz = new Button();
-            textBox16 = new TextBox();
             pictureBox10 = new PictureBox();
-            textBox20 = new TextBox();
-            Minus30XM16E1 = new Button();
-            Plus30XM16E1 = new Button();
-            button29 = new Button();
-            textBox21 = new TextBox();
             pictureBox11 = new PictureBox();
-            XM16E1Clip = new Button();
-            textBox23 = new TextBox();
-            M37Clip = new Button();
             pictureBox4 = new PictureBox();
-            textBox26 = new TextBox();
-            M63Clip = new Button();
             pictureBox3 = new PictureBox();
-            MK22Clip = new Button();
-            button12 = new Button();
-            textBox9 = new TextBox();
-            Minus30MK22 = new Button();
-            Plus30MK22 = new Button();
-            textBox13 = new TextBox();
-            Minus30M1911A1 = new Button();
-            Plus30M1911A1 = new Button();
-            M1911A1Clip = new Button();
-            button25 = new Button();
-            textBox11 = new TextBox();
-            AK47Clip = new Button();
             pictureBox8 = new PictureBox();
-            AK47Button = new Button();
             AK47TextBox = new TextBox();
-            RPG7Clip = new Button();
-            SVDClip = new Button();
-            textBox15 = new TextBox();
             pictureBox12 = new PictureBox();
-            textBox17 = new TextBox();
             pictureBox5 = new PictureBox();
-            textBox18 = new TextBox();
-            textBox19 = new TextBox();
-            textBox22 = new TextBox();
-            ScorpionClip = new Button();
             pictureBox6 = new PictureBox();
-            ScorpionButton = new Button();
             ScorpionTextBox = new TextBox();
-            textBox25 = new TextBox();
-            SAAClip = new Button();
             pictureBox14 = new PictureBox();
-            SAAButton = new Button();
-            SAATextBox = new TextBox();
-            textBox28 = new TextBox();
-            textBox29 = new TextBox();
             pictureBox16 = new PictureBox();
-            MosinClip = new Button();
-            MosinButton = new Button();
             MosinTextBox = new TextBox();
-            textBox33 = new TextBox();
             pictureBox18 = new PictureBox();
-            CigSprayButton = new Button();
             CigSprayTextBox = new TextBox();
             RemovePatriot = new Button();
             AddPatriot = new Button();
-            textBox2 = new TextBox();
             pictureBox1 = new PictureBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
-            textBox7 = new TextBox();
             pictureBox7 = new PictureBox();
-            GrenadeButton = new Button();
             GrenadeTextBox = new TextBox();
-            textBox43 = new TextBox();
             pictureBox22 = new PictureBox();
-            ClaymoreButton = new Button();
             ClaymoreTextBox = new TextBox();
-            textBox45 = new TextBox();
             pictureBox23 = new PictureBox();
-            C3Button = new Button();
             C3TextBox = new TextBox();
-            textBox49 = new TextBox();
             pictureBox25 = new PictureBox();
-            textBox51 = new TextBox();
             pictureBox27 = new PictureBox();
-            TNTButton = new Button();
             TNTTextBox = new TextBox();
-            BookButton = new Button();
             BookTextBox = new TextBox();
-            textBox5 = new TextBox();
             pictureBox2 = new PictureBox();
-            StunGrenadeButton = new Button();
             StunGrenadeTextBox = new TextBox();
-            textBox31 = new TextBox();
             pictureBox13 = new PictureBox();
-            SmokeGrenadeButton = new Button();
             SmokeGrenadeTextBox = new TextBox();
-            textBox37 = new TextBox();
             pictureBox17 = new PictureBox();
-            WpGrenadeButton = new Button();
             WpGrenadeTextBox = new TextBox();
-            textBox39 = new TextBox();
             pictureBox20 = new PictureBox();
-            ChaffGrenadeButton = new Button();
             ChaffGrenadeTextBox = new TextBox();
-            textBox41 = new TextBox();
             pictureBox21 = new PictureBox();
-            MagazineButton = new Button();
             MagazineTextBox = new TextBox();
-            textBox47 = new TextBox();
-            textBox35 = new TextBox();
             pictureBox19 = new PictureBox();
-            HandkerchiefButton = new Button();
             HandkerchiefTextBox = new TextBox();
             RemoveKnife = new Button();
             AddKnife = new Button();
-            textBox48 = new TextBox();
             pictureBox24 = new PictureBox();
             RemoveFork = new Button();
             AddFork = new Button();
-            textBox50 = new TextBox();
             pictureBox26 = new PictureBox();
-            textBox6 = new TextBox();
             pictureBox28 = new PictureBox();
-            MousetrapButton = new Button();
             MousetrapTextbox = new TextBox();
             RemoveTorch = new Button();
             AddTorch = new Button();
-            textBox12 = new TextBox();
             pictureBox29 = new PictureBox();
             RemoveDMic = new Button();
             AddDMic = new Button();
-            textBox14 = new TextBox();
             pictureBox30 = new PictureBox();
             ItemFormSwap = new Button();
             button1 = new Button();
             button70 = new Button();
             HealthFormSwap = new Button();
-            button11 = new Button();
+            BossFormSwap = new Button();
+            M1911A1Dropdown = new ComboBox();
+            pictureBox31 = new PictureBox();
+            ChangeM1911A1 = new Button();
+            ChangeMK22 = new Button();
+            MK22Dropdown = new ComboBox();
+            ChangeXM16E1 = new Button();
+            XM16E1Dropdown = new ComboBox();
+            XM16E1TextBox = new TextBox();
+            ChangeSAA = new Button();
+            SAADropdown = new ComboBox();
+            SAATextBox = new TextBox();
+            ChangeScorpion = new Button();
+            ScorpionDropdown = new ComboBox();
+            ChangeAK47 = new Button();
+            AK47Dropdown = new ComboBox();
+            ChangeM63 = new Button();
+            M63Dropdown = new ComboBox();
+            ChangeRPG = new Button();
+            RPG7Dropdown = new ComboBox();
+            MosinDropdown = new ComboBox();
+            ChangeMosin = new Button();
+            ChangeM37 = new Button();
+            M37Dropdown = new ComboBox();
+            ChangeSVD = new Button();
+            SVDDropdown = new ComboBox();
+            ChangeGrenade = new Button();
+            GrenadeDropdown = new ComboBox();
+            ChangeWp = new Button();
+            WpGrenadeDropdown = new ComboBox();
+            ChangeStun = new Button();
+            StunGrenadeDropdown = new ComboBox();
+            ChangeSmoke = new Button();
+            SmokeGrenadeDropdown = new ComboBox();
+            ChangeChaff = new Button();
+            ChaffGrenadeDropdown = new ComboBox();
+            MagazineDropdown = new ComboBox();
+            ChangeMagazine = new Button();
+            ChangeC3 = new Button();
+            C3Dropdown = new ComboBox();
+            ChangeBook = new Button();
+            BookDropdown = new ComboBox();
+            ChangeClaymore = new Button();
+            ClaymoreDropdown = new ComboBox();
+            ChangeTNT = new Button();
+            TNTDropdown = new ComboBox();
+            ChangeMousetrap = new Button();
+            MousetrapDropdown = new ComboBox();
+            ChangeCigSpray = new Button();
+            CigSprayDropdown = new ComboBox();
+            ChangeHandkerchief = new Button();
+            HandkerchiefDropdown = new ComboBox();
+            AllWeaponsChecklist = new CheckedListBox();
+            ChangeAllChecked = new Button();
+            AllTextbox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -214,12 +180,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox28).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox30).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox31).BeginInit();
             SuspendLayout();
-            // 
-            // XM16E1TextBox
-            // 
-            resources.ApplyResources(XM16E1TextBox, "XM16E1TextBox");
-            XM16E1TextBox.Name = "XM16E1TextBox";
             // 
             // MK22TextBox
             // 
@@ -237,70 +199,15 @@
             resources.ApplyResources(M37TextBox, "M37TextBox");
             M37TextBox.Name = "M37TextBox";
             // 
-            // XM16E1Button
-            // 
-            resources.ApplyResources(XM16E1Button, "XM16E1Button");
-            XM16E1Button.Cursor = Cursors.Hand;
-            XM16E1Button.Name = "XM16E1Button";
-            XM16E1Button.UseVisualStyleBackColor = true;
-            XM16E1Button.Click += XM16E1Button_Click;
-            // 
-            // M37Button
-            // 
-            resources.ApplyResources(M37Button, "M37Button");
-            M37Button.Name = "M37Button";
-            M37Button.UseVisualStyleBackColor = true;
-            M37Button.Click += M37Button_Click;
-            // 
-            // M1911A1Button
-            // 
-            resources.ApplyResources(M1911A1Button, "M1911A1Button");
-            M1911A1Button.Cursor = Cursors.Hand;
-            M1911A1Button.Name = "M1911A1Button";
-            M1911A1Button.UseVisualStyleBackColor = true;
-            M1911A1Button.Click += M1911A1Button_Click;
-            // 
-            // MK22Button
-            // 
-            resources.ApplyResources(MK22Button, "MK22Button");
-            MK22Button.Cursor = Cursors.Hand;
-            MK22Button.Name = "MK22Button";
-            MK22Button.UseVisualStyleBackColor = true;
-            MK22Button.Click += MK22Button_Click;
-            // 
-            // RPG7Button
-            // 
-            resources.ApplyResources(RPG7Button, "RPG7Button");
-            RPG7Button.Cursor = Cursors.Hand;
-            RPG7Button.Name = "RPG7Button";
-            RPG7Button.UseVisualStyleBackColor = true;
-            RPG7Button.Click += RPG7Button_Click;
-            // 
             // RPG7TextBox
             // 
             resources.ApplyResources(RPG7TextBox, "RPG7TextBox");
             RPG7TextBox.Name = "RPG7TextBox";
             // 
-            // SVDButton
-            // 
-            resources.ApplyResources(SVDButton, "SVDButton");
-            SVDButton.Cursor = Cursors.Hand;
-            SVDButton.Name = "SVDButton";
-            SVDButton.UseVisualStyleBackColor = true;
-            SVDButton.Click += SVDButton_Click;
-            // 
             // SVDTextBox
             // 
             resources.ApplyResources(SVDTextBox, "SVDTextBox");
             SVDTextBox.Name = "SVDTextBox";
-            // 
-            // M63Button
-            // 
-            resources.ApplyResources(M63Button, "M63Button");
-            M63Button.Cursor = Cursors.Hand;
-            M63Button.Name = "M63Button";
-            M63Button.UseVisualStyleBackColor = true;
-            M63Button.Click += M63Button_Click;
             // 
             // M63TextBox
             // 
@@ -312,39 +219,6 @@
             resources.ApplyResources(pictureBox15, "pictureBox15");
             pictureBox15.Name = "pictureBox15";
             pictureBox15.TabStop = false;
-            // 
-            // pictureBox9
-            // 
-            resources.ApplyResources(pictureBox9, "pictureBox9");
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.TabStop = false;
-            // 
-            // textBox8
-            // 
-            resources.ApplyResources(textBox8, "textBox8");
-            textBox8.BackColor = SystemColors.ActiveCaptionText;
-            textBox8.BorderStyle = BorderStyle.None;
-            textBox8.ForeColor = SystemColors.ActiveCaptionText;
-            textBox8.Name = "textBox8";
-            textBox8.ReadOnly = true;
-            // 
-            // textBox10
-            // 
-            resources.ApplyResources(textBox10, "textBox10");
-            textBox10.BackColor = SystemColors.ActiveCaptionText;
-            textBox10.BorderStyle = BorderStyle.None;
-            textBox10.ForeColor = SystemColors.ActiveCaptionText;
-            textBox10.Name = "textBox10";
-            textBox10.ReadOnly = true;
-            // 
-            // textBox1
-            // 
-            resources.ApplyResources(textBox1, "textBox1");
-            textBox1.BackColor = SystemColors.ActiveCaptionText;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.ForeColor = SystemColors.ActiveCaptionText;
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
             // 
             // AddEz
             // 
@@ -362,61 +236,11 @@
             RemoveEz.UseVisualStyleBackColor = true;
             RemoveEz.Click += RemoveEz_Click;
             // 
-            // textBox16
-            // 
-            resources.ApplyResources(textBox16, "textBox16");
-            textBox16.BackColor = SystemColors.ActiveCaptionText;
-            textBox16.BorderStyle = BorderStyle.None;
-            textBox16.ForeColor = SystemColors.ActiveCaptionText;
-            textBox16.Name = "textBox16";
-            textBox16.ReadOnly = true;
-            // 
             // pictureBox10
             // 
             resources.ApplyResources(pictureBox10, "pictureBox10");
             pictureBox10.Name = "pictureBox10";
             pictureBox10.TabStop = false;
-            // 
-            // textBox20
-            // 
-            resources.ApplyResources(textBox20, "textBox20");
-            textBox20.BackColor = SystemColors.ActiveCaptionText;
-            textBox20.ForeColor = SystemColors.ActiveCaptionText;
-            textBox20.Name = "textBox20";
-            textBox20.ReadOnly = true;
-            // 
-            // Minus30XM16E1
-            // 
-            resources.ApplyResources(Minus30XM16E1, "Minus30XM16E1");
-            Minus30XM16E1.Cursor = Cursors.Hand;
-            Minus30XM16E1.Name = "Minus30XM16E1";
-            Minus30XM16E1.UseVisualStyleBackColor = true;
-            Minus30XM16E1.Click += Minus30XM16E1_Click;
-            // 
-            // Plus30XM16E1
-            // 
-            resources.ApplyResources(Plus30XM16E1, "Plus30XM16E1");
-            Plus30XM16E1.Cursor = Cursors.Hand;
-            Plus30XM16E1.Name = "Plus30XM16E1";
-            Plus30XM16E1.UseVisualStyleBackColor = true;
-            Plus30XM16E1.Click += Plus30XM16E1_Click;
-            // 
-            // button29
-            // 
-            resources.ApplyResources(button29, "button29");
-            button29.Cursor = Cursors.Hand;
-            button29.Name = "button29";
-            button29.UseVisualStyleBackColor = true;
-            button29.Click += ToggleXM16E1Suppressor_Click;
-            // 
-            // textBox21
-            // 
-            resources.ApplyResources(textBox21, "textBox21");
-            textBox21.BackColor = SystemColors.ActiveCaptionText;
-            textBox21.BorderStyle = BorderStyle.None;
-            textBox21.ForeColor = SystemColors.ActiveCaptionText;
-            textBox21.Name = "textBox21";
-            textBox21.ReadOnly = true;
             // 
             // pictureBox11
             // 
@@ -424,52 +248,11 @@
             pictureBox11.Name = "pictureBox11";
             pictureBox11.TabStop = false;
             // 
-            // XM16E1Clip
-            // 
-            resources.ApplyResources(XM16E1Clip, "XM16E1Clip");
-            XM16E1Clip.Cursor = Cursors.Hand;
-            XM16E1Clip.Name = "XM16E1Clip";
-            XM16E1Clip.UseVisualStyleBackColor = true;
-            XM16E1Clip.Click += XM16E1Clip_Click;
-            // 
-            // textBox23
-            // 
-            resources.ApplyResources(textBox23, "textBox23");
-            textBox23.BackColor = SystemColors.ActiveCaptionText;
-            textBox23.BorderStyle = BorderStyle.None;
-            textBox23.ForeColor = SystemColors.ActiveCaptionText;
-            textBox23.Name = "textBox23";
-            textBox23.ReadOnly = true;
-            // 
-            // M37Clip
-            // 
-            resources.ApplyResources(M37Clip, "M37Clip");
-            M37Clip.Name = "M37Clip";
-            M37Clip.UseVisualStyleBackColor = true;
-            M37Clip.Click += M37Clip_Click;
-            // 
             // pictureBox4
             // 
             resources.ApplyResources(pictureBox4, "pictureBox4");
             pictureBox4.Name = "pictureBox4";
             pictureBox4.TabStop = false;
-            // 
-            // textBox26
-            // 
-            resources.ApplyResources(textBox26, "textBox26");
-            textBox26.BackColor = SystemColors.ActiveCaptionText;
-            textBox26.BorderStyle = BorderStyle.None;
-            textBox26.ForeColor = SystemColors.ActiveCaptionText;
-            textBox26.Name = "textBox26";
-            textBox26.ReadOnly = true;
-            // 
-            // M63Clip
-            // 
-            resources.ApplyResources(M63Clip, "M63Clip");
-            M63Clip.Cursor = Cursors.Hand;
-            M63Clip.Name = "M63Clip";
-            M63Clip.UseVisualStyleBackColor = true;
-            M63Clip.Click += M63Clip_Click;
             // 
             // pictureBox3
             // 
@@ -477,146 +260,16 @@
             pictureBox3.Name = "pictureBox3";
             pictureBox3.TabStop = false;
             // 
-            // MK22Clip
-            // 
-            resources.ApplyResources(MK22Clip, "MK22Clip");
-            MK22Clip.Cursor = Cursors.Hand;
-            MK22Clip.Name = "MK22Clip";
-            MK22Clip.UseVisualStyleBackColor = true;
-            MK22Clip.Click += MK22Clip_Click;
-            // 
-            // button12
-            // 
-            resources.ApplyResources(button12, "button12");
-            button12.Cursor = Cursors.Hand;
-            button12.Name = "button12";
-            button12.UseVisualStyleBackColor = true;
-            button12.Click += ToggleMK22Suppressor_Click;
-            // 
-            // textBox9
-            // 
-            resources.ApplyResources(textBox9, "textBox9");
-            textBox9.BackColor = SystemColors.ActiveCaptionText;
-            textBox9.ForeColor = SystemColors.ActiveCaptionText;
-            textBox9.Name = "textBox9";
-            textBox9.ReadOnly = true;
-            // 
-            // Minus30MK22
-            // 
-            resources.ApplyResources(Minus30MK22, "Minus30MK22");
-            Minus30MK22.Cursor = Cursors.Hand;
-            Minus30MK22.Name = "Minus30MK22";
-            Minus30MK22.UseVisualStyleBackColor = true;
-            Minus30MK22.Click += Minus30MK22_Click;
-            // 
-            // Plus30MK22
-            // 
-            resources.ApplyResources(Plus30MK22, "Plus30MK22");
-            Plus30MK22.Cursor = Cursors.Hand;
-            Plus30MK22.Name = "Plus30MK22";
-            Plus30MK22.UseVisualStyleBackColor = true;
-            Plus30MK22.Click += Plus30MK22_Click;
-            // 
-            // textBox13
-            // 
-            resources.ApplyResources(textBox13, "textBox13");
-            textBox13.BackColor = SystemColors.ActiveCaptionText;
-            textBox13.ForeColor = SystemColors.ActiveCaptionText;
-            textBox13.Name = "textBox13";
-            textBox13.ReadOnly = true;
-            // 
-            // Minus30M1911A1
-            // 
-            resources.ApplyResources(Minus30M1911A1, "Minus30M1911A1");
-            Minus30M1911A1.Cursor = Cursors.Hand;
-            Minus30M1911A1.Name = "Minus30M1911A1";
-            Minus30M1911A1.UseVisualStyleBackColor = true;
-            Minus30M1911A1.Click += Minus30M1911A1_Click;
-            // 
-            // Plus30M1911A1
-            // 
-            resources.ApplyResources(Plus30M1911A1, "Plus30M1911A1");
-            Plus30M1911A1.Cursor = Cursors.Hand;
-            Plus30M1911A1.Name = "Plus30M1911A1";
-            Plus30M1911A1.UseVisualStyleBackColor = true;
-            Plus30M1911A1.Click += Plus30M1911A1_Click;
-            // 
-            // M1911A1Clip
-            // 
-            resources.ApplyResources(M1911A1Clip, "M1911A1Clip");
-            M1911A1Clip.Cursor = Cursors.Hand;
-            M1911A1Clip.Name = "M1911A1Clip";
-            M1911A1Clip.UseVisualStyleBackColor = true;
-            M1911A1Clip.Click += M1911A1Clip_Click;
-            // 
-            // button25
-            // 
-            resources.ApplyResources(button25, "button25");
-            button25.Cursor = Cursors.Hand;
-            button25.Name = "button25";
-            button25.UseVisualStyleBackColor = true;
-            button25.Click += ToggleM1911A1Suppressor_Click;
-            // 
-            // textBox11
-            // 
-            resources.ApplyResources(textBox11, "textBox11");
-            textBox11.BackColor = SystemColors.ActiveCaptionText;
-            textBox11.BorderStyle = BorderStyle.None;
-            textBox11.ForeColor = SystemColors.ActiveCaptionText;
-            textBox11.Name = "textBox11";
-            textBox11.ReadOnly = true;
-            // 
-            // AK47Clip
-            // 
-            resources.ApplyResources(AK47Clip, "AK47Clip");
-            AK47Clip.Cursor = Cursors.Hand;
-            AK47Clip.Name = "AK47Clip";
-            AK47Clip.UseVisualStyleBackColor = true;
-            AK47Clip.Click += AK47Clip_Click;
-            // 
             // pictureBox8
             // 
             resources.ApplyResources(pictureBox8, "pictureBox8");
             pictureBox8.Name = "pictureBox8";
             pictureBox8.TabStop = false;
             // 
-            // AK47Button
-            // 
-            resources.ApplyResources(AK47Button, "AK47Button");
-            AK47Button.Cursor = Cursors.Hand;
-            AK47Button.Name = "AK47Button";
-            AK47Button.UseVisualStyleBackColor = true;
-            AK47Button.Click += AK47Button_Click_1;
-            // 
             // AK47TextBox
             // 
             resources.ApplyResources(AK47TextBox, "AK47TextBox");
             AK47TextBox.Name = "AK47TextBox";
-            // 
-            // RPG7Clip
-            // 
-            resources.ApplyResources(RPG7Clip, "RPG7Clip");
-            RPG7Clip.Cursor = Cursors.Hand;
-            RPG7Clip.Name = "RPG7Clip";
-            RPG7Clip.UseVisualStyleBackColor = true;
-            RPG7Clip.Click += RPG7Clip_Click;
-            // 
-            // SVDClip
-            // 
-            resources.ApplyResources(SVDClip, "SVDClip");
-            SVDClip.Cursor = Cursors.Hand;
-            SVDClip.Name = "SVDClip";
-            SVDClip.UseVisualStyleBackColor = true;
-            SVDClip.Click += SVDClip_Click;
-            // 
-            // textBox15
-            // 
-            resources.ApplyResources(textBox15, "textBox15");
-            textBox15.BackColor = SystemColors.ActiveCaptionText;
-            textBox15.BorderStyle = BorderStyle.None;
-            textBox15.ForeColor = SystemColors.ActiveCaptionText;
-            textBox15.Name = "textBox15";
-            textBox15.ReadOnly = true;
             // 
             // pictureBox12
             // 
@@ -624,55 +277,11 @@
             pictureBox12.Name = "pictureBox12";
             pictureBox12.TabStop = false;
             // 
-            // textBox17
-            // 
-            resources.ApplyResources(textBox17, "textBox17");
-            textBox17.BackColor = SystemColors.ActiveCaptionText;
-            textBox17.BorderStyle = BorderStyle.None;
-            textBox17.ForeColor = SystemColors.ActiveCaptionText;
-            textBox17.Name = "textBox17";
-            textBox17.ReadOnly = true;
-            // 
             // pictureBox5
             // 
             resources.ApplyResources(pictureBox5, "pictureBox5");
             pictureBox5.Name = "pictureBox5";
             pictureBox5.TabStop = false;
-            // 
-            // textBox18
-            // 
-            resources.ApplyResources(textBox18, "textBox18");
-            textBox18.BackColor = SystemColors.ActiveCaptionText;
-            textBox18.BorderStyle = BorderStyle.None;
-            textBox18.ForeColor = SystemColors.ActiveCaptionText;
-            textBox18.Name = "textBox18";
-            textBox18.ReadOnly = true;
-            // 
-            // textBox19
-            // 
-            resources.ApplyResources(textBox19, "textBox19");
-            textBox19.BackColor = SystemColors.ActiveCaptionText;
-            textBox19.BorderStyle = BorderStyle.None;
-            textBox19.ForeColor = SystemColors.ActiveCaptionText;
-            textBox19.Name = "textBox19";
-            textBox19.ReadOnly = true;
-            // 
-            // textBox22
-            // 
-            resources.ApplyResources(textBox22, "textBox22");
-            textBox22.BackColor = SystemColors.ActiveCaptionText;
-            textBox22.BorderStyle = BorderStyle.None;
-            textBox22.ForeColor = SystemColors.ActiveCaptionText;
-            textBox22.Name = "textBox22";
-            textBox22.ReadOnly = true;
-            // 
-            // ScorpionClip
-            // 
-            resources.ApplyResources(ScorpionClip, "ScorpionClip");
-            ScorpionClip.Cursor = Cursors.Hand;
-            ScorpionClip.Name = "ScorpionClip";
-            ScorpionClip.UseVisualStyleBackColor = true;
-            ScorpionClip.Click += ScorpionClip_Click;
             // 
             // pictureBox6
             // 
@@ -680,35 +289,10 @@
             pictureBox6.Name = "pictureBox6";
             pictureBox6.TabStop = false;
             // 
-            // ScorpionButton
-            // 
-            resources.ApplyResources(ScorpionButton, "ScorpionButton");
-            ScorpionButton.Cursor = Cursors.Hand;
-            ScorpionButton.Name = "ScorpionButton";
-            ScorpionButton.UseVisualStyleBackColor = true;
-            ScorpionButton.Click += ScorpionButton_Click_1;
-            // 
             // ScorpionTextBox
             // 
             resources.ApplyResources(ScorpionTextBox, "ScorpionTextBox");
             ScorpionTextBox.Name = "ScorpionTextBox";
-            // 
-            // textBox25
-            // 
-            resources.ApplyResources(textBox25, "textBox25");
-            textBox25.BackColor = SystemColors.ActiveCaptionText;
-            textBox25.BorderStyle = BorderStyle.None;
-            textBox25.ForeColor = SystemColors.ActiveCaptionText;
-            textBox25.Name = "textBox25";
-            textBox25.ReadOnly = true;
-            // 
-            // SAAClip
-            // 
-            resources.ApplyResources(SAAClip, "SAAClip");
-            SAAClip.Cursor = Cursors.Hand;
-            SAAClip.Name = "SAAClip";
-            SAAClip.UseVisualStyleBackColor = true;
-            SAAClip.Click += SAAClip_Click;
             // 
             // pictureBox14
             // 
@@ -716,85 +300,22 @@
             pictureBox14.Name = "pictureBox14";
             pictureBox14.TabStop = false;
             // 
-            // SAAButton
-            // 
-            resources.ApplyResources(SAAButton, "SAAButton");
-            SAAButton.Cursor = Cursors.Hand;
-            SAAButton.Name = "SAAButton";
-            SAAButton.UseVisualStyleBackColor = true;
-            SAAButton.Click += SAAButton_Click;
-            // 
-            // SAATextBox
-            // 
-            resources.ApplyResources(SAATextBox, "SAATextBox");
-            SAATextBox.Name = "SAATextBox";
-            // 
-            // textBox28
-            // 
-            resources.ApplyResources(textBox28, "textBox28");
-            textBox28.BackColor = SystemColors.ActiveCaptionText;
-            textBox28.BorderStyle = BorderStyle.None;
-            textBox28.ForeColor = SystemColors.ActiveCaptionText;
-            textBox28.Name = "textBox28";
-            textBox28.ReadOnly = true;
-            // 
-            // textBox29
-            // 
-            resources.ApplyResources(textBox29, "textBox29");
-            textBox29.BackColor = SystemColors.ActiveCaptionText;
-            textBox29.BorderStyle = BorderStyle.None;
-            textBox29.ForeColor = SystemColors.ActiveCaptionText;
-            textBox29.Name = "textBox29";
-            textBox29.ReadOnly = true;
-            // 
             // pictureBox16
             // 
             resources.ApplyResources(pictureBox16, "pictureBox16");
             pictureBox16.Name = "pictureBox16";
             pictureBox16.TabStop = false;
             // 
-            // MosinClip
-            // 
-            resources.ApplyResources(MosinClip, "MosinClip");
-            MosinClip.Cursor = Cursors.Hand;
-            MosinClip.Name = "MosinClip";
-            MosinClip.UseVisualStyleBackColor = true;
-            MosinClip.Click += MosinClip_Click;
-            // 
-            // MosinButton
-            // 
-            resources.ApplyResources(MosinButton, "MosinButton");
-            MosinButton.Cursor = Cursors.Hand;
-            MosinButton.Name = "MosinButton";
-            MosinButton.UseVisualStyleBackColor = true;
-            MosinButton.Click += MosinButton_Click;
-            // 
             // MosinTextBox
             // 
             resources.ApplyResources(MosinTextBox, "MosinTextBox");
             MosinTextBox.Name = "MosinTextBox";
-            // 
-            // textBox33
-            // 
-            resources.ApplyResources(textBox33, "textBox33");
-            textBox33.BackColor = SystemColors.ActiveCaptionText;
-            textBox33.BorderStyle = BorderStyle.None;
-            textBox33.ForeColor = SystemColors.ActiveCaptionText;
-            textBox33.Name = "textBox33";
-            textBox33.ReadOnly = true;
             // 
             // pictureBox18
             // 
             resources.ApplyResources(pictureBox18, "pictureBox18");
             pictureBox18.Name = "pictureBox18";
             pictureBox18.TabStop = false;
-            // 
-            // CigSprayButton
-            // 
-            resources.ApplyResources(CigSprayButton, "CigSprayButton");
-            CigSprayButton.Name = "CigSprayButton";
-            CigSprayButton.UseVisualStyleBackColor = true;
-            CigSprayButton.Click += CigSprayButton_Click_1;
             // 
             // CigSprayTextBox
             // 
@@ -817,47 +338,11 @@
             AddPatriot.UseVisualStyleBackColor = true;
             AddPatriot.Click += AddPatriot_Click;
             // 
-            // textBox2
-            // 
-            resources.ApplyResources(textBox2, "textBox2");
-            textBox2.BackColor = SystemColors.ActiveCaptionText;
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.ForeColor = SystemColors.ActiveCaptionText;
-            textBox2.Name = "textBox2";
-            textBox2.ReadOnly = true;
-            // 
             // pictureBox1
             // 
             resources.ApplyResources(pictureBox1, "pictureBox1");
             pictureBox1.Name = "pictureBox1";
             pictureBox1.TabStop = false;
-            // 
-            // textBox3
-            // 
-            resources.ApplyResources(textBox3, "textBox3");
-            textBox3.BackColor = SystemColors.ActiveCaptionText;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.ForeColor = SystemColors.ActiveCaptionText;
-            textBox3.Name = "textBox3";
-            textBox3.ReadOnly = true;
-            // 
-            // textBox4
-            // 
-            resources.ApplyResources(textBox4, "textBox4");
-            textBox4.BackColor = SystemColors.ActiveCaptionText;
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.ForeColor = SystemColors.ActiveCaptionText;
-            textBox4.Name = "textBox4";
-            textBox4.ReadOnly = true;
-            // 
-            // textBox7
-            // 
-            resources.ApplyResources(textBox7, "textBox7");
-            textBox7.BackColor = SystemColors.ActiveCaptionText;
-            textBox7.BorderStyle = BorderStyle.None;
-            textBox7.ForeColor = SystemColors.ActiveCaptionText;
-            textBox7.Name = "textBox7";
-            textBox7.ReadOnly = true;
             // 
             // pictureBox7
             // 
@@ -865,26 +350,10 @@
             pictureBox7.Name = "pictureBox7";
             pictureBox7.TabStop = false;
             // 
-            // GrenadeButton
-            // 
-            resources.ApplyResources(GrenadeButton, "GrenadeButton");
-            GrenadeButton.Name = "GrenadeButton";
-            GrenadeButton.UseVisualStyleBackColor = true;
-            GrenadeButton.Click += GrenadeButton_Click_1;
-            // 
             // GrenadeTextBox
             // 
             resources.ApplyResources(GrenadeTextBox, "GrenadeTextBox");
             GrenadeTextBox.Name = "GrenadeTextBox";
-            // 
-            // textBox43
-            // 
-            resources.ApplyResources(textBox43, "textBox43");
-            textBox43.BackColor = SystemColors.ActiveCaptionText;
-            textBox43.BorderStyle = BorderStyle.None;
-            textBox43.ForeColor = SystemColors.ActiveCaptionText;
-            textBox43.Name = "textBox43";
-            textBox43.ReadOnly = true;
             // 
             // pictureBox22
             // 
@@ -892,26 +361,10 @@
             pictureBox22.Name = "pictureBox22";
             pictureBox22.TabStop = false;
             // 
-            // ClaymoreButton
-            // 
-            resources.ApplyResources(ClaymoreButton, "ClaymoreButton");
-            ClaymoreButton.Name = "ClaymoreButton";
-            ClaymoreButton.UseVisualStyleBackColor = true;
-            ClaymoreButton.Click += ClaymoreButton_Click;
-            // 
             // ClaymoreTextBox
             // 
             resources.ApplyResources(ClaymoreTextBox, "ClaymoreTextBox");
             ClaymoreTextBox.Name = "ClaymoreTextBox";
-            // 
-            // textBox45
-            // 
-            resources.ApplyResources(textBox45, "textBox45");
-            textBox45.BackColor = SystemColors.ActiveCaptionText;
-            textBox45.BorderStyle = BorderStyle.None;
-            textBox45.ForeColor = SystemColors.ActiveCaptionText;
-            textBox45.Name = "textBox45";
-            textBox45.ReadOnly = true;
             // 
             // pictureBox23
             // 
@@ -919,26 +372,10 @@
             pictureBox23.Name = "pictureBox23";
             pictureBox23.TabStop = false;
             // 
-            // C3Button
-            // 
-            resources.ApplyResources(C3Button, "C3Button");
-            C3Button.Name = "C3Button";
-            C3Button.UseVisualStyleBackColor = true;
-            C3Button.Click += C3Button_Click;
-            // 
             // C3TextBox
             // 
             resources.ApplyResources(C3TextBox, "C3TextBox");
             C3TextBox.Name = "C3TextBox";
-            // 
-            // textBox49
-            // 
-            resources.ApplyResources(textBox49, "textBox49");
-            textBox49.BackColor = SystemColors.ActiveCaptionText;
-            textBox49.BorderStyle = BorderStyle.None;
-            textBox49.ForeColor = SystemColors.ActiveCaptionText;
-            textBox49.Name = "textBox49";
-            textBox49.ReadOnly = true;
             // 
             // pictureBox25
             // 
@@ -946,54 +383,21 @@
             pictureBox25.Name = "pictureBox25";
             pictureBox25.TabStop = false;
             // 
-            // textBox51
-            // 
-            resources.ApplyResources(textBox51, "textBox51");
-            textBox51.BackColor = SystemColors.ActiveCaptionText;
-            textBox51.BorderStyle = BorderStyle.None;
-            textBox51.ForeColor = SystemColors.ActiveCaptionText;
-            textBox51.Name = "textBox51";
-            textBox51.ReadOnly = true;
-            // 
             // pictureBox27
             // 
             resources.ApplyResources(pictureBox27, "pictureBox27");
             pictureBox27.Name = "pictureBox27";
             pictureBox27.TabStop = false;
             // 
-            // TNTButton
-            // 
-            resources.ApplyResources(TNTButton, "TNTButton");
-            TNTButton.Cursor = Cursors.Hand;
-            TNTButton.Name = "TNTButton";
-            TNTButton.UseVisualStyleBackColor = true;
-            TNTButton.Click += TNTButton_Click;
-            // 
             // TNTTextBox
             // 
             resources.ApplyResources(TNTTextBox, "TNTTextBox");
             TNTTextBox.Name = "TNTTextBox";
             // 
-            // BookButton
-            // 
-            resources.ApplyResources(BookButton, "BookButton");
-            BookButton.Name = "BookButton";
-            BookButton.UseVisualStyleBackColor = true;
-            BookButton.Click += BookButton_Click;
-            // 
             // BookTextBox
             // 
             resources.ApplyResources(BookTextBox, "BookTextBox");
             BookTextBox.Name = "BookTextBox";
-            // 
-            // textBox5
-            // 
-            resources.ApplyResources(textBox5, "textBox5");
-            textBox5.BackColor = SystemColors.ActiveCaptionText;
-            textBox5.BorderStyle = BorderStyle.None;
-            textBox5.ForeColor = SystemColors.ActiveCaptionText;
-            textBox5.Name = "textBox5";
-            textBox5.ReadOnly = true;
             // 
             // pictureBox2
             // 
@@ -1001,26 +405,10 @@
             pictureBox2.Name = "pictureBox2";
             pictureBox2.TabStop = false;
             // 
-            // StunGrenadeButton
-            // 
-            resources.ApplyResources(StunGrenadeButton, "StunGrenadeButton");
-            StunGrenadeButton.Name = "StunGrenadeButton";
-            StunGrenadeButton.UseVisualStyleBackColor = true;
-            StunGrenadeButton.Click += StunGrenadeButton_Click_1;
-            // 
             // StunGrenadeTextBox
             // 
             resources.ApplyResources(StunGrenadeTextBox, "StunGrenadeTextBox");
             StunGrenadeTextBox.Name = "StunGrenadeTextBox";
-            // 
-            // textBox31
-            // 
-            resources.ApplyResources(textBox31, "textBox31");
-            textBox31.BackColor = SystemColors.ActiveCaptionText;
-            textBox31.BorderStyle = BorderStyle.None;
-            textBox31.ForeColor = SystemColors.ActiveCaptionText;
-            textBox31.Name = "textBox31";
-            textBox31.ReadOnly = true;
             // 
             // pictureBox13
             // 
@@ -1028,26 +416,10 @@
             pictureBox13.Name = "pictureBox13";
             pictureBox13.TabStop = false;
             // 
-            // SmokeGrenadeButton
-            // 
-            resources.ApplyResources(SmokeGrenadeButton, "SmokeGrenadeButton");
-            SmokeGrenadeButton.Name = "SmokeGrenadeButton";
-            SmokeGrenadeButton.UseVisualStyleBackColor = true;
-            SmokeGrenadeButton.Click += SmokeGrenadeButton_Click_1;
-            // 
             // SmokeGrenadeTextBox
             // 
             resources.ApplyResources(SmokeGrenadeTextBox, "SmokeGrenadeTextBox");
             SmokeGrenadeTextBox.Name = "SmokeGrenadeTextBox";
-            // 
-            // textBox37
-            // 
-            resources.ApplyResources(textBox37, "textBox37");
-            textBox37.BackColor = SystemColors.ActiveCaptionText;
-            textBox37.BorderStyle = BorderStyle.None;
-            textBox37.ForeColor = SystemColors.ActiveCaptionText;
-            textBox37.Name = "textBox37";
-            textBox37.ReadOnly = true;
             // 
             // pictureBox17
             // 
@@ -1055,26 +427,10 @@
             pictureBox17.Name = "pictureBox17";
             pictureBox17.TabStop = false;
             // 
-            // WpGrenadeButton
-            // 
-            resources.ApplyResources(WpGrenadeButton, "WpGrenadeButton");
-            WpGrenadeButton.Name = "WpGrenadeButton";
-            WpGrenadeButton.UseVisualStyleBackColor = true;
-            WpGrenadeButton.Click += WpGrenadeButton_Click_1;
-            // 
             // WpGrenadeTextBox
             // 
             resources.ApplyResources(WpGrenadeTextBox, "WpGrenadeTextBox");
             WpGrenadeTextBox.Name = "WpGrenadeTextBox";
-            // 
-            // textBox39
-            // 
-            resources.ApplyResources(textBox39, "textBox39");
-            textBox39.BackColor = SystemColors.ActiveCaptionText;
-            textBox39.BorderStyle = BorderStyle.None;
-            textBox39.ForeColor = SystemColors.ActiveCaptionText;
-            textBox39.Name = "textBox39";
-            textBox39.ReadOnly = true;
             // 
             // pictureBox20
             // 
@@ -1082,26 +438,10 @@
             pictureBox20.Name = "pictureBox20";
             pictureBox20.TabStop = false;
             // 
-            // ChaffGrenadeButton
-            // 
-            resources.ApplyResources(ChaffGrenadeButton, "ChaffGrenadeButton");
-            ChaffGrenadeButton.Name = "ChaffGrenadeButton";
-            ChaffGrenadeButton.UseVisualStyleBackColor = true;
-            ChaffGrenadeButton.Click += ChaffGrenadeButton_Click_1;
-            // 
             // ChaffGrenadeTextBox
             // 
             resources.ApplyResources(ChaffGrenadeTextBox, "ChaffGrenadeTextBox");
             ChaffGrenadeTextBox.Name = "ChaffGrenadeTextBox";
-            // 
-            // textBox41
-            // 
-            resources.ApplyResources(textBox41, "textBox41");
-            textBox41.BackColor = SystemColors.ActiveCaptionText;
-            textBox41.BorderStyle = BorderStyle.None;
-            textBox41.ForeColor = SystemColors.ActiveCaptionText;
-            textBox41.Name = "textBox41";
-            textBox41.ReadOnly = true;
             // 
             // pictureBox21
             // 
@@ -1109,48 +449,16 @@
             pictureBox21.Name = "pictureBox21";
             pictureBox21.TabStop = false;
             // 
-            // MagazineButton
-            // 
-            resources.ApplyResources(MagazineButton, "MagazineButton");
-            MagazineButton.Name = "MagazineButton";
-            MagazineButton.UseVisualStyleBackColor = true;
-            MagazineButton.Click += MagazineButton_Click;
-            // 
             // MagazineTextBox
             // 
             resources.ApplyResources(MagazineTextBox, "MagazineTextBox");
             MagazineTextBox.Name = "MagazineTextBox";
-            // 
-            // textBox47
-            // 
-            resources.ApplyResources(textBox47, "textBox47");
-            textBox47.BackColor = SystemColors.ActiveCaptionText;
-            textBox47.BorderStyle = BorderStyle.None;
-            textBox47.ForeColor = SystemColors.ActiveCaptionText;
-            textBox47.Name = "textBox47";
-            textBox47.ReadOnly = true;
-            // 
-            // textBox35
-            // 
-            resources.ApplyResources(textBox35, "textBox35");
-            textBox35.BackColor = SystemColors.ActiveCaptionText;
-            textBox35.BorderStyle = BorderStyle.None;
-            textBox35.ForeColor = SystemColors.ActiveCaptionText;
-            textBox35.Name = "textBox35";
-            textBox35.ReadOnly = true;
             // 
             // pictureBox19
             // 
             resources.ApplyResources(pictureBox19, "pictureBox19");
             pictureBox19.Name = "pictureBox19";
             pictureBox19.TabStop = false;
-            // 
-            // HandkerchiefButton
-            // 
-            resources.ApplyResources(HandkerchiefButton, "HandkerchiefButton");
-            HandkerchiefButton.Name = "HandkerchiefButton";
-            HandkerchiefButton.UseVisualStyleBackColor = true;
-            HandkerchiefButton.Click += HandkerchiefButton_Click;
             // 
             // HandkerchiefTextBox
             // 
@@ -1172,15 +480,6 @@
             AddKnife.Name = "AddKnife";
             AddKnife.UseVisualStyleBackColor = true;
             AddKnife.Click += AddKnife_Click;
-            // 
-            // textBox48
-            // 
-            resources.ApplyResources(textBox48, "textBox48");
-            textBox48.BackColor = SystemColors.ActiveCaptionText;
-            textBox48.BorderStyle = BorderStyle.None;
-            textBox48.ForeColor = SystemColors.ActiveCaptionText;
-            textBox48.Name = "textBox48";
-            textBox48.ReadOnly = true;
             // 
             // pictureBox24
             // 
@@ -1204,43 +503,17 @@
             AddFork.UseVisualStyleBackColor = true;
             AddFork.Click += AddFork_Click;
             // 
-            // textBox50
-            // 
-            resources.ApplyResources(textBox50, "textBox50");
-            textBox50.BackColor = SystemColors.ActiveCaptionText;
-            textBox50.BorderStyle = BorderStyle.None;
-            textBox50.ForeColor = SystemColors.ActiveCaptionText;
-            textBox50.Name = "textBox50";
-            textBox50.ReadOnly = true;
-            // 
             // pictureBox26
             // 
             resources.ApplyResources(pictureBox26, "pictureBox26");
             pictureBox26.Name = "pictureBox26";
             pictureBox26.TabStop = false;
             // 
-            // textBox6
-            // 
-            resources.ApplyResources(textBox6, "textBox6");
-            textBox6.BackColor = SystemColors.ActiveCaptionText;
-            textBox6.BorderStyle = BorderStyle.None;
-            textBox6.ForeColor = SystemColors.ActiveCaptionText;
-            textBox6.Name = "textBox6";
-            textBox6.ReadOnly = true;
-            // 
             // pictureBox28
             // 
             resources.ApplyResources(pictureBox28, "pictureBox28");
             pictureBox28.Name = "pictureBox28";
             pictureBox28.TabStop = false;
-            // 
-            // MousetrapButton
-            // 
-            resources.ApplyResources(MousetrapButton, "MousetrapButton");
-            MousetrapButton.Cursor = Cursors.Hand;
-            MousetrapButton.Name = "MousetrapButton";
-            MousetrapButton.UseVisualStyleBackColor = true;
-            MousetrapButton.Click += MousetrapButton_Click;
             // 
             // MousetrapTextbox
             // 
@@ -1263,15 +536,6 @@
             AddTorch.UseVisualStyleBackColor = true;
             AddTorch.Click += AddTorch_Click;
             // 
-            // textBox12
-            // 
-            resources.ApplyResources(textBox12, "textBox12");
-            textBox12.BackColor = SystemColors.ActiveCaptionText;
-            textBox12.BorderStyle = BorderStyle.None;
-            textBox12.ForeColor = SystemColors.ActiveCaptionText;
-            textBox12.Name = "textBox12";
-            textBox12.ReadOnly = true;
-            // 
             // pictureBox29
             // 
             resources.ApplyResources(pictureBox29, "pictureBox29");
@@ -1293,15 +557,6 @@
             AddDMic.Name = "AddDMic";
             AddDMic.UseVisualStyleBackColor = true;
             AddDMic.Click += AddDMic_Click;
-            // 
-            // textBox14
-            // 
-            resources.ApplyResources(textBox14, "textBox14");
-            textBox14.BackColor = SystemColors.ActiveCaptionText;
-            textBox14.BorderStyle = BorderStyle.None;
-            textBox14.ForeColor = SystemColors.ActiveCaptionText;
-            textBox14.Name = "textBox14";
-            textBox14.ReadOnly = true;
             // 
             // pictureBox30
             // 
@@ -1341,179 +596,641 @@
             HealthFormSwap.UseVisualStyleBackColor = true;
             HealthFormSwap.Click += HealthFormSwap_Click;
             // 
-            // button11
+            // BossFormSwap
             // 
-            resources.ApplyResources(button11, "button11");
-            button11.Cursor = Cursors.Hand;
-            button11.Name = "button11";
-            button11.UseVisualStyleBackColor = true;
+            resources.ApplyResources(BossFormSwap, "BossFormSwap");
+            BossFormSwap.Cursor = Cursors.Hand;
+            BossFormSwap.Name = "BossFormSwap";
+            BossFormSwap.UseVisualStyleBackColor = true;
+            BossFormSwap.Click += BossFormSwap_Click;
+            // 
+            // M1911A1Dropdown
+            // 
+            resources.ApplyResources(M1911A1Dropdown, "M1911A1Dropdown");
+            M1911A1Dropdown.BackColor = SystemColors.Control;
+            M1911A1Dropdown.Cursor = Cursors.Hand;
+            M1911A1Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            M1911A1Dropdown.FormattingEnabled = true;
+            M1911A1Dropdown.Items.AddRange(new object[] { resources.GetString("M1911A1Dropdown.Items"), resources.GetString("M1911A1Dropdown.Items1"), resources.GetString("M1911A1Dropdown.Items2"), resources.GetString("M1911A1Dropdown.Items3"), resources.GetString("M1911A1Dropdown.Items4"), resources.GetString("M1911A1Dropdown.Items5"), resources.GetString("M1911A1Dropdown.Items6") });
+            M1911A1Dropdown.Name = "M1911A1Dropdown";
+            M1911A1Dropdown.SelectedIndexChanged += M1911A1Dropdown_SelectedIndexChanged;
+            // 
+            // pictureBox31
+            // 
+            resources.ApplyResources(pictureBox31, "pictureBox31");
+            pictureBox31.Name = "pictureBox31";
+            pictureBox31.TabStop = false;
+            // 
+            // ChangeM1911A1
+            // 
+            resources.ApplyResources(ChangeM1911A1, "ChangeM1911A1");
+            ChangeM1911A1.Cursor = Cursors.Hand;
+            ChangeM1911A1.Name = "ChangeM1911A1";
+            ChangeM1911A1.UseVisualStyleBackColor = true;
+            ChangeM1911A1.Click += ChangeM1911A1_Click;
+            // 
+            // ChangeMK22
+            // 
+            resources.ApplyResources(ChangeMK22, "ChangeMK22");
+            ChangeMK22.Cursor = Cursors.Hand;
+            ChangeMK22.Name = "ChangeMK22";
+            ChangeMK22.UseVisualStyleBackColor = true;
+            ChangeMK22.Click += ChangeMK22_Click;
+            // 
+            // MK22Dropdown
+            // 
+            resources.ApplyResources(MK22Dropdown, "MK22Dropdown");
+            MK22Dropdown.BackColor = SystemColors.Control;
+            MK22Dropdown.Cursor = Cursors.Hand;
+            MK22Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            MK22Dropdown.FormattingEnabled = true;
+            MK22Dropdown.Items.AddRange(new object[] { resources.GetString("MK22Dropdown.Items"), resources.GetString("MK22Dropdown.Items1"), resources.GetString("MK22Dropdown.Items2"), resources.GetString("MK22Dropdown.Items3"), resources.GetString("MK22Dropdown.Items4"), resources.GetString("MK22Dropdown.Items5"), resources.GetString("MK22Dropdown.Items6") });
+            MK22Dropdown.Name = "MK22Dropdown";
+            MK22Dropdown.SelectedIndexChanged += MK22Dropdown_SelectedIndexChanged;
+            // 
+            // ChangeXM16E1
+            // 
+            resources.ApplyResources(ChangeXM16E1, "ChangeXM16E1");
+            ChangeXM16E1.Cursor = Cursors.Hand;
+            ChangeXM16E1.Name = "ChangeXM16E1";
+            ChangeXM16E1.UseVisualStyleBackColor = true;
+            ChangeXM16E1.Click += ChangeXM16E1_Click;
+            // 
+            // XM16E1Dropdown
+            // 
+            resources.ApplyResources(XM16E1Dropdown, "XM16E1Dropdown");
+            XM16E1Dropdown.BackColor = SystemColors.Control;
+            XM16E1Dropdown.Cursor = Cursors.Hand;
+            XM16E1Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            XM16E1Dropdown.FormattingEnabled = true;
+            XM16E1Dropdown.Items.AddRange(new object[] { resources.GetString("XM16E1Dropdown.Items"), resources.GetString("XM16E1Dropdown.Items1"), resources.GetString("XM16E1Dropdown.Items2"), resources.GetString("XM16E1Dropdown.Items3"), resources.GetString("XM16E1Dropdown.Items4"), resources.GetString("XM16E1Dropdown.Items5"), resources.GetString("XM16E1Dropdown.Items6") });
+            XM16E1Dropdown.Name = "XM16E1Dropdown";
+            XM16E1Dropdown.SelectedIndexChanged += XM16E1Dropdown_SelectedIndexChanged;
+            // 
+            // XM16E1TextBox
+            // 
+            resources.ApplyResources(XM16E1TextBox, "XM16E1TextBox");
+            XM16E1TextBox.Cursor = Cursors.IBeam;
+            XM16E1TextBox.Name = "XM16E1TextBox";
+            // 
+            // ChangeSAA
+            // 
+            resources.ApplyResources(ChangeSAA, "ChangeSAA");
+            ChangeSAA.Cursor = Cursors.Hand;
+            ChangeSAA.Name = "ChangeSAA";
+            ChangeSAA.UseVisualStyleBackColor = true;
+            ChangeSAA.Click += ChangeSAA_Click;
+            // 
+            // SAADropdown
+            // 
+            resources.ApplyResources(SAADropdown, "SAADropdown");
+            SAADropdown.BackColor = SystemColors.Control;
+            SAADropdown.Cursor = Cursors.Hand;
+            SAADropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            SAADropdown.FormattingEnabled = true;
+            SAADropdown.Items.AddRange(new object[] { resources.GetString("SAADropdown.Items"), resources.GetString("SAADropdown.Items1"), resources.GetString("SAADropdown.Items2"), resources.GetString("SAADropdown.Items3"), resources.GetString("SAADropdown.Items4"), resources.GetString("SAADropdown.Items5") });
+            SAADropdown.Name = "SAADropdown";
+            SAADropdown.SelectedIndexChanged += SAADropdown_SelectedIndexChanged;
+            // 
+            // SAATextBox
+            // 
+            resources.ApplyResources(SAATextBox, "SAATextBox");
+            SAATextBox.Cursor = Cursors.IBeam;
+            SAATextBox.Name = "SAATextBox";
+            // 
+            // ChangeScorpion
+            // 
+            resources.ApplyResources(ChangeScorpion, "ChangeScorpion");
+            ChangeScorpion.Cursor = Cursors.Hand;
+            ChangeScorpion.Name = "ChangeScorpion";
+            ChangeScorpion.UseVisualStyleBackColor = true;
+            ChangeScorpion.Click += ChangeScorpion_Click;
+            // 
+            // ScorpionDropdown
+            // 
+            resources.ApplyResources(ScorpionDropdown, "ScorpionDropdown");
+            ScorpionDropdown.BackColor = SystemColors.Control;
+            ScorpionDropdown.Cursor = Cursors.Hand;
+            ScorpionDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            ScorpionDropdown.FormattingEnabled = true;
+            ScorpionDropdown.Items.AddRange(new object[] { resources.GetString("ScorpionDropdown.Items"), resources.GetString("ScorpionDropdown.Items1"), resources.GetString("ScorpionDropdown.Items2"), resources.GetString("ScorpionDropdown.Items3"), resources.GetString("ScorpionDropdown.Items4"), resources.GetString("ScorpionDropdown.Items5") });
+            ScorpionDropdown.Name = "ScorpionDropdown";
+            ScorpionDropdown.SelectedIndexChanged += ScorpionDropdown_SelectedIndexChanged;
+            // 
+            // ChangeAK47
+            // 
+            resources.ApplyResources(ChangeAK47, "ChangeAK47");
+            ChangeAK47.Cursor = Cursors.Hand;
+            ChangeAK47.Name = "ChangeAK47";
+            ChangeAK47.UseVisualStyleBackColor = true;
+            ChangeAK47.Click += ChangeAK47_Click;
+            // 
+            // AK47Dropdown
+            // 
+            resources.ApplyResources(AK47Dropdown, "AK47Dropdown");
+            AK47Dropdown.BackColor = SystemColors.Control;
+            AK47Dropdown.Cursor = Cursors.Hand;
+            AK47Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            AK47Dropdown.FormattingEnabled = true;
+            AK47Dropdown.Items.AddRange(new object[] { resources.GetString("AK47Dropdown.Items"), resources.GetString("AK47Dropdown.Items1"), resources.GetString("AK47Dropdown.Items2"), resources.GetString("AK47Dropdown.Items3"), resources.GetString("AK47Dropdown.Items4"), resources.GetString("AK47Dropdown.Items5") });
+            AK47Dropdown.Name = "AK47Dropdown";
+            AK47Dropdown.SelectedIndexChanged += AK47Dropdown_SelectedIndexChanged;
+            // 
+            // ChangeM63
+            // 
+            resources.ApplyResources(ChangeM63, "ChangeM63");
+            ChangeM63.Cursor = Cursors.Hand;
+            ChangeM63.Name = "ChangeM63";
+            ChangeM63.UseVisualStyleBackColor = true;
+            ChangeM63.Click += ChangeM63_Click;
+            // 
+            // M63Dropdown
+            // 
+            resources.ApplyResources(M63Dropdown, "M63Dropdown");
+            M63Dropdown.BackColor = SystemColors.Control;
+            M63Dropdown.Cursor = Cursors.Hand;
+            M63Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            M63Dropdown.FormattingEnabled = true;
+            M63Dropdown.Items.AddRange(new object[] { resources.GetString("M63Dropdown.Items"), resources.GetString("M63Dropdown.Items1"), resources.GetString("M63Dropdown.Items2"), resources.GetString("M63Dropdown.Items3"), resources.GetString("M63Dropdown.Items4"), resources.GetString("M63Dropdown.Items5") });
+            M63Dropdown.Name = "M63Dropdown";
+            M63Dropdown.SelectedIndexChanged += M63Dropdown_SelectedIndexChanged;
+            // 
+            // ChangeRPG
+            // 
+            resources.ApplyResources(ChangeRPG, "ChangeRPG");
+            ChangeRPG.Cursor = Cursors.Hand;
+            ChangeRPG.Name = "ChangeRPG";
+            ChangeRPG.UseVisualStyleBackColor = true;
+            ChangeRPG.Click += ChangeRPG7_Click;
+            // 
+            // RPG7Dropdown
+            // 
+            resources.ApplyResources(RPG7Dropdown, "RPG7Dropdown");
+            RPG7Dropdown.BackColor = SystemColors.Control;
+            RPG7Dropdown.Cursor = Cursors.Hand;
+            RPG7Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            RPG7Dropdown.FormattingEnabled = true;
+            RPG7Dropdown.Items.AddRange(new object[] { resources.GetString("RPG7Dropdown.Items"), resources.GetString("RPG7Dropdown.Items1"), resources.GetString("RPG7Dropdown.Items2"), resources.GetString("RPG7Dropdown.Items3"), resources.GetString("RPG7Dropdown.Items4"), resources.GetString("RPG7Dropdown.Items5") });
+            RPG7Dropdown.Name = "RPG7Dropdown";
+            RPG7Dropdown.SelectedIndexChanged += RPG7Dropdown_SelectedIndexChanged;
+            // 
+            // MosinDropdown
+            // 
+            resources.ApplyResources(MosinDropdown, "MosinDropdown");
+            MosinDropdown.BackColor = SystemColors.Control;
+            MosinDropdown.Cursor = Cursors.Hand;
+            MosinDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            MosinDropdown.FormattingEnabled = true;
+            MosinDropdown.Items.AddRange(new object[] { resources.GetString("MosinDropdown.Items"), resources.GetString("MosinDropdown.Items1"), resources.GetString("MosinDropdown.Items2"), resources.GetString("MosinDropdown.Items3"), resources.GetString("MosinDropdown.Items4"), resources.GetString("MosinDropdown.Items5") });
+            MosinDropdown.Name = "MosinDropdown";
+            MosinDropdown.SelectedIndexChanged += MosinDropdown_SelectedIndexChanged;
+            // 
+            // ChangeMosin
+            // 
+            resources.ApplyResources(ChangeMosin, "ChangeMosin");
+            ChangeMosin.Cursor = Cursors.Hand;
+            ChangeMosin.Name = "ChangeMosin";
+            ChangeMosin.UseVisualStyleBackColor = true;
+            ChangeMosin.Click += ChangeMosin_Click;
+            // 
+            // ChangeM37
+            // 
+            resources.ApplyResources(ChangeM37, "ChangeM37");
+            ChangeM37.Cursor = Cursors.Hand;
+            ChangeM37.Name = "ChangeM37";
+            ChangeM37.UseVisualStyleBackColor = true;
+            ChangeM37.Click += ChangeM37_Click;
+            // 
+            // M37Dropdown
+            // 
+            resources.ApplyResources(M37Dropdown, "M37Dropdown");
+            M37Dropdown.BackColor = SystemColors.Control;
+            M37Dropdown.Cursor = Cursors.Hand;
+            M37Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            M37Dropdown.FormattingEnabled = true;
+            M37Dropdown.Items.AddRange(new object[] { resources.GetString("M37Dropdown.Items"), resources.GetString("M37Dropdown.Items1"), resources.GetString("M37Dropdown.Items2"), resources.GetString("M37Dropdown.Items3"), resources.GetString("M37Dropdown.Items4"), resources.GetString("M37Dropdown.Items5") });
+            M37Dropdown.Name = "M37Dropdown";
+            M37Dropdown.SelectedIndexChanged += M37Dropdown_SelectedIndexChanged;
+            // 
+            // ChangeSVD
+            // 
+            resources.ApplyResources(ChangeSVD, "ChangeSVD");
+            ChangeSVD.Cursor = Cursors.Hand;
+            ChangeSVD.Name = "ChangeSVD";
+            ChangeSVD.UseVisualStyleBackColor = true;
+            ChangeSVD.Click += ChangeSVD_Click_1;
+            // 
+            // SVDDropdown
+            // 
+            resources.ApplyResources(SVDDropdown, "SVDDropdown");
+            SVDDropdown.BackColor = SystemColors.Control;
+            SVDDropdown.Cursor = Cursors.Hand;
+            SVDDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            SVDDropdown.FormattingEnabled = true;
+            SVDDropdown.Items.AddRange(new object[] { resources.GetString("SVDDropdown.Items"), resources.GetString("SVDDropdown.Items1"), resources.GetString("SVDDropdown.Items2"), resources.GetString("SVDDropdown.Items3"), resources.GetString("SVDDropdown.Items4"), resources.GetString("SVDDropdown.Items5") });
+            SVDDropdown.Name = "SVDDropdown";
+            SVDDropdown.SelectedIndexChanged += SVDDropdown_SelectedIndexChanged_1;
+            // 
+            // ChangeGrenade
+            // 
+            resources.ApplyResources(ChangeGrenade, "ChangeGrenade");
+            ChangeGrenade.Cursor = Cursors.Hand;
+            ChangeGrenade.Name = "ChangeGrenade";
+            ChangeGrenade.UseVisualStyleBackColor = true;
+            ChangeGrenade.Click += ChangeGrenade_Click;
+            // 
+            // GrenadeDropdown
+            // 
+            resources.ApplyResources(GrenadeDropdown, "GrenadeDropdown");
+            GrenadeDropdown.BackColor = SystemColors.Control;
+            GrenadeDropdown.Cursor = Cursors.Hand;
+            GrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            GrenadeDropdown.FormattingEnabled = true;
+            GrenadeDropdown.Items.AddRange(new object[] { resources.GetString("GrenadeDropdown.Items"), resources.GetString("GrenadeDropdown.Items1"), resources.GetString("GrenadeDropdown.Items2") });
+            GrenadeDropdown.Name = "GrenadeDropdown";
+            GrenadeDropdown.SelectedIndexChanged += GrenadeDropdown_SelectedIndexChanged;
+            // 
+            // ChangeWp
+            // 
+            resources.ApplyResources(ChangeWp, "ChangeWp");
+            ChangeWp.Cursor = Cursors.Hand;
+            ChangeWp.Name = "ChangeWp";
+            ChangeWp.UseVisualStyleBackColor = true;
+            ChangeWp.Click += ChangeWp_Click;
+            // 
+            // WpGrenadeDropdown
+            // 
+            resources.ApplyResources(WpGrenadeDropdown, "WpGrenadeDropdown");
+            WpGrenadeDropdown.BackColor = SystemColors.Control;
+            WpGrenadeDropdown.Cursor = Cursors.Hand;
+            WpGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            WpGrenadeDropdown.FormattingEnabled = true;
+            WpGrenadeDropdown.Items.AddRange(new object[] { resources.GetString("WpGrenadeDropdown.Items"), resources.GetString("WpGrenadeDropdown.Items1"), resources.GetString("WpGrenadeDropdown.Items2") });
+            WpGrenadeDropdown.Name = "WpGrenadeDropdown";
+            WpGrenadeDropdown.SelectedIndexChanged += WpGrenadeDropdown_SelectedIndexChanged;
+            // 
+            // ChangeStun
+            // 
+            resources.ApplyResources(ChangeStun, "ChangeStun");
+            ChangeStun.Cursor = Cursors.Hand;
+            ChangeStun.Name = "ChangeStun";
+            ChangeStun.UseVisualStyleBackColor = true;
+            ChangeStun.Click += ChangeStun_Click;
+            // 
+            // StunGrenadeDropdown
+            // 
+            resources.ApplyResources(StunGrenadeDropdown, "StunGrenadeDropdown");
+            StunGrenadeDropdown.BackColor = SystemColors.Control;
+            StunGrenadeDropdown.Cursor = Cursors.Hand;
+            StunGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            StunGrenadeDropdown.FormattingEnabled = true;
+            StunGrenadeDropdown.Items.AddRange(new object[] { resources.GetString("StunGrenadeDropdown.Items"), resources.GetString("StunGrenadeDropdown.Items1"), resources.GetString("StunGrenadeDropdown.Items2") });
+            StunGrenadeDropdown.Name = "StunGrenadeDropdown";
+            StunGrenadeDropdown.SelectedIndexChanged += StunGrenadeDropdown_SelectedIndexChanged;
+            // 
+            // ChangeSmoke
+            // 
+            resources.ApplyResources(ChangeSmoke, "ChangeSmoke");
+            ChangeSmoke.Cursor = Cursors.Hand;
+            ChangeSmoke.Name = "ChangeSmoke";
+            ChangeSmoke.UseVisualStyleBackColor = true;
+            ChangeSmoke.Click += ChangeSmoke_Click;
+            // 
+            // SmokeGrenadeDropdown
+            // 
+            resources.ApplyResources(SmokeGrenadeDropdown, "SmokeGrenadeDropdown");
+            SmokeGrenadeDropdown.BackColor = SystemColors.Control;
+            SmokeGrenadeDropdown.Cursor = Cursors.Hand;
+            SmokeGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            SmokeGrenadeDropdown.FormattingEnabled = true;
+            SmokeGrenadeDropdown.Items.AddRange(new object[] { resources.GetString("SmokeGrenadeDropdown.Items"), resources.GetString("SmokeGrenadeDropdown.Items1"), resources.GetString("SmokeGrenadeDropdown.Items2") });
+            SmokeGrenadeDropdown.Name = "SmokeGrenadeDropdown";
+            SmokeGrenadeDropdown.SelectedIndexChanged += SmokeGrenadeDropdown_SelectedIndexChanged;
+            // 
+            // ChangeChaff
+            // 
+            resources.ApplyResources(ChangeChaff, "ChangeChaff");
+            ChangeChaff.Cursor = Cursors.Hand;
+            ChangeChaff.Name = "ChangeChaff";
+            ChangeChaff.UseVisualStyleBackColor = true;
+            ChangeChaff.Click += ChangeChaff_Click;
+            // 
+            // ChaffGrenadeDropdown
+            // 
+            resources.ApplyResources(ChaffGrenadeDropdown, "ChaffGrenadeDropdown");
+            ChaffGrenadeDropdown.BackColor = SystemColors.Control;
+            ChaffGrenadeDropdown.Cursor = Cursors.Hand;
+            ChaffGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            ChaffGrenadeDropdown.FormattingEnabled = true;
+            ChaffGrenadeDropdown.Items.AddRange(new object[] { resources.GetString("ChaffGrenadeDropdown.Items"), resources.GetString("ChaffGrenadeDropdown.Items1"), resources.GetString("ChaffGrenadeDropdown.Items2") });
+            ChaffGrenadeDropdown.Name = "ChaffGrenadeDropdown";
+            ChaffGrenadeDropdown.SelectedIndexChanged += ChaffGrenadeDropdown_SelectedIndexChanged;
+            // 
+            // MagazineDropdown
+            // 
+            resources.ApplyResources(MagazineDropdown, "MagazineDropdown");
+            MagazineDropdown.BackColor = SystemColors.Control;
+            MagazineDropdown.Cursor = Cursors.Hand;
+            MagazineDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            MagazineDropdown.FormattingEnabled = true;
+            MagazineDropdown.Items.AddRange(new object[] { resources.GetString("MagazineDropdown.Items"), resources.GetString("MagazineDropdown.Items1"), resources.GetString("MagazineDropdown.Items2") });
+            MagazineDropdown.Name = "MagazineDropdown";
+            MagazineDropdown.SelectedIndexChanged += MagazineDropdown_SelectedIndexChanged;
+            // 
+            // ChangeMagazine
+            // 
+            resources.ApplyResources(ChangeMagazine, "ChangeMagazine");
+            ChangeMagazine.Cursor = Cursors.Hand;
+            ChangeMagazine.Name = "ChangeMagazine";
+            ChangeMagazine.UseVisualStyleBackColor = true;
+            ChangeMagazine.Click += ChangeMagazine_Click;
+            // 
+            // ChangeC3
+            // 
+            resources.ApplyResources(ChangeC3, "ChangeC3");
+            ChangeC3.Cursor = Cursors.Hand;
+            ChangeC3.Name = "ChangeC3";
+            ChangeC3.UseVisualStyleBackColor = true;
+            ChangeC3.Click += ChangeC3_Click;
+            // 
+            // C3Dropdown
+            // 
+            resources.ApplyResources(C3Dropdown, "C3Dropdown");
+            C3Dropdown.BackColor = SystemColors.Control;
+            C3Dropdown.Cursor = Cursors.Hand;
+            C3Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            C3Dropdown.FormattingEnabled = true;
+            C3Dropdown.Items.AddRange(new object[] { resources.GetString("C3Dropdown.Items"), resources.GetString("C3Dropdown.Items1"), resources.GetString("C3Dropdown.Items2") });
+            C3Dropdown.Name = "C3Dropdown";
+            C3Dropdown.SelectedIndexChanged += C3Dropdown_SelectedIndexChanged;
+            // 
+            // ChangeBook
+            // 
+            resources.ApplyResources(ChangeBook, "ChangeBook");
+            ChangeBook.Cursor = Cursors.Hand;
+            ChangeBook.Name = "ChangeBook";
+            ChangeBook.UseVisualStyleBackColor = true;
+            ChangeBook.Click += ChangeBook_Click;
+            // 
+            // BookDropdown
+            // 
+            resources.ApplyResources(BookDropdown, "BookDropdown");
+            BookDropdown.BackColor = SystemColors.Control;
+            BookDropdown.Cursor = Cursors.Hand;
+            BookDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            BookDropdown.FormattingEnabled = true;
+            BookDropdown.Items.AddRange(new object[] { resources.GetString("BookDropdown.Items"), resources.GetString("BookDropdown.Items1"), resources.GetString("BookDropdown.Items2") });
+            BookDropdown.Name = "BookDropdown";
+            BookDropdown.SelectedIndexChanged += BookDropdown_SelectedIndexChanged;
+            // 
+            // ChangeClaymore
+            // 
+            resources.ApplyResources(ChangeClaymore, "ChangeClaymore");
+            ChangeClaymore.Cursor = Cursors.Hand;
+            ChangeClaymore.Name = "ChangeClaymore";
+            ChangeClaymore.UseVisualStyleBackColor = true;
+            ChangeClaymore.Click += ChangeClaymore_Click;
+            // 
+            // ClaymoreDropdown
+            // 
+            resources.ApplyResources(ClaymoreDropdown, "ClaymoreDropdown");
+            ClaymoreDropdown.BackColor = SystemColors.Control;
+            ClaymoreDropdown.Cursor = Cursors.Hand;
+            ClaymoreDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            ClaymoreDropdown.FormattingEnabled = true;
+            ClaymoreDropdown.Items.AddRange(new object[] { resources.GetString("ClaymoreDropdown.Items"), resources.GetString("ClaymoreDropdown.Items1"), resources.GetString("ClaymoreDropdown.Items2") });
+            ClaymoreDropdown.Name = "ClaymoreDropdown";
+            ClaymoreDropdown.SelectedIndexChanged += ClaymoreDropdown_SelectedIndexChanged;
+            // 
+            // ChangeTNT
+            // 
+            resources.ApplyResources(ChangeTNT, "ChangeTNT");
+            ChangeTNT.Cursor = Cursors.Hand;
+            ChangeTNT.Name = "ChangeTNT";
+            ChangeTNT.UseVisualStyleBackColor = true;
+            ChangeTNT.Click += ChangeTNT_Click;
+            // 
+            // TNTDropdown
+            // 
+            resources.ApplyResources(TNTDropdown, "TNTDropdown");
+            TNTDropdown.BackColor = SystemColors.Control;
+            TNTDropdown.Cursor = Cursors.Hand;
+            TNTDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            TNTDropdown.FormattingEnabled = true;
+            TNTDropdown.Items.AddRange(new object[] { resources.GetString("TNTDropdown.Items"), resources.GetString("TNTDropdown.Items1"), resources.GetString("TNTDropdown.Items2") });
+            TNTDropdown.Name = "TNTDropdown";
+            TNTDropdown.SelectedIndexChanged += TNTDropdown_SelectedIndexChanged;
+            // 
+            // ChangeMousetrap
+            // 
+            resources.ApplyResources(ChangeMousetrap, "ChangeMousetrap");
+            ChangeMousetrap.Cursor = Cursors.Hand;
+            ChangeMousetrap.Name = "ChangeMousetrap";
+            ChangeMousetrap.UseVisualStyleBackColor = true;
+            ChangeMousetrap.Click += ChangeMousetrap_Click;
+            // 
+            // MousetrapDropdown
+            // 
+            resources.ApplyResources(MousetrapDropdown, "MousetrapDropdown");
+            MousetrapDropdown.BackColor = SystemColors.Control;
+            MousetrapDropdown.Cursor = Cursors.Hand;
+            MousetrapDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            MousetrapDropdown.FormattingEnabled = true;
+            MousetrapDropdown.Items.AddRange(new object[] { resources.GetString("MousetrapDropdown.Items"), resources.GetString("MousetrapDropdown.Items1"), resources.GetString("MousetrapDropdown.Items2") });
+            MousetrapDropdown.Name = "MousetrapDropdown";
+            MousetrapDropdown.SelectedIndexChanged += MousetrapDropdown_SelectedIndexChanged;
+            // 
+            // ChangeCigSpray
+            // 
+            resources.ApplyResources(ChangeCigSpray, "ChangeCigSpray");
+            ChangeCigSpray.Cursor = Cursors.Hand;
+            ChangeCigSpray.Name = "ChangeCigSpray";
+            ChangeCigSpray.UseVisualStyleBackColor = true;
+            ChangeCigSpray.Click += ChangeCigSpray_Click;
+            // 
+            // CigSprayDropdown
+            // 
+            resources.ApplyResources(CigSprayDropdown, "CigSprayDropdown");
+            CigSprayDropdown.BackColor = SystemColors.Control;
+            CigSprayDropdown.Cursor = Cursors.Hand;
+            CigSprayDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            CigSprayDropdown.FormattingEnabled = true;
+            CigSprayDropdown.Items.AddRange(new object[] { resources.GetString("CigSprayDropdown.Items"), resources.GetString("CigSprayDropdown.Items1"), resources.GetString("CigSprayDropdown.Items2") });
+            CigSprayDropdown.Name = "CigSprayDropdown";
+            CigSprayDropdown.SelectedIndexChanged += CigSprayDropdown_SelectedIndexChanged;
+            // 
+            // ChangeHandkerchief
+            // 
+            resources.ApplyResources(ChangeHandkerchief, "ChangeHandkerchief");
+            ChangeHandkerchief.Cursor = Cursors.Hand;
+            ChangeHandkerchief.Name = "ChangeHandkerchief";
+            ChangeHandkerchief.UseVisualStyleBackColor = true;
+            ChangeHandkerchief.Click += ChangeHandkerchief_Click;
+            // 
+            // HandkerchiefDropdown
+            // 
+            resources.ApplyResources(HandkerchiefDropdown, "HandkerchiefDropdown");
+            HandkerchiefDropdown.BackColor = SystemColors.Control;
+            HandkerchiefDropdown.Cursor = Cursors.Hand;
+            HandkerchiefDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
+            HandkerchiefDropdown.FormattingEnabled = true;
+            HandkerchiefDropdown.Items.AddRange(new object[] { resources.GetString("HandkerchiefDropdown.Items"), resources.GetString("HandkerchiefDropdown.Items1"), resources.GetString("HandkerchiefDropdown.Items2") });
+            HandkerchiefDropdown.Name = "HandkerchiefDropdown";
+            HandkerchiefDropdown.SelectedIndexChanged += HandkerchiefDropdown_SelectedIndexChanged;
+            // 
+            // AllWeaponsChecklist
+            // 
+            resources.ApplyResources(AllWeaponsChecklist, "AllWeaponsChecklist");
+            AllWeaponsChecklist.FormattingEnabled = true;
+            AllWeaponsChecklist.Items.AddRange(new object[] { resources.GetString("AllWeaponsChecklist.Items"), resources.GetString("AllWeaponsChecklist.Items1"), resources.GetString("AllWeaponsChecklist.Items2"), resources.GetString("AllWeaponsChecklist.Items3"), resources.GetString("AllWeaponsChecklist.Items4"), resources.GetString("AllWeaponsChecklist.Items5"), resources.GetString("AllWeaponsChecklist.Items6"), resources.GetString("AllWeaponsChecklist.Items7"), resources.GetString("AllWeaponsChecklist.Items8"), resources.GetString("AllWeaponsChecklist.Items9"), resources.GetString("AllWeaponsChecklist.Items10"), resources.GetString("AllWeaponsChecklist.Items11"), resources.GetString("AllWeaponsChecklist.Items12"), resources.GetString("AllWeaponsChecklist.Items13"), resources.GetString("AllWeaponsChecklist.Items14"), resources.GetString("AllWeaponsChecklist.Items15"), resources.GetString("AllWeaponsChecklist.Items16"), resources.GetString("AllWeaponsChecklist.Items17"), resources.GetString("AllWeaponsChecklist.Items18"), resources.GetString("AllWeaponsChecklist.Items19"), resources.GetString("AllWeaponsChecklist.Items20"), resources.GetString("AllWeaponsChecklist.Items21"), resources.GetString("AllWeaponsChecklist.Items22"), resources.GetString("AllWeaponsChecklist.Items23") });
+            AllWeaponsChecklist.Name = "AllWeaponsChecklist";
+            AllWeaponsChecklist.SelectedIndexChanged += AllWeaponsChecklist_SelectedIndexChanged;
+            // 
+            // ChangeAllChecked
+            // 
+            resources.ApplyResources(ChangeAllChecked, "ChangeAllChecked");
+            ChangeAllChecked.Cursor = Cursors.Hand;
+            ChangeAllChecked.Name = "ChangeAllChecked";
+            ChangeAllChecked.UseVisualStyleBackColor = true;
+            ChangeAllChecked.Click += ChangeAllChecked_Click;
+            // 
+            // AllTextbox
+            // 
+            resources.ApplyResources(AllTextbox, "AllTextbox");
+            AllTextbox.Name = "AllTextbox";
             // 
             // WeaponForm
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            Controls.Add(button11);
+            Controls.Add(AllTextbox);
+            Controls.Add(ChangeAllChecked);
+            Controls.Add(AllWeaponsChecklist);
+            Controls.Add(ChangeHandkerchief);
+            Controls.Add(HandkerchiefDropdown);
+            Controls.Add(ChangeCigSpray);
+            Controls.Add(CigSprayDropdown);
+            Controls.Add(ChangeMousetrap);
+            Controls.Add(MousetrapDropdown);
+            Controls.Add(ChangeTNT);
+            Controls.Add(TNTDropdown);
+            Controls.Add(ChangeClaymore);
+            Controls.Add(ClaymoreDropdown);
+            Controls.Add(ChangeBook);
+            Controls.Add(BookDropdown);
+            Controls.Add(ChangeC3);
+            Controls.Add(C3Dropdown);
+            Controls.Add(ChangeMagazine);
+            Controls.Add(MagazineDropdown);
+            Controls.Add(ChangeChaff);
+            Controls.Add(ChaffGrenadeDropdown);
+            Controls.Add(ChangeSmoke);
+            Controls.Add(SmokeGrenadeDropdown);
+            Controls.Add(ChangeStun);
+            Controls.Add(StunGrenadeDropdown);
+            Controls.Add(ChangeWp);
+            Controls.Add(WpGrenadeDropdown);
+            Controls.Add(ChangeGrenade);
+            Controls.Add(GrenadeDropdown);
+            Controls.Add(ChangeSVD);
+            Controls.Add(SVDDropdown);
+            Controls.Add(ChangeM37);
+            Controls.Add(M37Dropdown);
+            Controls.Add(ChangeMosin);
+            Controls.Add(MosinDropdown);
+            Controls.Add(ChangeRPG);
+            Controls.Add(RPG7Dropdown);
+            Controls.Add(ChangeM63);
+            Controls.Add(M63Dropdown);
+            Controls.Add(ChangeAK47);
+            Controls.Add(AK47Dropdown);
+            Controls.Add(ChangeScorpion);
+            Controls.Add(ScorpionDropdown);
+            Controls.Add(SAATextBox);
+            Controls.Add(ChangeSAA);
+            Controls.Add(SAADropdown);
+            Controls.Add(ChangeXM16E1);
+            Controls.Add(XM16E1Dropdown);
+            Controls.Add(XM16E1TextBox);
+            Controls.Add(ChangeMK22);
+            Controls.Add(MK22Dropdown);
+            Controls.Add(ChangeM1911A1);
+            Controls.Add(pictureBox31);
+            Controls.Add(M1911A1Dropdown);
+            Controls.Add(BossFormSwap);
             Controls.Add(HealthFormSwap);
             Controls.Add(button70);
             Controls.Add(button1);
             Controls.Add(ItemFormSwap);
             Controls.Add(RemoveTorch);
             Controls.Add(AddTorch);
-            Controls.Add(textBox12);
             Controls.Add(pictureBox29);
             Controls.Add(RemoveDMic);
             Controls.Add(AddDMic);
-            Controls.Add(textBox14);
             Controls.Add(pictureBox30);
-            Controls.Add(textBox6);
             Controls.Add(pictureBox28);
-            Controls.Add(MousetrapButton);
             Controls.Add(MousetrapTextbox);
             Controls.Add(RemoveFork);
             Controls.Add(AddFork);
-            Controls.Add(textBox50);
             Controls.Add(pictureBox26);
             Controls.Add(RemoveKnife);
             Controls.Add(AddKnife);
-            Controls.Add(textBox48);
             Controls.Add(pictureBox24);
-            Controls.Add(textBox35);
             Controls.Add(pictureBox19);
-            Controls.Add(HandkerchiefButton);
             Controls.Add(HandkerchiefTextBox);
-            Controls.Add(textBox47);
-            Controls.Add(textBox39);
             Controls.Add(pictureBox20);
-            Controls.Add(ChaffGrenadeButton);
             Controls.Add(ChaffGrenadeTextBox);
-            Controls.Add(textBox41);
             Controls.Add(pictureBox21);
-            Controls.Add(MagazineButton);
             Controls.Add(MagazineTextBox);
-            Controls.Add(textBox31);
             Controls.Add(pictureBox13);
-            Controls.Add(SmokeGrenadeButton);
             Controls.Add(SmokeGrenadeTextBox);
-            Controls.Add(textBox37);
             Controls.Add(pictureBox17);
-            Controls.Add(WpGrenadeButton);
             Controls.Add(WpGrenadeTextBox);
-            Controls.Add(textBox5);
             Controls.Add(pictureBox2);
-            Controls.Add(StunGrenadeButton);
             Controls.Add(StunGrenadeTextBox);
-            Controls.Add(textBox43);
             Controls.Add(pictureBox22);
-            Controls.Add(ClaymoreButton);
             Controls.Add(ClaymoreTextBox);
-            Controls.Add(textBox45);
             Controls.Add(pictureBox23);
-            Controls.Add(C3Button);
             Controls.Add(C3TextBox);
-            Controls.Add(textBox49);
             Controls.Add(pictureBox25);
-            Controls.Add(textBox51);
             Controls.Add(pictureBox27);
-            Controls.Add(TNTButton);
             Controls.Add(TNTTextBox);
-            Controls.Add(BookButton);
             Controls.Add(BookTextBox);
-            Controls.Add(textBox7);
             Controls.Add(pictureBox7);
-            Controls.Add(GrenadeButton);
             Controls.Add(GrenadeTextBox);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
             Controls.Add(RemovePatriot);
             Controls.Add(AddPatriot);
-            Controls.Add(textBox2);
             Controls.Add(pictureBox1);
-            Controls.Add(textBox33);
             Controls.Add(pictureBox18);
-            Controls.Add(CigSprayButton);
             Controls.Add(CigSprayTextBox);
-            Controls.Add(textBox29);
             Controls.Add(pictureBox16);
-            Controls.Add(MosinClip);
-            Controls.Add(MosinButton);
             Controls.Add(MosinTextBox);
-            Controls.Add(textBox28);
-            Controls.Add(textBox25);
-            Controls.Add(SAAClip);
             Controls.Add(pictureBox14);
-            Controls.Add(SAAButton);
-            Controls.Add(SAATextBox);
-            Controls.Add(textBox22);
-            Controls.Add(ScorpionClip);
             Controls.Add(pictureBox6);
-            Controls.Add(ScorpionButton);
             Controls.Add(ScorpionTextBox);
-            Controls.Add(textBox19);
-            Controls.Add(textBox18);
-            Controls.Add(textBox17);
             Controls.Add(pictureBox5);
-            Controls.Add(textBox15);
             Controls.Add(pictureBox12);
-            Controls.Add(SVDClip);
-            Controls.Add(RPG7Clip);
-            Controls.Add(textBox11);
-            Controls.Add(AK47Clip);
             Controls.Add(pictureBox8);
-            Controls.Add(AK47Button);
             Controls.Add(AK47TextBox);
-            Controls.Add(M1911A1Clip);
-            Controls.Add(button25);
-            Controls.Add(textBox13);
-            Controls.Add(Minus30M1911A1);
-            Controls.Add(Plus30M1911A1);
-            Controls.Add(textBox9);
-            Controls.Add(Minus30MK22);
-            Controls.Add(Plus30MK22);
-            Controls.Add(MK22Clip);
-            Controls.Add(button12);
-            Controls.Add(textBox26);
-            Controls.Add(M63Clip);
             Controls.Add(pictureBox3);
-            Controls.Add(textBox23);
-            Controls.Add(M37Clip);
             Controls.Add(pictureBox4);
-            Controls.Add(XM16E1Clip);
-            Controls.Add(textBox20);
-            Controls.Add(Minus30XM16E1);
-            Controls.Add(Plus30XM16E1);
-            Controls.Add(button29);
-            Controls.Add(textBox21);
             Controls.Add(pictureBox11);
-            Controls.Add(textBox16);
             Controls.Add(pictureBox10);
             Controls.Add(RemoveEz);
             Controls.Add(AddEz);
-            Controls.Add(textBox1);
-            Controls.Add(textBox10);
-            Controls.Add(textBox8);
-            Controls.Add(pictureBox9);
             Controls.Add(pictureBox15);
-            Controls.Add(M63Button);
             Controls.Add(M63TextBox);
-            Controls.Add(SVDButton);
             Controls.Add(SVDTextBox);
-            Controls.Add(RPG7Button);
             Controls.Add(RPG7TextBox);
-            Controls.Add(MK22Button);
-            Controls.Add(M1911A1Button);
-            Controls.Add(M37Button);
-            Controls.Add(XM16E1Button);
             Controls.Add(M37TextBox);
             Controls.Add(M1911A1TextBox);
             Controls.Add(MK22TextBox);
-            Controls.Add(XM16E1TextBox);
             DoubleBuffered = true;
             MaximizeBox = false;
             Name = "WeaponForm";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -1542,165 +1259,133 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox28).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox30).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox31).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private TextBox XM16E1TextBox;
         private TextBox MK22TextBox;
         private TextBox M1911A1TextBox;
         private TextBox M37TextBox;
-        private Button XM16E1Button;
-        private Button M37Button;
-        private Button M1911A1Button;
-        private Button MK22Button;
-        private Button RPG7Button;
         private TextBox RPG7TextBox;
-        private Button SVDButton;
         private TextBox SVDTextBox;
-        private Button M63Button;
         private TextBox M63TextBox;
         private PictureBox pictureBox15;
-        private PictureBox pictureBox9;
-        private TextBox textBox8;
-        private TextBox textBox10;
-        private TextBox textBox1;
         private Button AddEz;
         private Button RemoveEz;
-        private TextBox textBox16;
         private PictureBox pictureBox10;
-        private TextBox textBox20;
-        private Button Minus30XM16E1;
-        private Button Plus30XM16E1;
-        private Button button29;
-        private TextBox textBox21;
         private PictureBox pictureBox11;
-        private Button XM16E1Clip;
-        private TextBox textBox23;
-        private Button M37Clip;
         private PictureBox pictureBox4;
-        private TextBox textBox26;
-        private Button M63Clip;
         private PictureBox pictureBox3;
-        private Button MK22Clip;
-        private Button button12;
-        private TextBox textBox9;
-        private Button Minus30MK22;
-        private Button Plus30MK22;
-        private TextBox textBox13;
-        private Button Minus30M1911A1;
-        private Button Plus30M1911A1;
-        private Button M1911A1Clip;
-        private Button button25;
-        private TextBox textBox11;
-        private Button AK47Clip;
         private PictureBox pictureBox8;
-        private Button AK47Button;
         private TextBox AK47TextBox;
-        private Button RPG7Clip;
-        private Button SVDClip;
-        private TextBox textBox15;
         private PictureBox pictureBox12;
-        private TextBox textBox17;
         private PictureBox pictureBox5;
-        private TextBox textBox18;
-        private TextBox textBox19;
-        private TextBox textBox22;
-        private Button ScorpionClip;
         private PictureBox pictureBox6;
-        private Button ScorpionButton;
         private TextBox ScorpionTextBox;
-        private TextBox textBox25;
-        private Button SAAClip;
         private PictureBox pictureBox14;
-        private Button SAAButton;
-        private TextBox SAATextBox;
-        private TextBox textBox28;
-        private TextBox textBox29;
         private PictureBox pictureBox16;
-        private Button MosinClip;
-        private Button MosinButton;
         private TextBox MosinTextBox;
-        private TextBox textBox33;
         private PictureBox pictureBox18;
-        private Button CigSprayButton;
         private TextBox CigSprayTextBox;
         private Button RemovePatriot;
         private Button AddPatriot;
-        private TextBox textBox2;
         private PictureBox pictureBox1;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private TextBox textBox7;
         private PictureBox pictureBox7;
-        private Button GrenadeButton;
         private TextBox GrenadeTextBox;
-        private TextBox textBox43;
         private PictureBox pictureBox22;
-        private Button ClaymoreButton;
         private TextBox ClaymoreTextBox;
-        private TextBox textBox45;
         private PictureBox pictureBox23;
-        private Button C3Button;
         private TextBox C3TextBox;
-        private TextBox textBox49;
         private PictureBox pictureBox25;
-        private TextBox textBox51;
         private PictureBox pictureBox27;
-        private Button TNTButton;
         private TextBox TNTTextBox;
-        private Button BookButton;
         private TextBox BookTextBox;
-        private TextBox textBox5;
         private PictureBox pictureBox2;
-        private Button StunGrenadeButton;
         private TextBox StunGrenadeTextBox;
-        private TextBox textBox31;
         private PictureBox pictureBox13;
-        private Button SmokeGrenadeButton;
         private TextBox SmokeGrenadeTextBox;
-        private TextBox textBox37;
         private PictureBox pictureBox17;
-        private Button WpGrenadeButton;
         private TextBox WpGrenadeTextBox;
-        private TextBox textBox39;
         private PictureBox pictureBox20;
-        private Button ChaffGrenadeButton;
         private TextBox ChaffGrenadeTextBox;
-        private TextBox textBox41;
         private PictureBox pictureBox21;
-        private Button MagazineButton;
         private TextBox MagazineTextBox;
-        private TextBox textBox47;
-        private TextBox textBox35;
         private PictureBox pictureBox19;
-        private Button HandkerchiefButton;
         private TextBox HandkerchiefTextBox;
         private Button RemoveKnife;
         private Button AddKnife;
-        private TextBox textBox48;
         private PictureBox pictureBox24;
         private Button RemoveFork;
         private Button AddFork;
-        private TextBox textBox50;
         private PictureBox pictureBox26;
-        private TextBox textBox6;
         private PictureBox pictureBox28;
-        private Button MousetrapButton;
         private TextBox MousetrapTextbox;
         private Button RemoveTorch;
         private Button AddTorch;
-        private TextBox textBox12;
         private PictureBox pictureBox29;
         private Button RemoveDMic;
         private Button AddDMic;
-        private TextBox textBox14;
         private PictureBox pictureBox30;
         private Button ItemFormSwap;
         private Button button1;
         private Button button70;
         private Button HealthFormSwap;
-        private Button button11;
+        private Button BossFormSwap;
+        private ComboBox M1911A1Dropdown;
+        private PictureBox pictureBox31;
+        private Button ChangeM1911A1;
+        private Button ChangeMK22;
+        private ComboBox MK22Dropdown;
+        private Button ChangeXM16E1;
+        private ComboBox XM16E1Dropdown;
+        private TextBox XM16E1TextBox;
+        private Button ChangeSAA;
+        private ComboBox SAADropdown;
+        private TextBox SAATextBox;
+        private Button ChangeScorpion;
+        private ComboBox ScorpionDropdown;
+        private Button ChangeAK47;
+        private ComboBox AK47Dropdown;
+        private Button ChangeM63;
+        private ComboBox M63Dropdown;
+        private Button ChangeRPG;
+        private ComboBox RPG7Dropdown;
+        private ComboBox MosinDropdown;
+        private Button ChangeMosin;
+        private Button ChangeM37;
+        private ComboBox M37Dropdown;
+        private Button ChangeSVD;
+        private ComboBox SVDDropdown;
+        private Button ChangeGrenade;
+        private ComboBox GrenadeDropdown;
+        private Button ChangeWp;
+        private ComboBox WpGrenadeDropdown;
+        private Button ChangeStun;
+        private ComboBox StunGrenadeDropdown;
+        private Button ChangeSmoke;
+        private ComboBox SmokeGrenadeDropdown;
+        private Button ChangeChaff;
+        private ComboBox ChaffGrenadeDropdown;
+        private ComboBox MagazineDropdown;
+        private Button ChangeMagazine;
+        private Button ChangeC3;
+        private ComboBox C3Dropdown;
+        private Button ChangeBook;
+        private ComboBox BookDropdown;
+        private Button ChangeClaymore;
+        private ComboBox ClaymoreDropdown;
+        private Button ChangeTNT;
+        private ComboBox TNTDropdown;
+        private Button ChangeMousetrap;
+        private ComboBox MousetrapDropdown;
+        private Button ChangeCigSpray;
+        private ComboBox CigSprayDropdown;
+        private Button ChangeHandkerchief;
+        private ComboBox HandkerchiefDropdown;
+        private CheckedListBox AllWeaponsChecklist;
+        private Button ChangeAllChecked;
+        private TextBox AllTextbox;
     }
 }

@@ -46,7 +46,7 @@
             BossFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             BossFormSwap.ImageAlign = ContentAlignment.TopCenter;
             BossFormSwap.ImeMode = ImeMode.NoControl;
-            BossFormSwap.Location = new Point(738, 504);
+            BossFormSwap.Location = new Point(730, 540);
             BossFormSwap.Name = "BossFormSwap";
             BossFormSwap.Size = new Size(426, 45);
             BossFormSwap.TabIndex = 558;
@@ -63,7 +63,7 @@
             HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
             HealthFormSwap.ImeMode = ImeMode.NoControl;
-            HealthFormSwap.Location = new Point(738, 423);
+            HealthFormSwap.Location = new Point(730, 459);
             HealthFormSwap.Name = "HealthFormSwap";
             HealthFormSwap.Size = new Size(426, 45);
             HealthFormSwap.TabIndex = 557;
@@ -80,7 +80,7 @@
             MiscFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             MiscFormSwap.ImageAlign = ContentAlignment.TopCenter;
             MiscFormSwap.ImeMode = ImeMode.NoControl;
-            MiscFormSwap.Location = new Point(738, 341);
+            MiscFormSwap.Location = new Point(730, 377);
             MiscFormSwap.Name = "MiscFormSwap";
             MiscFormSwap.Size = new Size(426, 45);
             MiscFormSwap.TabIndex = 556;
@@ -97,7 +97,7 @@
             CamoFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             CamoFormSwap.ImageAlign = ContentAlignment.TopCenter;
             CamoFormSwap.ImeMode = ImeMode.NoControl;
-            CamoFormSwap.Location = new Point(738, 263);
+            CamoFormSwap.Location = new Point(730, 299);
             CamoFormSwap.Name = "CamoFormSwap";
             CamoFormSwap.Size = new Size(426, 42);
             CamoFormSwap.TabIndex = 555;
@@ -114,7 +114,7 @@
             ItemFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             ItemFormSwap.ImageAlign = ContentAlignment.TopCenter;
             ItemFormSwap.ImeMode = ImeMode.NoControl;
-            ItemFormSwap.Location = new Point(738, 186);
+            ItemFormSwap.Location = new Point(730, 222);
             ItemFormSwap.Name = "ItemFormSwap";
             ItemFormSwap.Size = new Size(426, 42);
             ItemFormSwap.TabIndex = 554;
@@ -132,7 +132,7 @@
             WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
             WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(738, 112);
+            WeaponFormSwap.Location = new Point(730, 148);
             WeaponFormSwap.Name = "WeaponFormSwap";
             WeaponFormSwap.Size = new Size(426, 41);
             WeaponFormSwap.TabIndex = 559;
@@ -154,7 +154,9 @@
             Controls.Add(CamoFormSwap);
             Controls.Add(ItemFormSwap);
             DoubleBuffered = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainMenuForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "MGS3 Cheat Trainer - Main Menu - ANTIBigBoss";
             ResumeLayout(false);
         }
