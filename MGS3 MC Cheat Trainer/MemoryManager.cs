@@ -160,7 +160,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public IntPtr ScanMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
-            int bufferSize = 32768; // Example: Using a 32 KB buffer
+            int bufferSize = 131072; // 128 KB buffer
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -414,7 +414,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             var (pattern, mask) = Constants.AOBs["TheFearAOB"];
-            IntPtr startAddress = new IntPtr(0x22AFFFF0000); // Example start range
+            IntPtr startAddress = new IntPtr(0x22AFFFFFFFF); // Example start range
             IntPtr endAddress = new IntPtr(0x23B00000000); // Example end range
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 

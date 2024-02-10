@@ -38,10 +38,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             NativeMethods.CloseHandle(processHandle);
         }
-        internal static void TriggerSnakeAnimation(Constants.SnakeAnimation snakeAnimation)
-        {
-            ModifyByteValueObject(snakeAnimation.AnimationOffset, snakeAnimation.Value);
-        }
 
         internal static void ChangeHud(byte hudStatus)
         {

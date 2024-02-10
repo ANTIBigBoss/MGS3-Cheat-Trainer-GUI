@@ -56,41 +56,6 @@ namespace MGS3_MC_Cheat_Trainer
             Application.Exit();
         }
 
-        private void SnakeNapQuick_Click(object sender, EventArgs e)
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.QuickSleep);
-        }
-
-        private void SnakeLongNap_Click(object sender, EventArgs e)
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.LongSleep);
-        }
-
-        private void SnakeFakesDeath_Click(object sender, EventArgs e)
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.FakeDeath);
-        }
-
-        private void SnakePukes_Click(object sender, EventArgs e)
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.Puke);
-        }
-
-        private void button12_Click(object sender, EventArgs e) // Snake on fire
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.OnFire);
-        }
-
-        private void SnakePukeFire_Click(object sender, EventArgs e)
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.OnFirePuke);
-        }
-
-        private void button23_Click(object sender, EventArgs e) // Bunny hop
-        {
-            ModelManager.TriggerSnakeAnimation(Constants.MGS3SnakeAnimations.BunnyHop);
-        }
-
         private void NormalHUD_Click(object sender, EventArgs e)
         {
             ModelManager.ChangeHud((int)Constants.HudOptions.Normal);

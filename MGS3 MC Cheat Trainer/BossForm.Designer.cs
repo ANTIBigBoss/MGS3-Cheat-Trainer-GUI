@@ -28,16 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BossForm));
             WeaponFormSwap = new Button();
             HealthFormSwap = new Button();
             MiscFormSwap = new Button();
             CamoFormSwap = new Button();
             ItemFormSwap = new Button();
-            Fear0HP = new Button();
-            Fear1HP = new Button();
-            Fear0Stam = new Button();
-            Fear1Stam = new Button();
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
@@ -68,6 +65,13 @@
             button34 = new Button();
             button35 = new Button();
             button36 = new Button();
+            FearHealthSlider = new TrackBar();
+            Fear0HP = new Button();
+            FearStaminaSlider = new TrackBar();
+            Fear0Stam = new Button();
+            FearTimer = new System.Windows.Forms.Timer(components);
+            ((System.ComponentModel.ISupportInitialize)FearHealthSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)FearStaminaSlider).BeginInit();
             SuspendLayout();
             // 
             // WeaponFormSwap
@@ -149,70 +153,6 @@
             ItemFormSwap.Text = "Items";
             ItemFormSwap.UseVisualStyleBackColor = true;
             ItemFormSwap.Click += ItemFormSwap_Click;
-            // 
-            // Fear0HP
-            // 
-            Fear0HP.BackgroundImage = (Image)resources.GetObject("Fear0HP.BackgroundImage");
-            Fear0HP.Cursor = Cursors.Hand;
-            Fear0HP.FlatStyle = FlatStyle.Flat;
-            Fear0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Fear0HP.ImageAlign = ContentAlignment.TopCenter;
-            Fear0HP.ImeMode = ImeMode.NoControl;
-            Fear0HP.Location = new Point(192, 579);
-            Fear0HP.Name = "Fear0HP";
-            Fear0HP.Size = new Size(169, 29);
-            Fear0HP.TabIndex = 559;
-            Fear0HP.Text = "The Fear 0 HP";
-            Fear0HP.UseVisualStyleBackColor = true;
-            Fear0HP.Click += Fear0HP_Click;
-            // 
-            // Fear1HP
-            // 
-            Fear1HP.BackgroundImage = (Image)resources.GetObject("Fear1HP.BackgroundImage");
-            Fear1HP.Cursor = Cursors.Hand;
-            Fear1HP.FlatStyle = FlatStyle.Flat;
-            Fear1HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Fear1HP.ImageAlign = ContentAlignment.TopCenter;
-            Fear1HP.ImeMode = ImeMode.NoControl;
-            Fear1HP.Location = new Point(192, 610);
-            Fear1HP.Name = "Fear1HP";
-            Fear1HP.Size = new Size(169, 29);
-            Fear1HP.TabIndex = 560;
-            Fear1HP.Text = "The Fear 1 HP";
-            Fear1HP.UseVisualStyleBackColor = true;
-            Fear1HP.Click += Fear1HP_Click;
-            // 
-            // Fear0Stam
-            // 
-            Fear0Stam.BackgroundImage = (Image)resources.GetObject("Fear0Stam.BackgroundImage");
-            Fear0Stam.Cursor = Cursors.Hand;
-            Fear0Stam.FlatStyle = FlatStyle.Flat;
-            Fear0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Fear0Stam.ImageAlign = ContentAlignment.TopCenter;
-            Fear0Stam.ImeMode = ImeMode.NoControl;
-            Fear0Stam.Location = new Point(192, 641);
-            Fear0Stam.Name = "Fear0Stam";
-            Fear0Stam.Size = new Size(169, 29);
-            Fear0Stam.TabIndex = 561;
-            Fear0Stam.Text = "The Fear 0 Stamina";
-            Fear0Stam.UseVisualStyleBackColor = true;
-            Fear0Stam.Click += Fear0Stam_Click;
-            // 
-            // Fear1Stam
-            // 
-            Fear1Stam.BackgroundImage = (Image)resources.GetObject("Fear1Stam.BackgroundImage");
-            Fear1Stam.Cursor = Cursors.Hand;
-            Fear1Stam.FlatStyle = FlatStyle.Flat;
-            Fear1Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Fear1Stam.ImageAlign = ContentAlignment.TopCenter;
-            Fear1Stam.ImeMode = ImeMode.NoControl;
-            Fear1Stam.Location = new Point(192, 672);
-            Fear1Stam.Name = "Fear1Stam";
-            Fear1Stam.Size = new Size(169, 29);
-            Fear1Stam.TabIndex = 562;
-            Fear1Stam.Text = "The Fear 1 Stamina";
-            Fear1Stam.UseVisualStyleBackColor = true;
-            Fear1Stam.Click += Fear1Stam_Click;
             // 
             // button6
             // 
@@ -664,6 +604,60 @@
             button36.Text = "Volgin 0 HP";
             button36.UseVisualStyleBackColor = true;
             // 
+            // FearHealthSlider
+            // 
+            FearHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
+            FearHealthSlider.Location = new Point(192, 576);
+            FearHealthSlider.Name = "FearHealthSlider";
+            FearHealthSlider.Size = new Size(169, 45);
+            FearHealthSlider.TabIndex = 593;
+            FearHealthSlider.Scroll += FearHealthSlider_Scroll;
+            // 
+            // Fear0HP
+            // 
+            Fear0HP.BackgroundImage = (Image)resources.GetObject("Fear0HP.BackgroundImage");
+            Fear0HP.Cursor = Cursors.Hand;
+            Fear0HP.FlatStyle = FlatStyle.Flat;
+            Fear0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Fear0HP.ImageAlign = ContentAlignment.TopCenter;
+            Fear0HP.ImeMode = ImeMode.NoControl;
+            Fear0HP.Location = new Point(192, 598);
+            Fear0HP.Name = "Fear0HP";
+            Fear0HP.Size = new Size(169, 29);
+            Fear0HP.TabIndex = 594;
+            Fear0HP.Text = "The Fear 0 HP";
+            Fear0HP.UseVisualStyleBackColor = true;
+            Fear0HP.Click += Fear0HP_Click;
+            // 
+            // FearStaminaSlider
+            // 
+            FearStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
+            FearStaminaSlider.Location = new Point(192, 639);
+            FearStaminaSlider.Name = "FearStaminaSlider";
+            FearStaminaSlider.Size = new Size(169, 45);
+            FearStaminaSlider.TabIndex = 596;
+            FearStaminaSlider.Scroll += FearStaminaSlider_Scroll;
+            // 
+            // Fear0Stam
+            // 
+            Fear0Stam.BackgroundImage = (Image)resources.GetObject("Fear0Stam.BackgroundImage");
+            Fear0Stam.Cursor = Cursors.Hand;
+            Fear0Stam.FlatStyle = FlatStyle.Flat;
+            Fear0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Fear0Stam.ImageAlign = ContentAlignment.TopCenter;
+            Fear0Stam.ImeMode = ImeMode.NoControl;
+            Fear0Stam.Location = new Point(192, 661);
+            Fear0Stam.Name = "Fear0Stam";
+            Fear0Stam.Size = new Size(169, 29);
+            Fear0Stam.TabIndex = 597;
+            Fear0Stam.Text = "The Fear 0 Stamina";
+            Fear0Stam.UseVisualStyleBackColor = true;
+            Fear0Stam.Click += Fear0Stam_Click;
+            // 
+            // FearTimer
+            // 
+            FearTimer.Tick += FearTimer_Tick;
+            // 
             // BossForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -671,6 +665,10 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1185, 702);
+            Controls.Add(Fear0Stam);
+            Controls.Add(FearStaminaSlider);
+            Controls.Add(Fear0HP);
+            Controls.Add(FearHealthSlider);
             Controls.Add(button33);
             Controls.Add(button34);
             Controls.Add(button35);
@@ -701,10 +699,6 @@
             Controls.Add(button7);
             Controls.Add(button8);
             Controls.Add(button9);
-            Controls.Add(Fear1Stam);
-            Controls.Add(Fear0Stam);
-            Controls.Add(Fear1HP);
-            Controls.Add(Fear0HP);
             Controls.Add(WeaponFormSwap);
             Controls.Add(HealthFormSwap);
             Controls.Add(MiscFormSwap);
@@ -714,7 +708,11 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "BossForm";
             Text = "MGS3 Cheat Trainer - Bosses - ANTIBigBoss";
+            Load += BossForm_Load;
+            ((System.ComponentModel.ISupportInitialize)FearHealthSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)FearStaminaSlider).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -724,10 +722,7 @@
         private Button MiscFormSwap;
         private Button CamoFormSwap;
         private Button ItemFormSwap;
-        private Button Fear0HP;
-        private Button Fear1HP;
-        private Button Fear0Stam;
-        private Button Fear1Stam;
+        private TrackBar FearHealthSlider;
         private Button button6;
         private Button button7;
         private Button button8;
@@ -758,5 +753,9 @@
         private Button button34;
         private Button button35;
         private Button button36;
+        private Button Fear0HP;
+        private TrackBar FearStaminaSlider;
+        private Button Fear0Stam;
+        private System.Windows.Forms.Timer FearTimer;
     }
 }

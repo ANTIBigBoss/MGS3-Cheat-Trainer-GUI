@@ -29,24 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
-            SnakePukes = new Button();
             button1 = new Button();
             textBox29 = new TextBox();
             button2 = new Button();
             WeaponFormSwap = new Button();
-            textBox3 = new TextBox();
             textBox4 = new TextBox();
             NormalHUD = new Button();
             ShrinkHUD = new Button();
             NoHUD = new Button();
             NormalCam = new Button();
             UpsideDownCam = new Button();
-            SnakeNapQuick = new Button();
-            SnakeLongNap = new Button();
-            SnakeFakesDeath = new Button();
-            button12 = new Button();
-            SnakePukeFire = new Button();
-            button23 = new Button();
             ModelSlider = new TrackBar();
             textBox5 = new TextBox();
             ResetModelsToNormal = new Button();
@@ -68,19 +60,6 @@
             button11 = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             SuspendLayout();
-            // 
-            // SnakePukes
-            // 
-            SnakePukes.Cursor = Cursors.Hand;
-            SnakePukes.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SnakePukes.ImageAlign = ContentAlignment.TopCenter;
-            SnakePukes.Location = new Point(623, 261);
-            SnakePukes.Name = "SnakePukes";
-            SnakePukes.Size = new Size(241, 29);
-            SnakePukes.TabIndex = 179;
-            SnakePukes.Text = "Snake pukes";
-            SnakePukes.UseVisualStyleBackColor = true;
-            SnakePukes.Click += SnakePukes_Click;
             // 
             // button1
             // 
@@ -144,21 +123,6 @@
             WeaponFormSwap.Text = "Switch to Weapons";
             WeaponFormSwap.UseVisualStyleBackColor = true;
             WeaponFormSwap.Click += WeaponFormSwap_Click;
-            // 
-            // textBox3
-            // 
-            textBox3.BackColor = SystemColors.ActiveCaptionText;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox3.ForeColor = SystemColors.ActiveCaptionText;
-            textBox3.Location = new Point(623, 117);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "Animations";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(241, 34);
-            textBox3.TabIndex = 484;
-            textBox3.TextAlign = HorizontalAlignment.Center;
             // 
             // textBox4
             // 
@@ -239,84 +203,6 @@
             UpsideDownCam.Text = "Upside Down Camera";
             UpsideDownCam.UseVisualStyleBackColor = true;
             UpsideDownCam.Click += UpsideDownCam_Click;
-            // 
-            // SnakeNapQuick
-            // 
-            SnakeNapQuick.Cursor = Cursors.Hand;
-            SnakeNapQuick.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SnakeNapQuick.ImageAlign = ContentAlignment.TopCenter;
-            SnakeNapQuick.Location = new Point(623, 157);
-            SnakeNapQuick.Name = "SnakeNapQuick";
-            SnakeNapQuick.Size = new Size(241, 29);
-            SnakeNapQuick.TabIndex = 491;
-            SnakeNapQuick.Text = "Snake takes a quick nap";
-            SnakeNapQuick.UseVisualStyleBackColor = true;
-            SnakeNapQuick.Click += SnakeNapQuick_Click;
-            // 
-            // SnakeLongNap
-            // 
-            SnakeLongNap.Cursor = Cursors.Hand;
-            SnakeLongNap.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SnakeLongNap.ImageAlign = ContentAlignment.TopCenter;
-            SnakeLongNap.Location = new Point(623, 191);
-            SnakeLongNap.Name = "SnakeLongNap";
-            SnakeLongNap.Size = new Size(241, 29);
-            SnakeLongNap.TabIndex = 492;
-            SnakeLongNap.Text = "Snake takes a long nap";
-            SnakeLongNap.UseVisualStyleBackColor = true;
-            SnakeLongNap.Click += SnakeLongNap_Click;
-            // 
-            // SnakeFakesDeath
-            // 
-            SnakeFakesDeath.Cursor = Cursors.Hand;
-            SnakeFakesDeath.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SnakeFakesDeath.ImageAlign = ContentAlignment.TopCenter;
-            SnakeFakesDeath.Location = new Point(623, 226);
-            SnakeFakesDeath.Name = "SnakeFakesDeath";
-            SnakeFakesDeath.Size = new Size(241, 29);
-            SnakeFakesDeath.TabIndex = 493;
-            SnakeFakesDeath.Text = "Snake fakes his death";
-            SnakeFakesDeath.UseVisualStyleBackColor = true;
-            SnakeFakesDeath.Click += SnakeFakesDeath_Click;
-            // 
-            // button12
-            // 
-            button12.Cursor = Cursors.Hand;
-            button12.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button12.ImageAlign = ContentAlignment.TopCenter;
-            button12.Location = new Point(623, 296);
-            button12.Name = "button12";
-            button12.Size = new Size(241, 29);
-            button12.TabIndex = 494;
-            button12.Text = "Snake is set on fire";
-            button12.UseVisualStyleBackColor = true;
-            button12.Click += button12_Click;
-            // 
-            // SnakePukeFire
-            // 
-            SnakePukeFire.Cursor = Cursors.Hand;
-            SnakePukeFire.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SnakePukeFire.ImageAlign = ContentAlignment.TopCenter;
-            SnakePukeFire.Location = new Point(623, 331);
-            SnakePukeFire.Name = "SnakePukeFire";
-            SnakePukeFire.Size = new Size(241, 29);
-            SnakePukeFire.TabIndex = 495;
-            SnakePukeFire.Text = "Snake pukes and is set on fire";
-            SnakePukeFire.UseVisualStyleBackColor = true;
-            SnakePukeFire.Click += SnakePukeFire_Click;
-            // 
-            // button23
-            // 
-            button23.Cursor = Cursors.Hand;
-            button23.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button23.ImageAlign = ContentAlignment.TopCenter;
-            button23.Location = new Point(623, 365);
-            button23.Name = "button23";
-            button23.Size = new Size(241, 29);
-            button23.TabIndex = 496;
-            button23.Text = "Snake does a bunny hop";
-            button23.UseVisualStyleBackColor = true;
-            button23.Click += button23_Click;
             // 
             // ModelSlider
             // 
@@ -581,24 +467,16 @@
             Controls.Add(ResetModelsToNormal);
             Controls.Add(textBox5);
             Controls.Add(ModelSlider);
-            Controls.Add(button23);
-            Controls.Add(SnakePukeFire);
-            Controls.Add(button12);
-            Controls.Add(SnakeFakesDeath);
-            Controls.Add(SnakeLongNap);
-            Controls.Add(SnakeNapQuick);
             Controls.Add(UpsideDownCam);
             Controls.Add(NormalCam);
             Controls.Add(NoHUD);
             Controls.Add(ShrinkHUD);
             Controls.Add(textBox4);
             Controls.Add(NormalHUD);
-            Controls.Add(textBox3);
             Controls.Add(button1);
             Controls.Add(textBox29);
             Controls.Add(button2);
             Controls.Add(WeaponFormSwap);
-            Controls.Add(SnakePukes);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
@@ -609,24 +487,16 @@
         }
 
         #endregion
-        private Button SnakePukes;
         private Button button1;
         private TextBox textBox29;
         private Button button2;
         private Button WeaponFormSwap;
-        private TextBox textBox3;
         private TextBox textBox4;
         private Button NormalHUD;
         private Button ShrinkHUD;
         private Button NoHUD;
         private Button NormalCam;
         private Button UpsideDownCam;
-        private Button SnakeNapQuick;
-        private Button SnakeLongNap;
-        private Button SnakeFakesDeath;
-        private Button button12;
-        private Button SnakePukeFire;
-        private Button button23;
         private TrackBar ModelSlider;
         private TextBox textBox5;
         private Button ResetModelsToNormal;
