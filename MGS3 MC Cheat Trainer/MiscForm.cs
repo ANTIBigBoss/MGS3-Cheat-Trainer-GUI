@@ -182,7 +182,15 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
+                MessageBox.Show(result, "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -213,13 +221,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button10_Click(object sender, EventArgs e)
         {
-            /* 
-            Broke somehow lol
-            List<short> sequence = BossManager.ReadShortSequenceBeforeTheFearAOB(10, 1); // Example: Read 5 shorts starting 20 bytes before the AOB
-                                                                                         // Display the sequence for debugging
-            string sequenceDisplay = string.Join("\n", sequence);
-            MessageBox.Show(sequenceDisplay, "Debug Sequence", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            */
+
         }
 
     }

@@ -430,5 +430,94 @@ namespace MGS3_MC_Cheat_Trainer
             return false;
         }
 
+        public IntPtr FindMapStringAOB()
+        {
+            Process process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("Game process not found.");
+                return IntPtr.Zero;
+            }
+
+            IntPtr baseAddress = process.MainModule.BaseAddress;
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1C00000);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            var (pattern, mask) = Constants.AOBs["MapStringAOB"];
+
+            IntPtr processHandle = OpenGameProcess(process);
+            IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            return foundAddress;
+        }
+
+        public string FindLocationStringNearAOB(IntPtr aobAddress)
+        {
+            Process process = GetMGS3Process();
+            IntPtr processHandle = OpenGameProcess(process);
+            const int searchBackwardLimit = 1024; // Define how far back you want to search
+            byte[] buffer = new byte[searchBackwardLimit];
+            IntPtr readStartAddress = IntPtr.Subtract(aobAddress, searchBackwardLimit);
+
+            // Read the memory backwards from the AOB
+            if (!ReadProcessMemory(processHandle, readStartAddress, buffer, (uint)buffer.Length, out _))
+            {
+                NativeMethods.CloseHandle(processHandle);
+                return null;
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+
+            // Convert buffer to string for searching
+            string memoryString = Encoding.ASCII.GetString(buffer);
+
+            foreach (StringManager.LocationString location in Enum.GetValues(typeof(StringManager.LocationString)))
+            {
+                string locationString = location.ToString();
+                if (memoryString.Contains(locationString))
+                {
+                    return locationString; // Found a match
+                }
+            }
+
+            return null; // No match found
+        }
+
+        public string FindLocationStringDirectlyInRange()
+        {
+            Process process = GetMGS3Process();
+            if (process == null)
+            {
+                return "Game process not found.";
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            IntPtr baseAddress = process.MainModule.BaseAddress;
+
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1CFFF00);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1E00000);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            foreach (StringManager.LocationString location in Enum.GetValues(typeof(StringManager.LocationString)))
+            {
+                var locationString = location.ToString();
+                byte[] pattern = Encoding.ASCII.GetBytes(locationString);
+                string mask = new string('x', pattern.Length);
+
+                IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
+                if (foundAddress != IntPtr.Zero)
+                {
+                    string areaName = StringManager.LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+                    NativeMethods.CloseHandle(processHandle);
+                    return $"Location String: {locationString} \nArea Name: {areaName} \nMemory Address: {foundAddress.ToString("X")}";
+                }
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+            return "No Location String found in specified range.";
+        }
+
     }
 }
