@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    internal class StringManager
+    public class StringManager
     {
 
         /* List of strings for areas of the game that can be read to use for conditional checks 

@@ -158,6 +158,7 @@
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "MGS3 Cheat Trainer - Main Menu - ANTIBigBoss";
+            Load += MainMenuForm_Load;
             ResumeLayout(false);
         }
 

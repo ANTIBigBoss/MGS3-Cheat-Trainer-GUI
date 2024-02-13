@@ -93,7 +93,7 @@ namespace MGS3_MC_Cheat_Trainer
             {   // Side note this might be for multiple bosses but need to confirm so far Fear, Pain and Volgin are confirmed Ocelot did not work
                 "TheFearAOB", // F0 49 02 00 F0 49 02 00
                 (new byte[] { 0xF0, 0x49, 0x02, 0x00, 0xF0, 0x49, 0x02, 0x00 },
-                "xx xx xx xx xx xx")
+                "xx xx xx xx xx xx xx xx")
             },
 
             {

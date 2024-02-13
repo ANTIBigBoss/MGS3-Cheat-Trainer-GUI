@@ -49,7 +49,7 @@ namespace MGS3_MC_Cheat_Trainer
             Process? process = Process.GetProcessesByName(Constants.PROCESS_NAME).FirstOrDefault();
             if (process == null)
             {
-                throw new NullReferenceException();
+                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}.exe \nAre you sure you're running Metal Gear Solid 3: Snake Eater?");
             }
             return process;
         }
@@ -118,7 +118,7 @@ namespace MGS3_MC_Cheat_Trainer
                 }
             }
 
-            throw new InvalidOperationException("Failed to read short from memory.");
+            return -1;
         }
 
         public static int WriteShortToMemory(IntPtr processHandle, IntPtr address, short value)
@@ -126,7 +126,7 @@ namespace MGS3_MC_Cheat_Trainer
             if (NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten))
                 return bytesWritten;
 
-            throw new IOException();
+            return -1;
         }
 
         // We just want to be checking the timer so we can trigger the alert again if needed
@@ -160,7 +160,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public IntPtr ScanMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
-            int bufferSize = 131072; // 128 KB buffer
+            int bufferSize = 800000; // 800 KB buffer
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -414,8 +414,8 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             var (pattern, mask) = Constants.AOBs["TheFearAOB"];
-            IntPtr startAddress = new IntPtr(0x22AFFFFFFFF); // Example start range
-            IntPtr endAddress = new IntPtr(0x23B00000000); // Example end range
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
+            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
             IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
@@ -518,6 +518,22 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
             return "No Location String found in specified range.";
         }
+        public string ExtractLocationStringFromResult(string result)
+        {
+            // Assuming result format is "Location String: {locationString} \nArea Name: {areaName} \nMemory Address: {memoryAddress}"
+            // Adjust parsing logic if format changes
+            string[] parts = result.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length > 0)
+            {
+                string locationStringPart = parts[0]; // "Location String: {locationString}"
+                string[] locationStringParts = locationStringPart.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                if (locationStringParts.Length > 1)
+                {
+                    return locationStringParts[1].Trim();
+                }
+            }
 
+            return "Unknown"; // Return a default or error value if parsing fails
+        }
     }
 }

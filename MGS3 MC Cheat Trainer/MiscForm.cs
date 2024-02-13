@@ -186,6 +186,7 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
                 MessageBox.Show(result, "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             catch (Exception ex)
             {
