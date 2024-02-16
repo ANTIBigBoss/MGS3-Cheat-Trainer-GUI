@@ -113,61 +113,73 @@ namespace MGS3_MC_Cheat_Trainer
         private void AddPatriot_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.Patriot, true);
+            LoggingManager.Instance.Log("Added Patriot");
         }
 
         private void RemovePatriot_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.Patriot, false);
+            LoggingManager.Instance.Log("Removed Patriot");
         }
 
         private void AddEz_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.EzGun, true);
+            LoggingManager.Instance.Log("Added EZ Gun");
         }
 
         private void RemoveEz_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.EzGun, false);
+            LoggingManager.Instance.Log("Removed EZ Gun");
         }
 
         private void AddKnife_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.SurvivalKnife, true);
+            LoggingManager.Instance.Log("Added Survival Knife");
         }
 
         private void RemoveKnife_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.SurvivalKnife, false);
+            LoggingManager.Instance.Log("Removed Survival Knife");
         }
 
         private void AddFork_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.Fork, true);
+            LoggingManager.Instance.Log("Added Fork");
         }
 
         private void RemoveFork_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.Fork, false);
+            LoggingManager.Instance.Log("Removed Fork");
         }
 
         private void AddTorch_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.Torch, true);
+            LoggingManager.Instance.Log("Added Torch");
         }
 
         private void RemoveTorch_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.Torch, false);
+            LoggingManager.Instance.Log("Removed Torch");
         }
 
         private void AddDMic_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.DirectionalMic, true);
+            LoggingManager.Instance.Log("Added Directional Mic");
         }
 
         private void RemoveDMic_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleWeapon(MGS3UsableObjects.DirectionalMic, false);
+            LoggingManager.Instance.Log("Removed Directional Mic");
         }
         #endregion
 
@@ -182,6 +194,7 @@ namespace MGS3_MC_Cheat_Trainer
             ItemForm form2 = new ItemForm();
             form2.Show();
             this.Hide();
+            LoggingManager.Instance.Log("Navigating to Item Form from the Weapon Form");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -189,6 +202,7 @@ namespace MGS3_MC_Cheat_Trainer
             CamoForm form3 = new CamoForm();
             form3.Show();
             this.Hide();
+            LoggingManager.Instance.Log("Navigating to Camo Form from the Weapon Form");
         }
 
         private void button70_Click(object sender, EventArgs e) // Load form4
@@ -196,6 +210,7 @@ namespace MGS3_MC_Cheat_Trainer
             MiscForm form4 = new MiscForm();
             form4.Show();
             this.Hide();
+            LoggingManager.Instance.Log("Navigating to Misc Form from the Weapon Form");
         }
 
         private void HealthFormSwap_Click(object sender, EventArgs e)
@@ -203,6 +218,7 @@ namespace MGS3_MC_Cheat_Trainer
             StatsAndAlertForm form5 = new();
             form5.Show();
             this.Hide();
+            LoggingManager.Instance.Log("Navigating to Stats and Alert Form from the Weapon Form");
         }
 
         private void BossFormSwap_Click(object sender, EventArgs e)
@@ -210,6 +226,7 @@ namespace MGS3_MC_Cheat_Trainer
             BossForm form6 = new();
             form6.Show();
             this.Hide();
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Weapon Form");
         }
 
         private void M1911A1Dropdown_SelectedIndexChanged(object sender, EventArgs e)
@@ -226,27 +243,35 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.M1911A1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.M1911A1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Current Ammo to: " +textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.M1911A1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.M1911A1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.M1911A1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.M1911A1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Max Clip Size to: " + textBoxValue);
                     break;
                 case SuppressorCount:
                     ItemWeaponManager.ModifyItemCapacity(MGS3UsableObjects.M1911A1Surpressor, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Suppressor Count to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the M1911A1.");
                     break;
             }
         }
@@ -266,27 +291,35 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.MK22, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.MK22, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.MK22, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.MK22, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.MK22, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.MK22, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Max Clip Size to: " + textBoxValue);
                     break;
                 case SuppressorCount:
                     ItemWeaponManager.ModifyItemCapacity(MGS3UsableObjects.MK22Surpressor, textBoxValue);
+                    LoggingManager.Instance.Log("Changed MK22 Suppressor Count to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the MK22.");
                     break;
             }
         }
@@ -305,28 +338,36 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.XM16E1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.XM16E1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.XM16E1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.XM16E1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.XM16E1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.XM16E1, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Max Clip Size to: " + textBoxValue);
                     break;
                 case SuppressorCount:
                     // Assuming there is a suppressor item for the XM16E1
                     ItemWeaponManager.ModifyItemCapacity(MGS3UsableObjects.XM16E1Surpressor, textBoxValue);
+                    LoggingManager.Instance.Log("Changed XM16E1 Suppressor Count to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the XM16E1.");
                     break;
             }
         }
@@ -345,24 +386,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.SAA, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SAA Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.SAA, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SAA Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.SAA, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SAA Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.SAA, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SAA Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.SAA, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SAA Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.SAA, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SAA Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the SAA.");
                     break;
             }
         }
@@ -381,24 +429,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.M37, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M37 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.M37, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M37 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.M37, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M37 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.M37, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M37 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.M37, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M37 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.M37, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M37 Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the M37.");
                     break;
             }
         }
@@ -417,24 +472,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.SVD, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SVD Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.SVD, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SVD Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.SVD, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SVD Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.SVD, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SVD Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.SVD, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SVD Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.SVD, textBoxValue);
+                    LoggingManager.Instance.Log("Changed SVD Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the SVD.");
                     break;
             }
         }
@@ -453,24 +515,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Mosin, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mosin Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Mosin, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mosin Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Mosin, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mosin Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.Mosin, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mosin Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.Mosin, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mosin Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.Mosin, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mosin Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Mosin.");
                     break;
             }
         }
@@ -489,24 +558,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.RPG7, textBoxValue);
+                    LoggingManager.Instance.Log("Changed RPG7 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.RPG7, textBoxValue);
+                    LoggingManager.Instance.Log("Changed RPG7 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.RPG7, textBoxValue);
+                    LoggingManager.Instance.Log("Changed RPG7 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.RPG7, textBoxValue);
+                    LoggingManager.Instance.Log("Changed RPG7 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.RPG7, textBoxValue);
+                    LoggingManager.Instance.Log("Changed RPG7 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.RPG7, textBoxValue);
+                    LoggingManager.Instance.Log("Changed RPG7 Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the RPG7.");
                     break;
             }
         }
@@ -525,24 +601,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.AK47, textBoxValue);
+                    LoggingManager.Instance.Log("Changed AK47 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.AK47, textBoxValue);
+                    LoggingManager.Instance.Log("Changed AK47 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.AK47, textBoxValue);
+                    LoggingManager.Instance.Log("Changed AK47 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.AK47, textBoxValue);
+                    LoggingManager.Instance.Log("Changed AK47 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.AK47, textBoxValue);
+                    LoggingManager.Instance.Log("Changed AK47 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.AK47, textBoxValue);
+                    LoggingManager.Instance.Log("Changed AK47 Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the AK47.");
                     break;
             }
         }
@@ -561,24 +644,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.M63, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M63 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.M63, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M63 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.M63, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M63 Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.M63, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M63 Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.M63, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M63 Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.M63, textBoxValue);
+                    LoggingManager.Instance.Log("Changed M63 Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the M63.");
                     break;
             }
         }
@@ -597,24 +687,31 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Scorpion, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Scorpion Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Scorpion, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Scorpion Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Scorpion, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Scorpion Max Ammo to: " + textBoxValue);
                     break;
                 case MaxAndCurrentClipSize:
                     ItemWeaponManager.ModifyCurrentAndMaxClipSize(MGS3UsableObjects.Scorpion, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Scorpion Current and Max Clip Size to: " + textBoxValue);
                     break;
                 case ClipSize:
                     ItemWeaponManager.ModifyClipSize(MGS3UsableObjects.Scorpion, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Scorpion Clip Size to: " + textBoxValue);
                     break;
                 case MaxClipSize:
                     ItemWeaponManager.ModifyMaxClipSize(MGS3UsableObjects.Scorpion, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Scorpion Max Clip Size to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Scorpion.");
                     break;
             }
         }
@@ -633,15 +730,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Grenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Grenade Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Grenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Grenade Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Grenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Grenade Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Grenade.");
                     break;
             }
 
@@ -661,15 +762,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.WpGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Wp Grenade Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.WpGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Wp Grenade Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.WpGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Wp Grenade Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Wp Grenade.");
                     break;
             }
 
@@ -689,15 +794,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.SmokeGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Smoke Grenade Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.SmokeGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Smoke Grenade Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.SmokeGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Smoke Grenade Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Smoke Grenade.");
                     break;
             }
 
@@ -717,15 +826,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.StunGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Stun Grenade Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.StunGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Stun Grenade Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.StunGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Stun Grenade Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Stun Grenade.");
                     break;
             }
 
@@ -745,15 +858,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.ChaffGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Chaff Grenade Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.ChaffGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Chaff Grenade Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.ChaffGrenade, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Chaff Grenade Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Chaff Grenade.");
                     break;
             }
 
@@ -773,15 +890,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.EmptyMag, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Empty Magazine Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.EmptyMag, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Empty Magazine Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.EmptyMag, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Empty Magazine Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Empty Magazine.");
                     break;
             }
 
@@ -801,15 +922,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Handkerchief, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Handkerchief Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Handkerchief, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Handkerchief Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Handkerchief, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Handkerchief Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Handkerchief.");
                     break;
             }
         }
@@ -828,15 +953,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.CigSpray, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Cig Spray Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.CigSpray, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Cig Spray Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.CigSpray, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Cig Spray Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Cig Spray.");
                     break;
             }
         }
@@ -855,15 +984,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.C3, textBoxValue);
+                    LoggingManager.Instance.Log("Changed C3 Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.C3, textBoxValue);
+                    LoggingManager.Instance.Log("Changed C3 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.C3, textBoxValue);
+                    LoggingManager.Instance.Log("Changed C3 Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the C3.");
                     break;
             }
         }
@@ -882,15 +1015,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.TNT, textBoxValue);
+                    LoggingManager.Instance.Log("Changed TNT Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.TNT, textBoxValue);
+                    LoggingManager.Instance.Log("Changed TNT Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.TNT, textBoxValue);
+                    LoggingManager.Instance.Log("Changed TNT Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the TNT.");
                     break;
             }
         }
@@ -909,15 +1046,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Book, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Book Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Book, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Book Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Book, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Book Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Book.");
                     break;
             }
         }
@@ -936,15 +1077,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Claymore, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Claymore Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Claymore, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Claymore Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Claymore, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Claymore Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Claymore.");
                     break;
             }
         }
@@ -963,15 +1108,19 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case CurrentAndMax:
                     ItemWeaponManager.ModifyCurrentAndMaxAmmo(MGS3UsableObjects.Mousetrap, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mousetrap Current and Max Ammo to: " + textBoxValue);
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.Mousetrap, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mousetrap Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.Mousetrap, textBoxValue);
+                    LoggingManager.Instance.Log("Changed Mousetrap Max Ammo to: " + textBoxValue);
                     break;
                 default:
                     MessageBox.Show("Invalid option selected or no option selected.");
+                    LoggingManager.Instance.Log("Invalid option selected or no option selected for the Mousetrap.");
                     break;
             }
         }
@@ -1000,7 +1149,9 @@ namespace MGS3_MC_Cheat_Trainer
                 {
                     // Apply ammo and max ammo changes to the selected weapon
                     ItemWeaponManager.ModifyAmmo(weapon, ammoValue.ToString());
+                    LoggingManager.Instance.Log("Changed " + weaponName + " Current Ammo to: " + ammoValue);
                     ItemWeaponManager.ModifyMaxAmmo(weapon, ammoValue.ToString());
+                    LoggingManager.Instance.Log("Changed " + weaponName + " Max Ammo to: " + ammoValue);
                 }
             }
         }

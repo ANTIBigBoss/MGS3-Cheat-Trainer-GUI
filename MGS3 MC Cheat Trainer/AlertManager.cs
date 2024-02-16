@@ -128,10 +128,12 @@ namespace MGS3_MC_Cheat_Trainer
             if (enable)
             {
                 _alertTimer.Start();
+                LoggingManager.Instance.Log("Infinite Alert enabled.\n");
             }
             else
             {
                 _alertTimer.Stop();
+                LoggingManager.Instance.Log("Infinite Alert disabled.\n");
             }
         }
 
@@ -141,11 +143,13 @@ namespace MGS3_MC_Cheat_Trainer
             if (enable)
             {
                 _evasionTimer.Start(); // Start checking conditions for evasion
+                LoggingManager.Instance.Log("Infinite Evasion enabled.\n");
             }
             else
             {
                 _evasionTimer.Stop(); // Stop checking
                 evasionStepTimer.Stop(); // Also stop the evasion sequence timer if running
+                LoggingManager.Instance.Log("Infinite Evasion disabled.\n");
             }
         }
 
@@ -156,10 +160,12 @@ namespace MGS3_MC_Cheat_Trainer
             if (enable)
             {
                 _cautionTimer.Start();
+                LoggingManager.Instance.Log("Infinite Caution enabled.\n");
             }
             else
             {
                 _cautionTimer.Stop();
+                LoggingManager.Instance.Log("Infinite Caution disabled.\n");
             }
         }
 
@@ -183,7 +189,8 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to find alert memory region.");
+                MessageBox.Show("Failed to find alert's memory region. Submit the logs to ANTIBigBoss if this persists.");
+                LoggingManager.Instance.Log("Alert memory region not found.\n");
                 return;
             }
 
@@ -212,7 +219,7 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            IntPtr modifyAddress = IntPtr.Add(alertMemoryRegion, 78); // Same address as TriggerAlert
+            IntPtr modifyAddress = IntPtr.Add(alertMemoryRegion, 78);
 
             Process process = MemoryManager.GetMGS3Process();
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
@@ -222,6 +229,7 @@ namespace MGS3_MC_Cheat_Trainer
             MemoryManager.WriteShortToMemory(processHandle, modifyAddress, modifiedValue);
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
+            LoggingManager.Instance.Log("Evasion and Caution bits removed.\n");
         }
 
         internal static void TriggerAlert(AlertModes alertMode)
@@ -243,7 +251,7 @@ namespace MGS3_MC_Cheat_Trainer
             // Set the alert value based on the provided alertMode
             byte alertValue = (byte)alertMode;
 
-            memoryManager.WriteByteValueToMemory(triggerAddress, alertValue);
+            MemoryManager.WriteByteValueToMemory(triggerAddress, alertValue);
 
             if (alertMode == AlertModes.Evasion)
             {

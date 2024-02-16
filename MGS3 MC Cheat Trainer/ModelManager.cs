@@ -1,14 +1,29 @@
 ﻿using static MGS3_MC_Cheat_Trainer.MemoryManager;
-using static MGS3_MC_Cheat_Trainer.Constants;
 using System.Diagnostics;
-using System.Windows.Forms; // Ensure you have this using directive for MessageBox
 
 namespace MGS3_MC_Cheat_Trainer
 {
     internal class ModelManager
     {
 
-        internal static void ModifyModel(Constants.MGS3Distortion model, byte value)
+        private static IntPtr FindModelAddress(string aobKey)
+        {
+            try
+            {
+                (byte[] pattern, string mask) = Constants.AOBs["ModelDistortion"];
+                IntPtr foundAddress = MemoryManager.Instance.FindAOBInModelRange(pattern, mask);
+                // Additional offset may be needed depending on the AOB's location relative to the actual value you want to modify
+                // IntPtr targetAddress = IntPtr.Add(foundAddress, additionalOffset);
+                return foundAddress; // or return targetAddress if additional offset is used
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error finding model address: {ex.Message}");
+                return IntPtr.Zero;
+            }
+        }
+
+        internal static void ModifyModel(byte value)
         {
             Process process;
 
@@ -22,18 +37,28 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
             IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
             int bytesWritten;
 
             byte[] buffer = new byte[] { value }; // Value to write
-            IntPtr targetAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)model.ModelManipulationOffset); // Adjusted to add base address
+
+            // Use the "ModelDistortion" key from the Constants.AOBs dictionary
+            IntPtr foundAddress = FindModelAddress("ModelDistortion");
+
+            if (foundAddress == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to find memory address for model distortion.");
+                return;
+            }
+
+            // Adjust the address to target the byte before the array
+            IntPtr targetAddress = IntPtr.Subtract(foundAddress, 1); // One byte before the array
 
             bool success = NativeMethods.WriteProcessMemory(processHandle, targetAddress, buffer, (uint)buffer.Length, out bytesWritten);
 
             if (!success || bytesWritten != buffer.Length)
             {
-                MessageBox.Show($"Failed to write memory for model {model.Name} with value {value}.");
+                MessageBox.Show("Failed to write memory for model distortion with value " + value + ".");
             }
 
             NativeMethods.CloseHandle(processHandle);
@@ -50,7 +75,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr cameraAddress = FindCameraAddress(aobKey);
             if (cameraAddress != IntPtr.Zero)
             {
-                MemoryManager.Instance.WriteByteValueToMemory(cameraAddress, cameraSetting);
+                MemoryManager.WriteByteValueToMemory(cameraAddress, cameraSetting);
             }
             else
             {

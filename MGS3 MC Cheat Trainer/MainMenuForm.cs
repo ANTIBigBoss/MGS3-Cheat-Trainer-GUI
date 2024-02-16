@@ -17,7 +17,6 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 InitializeComponent();
                 this.FormClosing += new FormClosingEventHandler(MainMenuForm_FormClosing);
-
             }
         }
 
@@ -76,7 +75,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("Application started successfully.\n");
+            LoggingManager.Instance.Log("Start of logging for this session.\nApplication started successfully.\n");
         }
 
     }

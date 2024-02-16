@@ -9,13 +9,30 @@ namespace MGS3_MC_Cheat_Trainer
     {
         private static LoggingManager instance;
         private static readonly object padlock = new object();
-        private static string logFolderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Logs");
+        private static string logFolderPath;
         private static string logFileName = "MGS3_MC_Cheat_Trainer_Log.txt";
-        private static string logPath = Path.Combine(logFolderPath, logFileName);
+        private static string logPath;
+
+        // Static constructor to initialize logFolderPath and logPath
+        static LoggingManager()
+        {
+            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            if (string.IsNullOrEmpty(assemblyLocation))
+            {
+                // Fallback to a default path, such as the current directory
+                logFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+            }
+            else
+            {
+                logFolderPath = Path.Combine(Path.GetDirectoryName(assemblyLocation) ?? "", "Logs");
+            }
+            logPath = Path.Combine(logFolderPath, logFileName);
+            EnsureLogFileExists();
+        }
 
         private LoggingManager()
         {
-            EnsureLogFileExists(); // Ensure the log folder and file exist when the instance is created
+            // Private constructor to prevent instance creation outside of this class
         }
 
         public static LoggingManager Instance
@@ -33,7 +50,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void EnsureLogFileExists()
+        private static void EnsureLogFileExists()
         {
             if (!Directory.Exists(logFolderPath))
             {
@@ -41,8 +58,10 @@ namespace MGS3_MC_Cheat_Trainer
             }
             if (!File.Exists(logPath))
             {
-                // Create the file or do nothing if it already exists
-                File.Create(logPath).Dispose();
+                using (var stream = File.Create(logPath))
+                {
+                    // Immediately close the stream to release the file
+                }
             }
         }
 
@@ -57,11 +76,12 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"\nAn error occurred while trying to log: {ex.Message}");
+                Debug.WriteLine($"An error occurred while trying to log: {ex.Message}");
             }
         }
     }
 }
+
 
 /* Button to implement later to locate the log file/folder
  

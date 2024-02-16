@@ -129,7 +129,6 @@ namespace MGS3_MC_Cheat_Trainer
             return -1;
         }
 
-        // We just want to be checking the timer so we can trigger the alert again if needed
         public static byte ReadByteFromMemory(IntPtr processHandle, IntPtr address)
         {
             byte[] buffer = new byte[1];
@@ -160,7 +159,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         public IntPtr ScanMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
-            int bufferSize = 800000; // 800 KB buffer
+            // 64 KB buffer
+            int bufferSize = 65536;
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -186,7 +186,52 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
+        public IntPtr ScanWideMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
+        {
+            // 2000 KB buffer (I think this increases the speed of the scan) probably need a better
+            // way to optimize for boss AOBs since the range is so large to find them
+            int bufferSize = 2000000;
+            byte[] buffer = new byte[bufferSize];
+            int bytesRead;
+
+            long endAddress = startAddress.ToInt64() + size;
+            for (long address = startAddress.ToInt64(); address < endAddress; address += bufferSize)
+            {
+                int effectiveSize = (int)Math.Min(bufferSize, endAddress - address);
+                bool success = ReadProcessMemory(processHandle, new IntPtr(address), buffer, (uint)effectiveSize, out bytesRead);
+                if (!success || bytesRead == 0)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < bytesRead - pattern.Length; i++)
+                {
+                    if (IsMatch(buffer, i, pattern, mask))
+                    {
+                        return new IntPtr(address + i);
+                    }
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        // This currently seems it would work for wildcards but I don't think it does
         public bool IsMatch(byte[] buffer, int position, byte[] pattern, string mask)
+        {
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                if (mask[i] == '?' || buffer[position + i] == pattern[i])
+                {
+                    continue;
+                }
+                return false;
+            }
+            return true;
+        }
+
+        // Gonna use this template for future AOBs with a wildcard
+        public bool IsWildCardMatch(byte[] buffer, int position, byte[] pattern, string mask)
         {
             for (int i = 0; i < pattern.Length; i++)
             {
@@ -222,6 +267,7 @@ namespace MGS3_MC_Cheat_Trainer
             return NativeMethods.ReadProcessMemory(processHandle, address, buffer, size, out bytesRead);
         }
 
+        // Should realy just make a master AOB function for this and setup an enum or something for the different AOBs
         public IntPtr FindAOBInWeaponAndItemTableRange(byte[] aobPattern, string mask)
         {
             Process process = GetMGS3Process();
@@ -290,8 +336,49 @@ namespace MGS3_MC_Cheat_Trainer
                 return IntPtr.Zero;
             }
 
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x0FFFFF); // Adjusted start address
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1000000); // Adjusted end address
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x0FFFFF);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1000000);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
+            if (address != IntPtr.Zero)
+            {
+                return address;
+            }
+
+            MessageBox.Show("Pattern not found in specified range.");
+            return IntPtr.Zero;
+        }
+
+        public IntPtr FindAOBInModelRange(byte[] aobPattern, string mask)
+        {
+            Process process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("Game process not found.");
+                return IntPtr.Zero;
+            }
+
+            IntPtr baseAddress = IntPtr.Zero;
+            int moduleSize = 0;
+            foreach (ProcessModule module in process.Modules)
+            {
+                if (module.ModuleName == "METAL GEAR SOLID3.exe")
+                {
+                    baseAddress = module.BaseAddress;
+                    moduleSize = module.ModuleMemorySize;
+                    break;
+                }
+            }
+
+            if (baseAddress == IntPtr.Zero)
+            {
+                MessageBox.Show("METAL GEAR SOLID3.exe module not found.");
+                return IntPtr.Zero;
+            }
+
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0xA0000);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0xB0000);
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
             IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
@@ -329,7 +416,7 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
         }
 
-        public void WriteByteValueToMemory(IntPtr address, byte value)
+        public static void WriteByteValueToMemory(IntPtr address, byte value)
         {
             Process process = GetMGS3Process();
             if (process == null)
@@ -394,7 +481,42 @@ namespace MGS3_MC_Cheat_Trainer
             MessageBox.Show("Pattern not found in specified range.");
             return IntPtr.Zero;
         }
-        
+
+        public IntPtr FoundOcelotAddress { get; private set; } = IntPtr.Zero;
+
+        public bool FindAndStoreOcelotAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["Ocelot"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
+            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundOcelotAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
         public IntPtr FoundTheFearAddress { get; private set; } = IntPtr.Zero;
 
         public bool FindAndStoreTheFearAOB()
@@ -418,12 +540,114 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
-            IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
             NativeMethods.CloseHandle(processHandle);
 
             if (foundAddress != IntPtr.Zero)
             {
                 FoundTheFearAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
+        public IntPtr FoundTheFuryAddress { get; private set; } = IntPtr.Zero;
+        public bool FindAndStoreTheFuryAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["TheFury"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
+            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundTheFuryAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
+        public IntPtr FoundTheEnds063aAddress { get; private set; } = IntPtr.Zero;
+        public bool FindAndStoreTheEnds063aAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["TheEnds063a"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF);
+            IntPtr endAddress = new IntPtr(0x30000000000);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundTheEnds063aAddress = foundAddress;
+                return true;
+            }
+
+            return false;
+        }
+
+        public IntPtr FoundTheEnds065aAddress { get; private set; } = IntPtr.Zero;
+        public bool FindAndStoreTheEnds065aAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["TheEnds065a"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF);
+            IntPtr endAddress = new IntPtr(0x30000000000);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundTheEnds065aAddress = foundAddress;
                 return true;
             }
 
@@ -453,6 +677,8 @@ namespace MGS3_MC_Cheat_Trainer
             return foundAddress;
         }
 
+        // I was using this originally for the area string but then it turned out the pattern
+        // wasn't static but might still have a use for this in the future 
         public string FindLocationStringNearAOB(IntPtr aobAddress)
         {
             Process process = GetMGS3Process();
@@ -478,11 +704,12 @@ namespace MGS3_MC_Cheat_Trainer
                 string locationString = location.ToString();
                 if (memoryString.Contains(locationString))
                 {
-                    return locationString; // Found a match
+                    // We found a match
+                    return locationString; 
                 }
             }
-
-            return null; // No match found
+            // We didn't find a match
+            return null;
         }
 
         public string FindLocationStringDirectlyInRange()
@@ -518,14 +745,16 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
             return "No Location String found in specified range.";
         }
+
+        /* Same as the above function but only to find the location string it 
+           currently is only used in the BossForm use the player's area to 
+           know which boss they can tamper with for the UI elements */
         public string ExtractLocationStringFromResult(string result)
         {
-            // Assuming result format is "Location String: {locationString} \nArea Name: {areaName} \nMemory Address: {memoryAddress}"
-            // Adjust parsing logic if format changes
             string[] parts = result.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length > 0)
             {
-                string locationStringPart = parts[0]; // "Location String: {locationString}"
+                string locationStringPart = parts[0];
                 string[] locationStringParts = locationStringPart.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
                 if (locationStringParts.Length > 1)
                 {
@@ -533,7 +762,7 @@ namespace MGS3_MC_Cheat_Trainer
                 }
             }
 
-            return "Unknown"; // Return a default or error value if parsing fails
+            return "Unknown";
         }
     }
 }

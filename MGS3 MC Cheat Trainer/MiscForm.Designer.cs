@@ -57,7 +57,7 @@
             button8 = new Button();
             button9 = new Button();
             button10 = new Button();
-            button11 = new Button();
+            SwapToBossForm = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             SuspendLayout();
             // 
@@ -141,7 +141,9 @@
             // 
             // NormalHUD
             // 
+            NormalHUD.BackgroundImage = (Image)resources.GetObject("NormalHUD.BackgroundImage");
             NormalHUD.Cursor = Cursors.Hand;
+            NormalHUD.FlatStyle = FlatStyle.Flat;
             NormalHUD.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             NormalHUD.ImageAlign = ContentAlignment.TopCenter;
             NormalHUD.Location = new Point(904, 157);
@@ -154,7 +156,9 @@
             // 
             // ShrinkHUD
             // 
+            ShrinkHUD.BackgroundImage = (Image)resources.GetObject("ShrinkHUD.BackgroundImage");
             ShrinkHUD.Cursor = Cursors.Hand;
+            ShrinkHUD.FlatStyle = FlatStyle.Flat;
             ShrinkHUD.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ShrinkHUD.ImageAlign = ContentAlignment.TopCenter;
             ShrinkHUD.Location = new Point(904, 192);
@@ -167,7 +171,9 @@
             // 
             // NoHUD
             // 
+            NoHUD.BackgroundImage = (Image)resources.GetObject("NoHUD.BackgroundImage");
             NoHUD.Cursor = Cursors.Hand;
+            NoHUD.FlatStyle = FlatStyle.Flat;
             NoHUD.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             NoHUD.ImageAlign = ContentAlignment.TopCenter;
             NoHUD.Location = new Point(904, 226);
@@ -180,7 +186,9 @@
             // 
             // NormalCam
             // 
+            NormalCam.BackgroundImage = (Image)resources.GetObject("NormalCam.BackgroundImage");
             NormalCam.Cursor = Cursors.Hand;
+            NormalCam.FlatStyle = FlatStyle.Flat;
             NormalCam.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             NormalCam.ImageAlign = ContentAlignment.TopCenter;
             NormalCam.Location = new Point(904, 261);
@@ -193,7 +201,9 @@
             // 
             // UpsideDownCam
             // 
+            UpsideDownCam.BackgroundImage = (Image)resources.GetObject("UpsideDownCam.BackgroundImage");
             UpsideDownCam.Cursor = Cursors.Hand;
+            UpsideDownCam.FlatStyle = FlatStyle.Flat;
             UpsideDownCam.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             UpsideDownCam.ImageAlign = ContentAlignment.TopCenter;
             UpsideDownCam.Location = new Point(904, 296);
@@ -206,6 +216,7 @@
             // 
             // ModelSlider
             // 
+            ModelSlider.BackColor = Color.FromArgb(36, 44, 36);
             ModelSlider.Location = new Point(926, 602);
             ModelSlider.Name = "ModelSlider";
             ModelSlider.Size = new Size(181, 45);
@@ -214,11 +225,11 @@
             // 
             // textBox5
             // 
-            textBox5.BackColor = SystemColors.ActiveCaptionText;
+            textBox5.BackColor = Color.Black;
             textBox5.BorderStyle = BorderStyle.None;
             textBox5.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox5.ForeColor = SystemColors.ActiveCaptionText;
-            textBox5.Location = new Point(885, 501);
+            textBox5.ForeColor = SystemColors.ButtonHighlight;
+            textBox5.Location = new Point(885, 497);
             textBox5.Multiline = true;
             textBox5.Name = "textBox5";
             textBox5.PlaceholderText = "Player/Enemy Models";
@@ -229,14 +240,16 @@
             // 
             // ResetModelsToNormal
             // 
+            ResetModelsToNormal.BackgroundImage = (Image)resources.GetObject("ResetModelsToNormal.BackgroundImage");
             ResetModelsToNormal.Cursor = Cursors.Hand;
+            ResetModelsToNormal.FlatStyle = FlatStyle.Flat;
             ResetModelsToNormal.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ResetModelsToNormal.ImageAlign = ContentAlignment.TopCenter;
             ResetModelsToNormal.Location = new Point(885, 567);
             ResetModelsToNormal.Name = "ResetModelsToNormal";
             ResetModelsToNormal.Size = new Size(260, 29);
             ResetModelsToNormal.TabIndex = 506;
-            ResetModelsToNormal.Text = "Normal Models (80)";
+            ResetModelsToNormal.Text = "Normal Models (40)";
             ResetModelsToNormal.UseVisualStyleBackColor = true;
             ResetModelsToNormal.Click += ResetModelsToNormal_Click;
             // 
@@ -250,7 +263,9 @@
             // 
             // ChangeModelNumber
             // 
+            ChangeModelNumber.BackgroundImage = (Image)resources.GetObject("ChangeModelNumber.BackgroundImage");
             ChangeModelNumber.Cursor = Cursors.Hand;
+            ChangeModelNumber.FlatStyle = FlatStyle.Flat;
             ChangeModelNumber.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeModelNumber.ImageAlign = ContentAlignment.TopCenter;
             ChangeModelNumber.Location = new Point(926, 536);
@@ -263,7 +278,9 @@
             // 
             // Minus1ModelValue
             // 
+            Minus1ModelValue.BackgroundImage = (Image)resources.GetObject("Minus1ModelValue.BackgroundImage");
             Minus1ModelValue.Cursor = Cursors.Hand;
+            Minus1ModelValue.FlatStyle = FlatStyle.Flat;
             Minus1ModelValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Minus1ModelValue.ImageAlign = ContentAlignment.TopCenter;
             Minus1ModelValue.Location = new Point(885, 607);
@@ -276,7 +293,9 @@
             // 
             // Plus1ModelValue
             // 
+            Plus1ModelValue.BackgroundImage = (Image)resources.GetObject("Plus1ModelValue.BackgroundImage");
             Plus1ModelValue.Cursor = Cursors.Hand;
+            Plus1ModelValue.FlatStyle = FlatStyle.Flat;
             Plus1ModelValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Plus1ModelValue.ImageAlign = ContentAlignment.TopCenter;
             Plus1ModelValue.Location = new Point(1109, 607);
@@ -290,6 +309,7 @@
             // ModelCurrentValue
             // 
             ModelCurrentValue.Cursor = Cursors.IBeam;
+            ModelCurrentValue.Enabled = false;
             ModelCurrentValue.Location = new Point(1108, 653);
             ModelCurrentValue.Name = "ModelCurrentValue";
             ModelCurrentValue.Size = new Size(34, 23);
@@ -348,7 +368,7 @@
             button4.Name = "button4";
             button4.Size = new Size(241, 29);
             button4.TabIndex = 515;
-            button4.Text = "Testing";
+            button4.Text = "Current Area";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
@@ -361,7 +381,7 @@
             button5.Name = "button5";
             button5.Size = new Size(241, 29);
             button5.TabIndex = 516;
-            button5.Text = "WriteTheFearStamina";
+            button5.Text = "Empty";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
@@ -374,7 +394,7 @@
             button6.Name = "button6";
             button6.Size = new Size(241, 29);
             button6.TabIndex = 517;
-            button6.Text = "WriteTheFearHealth";
+            button6.Text = "Empty";
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
@@ -399,7 +419,7 @@
             button8.Name = "button8";
             button8.Size = new Size(241, 29);
             button8.TabIndex = 520;
-            button8.Text = "Testing";
+            button8.Text = "Alert Timers";
             button8.UseVisualStyleBackColor = true;
             // 
             // button9
@@ -427,20 +447,21 @@
             button10.UseVisualStyleBackColor = true;
             button10.Click += button10_Click;
             // 
-            // button11
+            // SwapToBossForm
             // 
-            button11.BackgroundImage = (Image)resources.GetObject("button11.BackgroundImage");
-            button11.Cursor = Cursors.Hand;
-            button11.FlatStyle = FlatStyle.Flat;
-            button11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button11.ImageAlign = ContentAlignment.TopCenter;
-            button11.ImeMode = ImeMode.NoControl;
-            button11.Location = new Point(936, 12);
-            button11.Name = "button11";
-            button11.Size = new Size(203, 32);
-            button11.TabIndex = 552;
-            button11.Text = "Bosses";
-            button11.UseVisualStyleBackColor = true;
+            SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
+            SwapToBossForm.Cursor = Cursors.Hand;
+            SwapToBossForm.FlatStyle = FlatStyle.Flat;
+            SwapToBossForm.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToBossForm.ImeMode = ImeMode.NoControl;
+            SwapToBossForm.Location = new Point(936, 12);
+            SwapToBossForm.Name = "SwapToBossForm";
+            SwapToBossForm.Size = new Size(203, 32);
+            SwapToBossForm.TabIndex = 552;
+            SwapToBossForm.Text = "Bosses";
+            SwapToBossForm.UseVisualStyleBackColor = true;
+            SwapToBossForm.Click += SwapToBossForm_Click;
             // 
             // MiscForm
             // 
@@ -448,7 +469,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
-            Controls.Add(button11);
+            Controls.Add(SwapToBossForm);
             Controls.Add(button7);
             Controls.Add(button8);
             Controls.Add(button9);
@@ -477,6 +498,7 @@
             Controls.Add(textBox29);
             Controls.Add(button2);
             Controls.Add(WeaponFormSwap);
+            ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
@@ -515,6 +537,6 @@
         private Button button8;
         private Button button9;
         private Button button10;
-        private Button button11;
+        private Button SwapToBossForm;
     }
 }

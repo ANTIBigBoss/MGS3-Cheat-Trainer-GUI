@@ -1,19 +1,4 @@
-﻿using Microsoft.VisualBasic.Devices;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Xml.Linq;
-
-namespace MGS3_MC_Cheat_Trainer
+﻿namespace MGS3_MC_Cheat_Trainer
 {
     public class Constants
     {
@@ -97,9 +82,39 @@ namespace MGS3_MC_Cheat_Trainer
             },
 
             {
-                "", // 
-                (new byte[] {  },               
-                "")                
+                "ModelDistortion", // 45 0F 29 43 C8 45 0F 29 4B B8 45 0F 29 53 A8 45 0F 29 5B 98 45 0F 29 63 88 44 0F 29 6C 24 30
+                (new byte[] { 0x45, 0x0F, 0x29, 0x43, 0xC8, 0x45, 0x0F, 0x29, 0x4B, 0xB8, 0x45, 0x0F, 0x29, 0x53, 0xA8, 0x45, 0x0F, 0x29, 0x5B, 0x98, 0x45, 0x0F, 0x29, 0x63, 0x88, 0x44, 0x0F, 0x29, 0x6C, 0x24, 0x30 },
+                "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx")                
+            },
+
+            {
+                "TheFury", // 01 00 01 00 D0 00 00 00 06 00
+                (new byte[] { 0x01, 0x00, 0x01, 0x00, 0xD0, 0x00, 0x00, 0x00, 0x06, 0x00 },
+                "xx xx xx xx xx xx xx xx xx xx")
+            },
+
+            {   // Starting Area for the boss fight with The End
+                "TheEnds063a", // 01 00 01 00 F0 74 00 00 80
+                (new byte[] { 0x01, 0x00, 0x01, 0x00, 0xF0, 0x74, 0x00, 0x00, 0x80 },
+                "xx xx xx xx xx xx xx xx xx")
+            },
+            
+            {   // Area where The End dies and you proceed to the ladder area also works for s064a
+                "TheEnds065a", // 01 00 01 00 00 01 00 00 80 80 80 80 80 80 80 80
+                (new byte[] { 0x01, 0x00, 0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 },
+                "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx")
+            },
+            
+            {
+                "Ocelot", // E0 66 00 00 80 80 80 80 80 80 80 80 80
+                (new byte[] { 0xE0, 0x66, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 },
+                "xx xx xx xx xx xx xx xx xx xx xx xx xx")
+            },
+
+            {
+                "", // Placeholder for next AOB
+                (new byte[] {  },
+                "")
             },
 
         };
@@ -151,23 +166,6 @@ namespace MGS3_MC_Cheat_Trainer
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
         internal const int MainPointerRegionOffset = 0x00AEC9D8;
         internal static IntPtr HudOffset = (IntPtr)0xAE345F;
-
-        public class MGS3Distortion : BaseMGS3Status
-        {
-            public IntPtr ModelManipulationOffset;
-            public byte Value { get; set; }
-
-            public MGS3Distortion(string name, IntPtr memoryOffset, byte value) : base(name, memoryOffset)
-            {
-                ModelManipulationOffset = memoryOffset;
-                Value = value;
-            }
-        }
-
-        public class MGS3DistortionEffects
-        {
-            public static readonly MGS3Distortion Normal = new("Normal", (IntPtr)0xA4CD2, 80);
-        }
 
         public static class InjuryData
         {
