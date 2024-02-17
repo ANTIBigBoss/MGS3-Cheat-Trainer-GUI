@@ -71,6 +71,14 @@ namespace MGS3_MC_Cheat_Trainer
             this.Hide();
         }
 
+        private void BossFormSwap_Click(object sender, EventArgs e)
+        {
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
+        }
+
         private void AddWoodland_Click(object sender, EventArgs e)
         {
             ItemWeaponManager.ToggleItemState(MGS3UsableObjects.Woodland, true);

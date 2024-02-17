@@ -35,6 +35,8 @@ namespace MGS3_MC_Cheat_Trainer
             this.Hide();
         }
 
+
+
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit(); // Closes the application(form1) if this form is closed
@@ -332,6 +334,14 @@ namespace MGS3_MC_Cheat_Trainer
             CamoForm form3 = new();
             form3.Show();
             this.Hide();
+        }
+
+        private void BossFormSwap_Click(object sender, EventArgs e)
+        {
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
         }
     }
 }

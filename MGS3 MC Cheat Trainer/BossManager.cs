@@ -10,7 +10,7 @@
         {
             if (!MemoryManager.Instance.FindAndStoreOcelotAOB())
             {
-                MessageBox.Show("Ocelot AOB address not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("Ocelot AOB address not found.");
                 return -1; // Indicate failure
             }
 
@@ -137,7 +137,7 @@
 
             if (!MemoryManager.Instance.FindAndStoreTheFearAOB())
             {
-                MessageBox.Show("TheFear AOB address not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("The Fear AOB address not found.");
                 return -1; // Indicate failure
             }
 
@@ -200,7 +200,7 @@
 
             if (!MemoryManager.Instance.FindAndStoreTheEnds063aAOB())
             {
-                MessageBox.Show("The Ends063a AOB address not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("The Ends063a AOB address not found.");
                 return -1; // Indicate failure
             }
 
@@ -262,7 +262,7 @@
 
             if (!MemoryManager.Instance.FindAndStoreTheEnds065aAOB())
             {
-                MessageBox.Show("The Ends065a AOB address not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("The Ends065a AOB address not found.");
                 return -1; // Indicate failure
             }
 
@@ -338,7 +338,7 @@
 
             if (!MemoryManager.Instance.FindAndStoreTheFuryAOB())
             {
-                MessageBox.Show("The Fury AOB address not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("The Fury AOB address not found.");
                 return -1; // Indicate failure
             }
 
@@ -441,5 +441,176 @@
         }
 
         #endregion
+
+        #region Shagohod
+
+        public static short FindShagohodAOB()
+        {
+
+            if (!MemoryManager.Instance.FindAndStoreShagohodAOB())
+            {
+                LoggingManager.Instance.Log("Shagohod AOB address not found.");
+                return -1; // Indicate failure
+            }
+
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, MemoryManager.Instance.FoundShagohodAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        public static void WriteShagohodHealth(short value)
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr healthAddress = IntPtr.Subtract(MemoryManager.Instance.FoundShagohodAddress, 105); // Health offset
+            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public static short ReadShagohodHealth()
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr healthAddress = IntPtr.Subtract(MemoryManager.Instance.FoundShagohodAddress, 105); // Adjust for actual health offset
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        public static bool IsShagohodDead()
+        {
+            return ReadShagohodHealth() == 0;
+        }
+
+        // Shagohod doesn't have stamina
+
+        #endregion
+
+        #region Volgin on Shagohod
+
+        public static short FindVolginOnShagohodAOB()
+        {
+
+            if (!MemoryManager.Instance.FindAndStoreVolginOnShagohodAOB())
+            {
+                LoggingManager.Instance.Log("Volgin on Shagohod AOB address not found.");
+                return -1; // Indicate failure
+            }
+
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, MemoryManager.Instance.FoundVolginOnShagohodAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        public static void WriteVolginOnShagohodHealth(short value)
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr healthAddress = IntPtr.Subtract(MemoryManager.Instance.FoundVolginOnShagohodAddress, 936); // Health offset
+            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public static short ReadVolginOnShagohodHealth()
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr healthAddress = IntPtr.Subtract(MemoryManager.Instance.FoundVolginOnShagohodAddress, 936); // Adjust for actual health offset
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        public static bool IsVolginOnShagohodDead()
+        {
+            return ReadVolginOnShagohodHealth() == 0;
+        }
+
+        public static void WriteVolginOnShagohodStamina(short value)
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr staminaAddress = IntPtr.Subtract(MemoryManager.Instance.FoundVolginOnShagohodAddress, 928); // Stamina offset
+            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public static short ReadVolginOnShagohodStamina()
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr staminaAddress = IntPtr.Subtract(MemoryManager.Instance.FoundVolginOnShagohodAddress, 928); // Adjust for actual stamina offset
+            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return staminaValue;
+        }
+
+        public static bool IsVolginOnShagohodStunned()
+        {
+            return ReadVolginOnShagohodStamina() == 0;
+        }
+
+        #endregion
+
+        #region The Boss
+
+        public static short FindTheBossAOB()
+        {
+
+            if (!MemoryManager.Instance.FindAndStoreTheBossAOB())
+            {
+                LoggingManager.Instance.Log("The Boss AOB address not found.");
+                return -1; // Indicate failure
+            }
+
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, MemoryManager.Instance.FoundTheBossAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        public static void WriteTheBossHealth(short value)
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr healthAddress = IntPtr.Subtract(MemoryManager.Instance.FoundTheBossAddress, 1444); // Health offset
+            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public static short ReadTheBossHealth()
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr healthAddress = IntPtr.Subtract(MemoryManager.Instance.FoundTheBossAddress, 1444); // Adjust for actual health offset
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        public static bool IsTheBossDead()
+        {
+            return ReadTheBossHealth() == 0;
+        }
+
+        public static void WriteTheBossStamina(short value)
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr staminaAddress = IntPtr.Subtract(MemoryManager.Instance.FoundTheBossAddress, 1440); // Stamina offset
+            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public static short ReadTheBossStamina()
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            IntPtr staminaAddress = IntPtr.Subtract(MemoryManager.Instance.FoundTheBossAddress, 1440); // Adjust for actual stamina offset
+            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return staminaValue;
+        }
+
+        public static bool IsTheBossStunned()
+        {
+            return ReadTheBossStamina() == 0;
+        }
+
+
+        #endregion
+
     }
 }

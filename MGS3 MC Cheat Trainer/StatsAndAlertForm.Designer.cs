@@ -77,7 +77,7 @@
             FoodPoisoningInjury = new Button();
             CommonColdInjury = new Button();
             RemoveInjuries = new Button();
-            button1 = new Button();
+            SwapToBossForm = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -693,20 +693,21 @@
             RemoveInjuries.UseVisualStyleBackColor = true;
             RemoveInjuries.Click += RemoveInjuries_Click;
             // 
-            // button1
+            // SwapToBossForm
             // 
-            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
-            button1.Cursor = Cursors.Hand;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.ImageAlign = ContentAlignment.TopCenter;
-            button1.ImeMode = ImeMode.NoControl;
-            button1.Location = new Point(941, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(203, 32);
-            button1.TabIndex = 551;
-            button1.Text = "Bosses";
-            button1.UseVisualStyleBackColor = true;
+            SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
+            SwapToBossForm.Cursor = Cursors.Hand;
+            SwapToBossForm.FlatStyle = FlatStyle.Flat;
+            SwapToBossForm.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToBossForm.ImeMode = ImeMode.NoControl;
+            SwapToBossForm.Location = new Point(941, 12);
+            SwapToBossForm.Name = "SwapToBossForm";
+            SwapToBossForm.Size = new Size(203, 32);
+            SwapToBossForm.TabIndex = 551;
+            SwapToBossForm.Text = "Bosses";
+            SwapToBossForm.UseVisualStyleBackColor = true;
+            SwapToBossForm.Click += SwapToBossForm_Click;
             // 
             // StatsAndAlertForm
             // 
@@ -714,7 +715,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
-            Controls.Add(button1);
+            Controls.Add(SwapToBossForm);
             Controls.Add(RemoveInjuries);
             Controls.Add(CommonColdInjury);
             Controls.Add(FoodPoisoningInjury);
@@ -814,6 +815,6 @@
         private Button TransmitterInjury;
         private Button FakeDeathPillInjury;
         private Button RemoveInjuries;
-        private Button button1;
+        private Button SwapToBossForm;
     }
 }

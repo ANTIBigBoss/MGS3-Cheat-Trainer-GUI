@@ -79,6 +79,14 @@ namespace MGS3_MC_Cheat_Trainer
             f4.Show();
             this.Hide();
         }
+
+        private void SwapToBossForm_Click(object sender, EventArgs e)
+        {
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
+        }
         #endregion
         #region Snake's Health and Stamina
         // Health and Stamina along with pointer logic
@@ -277,7 +285,7 @@ namespace MGS3_MC_Cheat_Trainer
         private void button9_Click(object sender, EventArgs e) // Caution Mode Trigger
         {
             AlertManager.TriggerAlert(AlertModes.Caution);
-        }       
+        }
 
         /* Have the progress bar parse the value of the MGS3AlertTimers for Alert, Evasion and Caution 
          then the checkbox will freeze the progress bar value until we uncheck it the the memory value
@@ -410,5 +418,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
+        
+        
     }
 }

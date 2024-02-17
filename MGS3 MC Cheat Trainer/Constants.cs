@@ -111,8 +111,26 @@
                 "xx xx xx xx xx xx xx xx xx xx xx xx xx")
             },
 
+            {   
+                "TheBoss", // D0 6E 00 00 80 80 80 80 80 80 80
+                (new byte[] { 0xD0, 0x6E, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 },
+                "xx xx xx xx xx xx xx xx xx xx xx")
+            },
+
             {
-                "", // Placeholder for next AOB
+                "Shagohod", // E6 99 48 00
+                (new byte[] { 0xE6, 0x99, 0x48, 0x00 },
+                "xx xx xx xx")
+            },
+
+            {
+                "VolginOnShagohod", // 00 80 ED C4 00 00 80 3F 00 00 80 3F
+                (new byte[] { 0x00, 0x80, 0xED, 0xC4, 0x00, 0x00, 0x80, 0x3F, 0x00, 0x00, 0x80, 0x3F },
+                "xx xx xx xx xx xx xx xx xx xx xx xx")
+            },
+
+            {
+                "", // Placeholder for next AOB E6 99 48 00
                 (new byte[] {  },
                 "")
             },

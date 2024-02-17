@@ -49,7 +49,7 @@ namespace MGS3_MC_Cheat_Trainer
             Process? process = Process.GetProcessesByName(Constants.PROCESS_NAME).FirstOrDefault();
             if (process == null)
             {
-                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}.exe \nAre you sure you're running Metal Gear Solid 3: Snake Eater?");
+                // Just do nothing for now so the user isn't spammed with messages
             }
             return process;
         }
@@ -190,7 +190,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             // 2000 KB buffer (I think this increases the speed of the scan) probably need a better
             // way to optimize for boss AOBs since the range is so large to find them
-            int bufferSize = 2000000;
+            int bufferSize = 30000000;
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -654,6 +654,110 @@ namespace MGS3_MC_Cheat_Trainer
             return false;
         }
 
+        public IntPtr FoundShagohodAddress { get; private set; } = IntPtr.Zero;
+        public bool FindAndStoreShagohodAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["Shagohod"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
+            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundShagohodAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
+        public IntPtr FoundVolginOnShagohodAddress { get; private set; } = IntPtr.Zero;
+        public bool FindAndStoreVolginOnShagohodAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["VolginOnShagohod"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
+            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundVolginOnShagohodAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
+
+        public IntPtr FoundTheBossAddress { get; private set; } = IntPtr.Zero;
+        public bool FindAndStoreTheBossAOB()
+        {
+            var process = GetMGS3Process();
+            if (process == null)
+            {
+                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var (pattern, mask) = Constants.AOBs["TheBoss"];
+            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
+            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress != IntPtr.Zero)
+            {
+                FoundTheBossAddress = foundAddress; // Store found address
+                return true;
+            }
+
+            return false;
+        }
+
+
         public IntPtr FindMapStringAOB()
         {
             Process process = GetMGS3Process();
@@ -722,7 +826,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             IntPtr processHandle = OpenGameProcess(process);
             IntPtr baseAddress = process.MainModule.BaseAddress;
-
             IntPtr startAddress = IntPtr.Add(baseAddress, 0x1CFFF00);
             IntPtr endAddress = IntPtr.Add(baseAddress, 0x1E00000);
             long size = endAddress.ToInt64() - startAddress.ToInt64();
@@ -737,6 +840,20 @@ namespace MGS3_MC_Cheat_Trainer
                 if (foundAddress != IntPtr.Zero)
                 {
                     string areaName = StringManager.LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+
+                    // Checking for cutscene indicators
+                    foreach (var suffix in new[] { "_0", "_1" })
+                    {
+                        byte[] cutscenePattern = Encoding.ASCII.GetBytes(locationString + suffix);
+                        IntPtr cutsceneFoundAddress = ScanMemory(processHandle, startAddress, size, cutscenePattern, mask + "x" + "x");
+
+                        if (cutsceneFoundAddress != IntPtr.Zero)
+                        {
+                            NativeMethods.CloseHandle(processHandle);
+                            return $"Location String: {locationString}{suffix} (Cutscene) \nArea Name: {areaName} \nMemory Address: {cutsceneFoundAddress.ToString("X")}";
+                        }
+                    }
+
                     NativeMethods.CloseHandle(processHandle);
                     return $"Location String: {locationString} \nArea Name: {areaName} \nMemory Address: {foundAddress.ToString("X")}";
                 }
@@ -758,10 +875,18 @@ namespace MGS3_MC_Cheat_Trainer
                 string[] locationStringParts = locationStringPart.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
                 if (locationStringParts.Length > 1)
                 {
-                    return locationStringParts[1].Trim();
+                    string locationString = locationStringParts[1].Trim();
+
+                    if (locationString.EndsWith("_0") || locationString.EndsWith("_1"))
+                    {
+                        return locationString + " (Cutscene)";
+                    }
+                    else
+                    {
+                        return locationString;
+                    }
                 }
             }
-
             return "Unknown";
         }
     }

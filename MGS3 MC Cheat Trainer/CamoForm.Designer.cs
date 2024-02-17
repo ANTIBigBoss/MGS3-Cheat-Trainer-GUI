@@ -195,7 +195,7 @@
             pictureBox35 = new PictureBox();
             pictureBox54 = new PictureBox();
             HealthFormSwap = new Button();
-            button11 = new Button();
+            BossFormSwap = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
@@ -2480,20 +2480,21 @@
             HealthFormSwap.UseVisualStyleBackColor = true;
             HealthFormSwap.Click += HealthFormSwap_Click;
             // 
-            // button11
+            // BossFormSwap
             // 
-            button11.BackgroundImage = (Image)resources.GetObject("button11.BackgroundImage");
-            button11.Cursor = Cursors.Hand;
-            button11.FlatStyle = FlatStyle.Flat;
-            button11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button11.ImageAlign = ContentAlignment.TopCenter;
-            button11.ImeMode = ImeMode.NoControl;
-            button11.Location = new Point(918, 4);
-            button11.Name = "button11";
-            button11.Size = new Size(203, 32);
-            button11.TabIndex = 577;
-            button11.Text = "Bosses";
-            button11.UseVisualStyleBackColor = true;
+            BossFormSwap.BackgroundImage = (Image)resources.GetObject("BossFormSwap.BackgroundImage");
+            BossFormSwap.Cursor = Cursors.Hand;
+            BossFormSwap.FlatStyle = FlatStyle.Flat;
+            BossFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            BossFormSwap.ImageAlign = ContentAlignment.TopCenter;
+            BossFormSwap.ImeMode = ImeMode.NoControl;
+            BossFormSwap.Location = new Point(918, 4);
+            BossFormSwap.Name = "BossFormSwap";
+            BossFormSwap.Size = new Size(203, 32);
+            BossFormSwap.TabIndex = 577;
+            BossFormSwap.Text = "Bosses";
+            BossFormSwap.UseVisualStyleBackColor = true;
+            BossFormSwap.Click += BossFormSwap_Click;
             // 
             // CamoForm
             // 
@@ -2503,7 +2504,7 @@
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1134, 707);
-            Controls.Add(button11);
+            Controls.Add(BossFormSwap);
             Controls.Add(HealthFormSwap);
             Controls.Add(pictureBox54);
             Controls.Add(RemoveBanana);
@@ -2900,6 +2901,6 @@
         private PictureBox pictureBox35;
         private PictureBox pictureBox54;
         private Button HealthFormSwap;
-        private Button button11;
+        private Button BossFormSwap;
     }
 }

@@ -66,6 +66,19 @@
             EndHealthSlider = new TrackBar();
             OcelotTimer = new System.Windows.Forms.Timer(components);
             EndTimer = new System.Windows.Forms.Timer(components);
+            Boss0Stam = new Button();
+            BossStaminaSlider = new TrackBar();
+            Boss0HP = new Button();
+            BossHealthSlider = new TrackBar();
+            BossTimer = new System.Windows.Forms.Timer(components);
+            VolginOnShagohog0Stam = new Button();
+            VolginOnShagohodStaminaSlider = new TrackBar();
+            VolginOnShagohog0HP = new Button();
+            VolginOnShagohodHealthSlider = new TrackBar();
+            ShagohodHealthSlider = new TrackBar();
+            ShagohodTimer = new System.Windows.Forms.Timer(components);
+            VolginOnShagohodTimer = new System.Windows.Forms.Timer(components);
+            Shagohod0HP = new Button();
             ((System.ComponentModel.ISupportInitialize)FearHealthSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FearStaminaSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PainStaminaSlider).BeginInit();
@@ -78,6 +91,11 @@
             ((System.ComponentModel.ISupportInitialize)OcelotHealthSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EndStaminaSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EndHealthSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BossStaminaSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)BossHealthSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VolginOnShagohodStaminaSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VolginOnShagohodHealthSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ShagohodHealthSlider).BeginInit();
             SuspendLayout();
             // 
             // WeaponFormSwap
@@ -163,9 +181,9 @@
             // FearHealthSlider
             // 
             FearHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            FearHealthSlider.Location = new Point(192, 576);
+            FearHealthSlider.Location = new Point(192, 587);
             FearHealthSlider.Name = "FearHealthSlider";
-            FearHealthSlider.Size = new Size(169, 45);
+            FearHealthSlider.Size = new Size(181, 45);
             FearHealthSlider.TabIndex = 593;
             FearHealthSlider.Scroll += FearHealthSlider_Scroll;
             // 
@@ -177,9 +195,9 @@
             Fear0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fear0HP.ImageAlign = ContentAlignment.TopCenter;
             Fear0HP.ImeMode = ImeMode.NoControl;
-            Fear0HP.Location = new Point(192, 598);
+            Fear0HP.Location = new Point(192, 609);
             Fear0HP.Name = "Fear0HP";
-            Fear0HP.Size = new Size(169, 29);
+            Fear0HP.Size = new Size(181, 29);
             Fear0HP.TabIndex = 594;
             Fear0HP.Text = "The Fear 0 HP";
             Fear0HP.UseVisualStyleBackColor = true;
@@ -188,9 +206,9 @@
             // FearStaminaSlider
             // 
             FearStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            FearStaminaSlider.Location = new Point(192, 639);
+            FearStaminaSlider.Location = new Point(192, 650);
             FearStaminaSlider.Name = "FearStaminaSlider";
-            FearStaminaSlider.Size = new Size(169, 45);
+            FearStaminaSlider.Size = new Size(181, 45);
             FearStaminaSlider.TabIndex = 596;
             FearStaminaSlider.Scroll += FearStaminaSlider_Scroll;
             // 
@@ -202,9 +220,9 @@
             Fear0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fear0Stam.ImageAlign = ContentAlignment.TopCenter;
             Fear0Stam.ImeMode = ImeMode.NoControl;
-            Fear0Stam.Location = new Point(192, 661);
+            Fear0Stam.Location = new Point(192, 672);
             Fear0Stam.Name = "Fear0Stam";
-            Fear0Stam.Size = new Size(169, 29);
+            Fear0Stam.Size = new Size(181, 29);
             Fear0Stam.TabIndex = 597;
             Fear0Stam.Text = "The Fear 0 Stamina";
             Fear0Stam.UseVisualStyleBackColor = true;
@@ -222,9 +240,9 @@
             Pain0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Pain0Stam.ImageAlign = ContentAlignment.TopCenter;
             Pain0Stam.ImeMode = ImeMode.NoControl;
-            Pain0Stam.Location = new Point(192, 458);
+            Pain0Stam.Location = new Point(190, 458);
             Pain0Stam.Name = "Pain0Stam";
-            Pain0Stam.Size = new Size(169, 29);
+            Pain0Stam.Size = new Size(181, 29);
             Pain0Stam.TabIndex = 601;
             Pain0Stam.Text = "The Pain 0 Stamina";
             Pain0Stam.UseVisualStyleBackColor = true;
@@ -233,9 +251,9 @@
             // PainStaminaSlider
             // 
             PainStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            PainStaminaSlider.Location = new Point(192, 436);
+            PainStaminaSlider.Location = new Point(190, 436);
             PainStaminaSlider.Name = "PainStaminaSlider";
-            PainStaminaSlider.Size = new Size(169, 45);
+            PainStaminaSlider.Size = new Size(181, 45);
             PainStaminaSlider.TabIndex = 600;
             PainStaminaSlider.Scroll += PainStaminaSlider_Scroll;
             // 
@@ -247,9 +265,9 @@
             Pain0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Pain0HP.ImageAlign = ContentAlignment.TopCenter;
             Pain0HP.ImeMode = ImeMode.NoControl;
-            Pain0HP.Location = new Point(192, 395);
+            Pain0HP.Location = new Point(190, 395);
             Pain0HP.Name = "Pain0HP";
-            Pain0HP.Size = new Size(169, 29);
+            Pain0HP.Size = new Size(181, 29);
             Pain0HP.TabIndex = 599;
             Pain0HP.Text = "The Pain 0 HP";
             Pain0HP.UseVisualStyleBackColor = true;
@@ -258,9 +276,9 @@
             // PainHealthSlider
             // 
             PainHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            PainHealthSlider.Location = new Point(192, 373);
+            PainHealthSlider.Location = new Point(190, 373);
             PainHealthSlider.Name = "PainHealthSlider";
-            PainHealthSlider.Size = new Size(169, 45);
+            PainHealthSlider.Size = new Size(181, 45);
             PainHealthSlider.TabIndex = 598;
             PainHealthSlider.Scroll += PainHealthSlider_Scroll;
             // 
@@ -276,20 +294,20 @@
             Volgin0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Volgin0Stam.ImageAlign = ContentAlignment.TopCenter;
             Volgin0Stam.ImeMode = ImeMode.NoControl;
-            Volgin0Stam.Location = new Point(576, 661);
+            Volgin0Stam.Location = new Point(566, 672);
             Volgin0Stam.Name = "Volgin0Stam";
-            Volgin0Stam.Size = new Size(169, 29);
+            Volgin0Stam.Size = new Size(181, 29);
             Volgin0Stam.TabIndex = 605;
-            Volgin0Stam.Text = "The Pain 0 Stamina";
+            Volgin0Stam.Text = "Volgin 0 Stamina";
             Volgin0Stam.UseVisualStyleBackColor = true;
             Volgin0Stam.Click += Volgin0Stam_Click;
             // 
             // VolginStaminaSlider
             // 
             VolginStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            VolginStaminaSlider.Location = new Point(576, 639);
+            VolginStaminaSlider.Location = new Point(566, 650);
             VolginStaminaSlider.Name = "VolginStaminaSlider";
-            VolginStaminaSlider.Size = new Size(169, 45);
+            VolginStaminaSlider.Size = new Size(181, 45);
             VolginStaminaSlider.TabIndex = 604;
             VolginStaminaSlider.Scroll += VolginStaminaSlider_Scroll;
             // 
@@ -301,9 +319,9 @@
             Volgin0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Volgin0HP.ImageAlign = ContentAlignment.TopCenter;
             Volgin0HP.ImeMode = ImeMode.NoControl;
-            Volgin0HP.Location = new Point(576, 598);
+            Volgin0HP.Location = new Point(566, 609);
             Volgin0HP.Name = "Volgin0HP";
-            Volgin0HP.Size = new Size(169, 29);
+            Volgin0HP.Size = new Size(181, 29);
             Volgin0HP.TabIndex = 603;
             Volgin0HP.Text = "Volgin 0 HP";
             Volgin0HP.UseVisualStyleBackColor = true;
@@ -312,9 +330,9 @@
             // VolginHealthSlider
             // 
             VolginHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            VolginHealthSlider.Location = new Point(576, 576);
+            VolginHealthSlider.Location = new Point(566, 587);
             VolginHealthSlider.Name = "VolginHealthSlider";
-            VolginHealthSlider.Size = new Size(169, 45);
+            VolginHealthSlider.Size = new Size(181, 45);
             VolginHealthSlider.TabIndex = 602;
             VolginHealthSlider.Scroll += VolginHealthSlider_Scroll;
             // 
@@ -330,9 +348,9 @@
             Fury0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fury0Stam.ImageAlign = ContentAlignment.TopCenter;
             Fury0Stam.ImeMode = ImeMode.NoControl;
-            Fury0Stam.Location = new Point(576, 458);
+            Fury0Stam.Location = new Point(564, 458);
             Fury0Stam.Name = "Fury0Stam";
-            Fury0Stam.Size = new Size(169, 29);
+            Fury0Stam.Size = new Size(181, 29);
             Fury0Stam.TabIndex = 609;
             Fury0Stam.Text = "The Fury 1 Stamina";
             Fury0Stam.UseVisualStyleBackColor = true;
@@ -341,9 +359,9 @@
             // FuryStaminaSlider
             // 
             FuryStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            FuryStaminaSlider.Location = new Point(576, 436);
+            FuryStaminaSlider.Location = new Point(564, 436);
             FuryStaminaSlider.Name = "FuryStaminaSlider";
-            FuryStaminaSlider.Size = new Size(169, 45);
+            FuryStaminaSlider.Size = new Size(181, 45);
             FuryStaminaSlider.TabIndex = 608;
             FuryStaminaSlider.Scroll += FuryStaminaSlider_Scroll;
             // 
@@ -355,9 +373,9 @@
             Fury0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fury0HP.ImageAlign = ContentAlignment.TopCenter;
             Fury0HP.ImeMode = ImeMode.NoControl;
-            Fury0HP.Location = new Point(576, 395);
+            Fury0HP.Location = new Point(564, 395);
             Fury0HP.Name = "Fury0HP";
-            Fury0HP.Size = new Size(169, 29);
+            Fury0HP.Size = new Size(181, 29);
             Fury0HP.TabIndex = 607;
             Fury0HP.Text = "The Fury 1 HP";
             Fury0HP.UseVisualStyleBackColor = true;
@@ -366,9 +384,9 @@
             // FuryHealthSlider
             // 
             FuryHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            FuryHealthSlider.Location = new Point(576, 373);
+            FuryHealthSlider.Location = new Point(564, 373);
             FuryHealthSlider.Name = "FuryHealthSlider";
-            FuryHealthSlider.Size = new Size(169, 45);
+            FuryHealthSlider.Size = new Size(181, 45);
             FuryHealthSlider.TabIndex = 606;
             FuryHealthSlider.Scroll += FuryHealthSlider_Scroll;
             // 
@@ -388,9 +406,9 @@
             Ocelot0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Ocelot0Stam.ImageAlign = ContentAlignment.TopCenter;
             Ocelot0Stam.ImeMode = ImeMode.NoControl;
-            Ocelot0Stam.Location = new Point(192, 207);
+            Ocelot0Stam.Location = new Point(190, 207);
             Ocelot0Stam.Name = "Ocelot0Stam";
-            Ocelot0Stam.Size = new Size(169, 29);
+            Ocelot0Stam.Size = new Size(181, 29);
             Ocelot0Stam.TabIndex = 613;
             Ocelot0Stam.Text = "Ocelot 1 Stamina";
             Ocelot0Stam.UseVisualStyleBackColor = true;
@@ -399,9 +417,9 @@
             // OcelotStaminaSlider
             // 
             OcelotStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            OcelotStaminaSlider.Location = new Point(192, 185);
+            OcelotStaminaSlider.Location = new Point(190, 185);
             OcelotStaminaSlider.Name = "OcelotStaminaSlider";
-            OcelotStaminaSlider.Size = new Size(169, 45);
+            OcelotStaminaSlider.Size = new Size(181, 45);
             OcelotStaminaSlider.TabIndex = 612;
             OcelotStaminaSlider.Scroll += OcelotStaminaSlider_Scroll;
             // 
@@ -413,9 +431,9 @@
             Ocelot0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Ocelot0HP.ImageAlign = ContentAlignment.TopCenter;
             Ocelot0HP.ImeMode = ImeMode.NoControl;
-            Ocelot0HP.Location = new Point(192, 144);
+            Ocelot0HP.Location = new Point(190, 144);
             Ocelot0HP.Name = "Ocelot0HP";
-            Ocelot0HP.Size = new Size(169, 29);
+            Ocelot0HP.Size = new Size(181, 29);
             Ocelot0HP.TabIndex = 611;
             Ocelot0HP.Text = "Ocelot 1 HP";
             Ocelot0HP.UseVisualStyleBackColor = true;
@@ -424,9 +442,9 @@
             // OcelotHealthSlider
             // 
             OcelotHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            OcelotHealthSlider.Location = new Point(192, 122);
+            OcelotHealthSlider.Location = new Point(190, 122);
             OcelotHealthSlider.Name = "OcelotHealthSlider";
-            OcelotHealthSlider.Size = new Size(169, 45);
+            OcelotHealthSlider.Size = new Size(181, 45);
             OcelotHealthSlider.TabIndex = 610;
             OcelotHealthSlider.Scroll += OcelotHealthSlider_Scroll;
             // 
@@ -438,9 +456,9 @@
             End0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             End0Stam.ImageAlign = ContentAlignment.TopCenter;
             End0Stam.ImeMode = ImeMode.NoControl;
-            End0Stam.Location = new Point(576, 207);
+            End0Stam.Location = new Point(564, 207);
             End0Stam.Name = "End0Stam";
-            End0Stam.Size = new Size(169, 29);
+            End0Stam.Size = new Size(181, 29);
             End0Stam.TabIndex = 617;
             End0Stam.Text = "The End 1 Stamina";
             End0Stam.UseVisualStyleBackColor = true;
@@ -449,9 +467,9 @@
             // EndStaminaSlider
             // 
             EndStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            EndStaminaSlider.Location = new Point(576, 185);
+            EndStaminaSlider.Location = new Point(564, 185);
             EndStaminaSlider.Name = "EndStaminaSlider";
-            EndStaminaSlider.Size = new Size(169, 45);
+            EndStaminaSlider.Size = new Size(181, 45);
             EndStaminaSlider.TabIndex = 616;
             EndStaminaSlider.Scroll += EndStaminaSlider_Scroll;
             // 
@@ -463,9 +481,9 @@
             End0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             End0HP.ImageAlign = ContentAlignment.TopCenter;
             End0HP.ImeMode = ImeMode.NoControl;
-            End0HP.Location = new Point(576, 144);
+            End0HP.Location = new Point(564, 144);
             End0HP.Name = "End0HP";
-            End0HP.Size = new Size(169, 29);
+            End0HP.Size = new Size(181, 29);
             End0HP.TabIndex = 615;
             End0HP.Text = "The End 1 HP";
             End0HP.UseVisualStyleBackColor = true;
@@ -474,9 +492,9 @@
             // EndHealthSlider
             // 
             EndHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            EndHealthSlider.Location = new Point(576, 122);
+            EndHealthSlider.Location = new Point(564, 122);
             EndHealthSlider.Name = "EndHealthSlider";
-            EndHealthSlider.Size = new Size(169, 45);
+            EndHealthSlider.Size = new Size(181, 45);
             EndHealthSlider.TabIndex = 614;
             EndHealthSlider.Scroll += EndHealthSlider_Scroll;
             // 
@@ -488,6 +506,143 @@
             // 
             EndTimer.Tick += EndTimer_Tick;
             // 
+            // Boss0Stam
+            // 
+            Boss0Stam.BackgroundImage = (Image)resources.GetObject("Boss0Stam.BackgroundImage");
+            Boss0Stam.Cursor = Cursors.Hand;
+            Boss0Stam.FlatStyle = FlatStyle.Flat;
+            Boss0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Boss0Stam.ImageAlign = ContentAlignment.TopCenter;
+            Boss0Stam.ImeMode = ImeMode.NoControl;
+            Boss0Stam.Location = new Point(994, 672);
+            Boss0Stam.Name = "Boss0Stam";
+            Boss0Stam.Size = new Size(181, 29);
+            Boss0Stam.TabIndex = 621;
+            Boss0Stam.Text = "The Boss 1 Stamina";
+            Boss0Stam.UseVisualStyleBackColor = true;
+            Boss0Stam.Click += Boss0Stam_Click;
+            // 
+            // BossStaminaSlider
+            // 
+            BossStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
+            BossStaminaSlider.Location = new Point(994, 650);
+            BossStaminaSlider.Name = "BossStaminaSlider";
+            BossStaminaSlider.Size = new Size(181, 45);
+            BossStaminaSlider.TabIndex = 620;
+            BossStaminaSlider.Scroll += BossStaminaSlider_Scroll;
+            // 
+            // Boss0HP
+            // 
+            Boss0HP.BackgroundImage = (Image)resources.GetObject("Boss0HP.BackgroundImage");
+            Boss0HP.Cursor = Cursors.Hand;
+            Boss0HP.FlatStyle = FlatStyle.Flat;
+            Boss0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Boss0HP.ImageAlign = ContentAlignment.TopCenter;
+            Boss0HP.ImeMode = ImeMode.NoControl;
+            Boss0HP.Location = new Point(994, 609);
+            Boss0HP.Name = "Boss0HP";
+            Boss0HP.Size = new Size(181, 29);
+            Boss0HP.TabIndex = 619;
+            Boss0HP.Text = "The Boss 1 HP";
+            Boss0HP.UseVisualStyleBackColor = true;
+            Boss0HP.Click += Boss0HP_Click;
+            // 
+            // BossHealthSlider
+            // 
+            BossHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
+            BossHealthSlider.Location = new Point(994, 587);
+            BossHealthSlider.Name = "BossHealthSlider";
+            BossHealthSlider.Size = new Size(181, 45);
+            BossHealthSlider.TabIndex = 618;
+            BossHealthSlider.Scroll += BossHealthSlider_Scroll;
+            // 
+            // BossTimer
+            // 
+            BossTimer.Tick += BossTimer_Tick;
+            // 
+            // VolginOnShagohog0Stam
+            // 
+            VolginOnShagohog0Stam.BackgroundImage = (Image)resources.GetObject("VolginOnShagohog0Stam.BackgroundImage");
+            VolginOnShagohog0Stam.Cursor = Cursors.Hand;
+            VolginOnShagohog0Stam.FlatStyle = FlatStyle.Flat;
+            VolginOnShagohog0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            VolginOnShagohog0Stam.ImageAlign = ContentAlignment.TopCenter;
+            VolginOnShagohog0Stam.ImeMode = ImeMode.NoControl;
+            VolginOnShagohog0Stam.Location = new Point(992, 458);
+            VolginOnShagohog0Stam.Name = "VolginOnShagohog0Stam";
+            VolginOnShagohog0Stam.Size = new Size(181, 29);
+            VolginOnShagohog0Stam.TabIndex = 625;
+            VolginOnShagohog0Stam.Text = "Volgin/Shago 0 Stam";
+            VolginOnShagohog0Stam.UseVisualStyleBackColor = true;
+            VolginOnShagohog0Stam.Click += VolginOnShagohog0Stam_Click;
+            // 
+            // VolginOnShagohodStaminaSlider
+            // 
+            VolginOnShagohodStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
+            VolginOnShagohodStaminaSlider.Location = new Point(992, 436);
+            VolginOnShagohodStaminaSlider.Name = "VolginOnShagohodStaminaSlider";
+            VolginOnShagohodStaminaSlider.Size = new Size(181, 45);
+            VolginOnShagohodStaminaSlider.TabIndex = 624;
+            VolginOnShagohodStaminaSlider.Scroll += VolginOnShagohodStaminaSlider_Scroll;
+            // 
+            // VolginOnShagohog0HP
+            // 
+            VolginOnShagohog0HP.BackgroundImage = (Image)resources.GetObject("VolginOnShagohog0HP.BackgroundImage");
+            VolginOnShagohog0HP.Cursor = Cursors.Hand;
+            VolginOnShagohog0HP.FlatStyle = FlatStyle.Flat;
+            VolginOnShagohog0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            VolginOnShagohog0HP.ImageAlign = ContentAlignment.TopCenter;
+            VolginOnShagohog0HP.ImeMode = ImeMode.NoControl;
+            VolginOnShagohog0HP.Location = new Point(992, 395);
+            VolginOnShagohog0HP.Name = "VolginOnShagohog0HP";
+            VolginOnShagohog0HP.Size = new Size(181, 29);
+            VolginOnShagohog0HP.TabIndex = 623;
+            VolginOnShagohog0HP.Text = "Volgin/Shago 0 HP";
+            VolginOnShagohog0HP.UseVisualStyleBackColor = true;
+            VolginOnShagohog0HP.Click += VolginOnShagohog0HP_Click;
+            // 
+            // VolginOnShagohodHealthSlider
+            // 
+            VolginOnShagohodHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
+            VolginOnShagohodHealthSlider.Location = new Point(992, 373);
+            VolginOnShagohodHealthSlider.Name = "VolginOnShagohodHealthSlider";
+            VolginOnShagohodHealthSlider.Size = new Size(181, 45);
+            VolginOnShagohodHealthSlider.TabIndex = 622;
+            VolginOnShagohodHealthSlider.Scroll += VolginOnShagohodHealthSlider_Scroll;
+            // 
+            // ShagohodHealthSlider
+            // 
+            ShagohodHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
+            ShagohodHealthSlider.Location = new Point(992, 116);
+            ShagohodHealthSlider.Name = "ShagohodHealthSlider";
+            ShagohodHealthSlider.Size = new Size(181, 45);
+            ShagohodHealthSlider.TabIndex = 626;
+            ShagohodHealthSlider.Scroll += ShagohodHealthSlider_Scroll;
+            // 
+            // ShagohodTimer
+            // 
+            ShagohodTimer.Tick += ShagohodTimer_Tick;
+            // 
+            // VolginOnShagohodTimer
+            // 
+            VolginOnShagohodTimer.Tick += VolginOnShagohodTimer_Tick;
+            // 
+            // Shagohod0HP
+            // 
+            Shagohod0HP.BackgroundImage = (Image)resources.GetObject("Shagohod0HP.BackgroundImage");
+            Shagohod0HP.Cursor = Cursors.Hand;
+            Shagohod0HP.FlatStyle = FlatStyle.Flat;
+            Shagohod0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Shagohod0HP.ImageAlign = ContentAlignment.TopCenter;
+            Shagohod0HP.ImeMode = ImeMode.NoControl;
+            Shagohod0HP.Location = new Point(992, 138);
+            Shagohod0HP.Name = "Shagohod0HP";
+            Shagohod0HP.Size = new Size(181, 29);
+            Shagohod0HP.TabIndex = 627;
+            Shagohod0HP.Text = "Shagohod 0 HP";
+            Shagohod0HP.UseVisualStyleBackColor = true;
+            Shagohod0HP.Click += Shagohod0HP_Click_1;
+            // 
             // BossForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -495,6 +650,16 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1185, 702);
+            Controls.Add(Shagohod0HP);
+            Controls.Add(ShagohodHealthSlider);
+            Controls.Add(VolginOnShagohog0Stam);
+            Controls.Add(VolginOnShagohodStaminaSlider);
+            Controls.Add(VolginOnShagohog0HP);
+            Controls.Add(VolginOnShagohodHealthSlider);
+            Controls.Add(Boss0Stam);
+            Controls.Add(BossStaminaSlider);
+            Controls.Add(Boss0HP);
+            Controls.Add(BossHealthSlider);
             Controls.Add(End0Stam);
             Controls.Add(EndStaminaSlider);
             Controls.Add(End0HP);
@@ -541,6 +706,11 @@
             ((System.ComponentModel.ISupportInitialize)OcelotHealthSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)EndStaminaSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)EndHealthSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BossStaminaSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)BossHealthSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VolginOnShagohodStaminaSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VolginOnShagohodHealthSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ShagohodHealthSlider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -583,5 +753,21 @@
         private TrackBar EndHealthSlider;
         private System.Windows.Forms.Timer OcelotTimer;
         private System.Windows.Forms.Timer EndTimer;
+        private Button Boss0Stam;
+        private TrackBar BossStaminaSlider;
+        private Button Boss0HP;
+        private TrackBar BossHealthSlider;
+        private System.Windows.Forms.Timer BossTimer;
+        private Button VolginOnShagohog0Stam;
+        private TrackBar VolginOnShagohodStaminaSlider;
+        private Button VolginOnShagohog0HP;
+        private TrackBar VolginOnShagohodHealthSlider;
+        private Button button3;
+        private TrackBar trackBar3;
+        private Button button4;
+        private TrackBar ShagohodHealthSlider;
+        private System.Windows.Forms.Timer ShagohodTimer;
+        private System.Windows.Forms.Timer VolginOnShagohodTimer;
+        private Button Shagohod0HP;
     }
 }
