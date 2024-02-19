@@ -36,7 +36,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s023a":
                     LoggingManager.Instance.Log("Looking for Ocelot AOB");
                     BossManager.FindOcelotAOB(); // Ocelot
-                    LoggingManager.Instance.Log("Ocelot AOB found at: 0x" + MemoryManager.Instance.FoundOcelotAddress.ToInt64().ToString("X"));
                     OcelotTimer.Interval = 1000; // Update every second
                     OcelotTimer.Tick += new EventHandler(OcelotTimer_Tick);
                     OcelotTimer.Start();
@@ -51,15 +50,14 @@ namespace MGS3_MC_Cheat_Trainer
                     Ocelot0HP.Enabled = true;
                     Ocelot0Stam.Enabled = true;
 
-                    LoggingManager.Instance.Log("Every other boss control disabled except for Ocelot");
+                    LoggingManager.Instance.Log("Enabling Ocelot's control");
                     break;
 
                 case "s032b":
                     // Set up a lot of logging for this with how tempermental the boss implementations are I
                     // can locate the issue easier than the user being like "lol trainer doesn't work"
                     LoggingManager.Instance.Log("Looking for The Pain's AOB");
-                    BossManager.FindTheFearAOB(); // Pain and Fear share the same AOB
-                    LoggingManager.Instance.Log("The Pain AOB found at: 0x" + MemoryManager.Instance.FoundTheFearAddress.ToInt64().ToString("X"));
+                    BossManager.FindTheFearAOB(); // Pain and Fear share the same AOB                   
                     PainTimer.Interval = 1000; // Update every second
                     FearTimer.Tick += new EventHandler(PainTimer_Tick);
                     PainTimer.Start();
@@ -85,7 +83,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s051b":
                     LoggingManager.Instance.Log("Looking for The Fear AOB");
                     BossManager.FindTheFearAOB(); // Actually The Fear
-                    LoggingManager.Instance.Log("The Fear AOB found at: 0x" + MemoryManager.Instance.FoundTheFearAddress.ToInt64().ToString("X"));
                     FearTimer.Interval = 1000; // Update every second
                     FearTimer.Tick += new EventHandler(FearTimer_Tick);
                     FearTimer.Start();
@@ -108,7 +105,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s063a":
                     LoggingManager.Instance.Log("Looking for The End AOB");
                     BossManager.FindTheEnds063aAOB(); // The End
-                    LoggingManager.Instance.Log("The End AOB found at: 0x" + MemoryManager.Instance.FoundTheEnds063aAddress.ToInt64().ToString("X"));
                     EndTimer.Interval = 1000; // Update every second
                     EndTimer.Tick += new EventHandler(EndTimer_Tick);
                     EndTimer.Start();
@@ -130,7 +126,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s064a":
                     LoggingManager.Instance.Log("Looking for The End AOB");
                     BossManager.FindTheEnds065aAOB(); // The End
-                    LoggingManager.Instance.Log("The End AOB found at: 0x" + MemoryManager.Instance.FoundTheEnds065aAddress.ToInt64().ToString("X"));
                     EndTimer.Interval = 1000; // Update every second
                     EndTimer.Tick += new EventHandler(EndTimer_Tick);
                     EndTimer.Start();
@@ -152,7 +147,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s065a":
                     LoggingManager.Instance.Log("Looking for The End AOB");
                     BossManager.FindTheEnds065aAOB(); // The End
-                    LoggingManager.Instance.Log("The End AOB found at: 0x" + MemoryManager.Instance.FoundTheEnds065aAddress.ToInt64().ToString("X"));
                     EndTimer.Interval = 1000; // Update every second
                     EndTimer.Tick += new EventHandler(EndTimer_Tick);
                     EndTimer.Start();
@@ -175,7 +169,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s081a":
                     LoggingManager.Instance.Log("Looking for The Fury AOB");
                     BossManager.FindTheFuryAOB(); // The Fury
-                    LoggingManager.Instance.Log(MemoryManager.Instance.FoundTheFuryAddress.ToInt64().ToString("X"));
                     FuryTimer.Interval = 1000; // Update every second
                     FuryTimer.Tick += new EventHandler(FuryTimer_Tick);
                     FuryTimer.Start();
@@ -197,7 +190,6 @@ namespace MGS3_MC_Cheat_Trainer
                 case "s122a":
                     LoggingManager.Instance.Log("Looking for Volgin AOB");
                     BossManager.FindTheFearAOB(); // Volgin's first fight shares the same AOB as well
-                    LoggingManager.Instance.Log("Volgin AOB found at: 0x" + MemoryManager.Instance.FoundTheFearAddress.ToInt64().ToString("X"));
                     VolginTimer.Interval = 1000; // Update every second
                     FearTimer.Tick += new EventHandler(VolginTimer_Tick);
                     VolginTimer.Start();
@@ -216,36 +208,12 @@ namespace MGS3_MC_Cheat_Trainer
                     LoggingManager.Instance.Log("Every other boss control disabled except for Volgin");
                     break;
 
-                /* Both Shagohod and Volgin share the same map string so I can't use it to differentiate
-                case "s171b":
-                    LoggingManager.Instance.Log("Looking for Shagohod AOB");
-                    BossManager.FindShagohodAOB(); // Shagohod
-                    LoggingManager.Instance.Log("Shagohod AOB found at: 0x" + MemoryManager.Instance.FoundShagohodAddress.ToInt64().ToString("X"));
-                    ShagohodTimer.Interval = 1000; // Update every second
-                    ShagohodTimer.Tick += new EventHandler(ShagohodTimer_Tick);
-                    ShagohodTimer.Start();
-
-                    ShagohodHealthSlider.Maximum = 8000; // Max health
-                    ShagohodHealthSlider.Minimum = 0; // Min health
-
-
-                    ShagohodHealthSlider.Enabled = true;
-
-                    Shagohod0HP.Enabled = true;
-
-                    LoggingManager.Instance.Log("Enabling Shagohod's controls.");
-
-                    LoggingManager.Instance.Log("Every other boss control disabled except for Shagohod");
-                    break;
-                */
-
                 case "s171b":
                     LoggingManager.Instance.Log("Looking for Shagohod AOB");
                     short shagohodResult = BossManager.FindShagohodAOB();
                     if ((shagohodResult != -1) && (BossManager.IsShagohodDead() == false))
                     {
                         // Shagohod found
-                        LoggingManager.Instance.Log("Shagohod AOB found at: 0x" + MemoryManager.Instance.FoundShagohodAddress.ToInt64().ToString("X"));
                         ShagohodTimer.Interval = 1000; // Update every second
                         ShagohodTimer.Tick += new EventHandler(ShagohodTimer_Tick);
                         ShagohodTimer.Start();
@@ -262,16 +230,13 @@ namespace MGS3_MC_Cheat_Trainer
                     {
                         LoggingManager.Instance.Log("Shagohod AOB found but Shagohod is dead. Looking for VolginOnShagohod AOB");
                         short volginOnShagohodResult = BossManager.FindVolginOnShagohodAOB();
-                        // Volgin on Shagohod found
-                        LoggingManager.Instance.Log("Volgin on Shagohod AOB found at: 0x" + MemoryManager.Instance.FoundVolginOnShagohodAddress.ToInt64().ToString("X"));
-                        VolginOnShagohodTimer.Interval = 1000; // Update every second
                         VolginOnShagohodTimer.Tick += new EventHandler(VolginOnShagohodTimer_Tick);
                         VolginOnShagohodTimer.Start();
 
-                        VolginOnShagohodHealthSlider.Maximum = 8000; // Max health
-                        VolginOnShagohodHealthSlider.Minimum = 0; // Min health
-                        VolginOnShagohodStaminaSlider.Maximum = 8000; // Max stamina
-                        VolginOnShagohodStaminaSlider.Minimum = 0; // Min stamina
+                        VolginOnShagohodHealthSlider.Maximum = 8000;
+                        VolginOnShagohodHealthSlider.Minimum = 0;
+                        VolginOnShagohodStaminaSlider.Maximum = 8000;
+                        VolginOnShagohodStaminaSlider.Minimum = 0;
 
                         LoggingManager.Instance.Log("Enabling Volgin on Shagohod's controls.");
                         VolginOnShagohodHealthSlider.Enabled = true;
@@ -291,13 +256,9 @@ namespace MGS3_MC_Cheat_Trainer
 
                     break;
 
-
-
-
                 case "s201a":
                     LoggingManager.Instance.Log("Looking for The Boss AOB");
                     BossManager.FindTheBossAOB(); // The Boss
-                    LoggingManager.Instance.Log("The Boss AOB found at: 0x" + MemoryManager.Instance.FoundTheBossAddress.ToInt64().ToString("X"));
                     BossTimer.Interval = 1000; // Update every second
                     BossTimer.Tick += new EventHandler(BossTimer_Tick);
                     BossTimer.Start();
@@ -446,7 +407,6 @@ namespace MGS3_MC_Cheat_Trainer
             else if (IsBossDefeated() && IsNotBossLocation(currentLocation))
             {
                 DisableAllBossControls();
-                LoggingManager.Instance.Log("Player has moved from the boss area or boss is defeated. All boss controls disabled.");
                 consistencyCheckNeeded = false;
             }
         }

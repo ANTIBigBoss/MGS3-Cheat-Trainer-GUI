@@ -130,6 +130,24 @@
             },
 
             {
+                "SnakeAndBossesStanding", // 00 00 00 90 01 20 03
+                (new byte[] { 0x00, 0x00, 0x00, 0x90, 0x01, 0x20, 0x03 },
+                "xx xx xx xx xx xx xx")
+            },
+
+            {
+                "SnakeAndGuardProne", // 00 00 00 96 00 2C 01
+                (new byte[] { 0x00, 0x00, 0x00, 0x96, 0x00, 0x2C, 0x01 },
+                "xx xx xx xx xx xx xx")
+            },
+
+            {
+                "GuardPatroling", // 00 00 00 90 01 52 03
+                (new byte[] { 0x00, 0x00, 0x00, 0x90, 0x01, 0x52, 0x03 },
+                "xx xx xx xx xx xx xx")
+            },
+
+            {
                 "", // Placeholder for next AOB E6 99 48 00
                 (new byte[] {  },
                 "")

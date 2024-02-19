@@ -1,4 +1,7 @@
-﻿namespace MGS3_MC_Cheat_Trainer
+﻿using System.Text;
+using static MGS3_MC_Cheat_Trainer.MemoryManager;
+
+namespace MGS3_MC_Cheat_Trainer
 {
     public partial class MiscForm : Form
     {
@@ -167,13 +170,25 @@
         #region Debugging Buttons
         private void button3_Click(object sender, EventArgs e)
         {
-            if (MemoryManager.Instance.FindAndStoreTheFearAOB())
+
+            if (MemoryManager.Instance.FoundSnakePositionAddress != IntPtr.Zero)
             {
-                MessageBox.Show($"TheFear AOB found at: 0x{MemoryManager.Instance.FoundTheFearAddress.ToInt64():X}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    float[] snakePosition = MemoryManager.Instance.ReadSnakePosition(processHandle);
+                    MessageBox.Show($"Snake's Position: \nX={snakePosition[0]}, \nY={snakePosition[1]}, \nZ={snakePosition[2]}", "Snake Position", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to open process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show("TheFear AOB not found.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Snake position AOB not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -194,15 +209,30 @@
         // Read The Fury's health value from boss manager
         private void button5_Click(object sender, EventArgs e)
         {
-            if (MemoryManager.Instance.FindAndStoreTheFuryAOB())
+            var guardsAddresses = MemoryManager.Instance.FindAllGuardsPositionAOBs();
+            if (guardsAddresses.Count > 0)
             {
-                MessageBox.Show("The Fury AOB found at: 0x" + MemoryManager.Instance.FoundTheFuryAddress.ToInt64().ToString("X"));
-                short healthValue = BossManager.ReadTheFuryHealth();
-                MessageBox.Show($"The Fury's health: {healthValue}", "The Fury's Health", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    var guardsPositions = MemoryManager.Instance.ReadGuardsPositions(processHandle, guardsAddresses);
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var position in guardsPositions)
+                    {
+                        sb.AppendLine($"Guard Position: \nX={position[0]}, \nY={position[1]}, \nZ={position[2]}\n");
+                    }
+                    MessageBox.Show(sb.ToString(), "Guards Positions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to open process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show("TheFury AOB not found.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No guards found.", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -229,12 +259,27 @@
 
         private void button10_Click(object sender, EventArgs e)
         {
-            // Read the fury's health value
-            short healthValue = BossManager.ReadTheFuryHealth();
-            MessageBox.Show($"The Fury's health: {healthValue}", "The Fury's Health", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MemoryManager.Instance.FindAndStoreSnakesPositionAOB();
+            
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
 
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            MemoryManager.Instance.MoveAllGuardsToSnake();
+        }
+
         #endregion
-       
+
+
     }
 }

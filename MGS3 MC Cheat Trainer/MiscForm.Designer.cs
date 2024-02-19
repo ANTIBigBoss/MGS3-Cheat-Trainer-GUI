@@ -409,6 +409,7 @@
             button7.TabIndex = 521;
             button7.Text = "Testing";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // button8
             // 
@@ -421,6 +422,7 @@
             button8.TabIndex = 520;
             button8.Text = "Alert Timers";
             button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
             // 
             // button9
             // 
@@ -433,6 +435,7 @@
             button9.TabIndex = 519;
             button9.Text = "Testing";
             button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
             // 
             // button10
             // 

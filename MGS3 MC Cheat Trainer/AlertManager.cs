@@ -40,6 +40,7 @@ namespace MGS3_MC_Cheat_Trainer
             _cautionTimer.Tick += CautionTimer_Tick;
         }
 
+
         private static void AlertTimer_Tick(object sender, EventArgs e)
         {
             // Assuming the alert memory region is already found and stored
