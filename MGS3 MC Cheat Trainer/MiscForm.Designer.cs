@@ -420,7 +420,7 @@
             button8.Name = "button8";
             button8.Size = new Size(241, 29);
             button8.TabIndex = 520;
-            button8.Text = "Alert Timers";
+            button8.Text = "Use AOB to write to 1 HP";
             button8.UseVisualStyleBackColor = true;
             button8.Click += button8_Click;
             // 
@@ -433,7 +433,7 @@
             button9.Name = "button9";
             button9.Size = new Size(241, 29);
             button9.TabIndex = 519;
-            button9.Text = "Testing";
+            button9.Text = "Find Ocelot AOB";
             button9.UseVisualStyleBackColor = true;
             button9.Click += button9_Click;
             // 

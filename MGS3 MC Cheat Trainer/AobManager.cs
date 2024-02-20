@@ -42,40 +42,62 @@ namespace MGS3_MC_Cheat_Trainer
 
         public bool FindAndStoreOcelotAOB()
         {
-            var process = GetMGS3Process();
+            var process = MemoryManager.GetMGS3Process();
             if (process == null)
             {
                 MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            IntPtr processHandle = OpenGameProcess(process);
+            IntPtr baseAddress = IntPtr.Zero;
+            foreach (ProcessModule module in process.Modules)
+            {
+                if (module.ModuleName.Equals("METAL GEAR SOLID3.exe", StringComparison.OrdinalIgnoreCase))
+                {
+                    baseAddress = module.BaseAddress;
+                    break;
+                }
+            }
+
+            if (baseAddress == IntPtr.Zero)
+            {
+                MessageBox.Show("METAL GEAR SOLID3.exe module not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
                 MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            var (pattern, mask) = Constants.AOBs["Ocelot"];
-            IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
-            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
+            // Adjust the start and end address based on the range you want to scan
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x01D00000); // Base address for scan
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x01E00000); // End address for scan
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
-            IntPtr foundAddress = MemoryManager.Instance.ScanWideMemory(processHandle, startAddress, size, pattern, mask);
+            var (pattern, mask) = Constants.AOBs["Ocelot"];
+            // Continue from setting the pattern and mask
+            IntPtr foundAddress = MemoryManager.Instance.FindDynamicPointerAddress(processHandle, startAddress, size, pattern, mask, new int[] { 0x5DC });
             NativeMethods.CloseHandle(processHandle);
 
             if (foundAddress != IntPtr.Zero)
             {
-                FoundOcelotAddress = foundAddress; // Store found address
+                // If the AOB was found, store its address (adjusted by the offset)
+                FoundOcelotAddress = foundAddress;
                 return true;
             }
-
-            return false;
+            else
+            {
+                // If the AOB was not found, return false
+                return false;
+            }
         }
 
-        
 
-        public bool FindAndStoreTheFearAOB()
+
+            public bool FindAndStoreTheFearAOB()
         {
             var process = GetMGS3Process();
             if (process == null)

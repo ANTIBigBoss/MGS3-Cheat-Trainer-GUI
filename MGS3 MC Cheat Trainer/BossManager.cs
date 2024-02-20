@@ -7,38 +7,66 @@
     {
         // Instance of AobManager
         private static AobManager _instance;
-        
+
         #region Ocelot
-        public static short FindOcelotAOB()
+        public static bool FindOcelotAOB()
         {
-            if (!AobManager.Instance.FindAndStoreOcelotAOB())
+            // Assuming AobManager is accessible here
+            return AobManager.Instance.FindAndStoreOcelotAOB();
+        }
+
+        public static void WriteOcelotHealth(short value)
+        {
+            // Ensure the AOB has been found and stored
+            if (AobManager.Instance.FoundOcelotAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreOcelotAOB())
+            {
+                LoggingManager.Instance.Log("Failed to find Ocelot AOB.");
+                return;
+            }
+
+            // Open the game process
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            // Calculate the actual health address by applying the offset
+            IntPtr healthAddress = IntPtr.Add(AobManager.Instance.FoundOcelotAddress, -916);
+
+            // Write the health value
+            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+
+        public static short ReadOcelotHealth()
+        {
+            // Ensure the AOB has been found and stored
+            if (AobManager.Instance.FoundOcelotAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreOcelotAOB())
             {
                 LoggingManager.Instance.Log("Ocelot AOB address not found.");
                 return -1; // Indicate failure
             }
 
+            // Open the game process
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundOcelotAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
-            return healthValue;
-        }
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return -1;
+            }
 
-        public static void WriteOcelotHealth(short value)
-        {
-            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 916); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
-        }
+            // Calculate the actual health address by applying the offset
+            IntPtr healthAddress = IntPtr.Add(AobManager.Instance.FoundOcelotAddress, -916);
 
-        public static short ReadOcelotHealth()
-        {
-            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 916); // Adjust for actual health offset
+            // Read the health value
             short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsOcelotDead()
         {

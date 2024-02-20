@@ -265,7 +265,6 @@ namespace MGS3_MC_Cheat_Trainer
             return processHandle;
         }
 
-        // Implement ReadProcessMemory method
         public static bool ReadProcessMemory(IntPtr processHandle, IntPtr address, byte[] buffer, uint size, out int bytesRead)
         {
             return NativeMethods.ReadProcessMemory(processHandle, address, buffer, size, out bytesRead);
@@ -865,5 +864,83 @@ namespace MGS3_MC_Cheat_Trainer
             }
             return "Unknown";
         }
+
+        public IntPtr ApplyOffsets(IntPtr processHandle, IntPtr pointerAddress, int[] offsets)
+        {
+            IntPtr currentAddress = pointerAddress;
+            foreach (int offset in offsets)
+            {
+                currentAddress = ReadIntPtr(processHandle, currentAddress) + offset;
+            }
+            return currentAddress;
+        }
+
+        public IntPtr ReadIntPtr(IntPtr processHandle, IntPtr address)
+        {
+            byte[] buffer = new byte[8]; // Correct for 64-bit
+            if (ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
+            {
+                return (IntPtr)BitConverter.ToInt64(buffer, 0);
+            }
+            return IntPtr.Zero;
+        }
+
+
+        public IntPtr FindDynamicPointerAddress(IntPtr processHandle, IntPtr startAddress, long rangeSize, byte[] pattern, string mask, int[] offsets)
+        {
+            int bufferSize = 4096; // Buffer size for reading memory
+            byte[] buffer = new byte[bufferSize + pattern.Length]; // Extend buffer to accommodate pattern length
+            long endAddress = startAddress.ToInt64() + rangeSize;
+
+            IntPtr previousEndAddress = startAddress;
+            for (long currentAddress = startAddress.ToInt64(); currentAddress < endAddress; currentAddress += bufferSize - pattern.Length)
+            {
+                Array.Clear(buffer, 0, buffer.Length); // Clear buffer to prevent data remnants affecting pattern matching
+                if (!ReadProcessMemory(processHandle, previousEndAddress, buffer, (uint)buffer.Length, out int bytesRead))
+                {
+                    continue; // Handle read failure as needed
+                }
+
+                for (int i = 0; i < bytesRead - pattern.Length; i++)
+                {
+                    if (PatternMatches(buffer, i, pattern, mask))
+                    {
+                        IntPtr foundAddress = (IntPtr)(currentAddress + i);
+                        // Apply offsets if necessary. Adjust this part as per your requirement.
+                        if (offsets != null && offsets.Length > 0)
+                        {
+                            foreach (var offset in offsets)
+                            {
+                                // Read the memory at foundAddress to get the next address in the chain.
+                                foundAddress = ReadIntPtr(processHandle, IntPtr.Add(foundAddress, offset));
+                                if (foundAddress == IntPtr.Zero)
+                                {
+                                    return IntPtr.Zero; // Failed to follow the pointer chain
+                                }
+                            }
+                        }
+                        return foundAddress; // Return the final address after applying offsets
+                    }
+                }
+                previousEndAddress = (IntPtr)(currentAddress + bufferSize - pattern.Length);
+            }
+
+            return IntPtr.Zero; // Not found
+        }
+
+
+
+        private bool PatternMatches(byte[] buffer, int index, byte[] pattern, string mask)
+        {
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                if (mask[i] == 'x' && buffer[index + i] != pattern[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }

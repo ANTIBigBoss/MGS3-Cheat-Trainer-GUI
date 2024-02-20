@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -263,15 +264,115 @@ namespace MGS3_MC_Cheat_Trainer
             
         }
 
+        private IntPtr dynamicAddress = IntPtr.Zero;
+
         private void button9_Click(object sender, EventArgs e)
         {
+            var process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("MGS3 process not found.");
+                return;
+            }
 
+            IntPtr baseAddress = IntPtr.Zero;
+            foreach (ProcessModule module in process.Modules)
+            {
+                if (module.ModuleName.Equals("METAL GEAR SOLID3.exe", StringComparison.OrdinalIgnoreCase))
+                {
+                    baseAddress = module.BaseAddress;
+                    break;
+                }
+            }
+
+            if (baseAddress == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("METAL GEAR SOLID3.exe module not found.");
+                return;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open process for scanning.");
+                return;
+            }
+
+            byte[] pattern = new byte[] { 0x50, 0x86, 0xEA, 0xE0, 0xF7, 0x01, 0x00, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            string mask = "xxxxxxxxxxxxxxxxxxxxxxxx";
+
+
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
+            long size = 0x1E00000 - 0x1D00000;
+
+            IntPtr foundAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size, pattern, mask);
+            if (foundAddress != IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log($"AOB found at: 0x{foundAddress.ToString("X")}");
+                dynamicAddress = foundAddress;
+            }
+            else
+            {
+                LoggingManager.Instance.Log("AOB not found within specified range.");
+            }
+
+            NativeMethods.CloseHandle(processHandle);
         }
+
 
         private void button8_Click(object sender, EventArgs e)
         {
+            var process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("MGS3 process not found.");
+                return;
+            }
 
+            if (dynamicAddress == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Dynamic address not set. Run AOB scan first.");
+                return;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open process for scanning.");
+                return;
+            }
+
+            IntPtr pointerAddress = MemoryManager.Instance.ReadIntPtr(processHandle, dynamicAddress);
+            if (pointerAddress == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to read pointer from dynamic address.");
+                return;
+            }
+
+            IntPtr dynamicTargetAddress = IntPtr.Add(pointerAddress, 0x5DC);
+            IntPtr targetAddress = IntPtr.Subtract(dynamicTargetAddress, 916);
+
+            short valueBefore = MemoryManager.ReadShortFromMemory(processHandle, targetAddress);
+            LoggingManager.Instance.Log($"Value before writing: {valueBefore} at 0x{targetAddress.ToString("X")}");
+            
+            short valueToWrite = 0;
+            int bytesWritten = MemoryManager.WriteShortToMemory(processHandle, targetAddress, valueToWrite);
+
+            if (bytesWritten == sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Successfully wrote {valueToWrite} to 0x{targetAddress.ToString("X")}");
+            }
+            else
+            {
+                LoggingManager.Instance.Log("Failed to write to memory.");
+            }
+            
+            short valueAfter = MemoryManager.ReadShortFromMemory(processHandle, targetAddress);
+            LoggingManager.Instance.Log($"Value after writing: {valueAfter} at 0x{targetAddress.ToString("X")}");
+
+            NativeMethods.CloseHandle(processHandle);
         }
+
 
         private void button7_Click(object sender, EventArgs e)
         {
