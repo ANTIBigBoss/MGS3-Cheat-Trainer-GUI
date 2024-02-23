@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
             button1 = new Button();
             textBox29 = new TextBox();
@@ -58,7 +59,14 @@
             button9 = new Button();
             button10 = new Button();
             SwapToBossForm = new Button();
+            Ocelot0Stam = new Button();
+            OcelotStaminaSlider = new TrackBar();
+            Ocelot0HP = new Button();
+            OcelotHealthSlider = new TrackBar();
+            OcelotTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)OcelotStaminaSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)OcelotHealthSlider).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -466,12 +474,68 @@
             SwapToBossForm.UseVisualStyleBackColor = true;
             SwapToBossForm.Click += SwapToBossForm_Click;
             // 
+            // Ocelot0Stam
+            // 
+            Ocelot0Stam.BackgroundImage = (Image)resources.GetObject("Ocelot0Stam.BackgroundImage");
+            Ocelot0Stam.Cursor = Cursors.Hand;
+            Ocelot0Stam.FlatStyle = FlatStyle.Flat;
+            Ocelot0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Ocelot0Stam.ImageAlign = ContentAlignment.TopCenter;
+            Ocelot0Stam.ImeMode = ImeMode.NoControl;
+            Ocelot0Stam.Location = new Point(450, 236);
+            Ocelot0Stam.Name = "Ocelot0Stam";
+            Ocelot0Stam.Size = new Size(181, 29);
+            Ocelot0Stam.TabIndex = 617;
+            Ocelot0Stam.Text = "Ocelot 1 Stamina";
+            Ocelot0Stam.UseVisualStyleBackColor = true;
+            // 
+            // OcelotStaminaSlider
+            // 
+            OcelotStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
+            OcelotStaminaSlider.Location = new Point(450, 214);
+            OcelotStaminaSlider.Name = "OcelotStaminaSlider";
+            OcelotStaminaSlider.Size = new Size(181, 45);
+            OcelotStaminaSlider.TabIndex = 616;
+            // 
+            // Ocelot0HP
+            // 
+            Ocelot0HP.BackgroundImage = (Image)resources.GetObject("Ocelot0HP.BackgroundImage");
+            Ocelot0HP.Cursor = Cursors.Hand;
+            Ocelot0HP.FlatStyle = FlatStyle.Flat;
+            Ocelot0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Ocelot0HP.ImageAlign = ContentAlignment.TopCenter;
+            Ocelot0HP.ImeMode = ImeMode.NoControl;
+            Ocelot0HP.Location = new Point(450, 173);
+            Ocelot0HP.Name = "Ocelot0HP";
+            Ocelot0HP.Size = new Size(181, 29);
+            Ocelot0HP.TabIndex = 615;
+            Ocelot0HP.Text = "Ocelot 1 HP";
+            Ocelot0HP.UseVisualStyleBackColor = true;
+            Ocelot0HP.Click += Ocelot0HP_Click;
+            // 
+            // OcelotHealthSlider
+            // 
+            OcelotHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
+            OcelotHealthSlider.Location = new Point(450, 151);
+            OcelotHealthSlider.Name = "OcelotHealthSlider";
+            OcelotHealthSlider.Size = new Size(181, 45);
+            OcelotHealthSlider.TabIndex = 614;
+            OcelotHealthSlider.Scroll += OcelotHealthSlider_Scroll;
+            // 
+            // OcelotTimer
+            // 
+            OcelotTimer.Tick += OcelotTimer_Tick;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(Ocelot0Stam);
+            Controls.Add(OcelotStaminaSlider);
+            Controls.Add(Ocelot0HP);
+            Controls.Add(OcelotHealthSlider);
             Controls.Add(SwapToBossForm);
             Controls.Add(button7);
             Controls.Add(button8);
@@ -507,6 +571,8 @@
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)OcelotStaminaSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)OcelotHealthSlider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -541,5 +607,10 @@
         private Button button9;
         private Button button10;
         private Button SwapToBossForm;
+        private Button Ocelot0Stam;
+        private TrackBar OcelotStaminaSlider;
+        private Button Ocelot0HP;
+        private TrackBar OcelotHealthSlider;
+        private System.Windows.Forms.Timer OcelotTimer;
     }
 }

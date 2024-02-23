@@ -261,13 +261,14 @@ namespace MGS3_MC_Cheat_Trainer
         private void button10_Click(object sender, EventArgs e)
         {
             MemoryManager.Instance.FindAndStoreSnakesPositionAOB();
-            
+
         }
 
         private IntPtr dynamicAddress = IntPtr.Zero;
 
         private void button9_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Starting AOB scan for Ocelot.");
             var process = MemoryManager.GetMGS3Process();
             if (process == null)
             {
@@ -281,6 +282,7 @@ namespace MGS3_MC_Cheat_Trainer
                 if (module.ModuleName.Equals("METAL GEAR SOLID3.exe", StringComparison.OrdinalIgnoreCase))
                 {
                     baseAddress = module.BaseAddress;
+                    LoggingManager.Instance.Log($"METAL GEAR SOLID3.exe module found at: 0x{baseAddress.ToString("X")}");
                     break;
                 }
             }
@@ -290,18 +292,20 @@ namespace MGS3_MC_Cheat_Trainer
                 LoggingManager.Instance.Log("METAL GEAR SOLID3.exe module not found.");
                 return;
             }
-
+            LoggingManager.Instance.Log("Opening process for scanning.");
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            LoggingManager.Instance.Log($"Process handle: {processHandle}");
             if (processHandle == IntPtr.Zero)
             {
                 LoggingManager.Instance.Log("Failed to open process for scanning.");
                 return;
             }
 
-            byte[] pattern = new byte[] { 0x50, 0x86, 0xEA, 0xE0, 0xF7, 0x01, 0x00, 0x00, 0x08, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-            string mask = "xxxxxxxxxxxxxxxxxxxxxxxx";
-
-
+            byte[] pattern = new byte[] { 0xC0, 0x37, 0x00, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x20, 0x11, 0x00, 0x00, 0x00, 0x7F };
+            string mask = "xx???xxxxx???x";
+            LoggingManager.Instance.Log("Using pattern of length: " + pattern.Length);
+            LoggingManager.Instance.Log("Using mask pattern of length: " + mask.Length);
+            LoggingManager.Instance.Log("Scanning in range: 0x1D00000 - 0x1E00000");
             IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
             long size = 0x1E00000 - 0x1D00000;
 
@@ -309,15 +313,18 @@ namespace MGS3_MC_Cheat_Trainer
             if (foundAddress != IntPtr.Zero)
             {
                 LoggingManager.Instance.Log($"AOB found at: 0x{foundAddress.ToString("X")}");
-                dynamicAddress = foundAddress;
+                // Adjust foundAddress by subtracting 848 bytes to get the actual target address
+                dynamicAddress = IntPtr.Subtract(foundAddress, 848);
+                LoggingManager.Instance.Log("Going back 848 bytes to get the actual target address.");
             }
             else
             {
                 LoggingManager.Instance.Log("AOB not found within specified range.");
             }
-
+            LoggingManager.Instance.Log($"Dynamic AOB address is: 0x{dynamicAddress.ToString("X")}");
             NativeMethods.CloseHandle(processHandle);
         }
+
 
 
         private void button8_Click(object sender, EventArgs e)
@@ -354,7 +361,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             short valueBefore = MemoryManager.ReadShortFromMemory(processHandle, targetAddress);
             LoggingManager.Instance.Log($"Value before writing: {valueBefore} at 0x{targetAddress.ToString("X")}");
-            
+
             short valueToWrite = 0;
             int bytesWritten = MemoryManager.WriteShortToMemory(processHandle, targetAddress, valueToWrite);
 
@@ -366,7 +373,7 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 LoggingManager.Instance.Log("Failed to write to memory.");
             }
-            
+
             short valueAfter = MemoryManager.ReadShortFromMemory(processHandle, targetAddress);
             LoggingManager.Instance.Log($"Value after writing: {valueAfter} at 0x{targetAddress.ToString("X")}");
 
@@ -376,11 +383,25 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button7_Click(object sender, EventArgs e)
         {
-            MemoryManager.Instance.MoveAllGuardsToSnake();
+            BossManager.ReadOcelotHealth();
         }
 
         #endregion
 
 
+        private void Ocelot0HP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OcelotHealthSlider_Scroll(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OcelotTimer_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

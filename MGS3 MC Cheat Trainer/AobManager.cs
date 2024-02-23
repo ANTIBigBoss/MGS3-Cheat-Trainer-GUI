@@ -31,7 +31,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
         private MemoryManager memoryManager;
 
-        public IntPtr FoundOcelotAddress { get; private set; } = IntPtr.Zero;
+        
         public IntPtr FoundTheFearAddress { get; private set; } = IntPtr.Zero;
         public IntPtr FoundTheFuryAddress { get; private set; } = IntPtr.Zero;
         public IntPtr FoundTheEnds063aAddress { get; private set; } = IntPtr.Zero;
@@ -40,12 +40,40 @@ namespace MGS3_MC_Cheat_Trainer
         public IntPtr FoundVolginOnShagohodAddress { get; private set; } = IntPtr.Zero;
         public IntPtr FoundTheBossAddress { get; private set; } = IntPtr.Zero;
 
+        public IntPtr FoundOcelotAddress { get; private set; } = IntPtr.Zero;
+        public IntPtr StoredOcelotAddress = IntPtr.Zero;
+        public IntPtr DynamicAOBAddress = IntPtr.Zero;
+        public IntPtr OcelotHealthAddress = IntPtr.Zero;
+
+
         public bool FindAndStoreOcelotAOB()
         {
+            if (OcelotHealthAddress != IntPtr.Zero)
+            {
+                return true; // If already calculated, immediately return true.
+            }
+
+            if (StoredOcelotAddress == IntPtr.Zero && TryFindOcelotDynamicAddress(out IntPtr dynamicAddress))
+            {
+                StoredOcelotAddress = dynamicAddress;
+            }
+
+            if (StoredOcelotAddress != IntPtr.Zero)
+            {
+                CalculateOcelotHealthAddress(StoredOcelotAddress);
+            }
+
+            return OcelotHealthAddress != IntPtr.Zero;
+        }
+
+        private bool TryFindOcelotDynamicAddress(out IntPtr dynamicAddress)
+        {
+            LoggingManager.Instance.Log("Attempting to access the Dynamic Address.");
+            dynamicAddress = IntPtr.Zero;
             var process = MemoryManager.GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("MGS3 process not found.");
                 return false;
             }
 
@@ -55,49 +83,103 @@ namespace MGS3_MC_Cheat_Trainer
                 if (module.ModuleName.Equals("METAL GEAR SOLID3.exe", StringComparison.OrdinalIgnoreCase))
                 {
                     baseAddress = module.BaseAddress;
+                    LoggingManager.Instance.Log($"METAL GEAR SOLID3.exe module found at: 0x{baseAddress.ToString("X")}");
                     break;
                 }
             }
 
             if (baseAddress == IntPtr.Zero)
             {
-                MessageBox.Show("METAL GEAR SOLID3.exe module not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("METAL GEAR SOLID3.exe module not found.");
+                LoggingManager.Instance.Log("Failed to find base address for scanning.");
                 return false;
             }
 
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("Failed to open process for scanning.");
                 return false;
             }
 
-            // Adjust the start and end address based on the range you want to scan
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x01D00000); // Base address for scan
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x01E00000); // End address for scan
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            var (pattern, mask) = Constants.AOBs["Ocelot"];
-            // Continue from setting the pattern and mask
-            IntPtr foundAddress = MemoryManager.Instance.FindDynamicPointerAddress(processHandle, startAddress, size, pattern, mask, new int[] { 0x5DC });
-            NativeMethods.CloseHandle(processHandle);
+            byte[] pattern = new byte[] { 0xC0, 0x37, 0x00, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x20, 0x11, 0x00, 0x00, 0x00, 0x7F };
+            string mask = "xx???xxxxx???x";
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
+            long size = 0x1E00000 - 0x1D00000;
+            IntPtr foundAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size, pattern, mask);
 
             if (foundAddress != IntPtr.Zero)
             {
-                // If the AOB was found, store its address (adjusted by the offset)
-                FoundOcelotAddress = foundAddress;
+                dynamicAddress = IntPtr.Subtract(foundAddress, 848); // Adjust according to your logic
+                LoggingManager.Instance.Log($"Dynamic AOB address is: 0x{dynamicAddress.ToString("X")}");
+                NativeMethods.CloseHandle(processHandle);
                 return true;
             }
             else
             {
-                // If the AOB was not found, return false
+                LoggingManager.Instance.Log("AOB not found within specified range.");
+                NativeMethods.CloseHandle(processHandle);
                 return false;
             }
         }
 
+        private void CalculateOcelotHealthAddress(IntPtr dynamicAddress)
+        {
+            var process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("MGS3 process not found.");
+                return;
+            }
+
+            if (dynamicAddress == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Dynamic address not set. Run AOB scan first.");
+                return;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open process for scanning.");
+                return;
+            }
+
+            // Read the pointer from the dynamic address.
+            IntPtr pointerAddress = MemoryManager.Instance.ReadIntPtr(processHandle, dynamicAddress);
+            if (pointerAddress == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to read pointer from dynamic address.");
+                NativeMethods.CloseHandle(processHandle);
+                return;
+            }
+
+            // Apply the offset of 0x5DC to reach the target memory location.
+            IntPtr DynamicAOBAddress = IntPtr.Add(pointerAddress, 0x5DC);
+            LoggingManager.Instance.Log($"Target address is: 0x{DynamicAOBAddress.ToString("X")}");
+
+            // Move 916 bytes backwards from the target address.
+            OcelotHealthAddress = IntPtr.Subtract(DynamicAOBAddress, 916);
+            // Ensure this is logged or indicated as a success.
+            LoggingManager.Instance.Log($"Ocelot Health Address calculated and set: 0x{OcelotHealthAddress.ToString("X")}");
+
+            // Now, read the short value from the adjusted address.
+            short value = ReadShortFromMemory(processHandle, OcelotHealthAddress);
+
+            if (value != -1) // Assuming -1 indicates a failure to read
+            {
+                LoggingManager.Instance.Log($"Short value at adjusted address (0x{OcelotHealthAddress.ToString("X")}) is: {value}");
+            }
+            else
+            {
+                LoggingManager.Instance.Log("Failed to read short value from adjusted address.");
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
 
 
-            public bool FindAndStoreTheFearAOB()
+        public bool FindAndStoreTheFearAOB()
         {
             var process = GetMGS3Process();
             if (process == null)

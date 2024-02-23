@@ -1,4 +1,6 @@
-﻿namespace MGS3_MC_Cheat_Trainer
+﻿using static MGS3_MC_Cheat_Trainer.MemoryManager;
+
+namespace MGS3_MC_Cheat_Trainer
 {
     // This whole form needs some classes setup but I wanted to verify each worked with how
     // tempermental the game is I will probably do this sometime after I release V 2.0 publicly
@@ -9,22 +11,19 @@
         private static AobManager _instance;
 
         #region Ocelot
-        public static bool FindOcelotAOB()
+
+
+        public static void FindOcelotAOB()
         {
-            // Assuming AobManager is accessible here
-            return AobManager.Instance.FindAndStoreOcelotAOB();
+            if (AobManager.Instance.FoundOcelotAddress == IntPtr.Zero)
+            {
+                AobManager.Instance.FindAndStoreOcelotAOB();
+            }
         }
 
         public static void WriteOcelotHealth(short value)
         {
-            // Ensure the AOB has been found and stored
-            if (AobManager.Instance.FoundOcelotAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreOcelotAOB())
-            {
-                LoggingManager.Instance.Log("Failed to find Ocelot AOB.");
-                return;
-            }
-
-            // Open the game process
+        
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             if (processHandle == IntPtr.Zero)
             {
@@ -32,40 +31,31 @@
                 return;
             }
 
-            // Calculate the actual health address by applying the offset
-            IntPtr healthAddress = IntPtr.Add(AobManager.Instance.FoundOcelotAddress, -916);
-
-            // Write the health value
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            // Directly use the calculated OcelotHealthAddress for writing the health value.
+            MemoryManager.WriteShortToMemory(processHandle, AobManager.Instance.OcelotHealthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
+
+
 
 
         public static short ReadOcelotHealth()
         {
-            // Ensure the AOB has been found and stored
-            if (AobManager.Instance.FoundOcelotAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreOcelotAOB())
-            {
-                LoggingManager.Instance.Log("Ocelot AOB address not found.");
-                return -1; // Indicate failure
-            }
 
-            // Open the game process
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             if (processHandle == IntPtr.Zero)
             {
                 LoggingManager.Instance.Log("Failed to open game process.");
-                return -1;
+                return -1; // Indicate error
             }
 
-            // Calculate the actual health address by applying the offset
-            IntPtr healthAddress = IntPtr.Add(AobManager.Instance.FoundOcelotAddress, -916);
-
-            // Read the health value
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            // Use the calculated health address to read Ocelot's health.
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.OcelotHealthAddress);
+            NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
+
 
 
         public static bool IsOcelotDead()
@@ -73,23 +63,7 @@
             return ReadOcelotHealth() == 0;
         }
 
-        /* I might do this for Ocelot down the line but I think I found the max health and stamina 
-           values for him but too much of a rabbit hole to invest time into right now so I'll put
-           some pseudo code here for now on how I would do it
-
-         public static short ReadOcelotMaxHealth()
-         // after calculating the offset for active health if you go forward by D464/54372 you will find the max health value for Ocelot and the same would be true for stamina
-        {
-            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            // We would use the found Ocelot health address in ReadOcelotHealth and then add the offset to get the max health value
-            ReadOcelotHealth();
-            IntPtr healthAddress = IntPtr.Add(MemoryManager.Instance.FoundOcelotAddress, 54372); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
-            return healthValue;
-        }
-
-        */
+        
 
         public static void WriteOcelotStamina(short value)
         {
@@ -112,7 +86,23 @@
         {
             return ReadOcelotStamina() == 0;
         }
+        /* I might do this for Ocelot down the line but I think I found the max health and stamina 
+           values for him but too much of a rabbit hole to invest time into right now so I'll put
+           some pseudo code here for now on how I would do it
 
+         public static short ReadOcelotMaxHealth()
+         // after calculating the offset for active health if you go forward by D464/54372 you will find the max health value for Ocelot and the same would be true for stamina
+        {
+            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            // We would use the found Ocelot health address in ReadOcelotHealth and then add the offset to get the max health value
+            ReadOcelotHealth();
+            IntPtr healthAddress = IntPtr.Add(MemoryManager.Instance.FoundOcelotAddress, 54372); // Adjust for actual health offset
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+        }
+
+        */
         #endregion
 
         #region The Pain
