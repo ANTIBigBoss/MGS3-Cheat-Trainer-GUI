@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xrml="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <assemblyIdentity name="MGS3 MC Cheat Trainer.application" version="1.0.0.16" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <assemblyIdentity name="MGS3 MC Cheat Trainer.application" version="1.0.0.21" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <description asmv2:publisher="MGS3 MC Cheat Trainer" asmv2:product="MGS3 MC Cheat Trainer" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" co.v1:createDesktopShortcut="true">
     <subscription>
@@ -8,20 +8,20 @@
         <beforeApplicationStartup />
       </update>
     </subscription>
-    <deploymentProvider codebase="https://github.com/ANTIBigBoss/MGS3-Cheat-Trainer-GUI/tree/master/ClickOnce%20Releases/MGS3%20MC%20Cheat%20Trainer.application" />
+    <deploymentProvider codebase="https://mgs3.blob.core.windows.net/mgs3blob/ClickOnce%20Releases/MGS3%20MC%20Cheat%20Trainer.application" />
   </deployment>
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Application Files\MGS3 MC Cheat Trainer_1_0_0_16\MGS3 MC Cheat Trainer.dll.manifest" size="3480">
-      <assemblyIdentity name="MGS3 MC Cheat Trainer.exe" version="1.0.0.16" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+    <dependentAssembly dependencyType="install" codebase="Application Files\MGS3 MC Cheat Trainer_1_0_0_21\MGS3 MC Cheat Trainer.dll.manifest" size="3982">
+      <assemblyIdentity name="MGS3 MC Cheat Trainer.exe" version="1.0.0.21" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>A0E1FB7Yihoscweljbf9BCb4QpWZLi26Z/klG6ycIm8=</dsig:DigestValue>
+        <dsig:DigestValue>dV8K2xYP/Ysqdfy/B+gxTwodqGRr0XkPaYdxRw9Hh0M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
