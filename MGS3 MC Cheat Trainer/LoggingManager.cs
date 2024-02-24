@@ -16,17 +16,13 @@ namespace MGS3_MC_Cheat_Trainer
         // Static constructor to initialize logFolderPath and logPath
         static LoggingManager()
         {
-            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            if (string.IsNullOrEmpty(assemblyLocation))
-            {
-                // Fallback to a default path, such as the current directory
-                logFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
-            }
-            else
-            {
-                logFolderPath = Path.Combine(Path.GetDirectoryName(assemblyLocation) ?? "", "Logs");
-            }
+            // Use the Documents folder for storing logs, with a specific subfolder for the application
+            string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string appLogFolder = "MGS3 CT Logs"; // Specific name for the log folder
+
+            logFolderPath = Path.Combine(documentsFolder, appLogFolder);
             logPath = Path.Combine(logFolderPath, logFileName);
+
             EnsureLogFileExists();
         }
 
