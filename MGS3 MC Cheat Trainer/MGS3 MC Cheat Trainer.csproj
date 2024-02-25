@@ -8,8 +8,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageIcon>LadderMitch(1).png</PackageIcon>
-    <ApplicationIcon>LadderMitch(3)-min.ico</ApplicationIcon>
     <SignAssembly>False</SignAssembly>
+    <IncludeSymbols>False</IncludeSymbols>
+    <ApplicationIcon>LadderMitch(3)-min.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

@@ -253,7 +253,6 @@ namespace MGS3_MC_Cheat_Trainer
                     {
                         LoggingManager.Instance.Log("Shagohod and Volgin on Shagohod AOB not found.");
                     }
-
                     break;
 
                 case "s201a":

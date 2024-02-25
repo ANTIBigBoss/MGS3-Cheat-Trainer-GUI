@@ -67,6 +67,14 @@ namespace MGS3_MC_Cheat_Trainer
             form6.Show();
             this.Hide();
         }
+
+        private void BossRefactorForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Boss form from the Main Menu form.\n");
+            BossFormRefactor form7 = new();
+            form7.Show();
+            this.Hide();
+        }
         private void MainMenuForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             LoggingManager.Instance.Log("User exiting the trainer.\nEnd of log for this session.\n\n\n\n");
@@ -78,5 +86,6 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("Start of logging for this session.\nApplication started successfully.\n");
         }
 
+        
     }
 }

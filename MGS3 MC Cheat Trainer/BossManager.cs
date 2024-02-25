@@ -1,4 +1,5 @@
-﻿using static MGS3_MC_Cheat_Trainer.MemoryManager;
+﻿using MGS3_MC_Cheat_Trainer;
+using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -9,6 +10,28 @@ namespace MGS3_MC_Cheat_Trainer
     {
         // Instance of AobManager
         private static AobManager _instance;
+
+        public static string UpdateBossStateBasedOnLocation()
+        {
+            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+
+            switch (locationString)
+            {
+                case "s023a":
+                    FindOcelotAOB();
+                    break;
+
+                case "s032b":
+                    FindThePainAOB();
+                    break;
+
+                default:
+                    LoggingManager.Instance.Log($"Player is in area: {locationString}");
+                    break;
+            }
+            return locationString;
+        }
 
         #region Ocelot
 
@@ -36,9 +59,6 @@ namespace MGS3_MC_Cheat_Trainer
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
-
-
-
         public static short ReadOcelotHealth()
         {
 
@@ -55,32 +75,45 @@ namespace MGS3_MC_Cheat_Trainer
             return healthValue;
         }
 
-
-
-
+        // Unneeded once refactor is complete
         public static bool IsOcelotDead()
         {
             return ReadOcelotHealth() == 0;
         }
-
-        
-
+      
         public static void WriteOcelotStamina(short value)
         {
+
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 908); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            // Directly use the calculated OcelotHealthAddress for writing the health value.
+            MemoryManager.WriteShortToMemory(processHandle, AobManager.Instance.OcelotStaminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
-        }       
+        }
+
+
 
         public static short ReadOcelotStamina()
         {
+
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 908); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return -1; // Indicate error
+            }
+
+            // Use the calculated health address to read Ocelot's health.
+            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.OcelotStaminaAddress);
+            NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+        
 
         public static bool IsOcelotStunned()
         {
@@ -106,20 +139,42 @@ namespace MGS3_MC_Cheat_Trainer
         #endregion
 
         #region The Pain
-        public static void WriteThePainHealth(short value)
+
+
+        public static void FindThePainAOB()
         {
+            if (AobManager.Instance.FoundThePainAddress == IntPtr.Zero)
+            {
+                AobManager.Instance.FindAndStoreThePainAOB();
+            }
+        }
+
+        public static void WriteThePainHealth(short value)
+        { 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            MemoryManager.WriteShortToMemory(processHandle, AobManager.Instance.ThePainHealthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadThePainHealth()
         {
+
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return -1; // Indicate error
+            }
+
+            // Use the calculated health address to read Ocelot's health.
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.ThePainHealthAddress);
+            NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
 
@@ -131,18 +186,32 @@ namespace MGS3_MC_Cheat_Trainer
         public static void WriteThePainStamina(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            MemoryManager.WriteShortToMemory(processHandle, AobManager.Instance.ThePainStaminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
+
+
         }
 
         public static short ReadThePainStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
-            return staminaValue;
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return -1; // Indicate error
+            }
+
+            // Use the calculated health address to read Ocelot's health.
+            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.ThePainStaminaAddress);
+            NativeMethods.CloseHandle(processHandle);
+            return healthValue;
+
         }
 
         public static bool IsThePainStunned()
