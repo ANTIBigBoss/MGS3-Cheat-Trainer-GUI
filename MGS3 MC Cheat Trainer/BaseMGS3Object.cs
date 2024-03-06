@@ -131,7 +131,7 @@ namespace MGS3_MC_Cheat_Trainer
             protected GameObject gameObject { get; set; }
             public string Name { get { return gameObject._name; } }
             public IntPtr MemoryOffset { get { return gameObject._memoryOffset; } }
-
+            
             public BaseMGS3Object(string name, IntPtr memoryOffset)
             {
                 gameObject = new GameObject { _name = name, _memoryOffset = memoryOffset };
@@ -215,7 +215,7 @@ namespace MGS3_MC_Cheat_Trainer
             public static readonly Weapon Book = new("Book", 27, "WeaponsTable", true, false, false);
             public static readonly Weapon Mousetrap = new("Mousetrap", 28, "WeaponsTable", true, false, false);
             public static readonly Weapon DirectionalMic = new("Directional Microphone", 29, "WeaponsTable", false, false, false);
-        // When I learn more on how to force certain food items to be in the 19 slots affter will implement logic here
+        // When I learn more on how to force certain food items to be in the 19 slots after will implement logic here
         #endregion
 
         #region Items

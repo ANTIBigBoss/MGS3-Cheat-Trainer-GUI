@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
             button1 = new Button();
             textBox29 = new TextBox();
@@ -50,23 +49,12 @@
             ModelCurrentValue = new TextBox();
             textBox8 = new TextBox();
             HealthFormSwap = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
-            button7 = new Button();
-            button8 = new Button();
-            button9 = new Button();
-            button10 = new Button();
             SwapToBossForm = new Button();
-            Ocelot0Stam = new Button();
-            OcelotStaminaSlider = new TrackBar();
-            Ocelot0HP = new Button();
-            OcelotHealthSlider = new TrackBar();
-            OcelotTimer = new System.Windows.Forms.Timer(components);
+            TeleportGuardsToSnake = new Button();
+            textBox1 = new TextBox();
+            SnakeJump = new Button();
+            SnakesXYZaob = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)OcelotStaminaSlider).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)OcelotHealthSlider).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -94,7 +82,7 @@
             textBox29.Location = new Point(20, 64);
             textBox29.Multiline = true;
             textBox29.Name = "textBox29";
-            textBox29.PlaceholderText = "Random things for fun (Warning may crash game) - Will add more in future updates share any findings with ANTIBigBoss on Discord";
+            textBox29.PlaceholderText = "Random things for fun (Warning may crash game) ";
             textBox29.ReadOnly = true;
             textBox29.Size = new Size(1125, 30);
             textBox29.TabIndex = 480;
@@ -354,110 +342,6 @@
             HealthFormSwap.UseVisualStyleBackColor = true;
             HealthFormSwap.Click += HealthFormSwap_Click;
             // 
-            // button3
-            // 
-            button3.Cursor = Cursors.Hand;
-            button3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.Location = new Point(115, 117);
-            button3.Name = "button3";
-            button3.Size = new Size(241, 29);
-            button3.TabIndex = 514;
-            button3.Text = "Testing";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // button4
-            // 
-            button4.Cursor = Cursors.Hand;
-            button4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.ImageAlign = ContentAlignment.TopCenter;
-            button4.Location = new Point(115, 152);
-            button4.Name = "button4";
-            button4.Size = new Size(241, 29);
-            button4.TabIndex = 515;
-            button4.Text = "Current Area";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // button5
-            // 
-            button5.Cursor = Cursors.Hand;
-            button5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button5.ImageAlign = ContentAlignment.TopCenter;
-            button5.Location = new Point(115, 187);
-            button5.Name = "button5";
-            button5.Size = new Size(241, 29);
-            button5.TabIndex = 516;
-            button5.Text = "Empty";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
-            // button6
-            // 
-            button6.Cursor = Cursors.Hand;
-            button6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button6.ImageAlign = ContentAlignment.TopCenter;
-            button6.Location = new Point(115, 222);
-            button6.Name = "button6";
-            button6.Size = new Size(241, 29);
-            button6.TabIndex = 517;
-            button6.Text = "Empty";
-            button6.UseVisualStyleBackColor = true;
-            button6.Click += button6_Click;
-            // 
-            // button7
-            // 
-            button7.Cursor = Cursors.Hand;
-            button7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button7.ImageAlign = ContentAlignment.TopCenter;
-            button7.Location = new Point(115, 362);
-            button7.Name = "button7";
-            button7.Size = new Size(241, 29);
-            button7.TabIndex = 521;
-            button7.Text = "Testing";
-            button7.UseVisualStyleBackColor = true;
-            button7.Click += button7_Click;
-            // 
-            // button8
-            // 
-            button8.Cursor = Cursors.Hand;
-            button8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button8.ImageAlign = ContentAlignment.TopCenter;
-            button8.Location = new Point(115, 327);
-            button8.Name = "button8";
-            button8.Size = new Size(241, 29);
-            button8.TabIndex = 520;
-            button8.Text = "Use AOB to write to 1 HP";
-            button8.UseVisualStyleBackColor = true;
-            button8.Click += button8_Click;
-            // 
-            // button9
-            // 
-            button9.Cursor = Cursors.Hand;
-            button9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button9.ImageAlign = ContentAlignment.TopCenter;
-            button9.Location = new Point(115, 292);
-            button9.Name = "button9";
-            button9.Size = new Size(241, 29);
-            button9.TabIndex = 519;
-            button9.Text = "Find Ocelot AOB";
-            button9.UseVisualStyleBackColor = true;
-            button9.Click += button9_Click;
-            // 
-            // button10
-            // 
-            button10.Cursor = Cursors.Hand;
-            button10.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button10.ImageAlign = ContentAlignment.TopCenter;
-            button10.Location = new Point(115, 257);
-            button10.Name = "button10";
-            button10.Size = new Size(241, 29);
-            button10.TabIndex = 518;
-            button10.Text = "Testing";
-            button10.UseVisualStyleBackColor = true;
-            button10.Click += button10_Click;
-            // 
             // SwapToBossForm
             // 
             SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
@@ -474,57 +358,65 @@
             SwapToBossForm.UseVisualStyleBackColor = true;
             SwapToBossForm.Click += SwapToBossForm_Click;
             // 
-            // Ocelot0Stam
+            // TeleportGuardsToSnake
             // 
-            Ocelot0Stam.BackgroundImage = (Image)resources.GetObject("Ocelot0Stam.BackgroundImage");
-            Ocelot0Stam.Cursor = Cursors.Hand;
-            Ocelot0Stam.FlatStyle = FlatStyle.Flat;
-            Ocelot0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Ocelot0Stam.ImageAlign = ContentAlignment.TopCenter;
-            Ocelot0Stam.ImeMode = ImeMode.NoControl;
-            Ocelot0Stam.Location = new Point(450, 236);
-            Ocelot0Stam.Name = "Ocelot0Stam";
-            Ocelot0Stam.Size = new Size(181, 29);
-            Ocelot0Stam.TabIndex = 617;
-            Ocelot0Stam.Text = "Ocelot 1 Stamina";
-            Ocelot0Stam.UseVisualStyleBackColor = true;
+            TeleportGuardsToSnake.BackgroundImage = (Image)resources.GetObject("TeleportGuardsToSnake.BackgroundImage");
+            TeleportGuardsToSnake.Cursor = Cursors.Hand;
+            TeleportGuardsToSnake.FlatStyle = FlatStyle.Flat;
+            TeleportGuardsToSnake.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            TeleportGuardsToSnake.ImageAlign = ContentAlignment.TopCenter;
+            TeleportGuardsToSnake.Location = new Point(28, 329);
+            TeleportGuardsToSnake.Name = "TeleportGuardsToSnake";
+            TeleportGuardsToSnake.Size = new Size(241, 80);
+            TeleportGuardsToSnake.TabIndex = 553;
+            TeleportGuardsToSnake.Text = "Teleport Guards to Snake (Takes like 20ish Seconds)";
+            TeleportGuardsToSnake.UseVisualStyleBackColor = true;
+            TeleportGuardsToSnake.Click += TeleportGuardsToSnake_Click;
             // 
-            // OcelotStaminaSlider
+            // textBox1
             // 
-            OcelotStaminaSlider.BackColor = Color.FromArgb(36, 44, 36);
-            OcelotStaminaSlider.Location = new Point(450, 214);
-            OcelotStaminaSlider.Name = "OcelotStaminaSlider";
-            OcelotStaminaSlider.Size = new Size(181, 45);
-            OcelotStaminaSlider.TabIndex = 616;
+            textBox1.BackColor = SystemColors.ActiveCaptionText;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox1.ForeColor = SystemColors.ActiveCaptionText;
+            textBox1.Location = new Point(28, 117);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Position Moving";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(241, 34);
+            textBox1.TabIndex = 554;
+            textBox1.TextAlign = HorizontalAlignment.Center;
             // 
-            // Ocelot0HP
+            // SnakeJump
             // 
-            Ocelot0HP.BackgroundImage = (Image)resources.GetObject("Ocelot0HP.BackgroundImage");
-            Ocelot0HP.Cursor = Cursors.Hand;
-            Ocelot0HP.FlatStyle = FlatStyle.Flat;
-            Ocelot0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            Ocelot0HP.ImageAlign = ContentAlignment.TopCenter;
-            Ocelot0HP.ImeMode = ImeMode.NoControl;
-            Ocelot0HP.Location = new Point(450, 173);
-            Ocelot0HP.Name = "Ocelot0HP";
-            Ocelot0HP.Size = new Size(181, 29);
-            Ocelot0HP.TabIndex = 615;
-            Ocelot0HP.Text = "Ocelot 1 HP";
-            Ocelot0HP.UseVisualStyleBackColor = true;
-            Ocelot0HP.Click += Ocelot0HP_Click;
+            SnakeJump.BackgroundImage = (Image)resources.GetObject("SnakeJump.BackgroundImage");
+            SnakeJump.Cursor = Cursors.Hand;
+            SnakeJump.FlatStyle = FlatStyle.Flat;
+            SnakeJump.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SnakeJump.ImageAlign = ContentAlignment.TopCenter;
+            SnakeJump.Location = new Point(28, 243);
+            SnakeJump.Name = "SnakeJump";
+            SnakeJump.Size = new Size(241, 80);
+            SnakeJump.TabIndex = 555;
+            SnakeJump.Text = "Make Snake Jump";
+            SnakeJump.UseVisualStyleBackColor = true;
+            SnakeJump.Click += SnakeJump_Click;
             // 
-            // OcelotHealthSlider
+            // SnakesXYZaob
             // 
-            OcelotHealthSlider.BackColor = Color.FromArgb(36, 44, 36);
-            OcelotHealthSlider.Location = new Point(450, 151);
-            OcelotHealthSlider.Name = "OcelotHealthSlider";
-            OcelotHealthSlider.Size = new Size(181, 45);
-            OcelotHealthSlider.TabIndex = 614;
-            OcelotHealthSlider.Scroll += OcelotHealthSlider_Scroll;
-            // 
-            // OcelotTimer
-            // 
-            OcelotTimer.Tick += OcelotTimer_Tick;
+            SnakesXYZaob.BackgroundImage = (Image)resources.GetObject("SnakesXYZaob.BackgroundImage");
+            SnakesXYZaob.Cursor = Cursors.Hand;
+            SnakesXYZaob.FlatStyle = FlatStyle.Flat;
+            SnakesXYZaob.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SnakesXYZaob.ImageAlign = ContentAlignment.TopCenter;
+            SnakesXYZaob.Location = new Point(28, 157);
+            SnakesXYZaob.Name = "SnakesXYZaob";
+            SnakesXYZaob.Size = new Size(241, 80);
+            SnakesXYZaob.TabIndex = 556;
+            SnakesXYZaob.Text = "Report Snake's Position (Run this if other buttons not working)";
+            SnakesXYZaob.UseVisualStyleBackColor = true;
+            SnakesXYZaob.Click += SnakesXYZaob_Click;
             // 
             // MiscForm
             // 
@@ -532,19 +424,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
-            Controls.Add(Ocelot0Stam);
-            Controls.Add(OcelotStaminaSlider);
-            Controls.Add(Ocelot0HP);
-            Controls.Add(OcelotHealthSlider);
+            Controls.Add(SnakesXYZaob);
+            Controls.Add(SnakeJump);
+            Controls.Add(textBox1);
+            Controls.Add(TeleportGuardsToSnake);
             Controls.Add(SwapToBossForm);
-            Controls.Add(button7);
-            Controls.Add(button8);
-            Controls.Add(button9);
-            Controls.Add(button10);
-            Controls.Add(button6);
-            Controls.Add(button5);
-            Controls.Add(button4);
-            Controls.Add(button3);
             Controls.Add(HealthFormSwap);
             Controls.Add(textBox8);
             Controls.Add(ModelCurrentValue);
@@ -571,8 +455,6 @@
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
-            ((System.ComponentModel.ISupportInitialize)OcelotStaminaSlider).EndInit();
-            ((System.ComponentModel.ISupportInitialize)OcelotHealthSlider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -598,19 +480,10 @@
         private TextBox ModelCurrentValue;
         private TextBox textBox8;
         private Button HealthFormSwap;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private Button button7;
-        private Button button8;
-        private Button button9;
-        private Button button10;
         private Button SwapToBossForm;
-        private Button Ocelot0Stam;
-        private TrackBar OcelotStaminaSlider;
-        private Button Ocelot0HP;
-        private TrackBar OcelotHealthSlider;
-        private System.Windows.Forms.Timer OcelotTimer;
+        private Button TeleportGuardsToSnake;
+        private TextBox textBox1;
+        private Button SnakeJump;
+        private Button SnakesXYZaob;
     }
 }

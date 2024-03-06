@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -8,11 +8,11 @@ namespace MGS3_MC_Cheat_Trainer
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form1_FormClosing);
-
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void WeaponForm_Load(object sender, EventArgs e)
         {
+
             for (int i = 0; i < AllWeaponsChecklist.Items.Count; i++)
             {
                 AllWeaponsChecklist.SetItemChecked(i, true);
@@ -183,53 +183,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
-
-        // Function logics for navigating to other forms for items, camo and misc
-        // Form2 is for items
-        // Form3 is for camo
-        // Form4 is for misc
-        // Should rename these in the future for better clarity
-        private void ItemFormSwap_Click(object sender, EventArgs e)
-        {
-            ItemForm form2 = new ItemForm();
-            form2.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Item Form from the Weapon Form");
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            CamoForm form3 = new CamoForm();
-            form3.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Camo Form from the Weapon Form");
-        }
-
-        private void button70_Click(object sender, EventArgs e) // Load form4
-        {
-            MiscForm form4 = new MiscForm();
-            form4.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Misc Form from the Weapon Form");
-        }
-
-        private void HealthFormSwap_Click(object sender, EventArgs e)
-        {
-            StatsAndAlertForm form5 = new();
-            form5.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Stats and Alert Form from the Weapon Form");
-        }
-
-        private void BossFormSwap_Click(object sender, EventArgs e)
-        {
-            BossForm form6 = new();
-            form6.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Boss Form from the Weapon Form");
-        }
-
-        private void M1911A1Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void M1911A1Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedM1911A1Option = (string)comboBox.SelectedItem;
@@ -247,7 +201,7 @@ namespace MGS3_MC_Cheat_Trainer
                     break;
                 case CurrentAmmo:
                     ItemWeaponManager.ModifyAmmo(MGS3UsableObjects.M1911A1, textBoxValue);
-                    LoggingManager.Instance.Log("Changed M1911A1 Current Ammo to: " +textBoxValue);
+                    LoggingManager.Instance.Log("Changed M1911A1 Current Ammo to: " + textBoxValue);
                     break;
                 case MaxAmmo:
                     ItemWeaponManager.ModifyMaxAmmo(MGS3UsableObjects.M1911A1, textBoxValue);
@@ -277,7 +231,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         // Assuming you have a ComboBox named MK22Dropdown and a TextBox named MK22TextBox in your form
-        private void MK22Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void MK22Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedMK22Option = (string)comboBox.SelectedItem;
@@ -324,7 +278,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void XM16E1Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void XM16E1Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedXM16E1Option = (string)comboBox.SelectedItem;
@@ -372,7 +326,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void SAADropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void SAADropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedSAAOption = (string)comboBox.SelectedItem;
@@ -415,7 +369,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void M37Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void M37Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedM37Option = (string)comboBox.SelectedItem;
@@ -458,13 +412,13 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void SVDDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void SVDDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedSVDOption = (string)comboBox.SelectedItem;
         }
 
-        private void ChangeSVD_Click_1(object sender, EventArgs e)
+        private void ChangeSVD_Click(object sender, EventArgs e)
         {
             string textBoxValue = SVDTextBox.Text; // Assuming you have a TextBox for SVD user input
 
@@ -501,7 +455,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void MosinDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void MosinDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedMosinOption = (string)comboBox.SelectedItem;
@@ -544,13 +498,13 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void RPG7Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void RPG7Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedRPG7Option = (string)comboBox.SelectedItem;
         }
 
-        private void ChangeRPG7_Click(object sender, EventArgs e)
+        private void ChangeRPG_Click(object sender, EventArgs e)
         {
             string textBoxValue = RPG7TextBox.Text; // Assuming you have a TextBox for RPG-7 user input
 
@@ -587,7 +541,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void AK47Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void AK47Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedAK47Option = (string)comboBox.SelectedItem;
@@ -630,7 +584,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void M63Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void M63Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedM63Option = (string)comboBox.SelectedItem;
@@ -673,7 +627,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void ScorpionDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void ScorpionDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedScorpionOption = (string)comboBox.SelectedItem;
@@ -716,7 +670,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void GrenadeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void GrenadeDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedGrenadeOption = (string)comboBox.SelectedItem;
@@ -748,7 +702,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        private void WpGrenadeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void WpGrenadeDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedWpGrenadeOption = (string)comboBox.SelectedItem;
@@ -780,7 +734,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        private void SmokeGrenadeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void SmokeGrenadeDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedSmokeGrenadeOption = (string)comboBox.SelectedItem;
@@ -812,7 +766,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        private void StunGrenadeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void StunGrenadeDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedStunGrenadeOption = (string)comboBox.SelectedItem;
@@ -844,7 +798,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        private void ChaffGrenadeDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void ChaffGrenadeDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedChaffGrenadeOption = (string)comboBox.SelectedItem;
@@ -876,7 +830,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        private void MagazineDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void MagazineDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedMagazineOption = (string)comboBox.SelectedItem;
@@ -908,7 +862,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        private void HandkerchiefDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandkerchiefDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedHandkerchiefOption = (string)comboBox.SelectedItem;
@@ -939,7 +893,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void CigSprayDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void CigSprayDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedCigSprayOption = (string)comboBox.SelectedItem;
@@ -970,7 +924,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void C3Dropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void C3Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedC3Option = (string)comboBox.SelectedItem;
@@ -1001,7 +955,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void TNTDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void TNTDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedTNTOption = (string)comboBox.SelectedItem;
@@ -1032,7 +986,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void BookDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void BookDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedBookOption = (string)comboBox.SelectedItem;
@@ -1063,7 +1017,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void ClaymoreDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void ClaymoreDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedClaymoreOption = (string)comboBox.SelectedItem;
@@ -1094,7 +1048,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void MousetrapDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void MousetrapDropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
             selectedMousetrapOption = (string)comboBox.SelectedItem;
@@ -1123,11 +1077,6 @@ namespace MGS3_MC_Cheat_Trainer
                     LoggingManager.Instance.Log("Invalid option selected or no option selected for the Mousetrap.");
                     break;
             }
-        }
-
-        private void AllWeaponsChecklist_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void ChangeAllChecked_Click(object sender, EventArgs e)
@@ -1189,6 +1138,44 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ItemForm form2 = new ItemForm();
+            form2.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Item Form from the Weapon Form");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            CamoForm form3 = new CamoForm();
+            form3.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Camo Form from the Weapon Form");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MiscForm form4 = new MiscForm();
+            form4.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Misc Form from the Weapon Form");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            StatsAndAlertForm form5 = new();
+            form5.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Stats and Alert Form from the Weapon Form");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Weapon Form");
+        }
     }
 }

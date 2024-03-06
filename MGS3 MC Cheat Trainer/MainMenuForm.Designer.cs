@@ -35,7 +35,6 @@
             CamoFormSwap = new Button();
             ItemFormSwap = new Button();
             WeaponFormSwap = new Button();
-            BossRefactorForm = new Button();
             SuspendLayout();
             // 
             // BossFormSwap
@@ -141,23 +140,6 @@
             WeaponFormSwap.UseVisualStyleBackColor = false;
             WeaponFormSwap.Click += WeaponFormSwap_Click;
             // 
-            // BossRefactorForm
-            // 
-            BossRefactorForm.BackgroundImage = (Image)resources.GetObject("BossRefactorForm.BackgroundImage");
-            BossRefactorForm.BackgroundImageLayout = ImageLayout.Center;
-            BossRefactorForm.Cursor = Cursors.Hand;
-            BossRefactorForm.FlatStyle = FlatStyle.Flat;
-            BossRefactorForm.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            BossRefactorForm.ImageAlign = ContentAlignment.TopCenter;
-            BossRefactorForm.ImeMode = ImeMode.NoControl;
-            BossRefactorForm.Location = new Point(730, 616);
-            BossRefactorForm.Name = "BossRefactorForm";
-            BossRefactorForm.Size = new Size(426, 45);
-            BossRefactorForm.TabIndex = 560;
-            BossRefactorForm.Text = "Bosses Refactor";
-            BossRefactorForm.UseVisualStyleBackColor = true;
-            BossRefactorForm.Click += BossRefactorForm_Click;
-            // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -165,7 +147,6 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1185, 702);
-            Controls.Add(BossRefactorForm);
             Controls.Add(WeaponFormSwap);
             Controls.Add(BossFormSwap);
             Controls.Add(HealthFormSwap);
@@ -189,6 +170,5 @@
         private Button CamoFormSwap;
         private Button ItemFormSwap;
         private Button WeaponFormSwap;
-        private Button BossRefactorForm;
     }
 }

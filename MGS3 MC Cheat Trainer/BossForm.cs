@@ -15,10 +15,62 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void BossForm_Load(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("Boss form loaded successfully.");
-            // By starting a consistency check here we can just search as soon as the form loads then the
-            // rest of the logic will take care of upkeeping the boss control while the user is on the form
-            StartConsistencyCheck();
+            ConsistencyCheckTimer.Start();
+            OcelotHealthSlider.Maximum = 3400; // Max health
+            OcelotHealthSlider.Minimum = 1; // Min health
+            OcelotStaminaSlider.Maximum = 3400; // Max stamina
+            OcelotStaminaSlider.Minimum = 1; // Min stamina
+            OcelotTextbox.Enabled = false;
+
+            // Pain can be set to 0 but Ocelot can't therefore 1 for Ocelot and 0 for Pain for min values
+            PainHealthSlider.Maximum = 30000;
+            PainHealthSlider.Minimum = 0;
+            PainStaminaSlider.Maximum = 21000;
+            PainStaminaSlider.Minimum = 0;
+            PainTextbox.Enabled = false;
+
+            FearHealthSlider.Maximum = 30000;
+            FearHealthSlider.Minimum = 0;
+            FearStaminaSlider.Maximum = 21000;
+            FearStaminaSlider.Minimum = 0;
+            FearTextbox.Enabled = false;
+
+            EndHealthSlider.Maximum = 10000;
+            EndHealthSlider.Minimum = 1;
+            EndStaminaSlider.Maximum = 10000;
+            EndStaminaSlider.Minimum = 1;
+            EndTextbox.Enabled = false;
+
+            FuryHealthSlider.Maximum = 8500;
+            FuryHealthSlider.Minimum = 1;
+            FuryStaminaSlider.Maximum = 7500;
+            FuryStaminaSlider.Minimum = 1;
+            FuryTextbox.Enabled = false;
+
+            VolginHealthSlider.Maximum = 30000;
+            VolginHealthSlider.Minimum = 0;
+            VolginStaminaSlider.Maximum = 21000;
+            VolginStaminaSlider.Minimum = 0;
+            VolginTextbox.Enabled = false;
+
+            //Shagohod has no stamina so only health
+            ShagohodHealthSlider.Maximum = 8000;
+            ShagohodHealthSlider.Minimum = 0;
+            ShagohodTextbox.Enabled = false;
+
+            VolginOnShagohodHealthSlider.Maximum = 8000;
+            VolginOnShagohodHealthSlider.Minimum = 0;
+            VolginOnShagohodStaminaSlider.Maximum = 8000;
+            VolginOnShagohodStaminaSlider.Minimum = 0;
+            VolginOnShagohodTextbox.Enabled = false;
+
+            BossHealthSlider.Maximum = 10000;
+            BossHealthSlider.Minimum = 1;
+            BossStaminaSlider.Maximum = 10000;
+            BossStaminaSlider.Minimum = 1;
+            TheBossTextbox.Enabled = false;
+
+
         }
 
         #endregion
@@ -35,219 +87,186 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 case "s023a":
                     LoggingManager.Instance.Log("Looking for Ocelot AOB");
+                    OcelotTextbox.Text = "Looking for Ocelot Please wait...";
                     BossManager.FindOcelotAOB(); // Ocelot
+                    OcelotHealthSlider.Enabled = true;
+                    OcelotStaminaSlider.Enabled = true;
+                    Ocelot0HP.Enabled = true;
+                    Ocelot0Stam.Enabled = true;                    
                     OcelotTimer.Interval = 1000; // Update every second
                     OcelotTimer.Tick += new EventHandler(OcelotTimer_Tick);
                     OcelotTimer.Start();
 
-                    OcelotHealthSlider.Maximum = 3400; // Max health
-                    OcelotHealthSlider.Minimum = 0; // Min health
-                    OcelotStaminaSlider.Maximum = 3400; // Max stamina
-                    OcelotStaminaSlider.Minimum = 0; // Min stamina
-
-                    OcelotHealthSlider.Enabled = true;
-                    OcelotStaminaSlider.Enabled = true;
-                    Ocelot0HP.Enabled = true;
-                    Ocelot0Stam.Enabled = true;
-
                     LoggingManager.Instance.Log("Enabling Ocelot's control");
+                    OcelotTextbox.Text = "Ocelot controls enabled";
+                    break;
+
+                case "s023a_0":
+                    OcelotTextbox.Text = "Ocelot controls disabled during cutscene";
                     break;
 
                 case "s032b":
                     // Set up a lot of logging for this with how tempermental the boss implementations are I
                     // can locate the issue easier than the user being like "lol trainer doesn't work"
                     LoggingManager.Instance.Log("Looking for The Pain's AOB");
-                    BossManager.FindTheFearAOB(); // Pain and Fear share the same AOB                   
-                    PainTimer.Interval = 1000; // Update every second
-                    FearTimer.Tick += new EventHandler(PainTimer_Tick);
-                    PainTimer.Start();
-
-                    // Once found and the timer starts we enable the controls                   
+                    PainTextbox.Text = "Looking for The Pain Please wait...";
+                    BossManager.FindThePainAOB(); // Pain and Fear share the same AOB
                     PainHealthSlider.Enabled = true;
                     PainStaminaSlider.Enabled = true;
                     Pain0HP.Enabled = true;
                     Pain0Stam.Enabled = true;
-                    LoggingManager.Instance.Log("Enabling Pain's controls.");
-
-                    // When I find a way to track the game difficulty I can use the values
-                    // each boss has for the values of min/max
-                    PainHealthSlider.Maximum = 30000; // Max health
-                    PainHealthSlider.Minimum = 0; // Min health
-                    PainStaminaSlider.Maximum = 21000; // Max stamina
-                    PainStaminaSlider.Minimum = 0; // Min stamina
-
+                    PainTimer.Interval = 1000; // Update every second
+                    FearTimer.Tick += new EventHandler(PainTimer_Tick);
+                    PainTimer.Start();
                     LoggingManager.Instance.Log("Every other boss control disabled except for The Pain");
+                    PainTextbox.Text = "The Pain Controls enabled";
                     break;
 
+                case "s032b_0":
+                    PainTextbox.Text = "Pain controls disabled during cutscene";
+                    break;
 
                 case "s051b":
                     LoggingManager.Instance.Log("Looking for The Fear AOB");
+                    FearTextbox.Text = "Looking for The Fear Please wait...";
                     BossManager.FindTheFearAOB(); // Actually The Fear
-                    FearTimer.Interval = 1000; // Update every second
-                    FearTimer.Tick += new EventHandler(FearTimer_Tick);
-                    FearTimer.Start();
-
-
                     FearHealthSlider.Enabled = true;
                     FearStaminaSlider.Enabled = true;
                     Fear0HP.Enabled = true;
                     Fear0Stam.Enabled = true;
-
-                    FearHealthSlider.Maximum = 30000; // Max health
-                    FearHealthSlider.Minimum = 0; // Min health
-                    FearStaminaSlider.Maximum = 21000; // Max stamina
-                    FearStaminaSlider.Minimum = 0; // Min stamina
-
+                    FearTimer.Interval = 1000; // Update every second
+                    FearTimer.Tick += new EventHandler(FearTimer_Tick);
+                    FearTimer.Start();
                     LoggingManager.Instance.Log("Every other boss control disabled except for The Fear");
+                    FearTextbox.Text = "The Fear Controls enabled";
+                    break;
+
+                case "s051b_0":
+                    FearTextbox.Text = "Fear controls disabled during cutscene";
                     break;
 
                 // The End's first area where the boss fight starts in s063a
                 case "s063a":
                     LoggingManager.Instance.Log("Looking for The End AOB");
                     BossManager.FindTheEnds063aAOB(); // The End
-                    EndTimer.Interval = 1000; // Update every second
-                    EndTimer.Tick += new EventHandler(EndTimer_Tick);
-                    EndTimer.Start();
-
-                    EndHealthSlider.Maximum = 10000; // Max health
-                    EndHealthSlider.Minimum = 0; // Min health
-                    EndStaminaSlider.Maximum = 10000; // Max stamina
-                    EndStaminaSlider.Minimum = 0; // Min stamina
-
                     EndHealthSlider.Enabled = true;
                     EndStaminaSlider.Enabled = true;
                     End0HP.Enabled = true;
                     End0Stam.Enabled = true;
-
+                    EndTimer.Interval = 1000; // Update every second
+                    EndTimer.Tick += new EventHandler(EndTimer_Tick);
+                    EndTimer.Start();                    
                     LoggingManager.Instance.Log("The End's controls are enabled");
+                    EndTextbox.Text = "The End's Controls enabled";
+                    break;
+
+                case "s063a_0":
+                    EndTextbox.Text = "The End controls disabled during cutscene";
                     break;
 
                 // The End's boss arena where the river is
                 case "s064a":
                     LoggingManager.Instance.Log("Looking for The End AOB");
+                    EndTextbox.Text = "Looking for The End Please wait...";
                     BossManager.FindTheEnds065aAOB(); // The End
-                    EndTimer.Interval = 1000; // Update every second
-                    EndTimer.Tick += new EventHandler(EndTimer_Tick);
-                    EndTimer.Start();
-
-                    EndHealthSlider.Maximum = 10000; // Max health
-                    EndHealthSlider.Minimum = 0; // Min health
-                    EndStaminaSlider.Maximum = 10000; // Max stamina
-                    EndStaminaSlider.Minimum = 0; // Min stamina
-
                     EndHealthSlider.Enabled = true;
                     EndStaminaSlider.Enabled = true;
                     End0HP.Enabled = true;
                     End0Stam.Enabled = true;
+                    EndTimer.Interval = 1000; // Update every second
+                    EndTimer.Tick += new EventHandler(EndTimer_Tick);
+                    EndTimer.Start();
+                    LoggingManager.Instance.Log("The End's controls are enabled");
+                    EndTextbox.Text = "The End's Controls enabled";
+                    break;
 
-                    LoggingManager.Instance.Log("Every other boss control disabled except for The End");
+                case "s064a_0":
+                    EndTextbox.Text = "The End controls disabled during cutscene";
                     break;
 
                 // This area is the cutscene where The End dies
                 case "s065a":
                     LoggingManager.Instance.Log("Looking for The End AOB");
+                    EndTextbox.Text = "Looking for The End Please wait...";
                     BossManager.FindTheEnds065aAOB(); // The End
-                    EndTimer.Interval = 1000; // Update every second
-                    EndTimer.Tick += new EventHandler(EndTimer_Tick);
-                    EndTimer.Start();
-
-                    EndHealthSlider.Maximum = 10000; // Max health
-                    EndHealthSlider.Minimum = 0; // Min health
-                    EndStaminaSlider.Maximum = 10000; // Max stamina
-                    EndStaminaSlider.Minimum = 0; // Min stamina
-
                     EndHealthSlider.Enabled = true;
                     EndStaminaSlider.Enabled = true;
                     End0HP.Enabled = true;
                     End0Stam.Enabled = true;
+                    EndTimer.Interval = 1000; // Update every second
+                    EndTimer.Tick += new EventHandler(EndTimer_Tick);
+                    EndTimer.Start();
+                    LoggingManager.Instance.Log("The End's controls are enabled");
+                    EndTextbox.Text = "The End's Controls enabled";
+                    break;
 
-
-                    LoggingManager.Instance.Log("Every other boss control disabled except for The End");
+                case "s065a_0":
+                    EndTextbox.Text = "The End controls disabled during cutscene";
                     break;
 
                 // The Fury 
                 case "s081a":
                     LoggingManager.Instance.Log("Looking for The Fury AOB");
                     BossManager.FindTheFuryAOB(); // The Fury
-                    FuryTimer.Interval = 1000; // Update every second
-                    FuryTimer.Tick += new EventHandler(FuryTimer_Tick);
-                    FuryTimer.Start();
-
                     FuryHealthSlider.Enabled = true;
                     FuryStaminaSlider.Enabled = true;
                     Fury0HP.Enabled = true;
                     Fury0Stam.Enabled = true;
+                    FuryTimer.Interval = 1000; // Update every second
+                    FuryTimer.Tick += new EventHandler(FuryTimer_Tick);
+                    FuryTimer.Start();
+                    LoggingManager.Instance.Log("The Fury's controls are enabled");
+                    FuryTextbox.Text = "The Fury's Controls enabled";
+                    break;
 
-                    FuryHealthSlider.Maximum = 8500; // Max health
-                    FuryHealthSlider.Minimum = 0; // Min health
-                    FuryStaminaSlider.Maximum = 7500; // Max stamina
-                    FuryStaminaSlider.Minimum = 0; // Min stamina
-
-                    LoggingManager.Instance.Log("Every other boss control disabled except for The Fury");
+                case "s081a_0":
+                    FuryTextbox.Text = "The Fury controls disabled during cutscene";
                     break;
 
 
                 case "s122a":
                     LoggingManager.Instance.Log("Looking for Volgin AOB");
                     BossManager.FindTheFearAOB(); // Volgin's first fight shares the same AOB as well
-                    VolginTimer.Interval = 1000; // Update every second
-                    FearTimer.Tick += new EventHandler(VolginTimer_Tick);
-                    VolginTimer.Start();
-
-                    VolginHealthSlider.Maximum = 30000; // Max health
-                    VolginHealthSlider.Minimum = 0; // Min health
-                    VolginStaminaSlider.Maximum = 21000; // Max stamina
-                    VolginStaminaSlider.Minimum = 0; // Min stamina
-
                     VolginHealthSlider.Enabled = true;
                     VolginStaminaSlider.Enabled = true;
                     Volgin0HP.Enabled = true;
                     Volgin0Stam.Enabled = true;
-                    LoggingManager.Instance.Log("Enabling Volgin's controls.");
+                    VolginTimer.Interval = 1000; // Update every second
+                    FearTimer.Tick += new EventHandler(VolginTimer_Tick);
+                    VolginTimer.Start();
+                    LoggingManager.Instance.Log("Volgin's controls enabled");
+                    VolginTextbox.Text = "Volgin Controls enabled";
+                    break;
 
-                    LoggingManager.Instance.Log("Every other boss control disabled except for Volgin");
+                case "s122a_1":
+                    VolginTextbox.Text = "Volgin Controls disabled during cutscene";
                     break;
 
                 case "s171b":
                     LoggingManager.Instance.Log("Looking for Shagohod AOB");
+                    ShagohodTextbox.Text = "Looking for Shagohod Please wait...";
                     short shagohodResult = BossManager.FindShagohodAOB();
                     if ((shagohodResult != -1) && (BossManager.IsShagohodDead() == false))
                     {
-                        // Shagohod found
+                        ShagohodHealthSlider.Enabled = true;
+                        Shagohod0HP.Enabled = true;
                         ShagohodTimer.Interval = 1000; // Update every second
                         ShagohodTimer.Tick += new EventHandler(ShagohodTimer_Tick);
                         ShagohodTimer.Start();
-
-                        ShagohodHealthSlider.Maximum = 8000; // Max health
-                        ShagohodHealthSlider.Minimum = 0; // Min health
-
-                        ShagohodHealthSlider.Enabled = true;
-                        Shagohod0HP.Enabled = true;
-
-                        LoggingManager.Instance.Log("Enabling Shagohod's controls.");
                     }
                     else if (BossManager.IsShagohodDead() == true)
                     {
                         LoggingManager.Instance.Log("Shagohod AOB found but Shagohod is dead. Looking for VolginOnShagohod AOB");
+                        VolginOnShagohodTextbox.Text = "Looking for Volgin on Shagohod Please wait...";
                         short volginOnShagohodResult = BossManager.FindVolginOnShagohodAOB();
-                        VolginOnShagohodTimer.Tick += new EventHandler(VolginOnShagohodTimer_Tick);
-                        VolginOnShagohodTimer.Start();
-
-                        VolginOnShagohodHealthSlider.Maximum = 8000;
-                        VolginOnShagohodHealthSlider.Minimum = 0;
-                        VolginOnShagohodStaminaSlider.Maximum = 8000;
-                        VolginOnShagohodStaminaSlider.Minimum = 0;
-
-                        LoggingManager.Instance.Log("Enabling Volgin on Shagohod's controls.");
                         VolginOnShagohodHealthSlider.Enabled = true;
                         VolginOnShagohodStaminaSlider.Enabled = true;
                         VolginOnShagohog0HP.Enabled = true;
                         VolginOnShagohog0Stam.Enabled = true;
-
-                        
-                        Shagohod0HP.Enabled = false;
-                        ShagohodHealthSlider.Enabled = false;
-                        LoggingManager.Instance.Log("Disabled Shagohod's controls.");
+                        VolginOnShagohodTimer.Tick += new EventHandler(VolginOnShagohodTimer_Tick);
+                        VolginOnShagohodTimer.Start();
+                        LoggingManager.Instance.Log("Volgin on Shagohod's controls are enabled");
+                        VolginOnShagohodTextbox.Text = "Volgin on Shagohod's Controls enabled";
                     }
                     else
                     {
@@ -255,103 +274,39 @@ namespace MGS3_MC_Cheat_Trainer
                     }
                     break;
 
+                case "s171b_0":
+                    if (BossManager.IsShagohodDead() == false)
+                    {
+                        ShagohodTextbox.Text = "Shagohod controls disabled during cutscene";
+                    }
+                    else if (BossManager.IsShagohodDead() == true)
+                    {
+                        VolginOnShagohodTextbox.Text = "Volgin on Shagohod controls disabled during cutscene";
+                    }
+                    break;
+
                 case "s201a":
                     LoggingManager.Instance.Log("Looking for The Boss AOB");
+                    TheBossTextbox.Text = "Looking for The Boss Please wait...";
                     BossManager.FindTheBossAOB(); // The Boss
-                    BossTimer.Interval = 1000; // Update every second
-                    BossTimer.Tick += new EventHandler(BossTimer_Tick);
-                    BossTimer.Start();
-
-                    BossHealthSlider.Maximum = 10000; // Max health
-                    BossHealthSlider.Minimum = 0; // Min health
-                    BossStaminaSlider.Maximum = 10000; // Max stamina
-                    BossStaminaSlider.Minimum = 0; // Min stamina
-
                     BossHealthSlider.Enabled = true;
                     BossStaminaSlider.Enabled = true;
                     Boss0HP.Enabled = true;
                     Boss0Stam.Enabled = true;
-                    LoggingManager.Instance.Log("Enabling The Boss's controls.");
+                    BossTimer.Interval = 1000; // Update every second
+                    BossTimer.Tick += new EventHandler(BossTimer_Tick);
+                    BossTimer.Start();      
+                    LoggingManager.Instance.Log("The Boss's controls are enabled");
+                    TheBossTextbox.Text = "The Boss's Controls enabled";
+                    break;
 
-                    LoggingManager.Instance.Log("Every other boss control disabled except for The Boss");
+                case "s201a_0":
+                    TheBossTextbox.Text = "The Boss controls disabled during cutscene";
                     break;
 
                 default:                   
-                    // Make sure they can't mess with values in memory if they aren't in a boss fight
-                    DisableAllBossControls();
                     break;
             }
-        }
-
-        private bool IsBossDefeated()
-        {
-            // Return true if any of the bosses are dead or stunned
-            return
-            BossManager.IsOcelotDead() || BossManager.IsOcelotStunned() ||
-            BossManager.IsThePainDead() || BossManager.IsThePainStunned() ||
-            BossManager.IsTheFearDead() || BossManager.IsTheFearStunned() ||
-            BossManager.IsTheEnds063aDead() || BossManager.IsTheEnds063aStunned() ||
-            BossManager.IsTheEnds065aDead() || BossManager.IsTheEnds065aStunned() || // This would also apply to s064a
-            BossManager.IsTheFuryDead() || BossManager.IsTheFuryStunned() ||
-            BossManager.IsVolginDead() || BossManager.IsVolginStunned() ||
-            BossManager.IsShagohodDead() || // No stamina for Shagohod so only check for dead
-            BossManager.IsVolginOnShagohodDead() || BossManager.IsVolginOnShagohodStunned() ||
-            BossManager.IsTheBossDead() || BossManager.IsTheBossStunned();
-        }
-
-        private void DisableAllBossControls()
-        {
-            // Ocelot
-            OcelotHealthSlider.Enabled = false;
-            OcelotStaminaSlider.Enabled = false;
-            Ocelot0HP.Enabled = false;
-            Ocelot0Stam.Enabled = false;
-
-            // The Pain
-            PainHealthSlider.Enabled = false;
-            PainStaminaSlider.Enabled = false;
-            Pain0HP.Enabled = false;
-            Pain0Stam.Enabled = false;
-
-            // The Fear
-            FearHealthSlider.Enabled = false;
-            FearStaminaSlider.Enabled = false;
-            Fear0HP.Enabled = false;
-            Fear0Stam.Enabled = false;
-
-            // The End
-            EndHealthSlider.Enabled = false;
-            EndStaminaSlider.Enabled = false;
-            End0HP.Enabled = false;
-            End0Stam.Enabled = false;
-
-            // The Fury
-            FuryHealthSlider.Enabled = false;
-            FuryStaminaSlider.Enabled = false;
-            Fury0HP.Enabled = false;
-            Fury0Stam.Enabled = false;
-
-            // Volgin
-            VolginHealthSlider.Enabled = false;
-            VolginStaminaSlider.Enabled = false;
-            Volgin0HP.Enabled = false;
-            Volgin0Stam.Enabled = false;
-
-            // Shagohod
-            ShagohodHealthSlider.Enabled = false;
-            Shagohod0HP.Enabled = false;
-
-            // Volgin on the Shagohod
-            VolginOnShagohodHealthSlider.Enabled = false;
-            VolginOnShagohodStaminaSlider.Enabled = false;
-            VolginOnShagohog0HP.Enabled = false;
-            VolginOnShagohog0Stam.Enabled = false;
-
-            // The Boss
-            BossHealthSlider.Enabled = false;
-            BossStaminaSlider.Enabled = false;
-            Boss0HP.Enabled = false;
-            Boss0Stam.Enabled = false;
         }
 
         private bool IsNotBossLocation(string locationString)
@@ -409,6 +364,97 @@ namespace MGS3_MC_Cheat_Trainer
                 consistencyCheckNeeded = false;
             }
         }
+
+        private bool IsBossDefeated()
+        {
+            // Return true if any of the bosses are dead or stunned
+            return
+            BossManager.IsOcelotDead() || BossManager.IsOcelotStunned() ||
+            BossManager.IsThePainDead() || BossManager.IsThePainStunned() ||
+            BossManager.IsTheFearDead() || BossManager.IsTheFearStunned() ||
+            BossManager.IsTheEnds063aDead() || BossManager.IsTheEnds063aStunned() ||
+            BossManager.IsTheEnds065aDead() || BossManager.IsTheEnds065aStunned() || // This would also apply to s064a
+            BossManager.IsTheFuryDead() || BossManager.IsTheFuryStunned() ||
+            BossManager.IsVolginDead() || BossManager.IsVolginStunned() ||
+            BossManager.IsShagohodDead() || // No stamina for Shagohod so only check for dead
+            BossManager.IsVolginOnShagohodDead() || BossManager.IsVolginOnShagohodStunned() ||
+            BossManager.IsTheBossDead() || BossManager.IsTheBossStunned();
+        }
+
+        private void DisableAllBossControls()
+        {
+            // Ocelot
+            OcelotHealthSlider.Enabled = false;
+            OcelotStaminaSlider.Enabled = false;
+            Ocelot0HP.Enabled = false;
+            Ocelot0Stam.Enabled = false;
+            OcelotTimer.Stop();
+            OcelotTextbox.Text = "Ocelot Controls Disabled";
+            
+
+            // The Pain
+            PainHealthSlider.Enabled = false;
+            PainStaminaSlider.Enabled = false;
+            Pain0HP.Enabled = false;
+            Pain0Stam.Enabled = false;
+            PainTimer.Stop();
+            PainTextbox.Text = "The Pain Controls Disabled";
+
+            // The Fear
+            FearHealthSlider.Enabled = false;
+            FearStaminaSlider.Enabled = false;
+            Fear0HP.Enabled = false;
+            Fear0Stam.Enabled = false;
+            FearTimer.Stop();
+            FearTextbox.Text = "The Fear Controls Disabled";
+
+            // The End
+            EndHealthSlider.Enabled = false;
+            EndStaminaSlider.Enabled = false;
+            End0HP.Enabled = false;
+            End0Stam.Enabled = false;
+            EndTimer.Stop();
+            EndTextbox.Text = "The End Controls Disabled";
+
+            // The Fury
+            FuryHealthSlider.Enabled = false;
+            FuryStaminaSlider.Enabled = false;
+            Fury0HP.Enabled = false;
+            Fury0Stam.Enabled = false;
+            FuryTimer.Stop();
+            FuryTextbox.Text = "The Fury Controls Disabled";
+
+            // Volgin
+            VolginHealthSlider.Enabled = false;
+            VolginStaminaSlider.Enabled = false;
+            Volgin0HP.Enabled = false;
+            Volgin0Stam.Enabled = false;
+            VolginTimer.Stop();
+            VolginTextbox.Text = "Volgin Controls Disabled";
+
+            // Shagohod
+            ShagohodHealthSlider.Enabled = false;
+            Shagohod0HP.Enabled = false;
+            ShagohodTimer.Stop();
+            ShagohodTextbox.Text = "Shagohod Controls Disabled";
+
+            // Volgin on the Shagohod
+            VolginOnShagohodHealthSlider.Enabled = false;
+            VolginOnShagohodStaminaSlider.Enabled = false;
+            VolginOnShagohog0HP.Enabled = false;
+            VolginOnShagohog0Stam.Enabled = false;
+            VolginOnShagohodTimer.Stop();
+            VolginOnShagohodTextbox.Text = "Volgin/Shagohod Controls Disabled";
+
+            // The Boss
+            BossHealthSlider.Enabled = false;
+            BossStaminaSlider.Enabled = false;
+            Boss0HP.Enabled = false;
+            Boss0Stam.Enabled = false;
+            BossTimer.Stop();
+            TheBossTextbox.Text = "The Boss Controls Disabled";
+        }
+
         #endregion
 
         #region Form Swapping and Closing
@@ -457,221 +503,215 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Boss form.\n");
         }
         #endregion
+                 
+    private void Ocelot0HP_Click(object sender, EventArgs e)
+    {
 
-        #region Ocelot
+        BossManager.WriteOcelotHealth(0x0001);
+        LoggingManager.Instance.Log("Ocelot's health was depleted via Health button click");
+    }
 
-        private void Ocelot0HP_Click(object sender, EventArgs e)
+    private void OcelotHealthSlider_Scroll(object sender, EventArgs e)
+    {        
+        short newHealthValue = (short)OcelotHealthSlider.Value;
+        BossManager.WriteOcelotHealth(newHealthValue);
+        LoggingManager.Instance.Log("Ocelot's health was set to " + newHealthValue + "via the slider");
+        if (newHealthValue == 0)
         {
-            BossManager.WriteOcelotHealth(0x0000);
-            LoggingManager.Instance.Log("Ocelot's health was depleted via Health button click");
-            StartConsistencyCheck();
-            LoggingManager.Instance.Log("Consistency check started for Ocelot.");
+            LoggingManager.Instance.Log("Ocelot's health was depleted via slider.");
+        }
+    }
+
+    private void Ocelot0Stam_Click(object sender, EventArgs e)
+    {
+
+        BossManager.WriteOcelotStamina(0x0001);
+        LoggingManager.Instance.Log("Ocelot's stamina was depleted via Stamina button click");
+    }
+
+    private void OcelotStaminaSlider_Scroll(object sender, EventArgs e)
+    {
+
+        short newStaminaValue = (short)OcelotStaminaSlider.Value;
+        BossManager.WriteOcelotStamina(newStaminaValue);
+        LoggingManager.Instance.Log("Ocelot's stamina was set to " + newStaminaValue + "via the slider");
+        if (newStaminaValue == 0)
+        {
+            LoggingManager.Instance.Log("Ocelot's stamina was depleted via slider.");
+        }
+    }
+
+    private void OcelotTimer_Tick(object sender, EventArgs e)
+    {
+        OcelotHealthSlider.Scroll -= OcelotHealthSlider_Scroll;
+        OcelotStaminaSlider.Scroll -= OcelotStaminaSlider_Scroll;
+
+        try
+        {
+            short currentHealth = BossManager.ReadOcelotHealth();
+            short currentStamina = BossManager.ReadOcelotStamina();
+
+            OcelotHealthSlider.Value = Math.Clamp(currentHealth, OcelotHealthSlider.Minimum, OcelotHealthSlider.Maximum);
+            OcelotStaminaSlider.Value = Math.Clamp(currentStamina, OcelotStaminaSlider.Minimum, OcelotStaminaSlider.Maximum);
+        }
+        finally
+        {
+            OcelotHealthSlider.Scroll += OcelotHealthSlider_Scroll;
+            OcelotStaminaSlider.Scroll += OcelotStaminaSlider_Scroll;
+        }
+    }
+
+
+
+    // s032b is The Pain's area
+    private void Pain0HP_Click(object sender, EventArgs e)
+    {
+
+        BossManager.WriteThePainHealth(0x0001);
+        LoggingManager.Instance.Log("The Pain's health was depleted via Health button click");
+
+    }
+
+    private void PainHealthSlider_Scroll(object sender, EventArgs e)
+    {
+ 
+        short newHealthValue = (short)PainHealthSlider.Value;
+        BossManager.WriteThePainHealth(newHealthValue);
+        LoggingManager.Instance.Log("The Pain's health was set to " + newHealthValue + "via the slider");
+        if (newHealthValue == 0)
+        {
+            LoggingManager.Instance.Log("The Pain's health was depleted via slider.");
         }
 
-        private void Ocelot0Stam_Click(object sender, EventArgs e)
+    }
+
+    private void Pain0Stam_Click(object sender, EventArgs e)
+    {
+ 
+        BossManager.WriteThePainStamina(0x0001);
+        LoggingManager.Instance.Log("The Pain's stamina was depleted via Stamina button click");
+
+    }
+
+    private void PainStaminaSlider_Scroll(object sender, EventArgs e)
+    {
+
+        short newStaminaValue = (short)PainStaminaSlider.Value;
+        BossManager.WriteThePainStamina(newStaminaValue);
+        LoggingManager.Instance.Log("The Pain's stamina was set to " + newStaminaValue + "via the slider");
+        if (newStaminaValue == 0)
         {
-            BossManager.WriteOcelotStamina(0x0000);
-            LoggingManager.Instance.Log("Ocelot's stamina was depleted via Stamina button click");
-            StartConsistencyCheck();
-            LoggingManager.Instance.Log("Consistency check started for Ocelot.");
+            LoggingManager.Instance.Log("The Pain's stamina was depleted via slider.");
+        }
+    }
+
+    private void PainTimer_Tick(object sender, EventArgs e)
+    {
+        PainHealthSlider.Scroll -= PainHealthSlider_Scroll;
+        PainStaminaSlider.Scroll -= PainStaminaSlider_Scroll;
+
+        try
+        {
+            short currentHealth = BossManager.ReadThePainHealth();
+            short currentStamina = BossManager.ReadThePainStamina();
+
+            PainHealthSlider.Value = Math.Clamp(currentHealth, PainHealthSlider.Minimum, PainHealthSlider.Maximum);
+            PainStaminaSlider.Value = Math.Clamp(currentStamina, PainStaminaSlider.Minimum, PainStaminaSlider.Maximum);
+        }
+        finally
+        {
+            PainHealthSlider.Scroll += PainHealthSlider_Scroll;
+            PainStaminaSlider.Scroll += PainStaminaSlider_Scroll;
+        }
+    }
+
+    private void Fear0HP_Click(object sender, EventArgs e)
+    {
+
+        BossManager.WriteTheFearHealth(0x0000);
+        LoggingManager.Instance.Log("The Fear's health was depleted via Health button click");
+    }
+
+
+    private void FearHealthSlider_Scroll(object sender, EventArgs e)
+    {
+
+        short newHealthValue = (short)FearHealthSlider.Value;
+        BossManager.WriteTheFearHealth(newHealthValue);
+        LoggingManager.Instance.Log("The Fear's health was set to " + newHealthValue + "via the slider");
+        if (newHealthValue == 0)
+        {
+            LoggingManager.Instance.Log("The Fear's health was depleted via slider.");
+        }
+    }
+
+    private void FearStaminaSlider_Scroll(object sender, EventArgs e)
+    {
+
+        short newStaminaValue = (short)FearStaminaSlider.Value;
+        BossManager.WriteTheFearStamina(newStaminaValue);
+        LoggingManager.Instance.Log("The Fear's stamina was set to " + newStaminaValue + "via the slider");
+        if (newStaminaValue == 0)
+        {
+            LoggingManager.Instance.Log("The Fear's stamina was depleted via slider.");
         }
 
-        private void OcelotHealthSlider_Scroll(object sender, EventArgs e)
+    }
+
+    private void Fear0Stam_Click(object sender, EventArgs e)
+    {
+
+        BossManager.WriteTheFearStamina(0x0000);
+        LoggingManager.Instance.Log("The Fear's stamina was depleted via Stamina button click");
+
+    }
+
+    private void FearTimer_Tick(object sender, EventArgs e)
+    {
+        FearHealthSlider.Scroll -= FearHealthSlider_Scroll;
+        FearStaminaSlider.Scroll -= FearStaminaSlider_Scroll;
+
+        try
         {
-            short newHealthValue = (short)OcelotHealthSlider.Value;
-            BossManager.WriteOcelotHealth(newHealthValue);
-            if (newHealthValue == 0)
-            {
-                LoggingManager.Instance.Log("Ocelot's health was depleted via slider.");
-                StartConsistencyCheck();
-                LoggingManager.Instance.Log("Consistency check started for Ocelot.");
-            }
+            short currentHealth = BossManager.ReadTheFearHealth();
+            short currentStamina = BossManager.ReadTheFearStamina();
+
+            FearHealthSlider.Value = Math.Clamp(currentHealth, FearHealthSlider.Minimum, FearHealthSlider.Maximum);
+            FearStaminaSlider.Value = Math.Clamp(currentStamina, FearStaminaSlider.Minimum, FearStaminaSlider.Maximum);
+        }
+        finally
+        {
+            FearHealthSlider.Scroll += FearHealthSlider_Scroll;
+            FearStaminaSlider.Scroll += FearStaminaSlider_Scroll;
         }
 
-        private void OcelotStaminaSlider_Scroll(object sender, EventArgs e)
-        {
-            short newStaminaValue = (short)OcelotStaminaSlider.Value;
-            BossManager.WriteOcelotStamina(newStaminaValue);
-            if (newStaminaValue == 0)
-            {
-                LoggingManager.Instance.Log("Ocelot's stamina was depleted via slider.");
-                StartConsistencyCheck();
-                LoggingManager.Instance.Log("Consistency check started for Ocelot.");
-            }
-        }
-
-        private void OcelotTimer_Tick(object sender, EventArgs e)
-        {
-            OcelotHealthSlider.Scroll -= OcelotHealthSlider_Scroll;
-            OcelotStaminaSlider.Scroll -= OcelotStaminaSlider_Scroll;
-
-            try
-            {
-                short currentHealth = BossManager.ReadOcelotHealth();
-                short currentStamina = BossManager.ReadOcelotStamina();
-
-                OcelotHealthSlider.Value = Math.Clamp(currentHealth, OcelotHealthSlider.Minimum, OcelotHealthSlider.Maximum);
-                OcelotStaminaSlider.Value = Math.Clamp(currentStamina, OcelotStaminaSlider.Minimum, OcelotStaminaSlider.Maximum);
-            }
-            finally
-            {
-                OcelotHealthSlider.Scroll += OcelotHealthSlider_Scroll;
-                OcelotStaminaSlider.Scroll += OcelotStaminaSlider_Scroll;
-            }
-        }
-
-        #endregion
-
-        #region The Pain
-        private void Pain0HP_Click(object sender, EventArgs e)
-        {
-            BossManager.WriteThePainHealth(0x0000);
-            LoggingManager.Instance.Log("The Pain's health was depleted via Health button click");
-            StartConsistencyCheck();
-            LoggingManager.Instance.Log("Consistency check started for The Pain.");
-        }
-
-        private void Pain0Stam_Click(object sender, EventArgs e)
-        {
-            BossManager.WriteThePainStamina(0x0000);
-            LoggingManager.Instance.Log("The Pain's stamina was depleted via Stamina button click");
-            StartConsistencyCheck();
-            LoggingManager.Instance.Log("Consistency check started for The Pain.");
-        }
-
-        private void PainTimer_Tick(object sender, EventArgs e)
-        {
-            PainHealthSlider.Scroll -= PainHealthSlider_Scroll;
-            PainStaminaSlider.Scroll -= PainStaminaSlider_Scroll;
-
-            try
-            {
-                short currentHealth = BossManager.ReadThePainHealth();
-                short currentStamina = BossManager.ReadThePainStamina();
-
-                PainHealthSlider.Value = Math.Clamp(currentHealth, PainHealthSlider.Minimum, PainHealthSlider.Maximum);
-                PainStaminaSlider.Value = Math.Clamp(currentStamina, PainStaminaSlider.Minimum, PainStaminaSlider.Maximum);
-            }
-            finally
-            {
-                PainHealthSlider.Scroll += PainHealthSlider_Scroll;
-                PainStaminaSlider.Scroll += PainStaminaSlider_Scroll;
-            }
-
-        }
-
-        private void PainHealthSlider_Scroll(object sender, EventArgs e)
-        {
-            short newHealthValue = (short)PainHealthSlider.Value;
-            BossManager.WriteThePainHealth(newHealthValue);
-            if (newHealthValue == 0)
-            {
-                LoggingManager.Instance.Log("The Pain's health was depleted via slider.");
-                StartConsistencyCheck();
-                LoggingManager.Instance.Log("Consistency check started for The Pain.");
-            }
-
-        }
-
-        private void PainStaminaSlider_Scroll(object sender, EventArgs e)
-        {
-            short newStaminaValue = (short)PainStaminaSlider.Value;
-            BossManager.WriteThePainStamina(newStaminaValue);
-            if (newStaminaValue == 0)
-            {
-                LoggingManager.Instance.Log("The Pain's stamina was depleted via slider.");
-                StartConsistencyCheck();
-                LoggingManager.Instance.Log("Consistency check started for The Pain.");
-            }
-        }
-        #endregion
-
-        #region The Fear
-        private void Fear0HP_Click(object sender, EventArgs e)
-        {
-            BossManager.WriteTheFearHealth(0x0000);
-            LoggingManager.Instance.Log("The Fear's health was depleted via Health button click");
-            StartConsistencyCheck();
-            LoggingManager.Instance.Log("Consistency check started for The Fear.");
-        }
-
-        private void Fear0Stam_Click(object sender, EventArgs e)
-        {
-            BossManager.WriteTheFearStamina(0x0000);
-            LoggingManager.Instance.Log("The Fear's stamina was depleted via Stamina button click");
-            StartConsistencyCheck();
-            LoggingManager.Instance.Log("Consistency check started for The Fear.");
-        }
-
-        private void FearTimer_Tick(object sender, EventArgs e)
-        {
-            // Temporarily disable event handlers to prevent recursion
-            FearHealthSlider.Scroll -= FearHealthSlider_Scroll;
-            FearStaminaSlider.Scroll -= FearStaminaSlider_Scroll;
-
-            try
-            {
-                short currentHealth = BossManager.ReadTheFearHealth();
-                short currentStamina = BossManager.ReadTheFearStamina();
-
-                // Update sliders with current values
-                FearHealthSlider.Value = Math.Clamp(currentHealth, FearHealthSlider.Minimum, FearHealthSlider.Maximum);
-                FearStaminaSlider.Value = Math.Clamp(currentStamina, FearStaminaSlider.Minimum, FearStaminaSlider.Maximum);
-            }
-            finally
-            {
-                // Re-enable event handlers after updating
-                FearHealthSlider.Scroll += FearHealthSlider_Scroll;
-                FearStaminaSlider.Scroll += FearStaminaSlider_Scroll;
-            }
-        }
-
-        private void FearHealthSlider_Scroll(object sender, EventArgs e)
-        {
-            short newHealthValue = (short)FearHealthSlider.Value;
-            BossManager.WriteTheFearHealth(newHealthValue);
-            if (newHealthValue == 0)
-            {
-                LoggingManager.Instance.Log("The Fear's health was depleted via slider.");
-                StartConsistencyCheck();
-            }
-        }
-
-        private void FearStaminaSlider_Scroll(object sender, EventArgs e)
-        {
-            short newStaminaValue = (short)FearStaminaSlider.Value;
-            BossManager.WriteTheFearStamina(newStaminaValue);
-            if (newStaminaValue == 0)
-            {
-                LoggingManager.Instance.Log("The Fear's stamina was depleted via slider.");
-                StartConsistencyCheck();
-            }
-        }
-        #endregion
+    }
 
         #region The End
 
-        private void End0HP_Click(object sender, EventArgs e)
+    private void End0HP_Click(object sender, EventArgs e)
         {
+
             string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
             string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
-                BossManager.WriteTheEnds063aHealth(0x0000);
+                
+                BossManager.WriteTheEnds063aHealth(0x0001);
                 LoggingManager.Instance.Log("The End's health was depleted via Health button click");
                 StartConsistencyCheck();
                 LoggingManager.Instance.Log("Consistency check started for The End.");
             }
             else if (locationString == "s064a")
             {
-                BossManager.WriteTheEnds065aHealth(0x0000);
+                BossManager.WriteTheEnds065aHealth(0x0001);
                 LoggingManager.Instance.Log("The End's health was depleted via Health button click");
                 StartConsistencyCheck();
                 LoggingManager.Instance.Log("Consistency check started for The End.");
             }
             else if (locationString == "s065a")
             {
-                BossManager.WriteTheEnds065aHealth(0x0000);
+                BossManager.WriteTheEnds065aHealth(0x0001);
                 LoggingManager.Instance.Log("The End's health was depleted via Health button click");
                 StartConsistencyCheck();
                 LoggingManager.Instance.Log("Consistency check started for The End.");
@@ -680,25 +720,26 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void End0Stam_Click(object sender, EventArgs e)
         {
+
             string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
             string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
-                BossManager.WriteTheEnds063aStamina(0x0000);
+                BossManager.WriteTheEnds063aStamina(0x0001);
                 LoggingManager.Instance.Log("The End's stamina was depleted via Stamina button click");
                 StartConsistencyCheck();
                 LoggingManager.Instance.Log("Consistency check started for The End.");
             }
             else if (locationString == "s064a")
             {
-                BossManager.WriteTheEnds065aStamina(0x0000);
+                BossManager.WriteTheEnds065aStamina(0x0001);
                 LoggingManager.Instance.Log("The End's stamina was depleted via Stamina button click");
                 StartConsistencyCheck();
                 LoggingManager.Instance.Log("Consistency check started for The End.");
             }
             else if (locationString == "s065a")
             {
-                BossManager.WriteTheEnds065aStamina(0x0000);
+                BossManager.WriteTheEnds065aStamina(0x0001);
                 LoggingManager.Instance.Log("The End's stamina was depleted via Stamina button click");
                 StartConsistencyCheck();
                 LoggingManager.Instance.Log("Consistency check started for The End.");
@@ -707,6 +748,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void EndHealthSlider_Scroll(object sender, EventArgs e)
         {
+
             string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
             string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
@@ -752,6 +794,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void EndStaminaSlider_Scroll(object sender, EventArgs e)
         {
+
             string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
             string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
@@ -1101,7 +1144,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void Boss0HP_Click(object sender, EventArgs e)
         {
-            BossManager.WriteTheBossHealth(0x0000);
+            BossManager.WriteTheBossHealth(0x0001);
             LoggingManager.Instance.Log("The Boss's health was depleted via Health button click");
             StartConsistencyCheck();
             LoggingManager.Instance.Log("Consistency check started for The Boss.");
@@ -1109,7 +1152,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void Boss0Stam_Click(object sender, EventArgs e)
         {
-            BossManager.WriteTheBossStamina(0x0000);
+            BossManager.WriteTheBossStamina(0x0001);
             LoggingManager.Instance.Log("The Boss's stamina was depleted via Stamina button click");
             StartConsistencyCheck();
             LoggingManager.Instance.Log("Consistency check started for The Boss.");

@@ -79,6 +79,15 @@
             ShagohodTimer = new System.Windows.Forms.Timer(components);
             VolginOnShagohodTimer = new System.Windows.Forms.Timer(components);
             Shagohod0HP = new Button();
+            OcelotTextbox = new TextBox();
+            PainTextbox = new TextBox();
+            FearTextbox = new TextBox();
+            EndTextbox = new TextBox();
+            FuryTextbox = new TextBox();
+            VolginTextbox = new TextBox();
+            ShagohodTextbox = new TextBox();
+            VolginOnShagohodTextbox = new TextBox();
+            TheBossTextbox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)FearHealthSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FearStaminaSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PainStaminaSlider).BeginInit();
@@ -643,6 +652,69 @@
             Shagohod0HP.UseVisualStyleBackColor = true;
             Shagohod0HP.Click += Shagohod0HP_Click_1;
             // 
+            // OcelotTextbox
+            // 
+            OcelotTextbox.Location = new Point(190, 93);
+            OcelotTextbox.Name = "OcelotTextbox";
+            OcelotTextbox.Size = new Size(181, 23);
+            OcelotTextbox.TabIndex = 628;
+            // 
+            // PainTextbox
+            // 
+            PainTextbox.Location = new Point(190, 344);
+            PainTextbox.Name = "PainTextbox";
+            PainTextbox.Size = new Size(181, 23);
+            PainTextbox.TabIndex = 629;
+            // 
+            // FearTextbox
+            // 
+            FearTextbox.Location = new Point(192, 558);
+            FearTextbox.Name = "FearTextbox";
+            FearTextbox.Size = new Size(181, 23);
+            FearTextbox.TabIndex = 630;
+            // 
+            // EndTextbox
+            // 
+            EndTextbox.Location = new Point(564, 93);
+            EndTextbox.Name = "EndTextbox";
+            EndTextbox.Size = new Size(181, 23);
+            EndTextbox.TabIndex = 631;
+            // 
+            // FuryTextbox
+            // 
+            FuryTextbox.Location = new Point(566, 344);
+            FuryTextbox.Name = "FuryTextbox";
+            FuryTextbox.Size = new Size(181, 23);
+            FuryTextbox.TabIndex = 632;
+            // 
+            // VolginTextbox
+            // 
+            VolginTextbox.Location = new Point(566, 558);
+            VolginTextbox.Name = "VolginTextbox";
+            VolginTextbox.Size = new Size(181, 23);
+            VolginTextbox.TabIndex = 633;
+            // 
+            // ShagohodTextbox
+            // 
+            ShagohodTextbox.Location = new Point(992, 87);
+            ShagohodTextbox.Name = "ShagohodTextbox";
+            ShagohodTextbox.Size = new Size(181, 23);
+            ShagohodTextbox.TabIndex = 634;
+            // 
+            // VolginOnShagohodTextbox
+            // 
+            VolginOnShagohodTextbox.Location = new Point(992, 344);
+            VolginOnShagohodTextbox.Name = "VolginOnShagohodTextbox";
+            VolginOnShagohodTextbox.Size = new Size(181, 23);
+            VolginOnShagohodTextbox.TabIndex = 635;
+            // 
+            // TheBossTextbox
+            // 
+            TheBossTextbox.Location = new Point(994, 558);
+            TheBossTextbox.Name = "TheBossTextbox";
+            TheBossTextbox.Size = new Size(181, 23);
+            TheBossTextbox.TabIndex = 636;
+            // 
             // BossForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -650,6 +722,15 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1185, 702);
+            Controls.Add(TheBossTextbox);
+            Controls.Add(VolginOnShagohodTextbox);
+            Controls.Add(ShagohodTextbox);
+            Controls.Add(VolginTextbox);
+            Controls.Add(FuryTextbox);
+            Controls.Add(EndTextbox);
+            Controls.Add(FearTextbox);
+            Controls.Add(PainTextbox);
+            Controls.Add(OcelotTextbox);
             Controls.Add(Shagohod0HP);
             Controls.Add(ShagohodHealthSlider);
             Controls.Add(VolginOnShagohog0Stam);
@@ -769,5 +850,14 @@
         private System.Windows.Forms.Timer ShagohodTimer;
         private System.Windows.Forms.Timer VolginOnShagohodTimer;
         private Button Shagohod0HP;
+        private TextBox OcelotTextbox;
+        private TextBox PainTextbox;
+        private TextBox FearTextbox;
+        private TextBox EndTextbox;
+        private TextBox FuryTextbox;
+        private TextBox VolginTextbox;
+        private TextBox ShagohodTextbox;
+        private TextBox VolginOnShagohodTextbox;
+        private TextBox TheBossTextbox;
     }
 }

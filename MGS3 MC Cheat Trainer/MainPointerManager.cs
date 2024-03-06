@@ -19,7 +19,6 @@ namespace MGS3_MC_Cheat_Trainer
                 Process process = GetMGS3Process();
                 if (process == null)
                 {
-                    MessageBox.Show("Game process not found.");
                     return;
                 }
 
@@ -30,7 +29,6 @@ namespace MGS3_MC_Cheat_Trainer
                 byte[] buffer = new byte[IntPtr.Size];
                 if (!NativeMethods.ReadProcessMemory(processHandle, pointerToInjurySlot, buffer, (uint)buffer.Length, out _))
                 {
-                    MessageBox.Show("Failed to read the base injury slot address.");
                     NativeMethods.CloseHandle(processHandle);
                     return;
                 }
@@ -58,13 +56,11 @@ namespace MGS3_MC_Cheat_Trainer
 
                 if (!injuryApplied)
                 {
-                    MessageBox.Show("No empty slot found to apply injury. Attempted to clear space for new injuries.");
                 }
                 NativeMethods.CloseHandle(processHandle);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Exception occurred: {ex.Message}");
             }
         }
 
@@ -73,7 +69,6 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return;
             }
 
@@ -84,7 +79,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = new byte[IntPtr.Size];
             if (!NativeMethods.ReadProcessMemory(processHandle, pointerToInjurySlot, buffer, (uint)buffer.Length, out _))
             {
-                MessageBox.Show("Failed to read the base injury slot address.");
                 NativeMethods.CloseHandle(processHandle);
                 return;
             }
@@ -103,7 +97,6 @@ namespace MGS3_MC_Cheat_Trainer
                 bool writeSuccess = NativeMethods.WriteProcessMemory(processHandle, injurySlotAddress, emptyInjuryData, (uint)emptyInjuryData.Length, out _);
                 if (!writeSuccess)
                 {
-                    MessageBox.Show($"Failed to clear injury at slot {slot}.");
                     allCleared = false;
                     break; // Stop the process if unable to write to memory
                 }
@@ -113,7 +106,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (allCleared)
             {
-                MessageBox.Show("All injuries have been cleared.");
             }
         }
 
@@ -127,7 +119,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch
             {
-                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
                 return;
             }
 

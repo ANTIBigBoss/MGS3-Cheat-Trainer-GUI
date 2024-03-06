@@ -57,7 +57,7 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 // Optionally, stop the timer if the region is not found
                 // _alertTimer.Stop();
-                MessageBox.Show("Alert memory region not found.");
+
                 ToggleInfiniteAlert(false); // Stop the infinite alert if the region is not found
             }
         }
@@ -190,7 +190,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to find alert's memory region. Submit the logs to ANTIBigBoss if this persists.");
+
                 LoggingManager.Instance.Log("Alert memory region not found.\n");
                 return;
             }
@@ -216,7 +216,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to find alert memory region.");
+
                 return;
             }
 
@@ -242,7 +242,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to find alert memory region.");
+
                 return;
             }
 

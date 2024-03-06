@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="MGS3 MC Cheat Trainer.exe" version="1.0.0.34" publicKeyToken="0bed7d90f5a4e2bf" language="en" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="LadderMitch(3)-min.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Launcher" version="8.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Launcher.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Launcher.exe" size="17808">
+      <assemblyIdentity name="Launcher" version="8.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>OWOhBnIlpvtawIjL170emTBU6jrx1nC5P9QLZwHtmIU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="LadderMitch(3)-min.ico" size="139908">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>YPX4IsB+R1xSB/JJY3SlSyvb1qhjTJ/qSTwdeoyiasU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="MGS3 MC Cheat Trainer.dll.config" size="77">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>sRXPO8NcIiuVI4ajMrs7gnxty0j6ChK7OorE6bM0xfQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="MGS3 MC Cheat Trainer.exe" size="4750704">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>OkMo5tHXz/vCNaUY/mUmUzOeJzxIl+VQwzDlPDuKyrw=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=ANTIBigBoss" issuerKeyHash="c097fd20b7f2bc5b3e3654985db233ca38ceaf9e" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>dEkujK9XJ8RoK7UGHj2+Z1gV6m49YgWz4WN0EuJ7HeU=</DigestValue></Reference></SignedInfo><SignatureValue>ohJ9ag6yVNpC4WIC0GW0Tu8/znIvxfyeF+YSsg+oNC8lg6hYE5bUbKeL6yFQA+tTUZdQ7oNgbvMdyZQCd1wf7bemAnrinKcGgV1+VmudBahtnHU5Bga7yjRqpNZRkWXK3VXjmNLpSpqCXtni5ABp4nG/8BaRP7chzrEwvdLGQREdvBjAo7DjX55esWIaAckbbzuHclR/VycPzN75fYITQpSdMK5aV3LNynLJh7MsLUM7b6Fl0hL7rnP5AHRGbgh0ha9YpIVDl/Y8P2QLsGwYDGod9EoCJ5TFeq9DjwB5sJ8tDXrMMaqb2wHLyAE7wMLJheZCGCEfIpfQcPp8lGnxiw==</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>6nUX4PyacBI0B4rwf4JgHj5EHZ1Y3+rzVlFn5lbZNyG4IKyVshmRAJfV/C26t/EtIBj6+jgeHzRq3ULgRsrnrKSYWjdKRVnNumF8amIaghjMaQZz2jsZ9pjEBQQyJwBtMfWAEdAg+84Rpiv+M65QMjUW7nvxJFneiJ5YNWa3/cNG3QbO7HrRn6bfXZxprqMKZOTKASbVDhDDTKBrHiMrGpJi3PkGRzDmqGdADTnxDcWhu8mpnUWxvc9LabwOkcxjlCAm14+4WUmq5rrxIzRG6F42up1H2efbN0GVUAebOY7MVCQJcT0E99dJWfo0f8d0SCrTMFYwI13o85j44Q4PuQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="e51d7be2127463e1b305623d6eea155867be3d1e06b52b68c42757af8c2e4974" Description="" Url=""><as:assemblyIdentity name="MGS3 MC Cheat Trainer.exe" version="1.0.0.34" publicKeyToken="0bed7d90f5a4e2bf" language="en" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=ANTIBigBoss</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>dEA0Fef3Xw2NHXIQrFArGiPUvv6SH0TEGPXDFzN3NB0=</DigestValue></Reference></SignedInfo><SignatureValue>a6/a432QLbwYVD32UdTXGQSGHPfXKZGi5OABKmfvYyLTjnDv5DvRC7FmMjp3e1FTXf7d7OM7GvVy7kjRJrXM6SxpX3SCe+xkMsoJAzPnTthkbuXR9CYSKFZyUIrvSJXz9rGPijPyL69loxP7O8/CVR2/G3k0ImHZyCYTXDZljHclgj8hPnZCwip0kZdOGJIeS4ExwXCxv14CdoOwEPoqszsNvqLsYTS0uUD2/uYYe0HpmoWGPubaABWK6CCVvwR44xOaTQaZpBmBE8nQi2s816NM48hcQDUJT26ZaQ+mVglAuKPXxV9jeDhwEX/nxNock+fgXGXCyrWYGzMG/H0Xiw==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>6nUX4PyacBI0B4rwf4JgHj5EHZ1Y3+rzVlFn5lbZNyG4IKyVshmRAJfV/C26t/EtIBj6+jgeHzRq3ULgRsrnrKSYWjdKRVnNumF8amIaghjMaQZz2jsZ9pjEBQQyJwBtMfWAEdAg+84Rpiv+M65QMjUW7nvxJFneiJ5YNWa3/cNG3QbO7HrRn6bfXZxprqMKZOTKASbVDhDDTKBrHiMrGpJi3PkGRzDmqGdADTnxDcWhu8mpnUWxvc9LabwOkcxjlCAm14+4WUmq5rrxIzRG6F42up1H2efbN0GVUAebOY7MVCQJcT0E99dJWfo0f8d0SCrTMFYwI13o85j44Q4PuQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIDGzCCAgOgAwIBAgIQTqpnmIKh1bVKfuoweZwOXjANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDDAtBTlRJQmlnQm9zczAeFw0yNDAyMjQyMzMyMjdaFw0yNTAyMjQyMzUyMjdaMBYxFDASBgNVBAMMC0FOVElCaWdCb3NzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6nUX4PyacBI0B4rwf4JgHj5EHZ1Y3+rzVlFn5lbZNyG4IKyVshmRAJfV/C26t/EtIBj6+jgeHzRq3ULgRsrnrKSYWjdKRVnNumF8amIaghjMaQZz2jsZ9pjEBQQyJwBtMfWAEdAg+84Rpiv+M65QMjUW7nvxJFneiJ5YNWa3/cNG3QbO7HrRn6bfXZxprqMKZOTKASbVDhDDTKBrHiMrGpJi3PkGRzDmqGdADTnxDcWhu8mpnUWxvc9LabwOkcxjlCAm14+4WUmq5rrxIzRG6F42up1H2efbN0GVUAebOY7MVCQJcT0E99dJWfo0f8d0SCrTMFYwI13o85j44Q4PuQIDAQABo2UwYzAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAwwCgYIKwYBBQUHAwMwHQYDVR0RBBYwFIISTUdTMyBDaGVhdCBUcmFpbmVyMB0GA1UdDgQWBBTAl/0gt/K8Wz42VJhdsjPKOM6vnjANBgkqhkiG9w0BAQsFAAOCAQEAtK3aY10461IWGTrSb76WCJRodlU176CLJDFbSy295ziig5/ciVi3nsKxR7mAB7SOrsADHy3YSz2jLarV3L0f0MwvEkGdUPO/Gic7L6E+15dVNITRebUp9P+/0BOTzJkD80udif1p2HnLdUrspj3wWxvbAq6ezIaUzm/KzFhbgIhk5lXIR8qUiTZ3TUN00mDSRDqL/lQFwQQpDsg1Mja9/oC/s1sPwaJjpIo8oaLdGbgMHZ2ZfcaoedLLajgmfyYYhErPvyY27BtLiI0gIuwYoEIQmW8nbPQNROtdEbfnZiEW0v55zoJGk5jvPyK14wSl1q6cLf4GJ4V+cgmjY9jQRw==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

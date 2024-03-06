@@ -234,7 +234,6 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to find alert memory region.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

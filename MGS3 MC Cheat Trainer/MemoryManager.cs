@@ -64,7 +64,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch
             {
-                MessageBox.Show($"Cannot find process: {Constants.PROCESS_NAME}");
                 return;
             }
 
@@ -79,7 +78,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (!success || bytesWritten != buffer.Length)
             {
-                MessageBox.Show($"Failed to write memory with value {value}.");
             }
 
             NativeMethods.CloseHandle(processHandle);
@@ -252,14 +250,12 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return IntPtr.Zero;
             }
 
             IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open game process.");
             }
 
             return processHandle;
@@ -276,7 +272,6 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return IntPtr.Zero;
             }
 
@@ -294,7 +289,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (baseAddress == IntPtr.Zero)
             {
-                MessageBox.Show("METAL GEAR SOLID3.exe module not found.");
+
                 return IntPtr.Zero;
             }
 
@@ -305,10 +300,10 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
             if (address != IntPtr.Zero)
             {
+                LoggingManager.Instance.Log($"Found AOB at address {address.ToString("X")}.");
                 return address;
             }
 
-            MessageBox.Show("Pattern not found in specified range.");
             return IntPtr.Zero;
         }
 
@@ -317,7 +312,6 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return IntPtr.Zero;
             }
 
@@ -335,21 +329,20 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (baseAddress == IntPtr.Zero)
             {
-                MessageBox.Show("METAL GEAR SOLID3.exe module not found.");
                 return IntPtr.Zero;
             }
 
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x0FFFFF);
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x00FFFF);
             IntPtr endAddress = IntPtr.Add(baseAddress, 0x1000000);
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
             IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
             if (address != IntPtr.Zero)
             {
+                LoggingManager.Instance.Log($"Found AOB at address {address.ToString("X")}.");
                 return address;
             }
 
-            MessageBox.Show("Pattern not found in specified range.");
             return IntPtr.Zero;
         }
 
@@ -358,7 +351,6 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return IntPtr.Zero;
             }
 
@@ -376,12 +368,11 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (baseAddress == IntPtr.Zero)
             {
-                MessageBox.Show("METAL GEAR SOLID3.exe module not found.");
                 return IntPtr.Zero;
             }
 
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0xA0000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0xB0000);
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x00000);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0xC00000);
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
             IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
@@ -390,7 +381,6 @@ namespace MGS3_MC_Cheat_Trainer
                 return address;
             }
 
-            MessageBox.Show("Pattern not found in specified range.");
             return IntPtr.Zero;
         }
 
@@ -399,21 +389,20 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return;
             }
 
             IntPtr processHandle = OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process for writing.");
+
                 return;
             }
 
             bool success = NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten);
             if (!success || bytesWritten != sizeof(short))
             {
-                MessageBox.Show("Failed to write short value to memory.");
+
             }
 
             NativeMethods.CloseHandle(processHandle);
@@ -424,21 +413,20 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return;
             }
 
             IntPtr processHandle = OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process for writing.");
+
                 return;
             }
 
             bool success = NativeMethods.WriteProcessMemory(processHandle, address, new byte[] { value }, 1, out int bytesWritten);
             if (!success || bytesWritten != 1)
             {
-                MessageBox.Show("Failed to write byte value to memory.");
+
             }
 
             NativeMethods.CloseHandle(processHandle);
@@ -500,14 +488,14 @@ namespace MGS3_MC_Cheat_Trainer
             var process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return false;
             }
 
             IntPtr processHandle = OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return false;
             }
 
@@ -518,7 +506,7 @@ namespace MGS3_MC_Cheat_Trainer
             var patternProne = Constants.AOBs["SnakeAndGuardProne"].Pattern;
             var maskProne = Constants.AOBs["SnakeAndGuardProne"].Mask;
 
-            IntPtr startAddress = new IntPtr(0x1A0FFFFFFFF); // Example start range
+            IntPtr startAddress = new IntPtr(0x100FFFFFFFF); // Example start range
             IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
@@ -546,10 +534,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public float[] ReadSnakePosition(IntPtr processHandle)
         {
-            // Assuming FoundSnakePositionAddress is the address where the AOB was found
-            // and the floats start immediately after the AOB pattern.
-            // You might need to adjust the offset depending on the exact structure post-AOB.
-            IntPtr baseAddress = IntPtr.Add(FoundSnakePositionAddress, 7); // Adjust AOBPatternLength as necessary
+            IntPtr baseAddress = IntPtr.Add(FoundSnakePositionAddress, 7);
 
             float[] position = new float[3];
             for (int i = 0; i < position.Length; i++)
@@ -561,10 +546,84 @@ namespace MGS3_MC_Cheat_Trainer
             return position;
         }
 
+        public void TeleportSnake(float x, float y, float z)
+        {
+            FindAndStoreSnakesPositionAOB();
+            IntPtr processHandle = OpenGameProcess(GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                return;
+            }
+
+            if (FoundSnakePositionAddress == IntPtr.Zero && !FindAndStoreSnakesPositionAOB())
+            {
+                NativeMethods.CloseHandle(processHandle);
+                return;
+            }
+
+            float[] newPosition = new float[] { x, y, z };
+            for (int i = 0; i < newPosition.Length; i++)
+            {
+                IntPtr currentAddress = IntPtr.Add(FoundSnakePositionAddress, 7 + i * 4);
+                bool success = WriteFloatToMemory(processHandle, currentAddress, newPosition[i]);
+                if (!success)
+                {
+                    break;
+                }
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
+        public void RaiseSnakeYBy4000()
+        {
+            if (FoundSnakePositionAddress == IntPtr.Zero && !FindAndStoreSnakesPositionAOB())
+            {
+                LoggingManager.Instance.Log("Failed to find or verify Snake's position AOB.");
+                return;
+            }
+
+            IntPtr processHandle = OpenGameProcess(GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open process handle.");
+                return;
+            }
+
+            // Read current position
+            float[] currentPosition = ReadSnakePosition(processHandle);
+            if (currentPosition == null || currentPosition.Length < 3)
+            {
+                LoggingManager.Instance.Log("Failed to read Snake's current position.");
+                NativeMethods.CloseHandle(processHandle);
+                return;
+            }
+
+            // Increase Y by 4000 units
+            float newY = currentPosition[1] + 4000f;
+
+            // Prepare the address for Y coordinate
+            IntPtr yAddress = IntPtr.Add(FoundSnakePositionAddress, 7 + 4); // Assuming Y is the second float after the AOB pattern
+
+            // Write the new Y position
+            bool success = WriteFloatToMemory(processHandle, yAddress, newY);
+            if (success)
+            {
+                LoggingManager.Instance.Log($"Successfully raised Snake's Y position by 4000 units to {newY}.");
+            }
+            else
+            {
+                LoggingManager.Instance.Log("Failed to update Snake's Y position.");
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
+
         public List<IntPtr> ScanForAllInstances(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
             List<IntPtr> foundAddresses = new List<IntPtr>();
-            int bufferSize = 10000000; // Example buffer size, adjust based on your needs
+            int bufferSize = 10000000;
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -580,7 +639,6 @@ namespace MGS3_MC_Cheat_Trainer
                     if (IsMatch(buffer, i, pattern, mask))
                     {
                         foundAddresses.Add(new IntPtr(address + i));
-                        // Optionally, skip ahead by the pattern length to avoid overlapping matches
                         i += pattern.Length - 1;
                     }
                 }
@@ -589,25 +647,24 @@ namespace MGS3_MC_Cheat_Trainer
             return foundAddresses;
         }
 
-
         public List<IntPtr> FindAllGuardsPositionAOBs()
         {
             var process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("MGS3 process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return new List<IntPtr>();
             }
 
             IntPtr processHandle = OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process for scanning.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return new List<IntPtr>();
             }
 
             var (pattern, mask) = Constants.AOBs["GuardPatroling"];
-            IntPtr startAddress = new IntPtr(0x1A0FFFFFFFF); // Adjust as necessary
+            IntPtr startAddress = new IntPtr(0x100FFFFFFFF); // Adjust as necessary
             IntPtr endAddress = new IntPtr(0x30000000000); // Adjust as necessary
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
@@ -631,9 +688,7 @@ namespace MGS3_MC_Cheat_Trainer
                 guardsPositions.Add(position);
             }
             return guardsPositions;
-        }
-
-        
+        }       
 
         public void MoveGuardsToPosition(IntPtr processHandle, List<IntPtr> guardsAddresses, float[] newPosition)
         {
@@ -646,7 +701,7 @@ namespace MGS3_MC_Cheat_Trainer
                     bool success = WriteFloatToMemory(processHandle, currentAddress, newPosition[i]);
                     if (!success)
                     {
-                        MessageBox.Show($"Failed to move guard at address {currentAddress.ToString("X")} to new position.", "Write Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                         // Optionally, break or continue based on your error handling preference
                     }
                 }
@@ -658,14 +713,14 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr processHandle = OpenGameProcess(GetMGS3Process());
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process for operation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
 
             FindAndStoreSnakesPositionAOB();
             if (FoundSnakePositionAddress == IntPtr.Zero)
             {
-                MessageBox.Show("Snake position AOB not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 NativeMethods.CloseHandle(processHandle);
                 return;
             }
@@ -675,26 +730,21 @@ namespace MGS3_MC_Cheat_Trainer
             if (guardsAddresses.Count > 0)
             {
                 MoveGuardsToPosition(processHandle, guardsAddresses, snakePosition);
-                MessageBox.Show($"Moved {guardsAddresses.Count} guards to Snake's position.", "Operation Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             else
             {
-                MessageBox.Show("No guards found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
 
             NativeMethods.CloseHandle(processHandle);
         }
-
-
-
-
 
         public IntPtr FindAlertMemoryRegion(byte[] aobPattern, string mask)
         {
             Process process = GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Game process not found.");
                 return IntPtr.Zero;
             }
 
@@ -712,7 +762,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (baseAddress == IntPtr.Zero)
             {
-                MessageBox.Show("METAL GEAR SOLID3.exe module not found.");
+
                 return IntPtr.Zero;
             }
 
@@ -726,70 +776,9 @@ namespace MGS3_MC_Cheat_Trainer
                 return address;
             }
 
-            MessageBox.Show("Pattern not found in specified range.");
+
             return IntPtr.Zero;
-        }
-
-        
-
-
-        public IntPtr FindMapStringAOB()
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                MessageBox.Show("Game process not found.");
-                return IntPtr.Zero;
-            }
-
-            IntPtr baseAddress = process.MainModule.BaseAddress;
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1C00000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            var (pattern, mask) = Constants.AOBs["MapStringAOB"];
-
-            IntPtr processHandle = OpenGameProcess(process);
-            IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
-            NativeMethods.CloseHandle(processHandle);
-
-            return foundAddress;
-        }
-
-        // I was using this originally for the area string but then it turned out the pattern
-        // wasn't static but might still have a use for this in the future 
-        public string FindLocationStringNearAOB(IntPtr aobAddress)
-        {
-            Process process = GetMGS3Process();
-            IntPtr processHandle = OpenGameProcess(process);
-            const int searchBackwardLimit = 1024; // Define how far back you want to search
-            byte[] buffer = new byte[searchBackwardLimit];
-            IntPtr readStartAddress = IntPtr.Subtract(aobAddress, searchBackwardLimit);
-
-            // Read the memory backwards from the AOB
-            if (!ReadProcessMemory(processHandle, readStartAddress, buffer, (uint)buffer.Length, out _))
-            {
-                NativeMethods.CloseHandle(processHandle);
-                return null;
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-
-            // Convert buffer to string for searching
-            string memoryString = Encoding.ASCII.GetString(buffer);
-
-            foreach (StringManager.LocationString location in Enum.GetValues(typeof(StringManager.LocationString)))
-            {
-                string locationString = location.ToString();
-                if (memoryString.Contains(locationString))
-                {
-                    // We found a match
-                    return locationString; 
-                }
-            }
-            // We didn't find a match
-            return null;
-        }
+        }       
 
         public string FindLocationStringDirectlyInRange()
         {
@@ -865,16 +854,6 @@ namespace MGS3_MC_Cheat_Trainer
             return "Unknown";
         }
 
-        public IntPtr ApplyOffsets(IntPtr processHandle, IntPtr pointerAddress, int[] offsets)
-        {
-            IntPtr currentAddress = pointerAddress;
-            foreach (int offset in offsets)
-            {
-                currentAddress = ReadIntPtr(processHandle, currentAddress) + offset;
-            }
-            return currentAddress;
-        }
-
         public IntPtr ReadIntPtr(IntPtr processHandle, IntPtr address)
         {
             byte[] buffer = new byte[8]; // Correct for 64-bit
@@ -883,63 +862,6 @@ namespace MGS3_MC_Cheat_Trainer
                 return (IntPtr)BitConverter.ToInt64(buffer, 0);
             }
             return IntPtr.Zero;
-        }
-
-
-        public IntPtr FindDynamicPointerAddress(IntPtr processHandle, IntPtr startAddress, long rangeSize, byte[] pattern, string mask, int[] offsets)
-        {
-            int bufferSize = 4096; // Buffer size for reading memory
-            byte[] buffer = new byte[bufferSize + pattern.Length]; // Extend buffer to accommodate pattern length
-            long endAddress = startAddress.ToInt64() + rangeSize;
-
-            IntPtr previousEndAddress = startAddress;
-            for (long currentAddress = startAddress.ToInt64(); currentAddress < endAddress; currentAddress += bufferSize - pattern.Length)
-            {
-                Array.Clear(buffer, 0, buffer.Length); // Clear buffer to prevent data remnants affecting pattern matching
-                if (!ReadProcessMemory(processHandle, previousEndAddress, buffer, (uint)buffer.Length, out int bytesRead))
-                {
-                    continue; // Handle read failure as needed
-                }
-
-                for (int i = 0; i < bytesRead - pattern.Length; i++)
-                {
-                    if (PatternMatches(buffer, i, pattern, mask))
-                    {
-                        IntPtr foundAddress = (IntPtr)(currentAddress + i);
-                        // Apply offsets if necessary. Adjust this part as per your requirement.
-                        if (offsets != null && offsets.Length > 0)
-                        {
-                            foreach (var offset in offsets)
-                            {
-                                // Read the memory at foundAddress to get the next address in the chain.
-                                foundAddress = ReadIntPtr(processHandle, IntPtr.Add(foundAddress, offset));
-                                if (foundAddress == IntPtr.Zero)
-                                {
-                                    return IntPtr.Zero; // Failed to follow the pointer chain
-                                }
-                            }
-                        }
-                        return foundAddress; // Return the final address after applying offsets
-                    }
-                }
-                previousEndAddress = (IntPtr)(currentAddress + bufferSize - pattern.Length);
-            }
-
-            return IntPtr.Zero; // Not found
-        }
-
-
-
-        private bool PatternMatches(byte[] buffer, int index, byte[] pattern, string mask)
-        {
-            for (int i = 0; i < pattern.Length; i++)
-            {
-                if (mask[i] == 'x' && buffer[index + i] != pattern[i])
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
     }
