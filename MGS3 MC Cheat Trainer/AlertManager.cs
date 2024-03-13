@@ -15,6 +15,13 @@ namespace MGS3_MC_Cheat_Trainer
         private static System.Windows.Forms.Timer evasionStepTimer = new System.Windows.Forms.Timer();
         private static int evasionStep = 0;
 
+        // Couldn't find a better file to put this in so gonna slap it in here for now to track the player's location
+        // This way if they crash I can see where they were and decide if it's user error or a bug
+        private static System.Windows.Forms.Timer _locationChangeTimer = new System.Windows.Forms.Timer();
+
+
+
+
         // Define the backing field for IsInfiniteAlertEnabled
         private static bool infiniteAlertEnabled = false;
         private static bool infiniteEvasionEnabled = false;
@@ -38,7 +45,33 @@ namespace MGS3_MC_Cheat_Trainer
 
             _cautionTimer.Interval = 1000; // 10 seconds for caution checks
             _cautionTimer.Tick += CautionTimer_Tick;
+
+            _locationChangeTimer.Interval = 2000; // Check every 2 seconds, adjust as needed
+            _locationChangeTimer.Tick += LocationChangeTimer_Tick;
         }
+
+        private static string _lastKnownLocation = "";
+
+        private static void LocationChangeTimer_Tick(object sender, EventArgs e)
+        {
+            // Directly use the result from FindLocationStringDirectlyInRange, which includes all details.
+            string currentLocationInfo = MemoryManager.Instance.FindLocationStringDirectlyInRange();
+
+            if (currentLocationInfo != _lastKnownLocation)
+            {
+                _lastKnownLocation = currentLocationInfo;
+                // Log the change with full details (string, name, and address)
+                LoggingManager.Instance.Log($"Location changed: {currentLocationInfo}\n");
+            }
+        }
+
+
+        public static void StartLocationTracking()
+        {
+            _locationChangeTimer.Start();
+            LoggingManager.Instance.Log("Location tracking started.");
+        }
+
 
 
         private static void AlertTimer_Tick(object sender, EventArgs e)
@@ -47,7 +80,7 @@ namespace MGS3_MC_Cheat_Trainer
             var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
             var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
 
-            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
 
             if (alertMemoryRegion != IntPtr.Zero)
             {
@@ -93,7 +126,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (!infiniteEvasionEnabled) return;
 
-            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
             if (alertMemoryRegion == IntPtr.Zero) return;
 
             short alertTimerValue = ReadAlertTimerValue(alertMemoryRegion);
@@ -187,7 +220,7 @@ namespace MGS3_MC_Cheat_Trainer
             var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
             var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
 
-            IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
 
@@ -213,7 +246,7 @@ namespace MGS3_MC_Cheat_Trainer
             var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
             var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
 
-            IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
 
@@ -239,7 +272,7 @@ namespace MGS3_MC_Cheat_Trainer
             var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
             var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
 
-            IntPtr alertMemoryRegion = memoryManager.FindAlertMemoryRegion(aobPattern, mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
 

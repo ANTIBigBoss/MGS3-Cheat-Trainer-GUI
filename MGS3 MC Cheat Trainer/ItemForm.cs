@@ -16,6 +16,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WeaponFormSwap_Click(object sender, EventArgs e) // Switch to weapons form
         {
+            LoggingManager.Instance.Log("Navigating to Weapon Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
             WeaponForm form1 = new();
             form1.Show();
             this.Hide();
@@ -23,6 +26,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MiscFormSwap_Click(object sender, EventArgs e) // Load Misc form
         {
+            LoggingManager.Instance.Log("Navigating to Misc Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
             MiscForm form4 = new();
             form4.Show();
             this.Hide();
@@ -30,12 +36,13 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void HealthFormSwap_Click(object sender, EventArgs e) // Load Health and Alert form
         {
+            LoggingManager.Instance.Log("Navigating to Health and Alert Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "HealthForm");
             StatsAndAlertForm form5 = new();
             form5.Show();
             this.Hide();
         }
-
-
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -45,7 +52,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void Form2_Load(object sender, EventArgs e) // Accidently added this lmao
         {
-
+            this.Location = MemoryManager.GetLastFormLocation();
         }
 
         private void AddLifeMed_Click(object sender, EventArgs e)
@@ -331,6 +338,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ItemFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Camo Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
             CamoForm form3 = new();
             form3.Show();
             this.Hide();
@@ -338,10 +348,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void BossFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
             BossForm form6 = new();
             form6.Show();
             this.Hide();
-            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
         }
     }
 }

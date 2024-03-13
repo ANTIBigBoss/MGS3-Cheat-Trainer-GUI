@@ -11,10 +11,8 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 (byte[] pattern, string mask) = Constants.AOBs["ModelDistortion"];
-                IntPtr foundAddress = MemoryManager.Instance.FindAOBInModelRange(pattern, mask);
-                // Additional offset may be needed depending on the AOB's location relative to the actual value you want to modify
-                // IntPtr targetAddress = IntPtr.Add(foundAddress, additionalOffset);
-                return foundAddress; // or return targetAddress if additional offset is used
+                IntPtr foundAddress = AobManager.Instance.FindAOBInModelRange(pattern, mask);
+                return foundAddress;
             }
             catch (Exception ex)
             {
@@ -38,9 +36,8 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
             int bytesWritten;
 
-            byte[] buffer = new byte[] { value }; // Value to write
+            byte[] buffer = new byte[] { value };
 
-            // Use the "ModelDistortion" key from the Constants.AOBs dictionary
             IntPtr foundAddress = FindModelAddress("ModelDistortion");
 
             if (foundAddress == IntPtr.Zero)
@@ -48,7 +45,6 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            // Adjust the address to target the byte before the array
             IntPtr targetAddress = IntPtr.Subtract(foundAddress, 1); // One byte before the array
 
             bool success = NativeMethods.WriteProcessMemory(processHandle, targetAddress, buffer, (uint)buffer.Length, out bytesWritten);
@@ -83,18 +79,13 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 (byte[] pattern, string mask) = Constants.AOBs[aobKey];
-                IntPtr foundAddress = MemoryManager.Instance.FindAOBInCameraRange(pattern, mask);
-                // Additional offset may be needed depending on the AOB's location relative to the actual value you want to modify
-                // IntPtr targetAddress = IntPtr.Add(foundAddress, additionalOffset);
-                return foundAddress; // or return targetAddress if additional offset is used
+                IntPtr foundAddress = AobManager.Instance.FindAOBInCameraRange(pattern, mask);
+                return foundAddress;
             }
             catch (Exception ex)
             {
                 return IntPtr.Zero;
             }
         }
-
-
-
     }
 }

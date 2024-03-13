@@ -27,12 +27,16 @@ namespace MGS3_MC_Cheat_Trainer
             infiniteAlertCheckboxState = InfiniteAlert.Checked;
             infiniteAlertCheckboxState = InfiniteEvasion.Checked;
             infiniteAlertCheckboxState = InfiniteCaution.Checked;
+
+            System.Windows.Forms.Timer continuousMonitoringTimer = new System.Windows.Forms.Timer();
+            continuousMonitoringTimer.Interval = 1000; // Update every second
+            continuousMonitoringTimer.Tick += new EventHandler(ContinuousMonitoringTimer_Tick);
+            continuousMonitoringTimer.Start();
+
         }
 
         private void InitializeProgressBars()
         {
-            // Progress bar settings
-
             AlertProgressBar.Minimum = 0;
             AlertProgressBar.Maximum = 18000;
             AlertProgressBar.ProgressBarColour = Color.Red;
@@ -45,8 +49,11 @@ namespace MGS3_MC_Cheat_Trainer
             CautionProgressBar.Maximum = 18000;
             CautionProgressBar.ProgressBarColour = Color.Yellow;
         }
+        private void StatsAndAlertForm_Load(object sender, EventArgs e)
+        {
+            this.Location = MemoryManager.GetLastFormLocation();
+        }
 
-        // Form Closing Event
         private void StatsAndAlertForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
@@ -54,20 +61,31 @@ namespace MGS3_MC_Cheat_Trainer
         #region Form Swaps
         private void WeaponFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Weapon Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
             WeaponForm form1 = new();
             form1.Show();
             this.Hide();
         }
 
-        private void HealthFormSwap_Click(object sender, EventArgs e) // Item form misname
+        // This is the item form I made some mistakes on click event names on this form
+        private void HealthFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Item Form from the Stats Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "HealthForm");
             ItemForm f2 = new ItemForm();
             f2.Show();
             this.Hide();
         }
 
+        // Says ItemForm but it's actually the Camo Form
         private void CamoFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Camo Form from the Stats Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
             ItemForm f3 = new ItemForm();
             f3.Show();
             this.Hide();
@@ -75,6 +93,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MiscFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Misc Form from the Stats Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
             MiscForm f4 = new MiscForm();
             f4.Show();
             this.Hide();
@@ -82,12 +103,15 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToBossForm_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Stats Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
             BossForm form6 = new();
             form6.Show();
             this.Hide();
-            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
         }
         #endregion
+
         #region Snake's Health and Stamina
         // Health and Stamina along with pointer logic
         private void Plus100HpValue_Click(object sender, EventArgs e)
@@ -231,7 +255,7 @@ namespace MGS3_MC_Cheat_Trainer
         private void EvasionButton_Click(object sender, EventArgs e)
         {
             // First, find the alert memory region to read the timer values
-            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
                 return;
@@ -312,7 +336,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ContinuousMonitoringTimer_Tick(object sender, EventArgs e)
         {
-            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
                 Console.WriteLine("Error: Alert memory region not found.");
@@ -417,7 +441,8 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
-        
+
+
         
     }
 }

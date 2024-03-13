@@ -763,6 +763,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsAndAlertForm";
             Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss";
+            Load += StatsAndAlertForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();

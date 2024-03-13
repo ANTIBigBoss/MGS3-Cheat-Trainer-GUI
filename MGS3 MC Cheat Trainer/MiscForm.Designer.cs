@@ -54,7 +54,19 @@
             textBox1 = new TextBox();
             SnakeJump = new Button();
             SnakesXYZaob = new Button();
+            NopCamo = new Button();
+            RestoreCamo = new Button();
+            Read4ByteBeforeCamoAOB = new Button();
+            LogAOBs = new Button();
+            Plus50Camo = new Button();
+            Minus50Camo = new Button();
+            CamoIndexSlider = new TrackBar();
+            textBox2 = new TextBox();
+            textBox3 = new TextBox();
+            btnReadCamoIndex = new Button();
+            LadderSkip = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -82,9 +94,9 @@
             textBox29.Location = new Point(20, 64);
             textBox29.Multiline = true;
             textBox29.Name = "textBox29";
-            textBox29.PlaceholderText = "Random things for fun (Warning may crash game) ";
+            textBox29.PlaceholderText = "Random things for fun (Warning may crash game)    ";
             textBox29.ReadOnly = true;
-            textBox29.Size = new Size(1125, 30);
+            textBox29.Size = new Size(514, 30);
             textBox29.TabIndex = 480;
             textBox29.TextAlign = HorizontalAlignment.Center;
             // 
@@ -213,7 +225,7 @@
             // ModelSlider
             // 
             ModelSlider.BackColor = Color.FromArgb(36, 44, 36);
-            ModelSlider.Location = new Point(926, 602);
+            ModelSlider.Location = new Point(926, 578);
             ModelSlider.Name = "ModelSlider";
             ModelSlider.Size = new Size(181, 45);
             ModelSlider.TabIndex = 504;
@@ -225,7 +237,7 @@
             textBox5.BorderStyle = BorderStyle.None;
             textBox5.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox5.ForeColor = SystemColors.ButtonHighlight;
-            textBox5.Location = new Point(885, 497);
+            textBox5.Location = new Point(885, 476);
             textBox5.Multiline = true;
             textBox5.Name = "textBox5";
             textBox5.PlaceholderText = "Player/Enemy Models";
@@ -241,7 +253,7 @@
             ResetModelsToNormal.FlatStyle = FlatStyle.Flat;
             ResetModelsToNormal.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ResetModelsToNormal.ImageAlign = ContentAlignment.TopCenter;
-            ResetModelsToNormal.Location = new Point(885, 567);
+            ResetModelsToNormal.Location = new Point(885, 546);
             ResetModelsToNormal.Name = "ResetModelsToNormal";
             ResetModelsToNormal.Size = new Size(260, 29);
             ResetModelsToNormal.TabIndex = 506;
@@ -252,7 +264,7 @@
             // ModelChangeValue
             // 
             ModelChangeValue.Cursor = Cursors.IBeam;
-            ModelChangeValue.Location = new Point(886, 540);
+            ModelChangeValue.Location = new Point(886, 519);
             ModelChangeValue.Name = "ModelChangeValue";
             ModelChangeValue.Size = new Size(32, 23);
             ModelChangeValue.TabIndex = 507;
@@ -264,7 +276,7 @@
             ChangeModelNumber.FlatStyle = FlatStyle.Flat;
             ChangeModelNumber.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeModelNumber.ImageAlign = ContentAlignment.TopCenter;
-            ChangeModelNumber.Location = new Point(926, 536);
+            ChangeModelNumber.Location = new Point(926, 515);
             ChangeModelNumber.Name = "ChangeModelNumber";
             ChangeModelNumber.Size = new Size(219, 29);
             ChangeModelNumber.TabIndex = 508;
@@ -279,7 +291,7 @@
             Minus1ModelValue.FlatStyle = FlatStyle.Flat;
             Minus1ModelValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Minus1ModelValue.ImageAlign = ContentAlignment.TopCenter;
-            Minus1ModelValue.Location = new Point(885, 607);
+            Minus1ModelValue.Location = new Point(885, 583);
             Minus1ModelValue.Name = "Minus1ModelValue";
             Minus1ModelValue.Size = new Size(37, 32);
             Minus1ModelValue.TabIndex = 509;
@@ -294,7 +306,7 @@
             Plus1ModelValue.FlatStyle = FlatStyle.Flat;
             Plus1ModelValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Plus1ModelValue.ImageAlign = ContentAlignment.TopCenter;
-            Plus1ModelValue.Location = new Point(1109, 607);
+            Plus1ModelValue.Location = new Point(1109, 583);
             Plus1ModelValue.Name = "Plus1ModelValue";
             Plus1ModelValue.Size = new Size(36, 32);
             Plus1ModelValue.TabIndex = 510;
@@ -306,7 +318,7 @@
             // 
             ModelCurrentValue.Cursor = Cursors.IBeam;
             ModelCurrentValue.Enabled = false;
-            ModelCurrentValue.Location = new Point(1108, 653);
+            ModelCurrentValue.Location = new Point(1108, 632);
             ModelCurrentValue.Name = "ModelCurrentValue";
             ModelCurrentValue.Size = new Size(34, 23);
             ModelCurrentValue.TabIndex = 511;
@@ -317,7 +329,7 @@
             textBox8.BorderStyle = BorderStyle.None;
             textBox8.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             textBox8.ForeColor = SystemColors.ActiveCaptionText;
-            textBox8.Location = new Point(885, 648);
+            textBox8.Location = new Point(885, 627);
             textBox8.Multiline = true;
             textBox8.Name = "textBox8";
             textBox8.PlaceholderText = "Current Model # value:";
@@ -418,12 +430,182 @@
             SnakesXYZaob.UseVisualStyleBackColor = true;
             SnakesXYZaob.Click += SnakesXYZaob_Click;
             // 
+            // NopCamo
+            // 
+            NopCamo.BackgroundImage = (Image)resources.GetObject("NopCamo.BackgroundImage");
+            NopCamo.Cursor = Cursors.Hand;
+            NopCamo.FlatStyle = FlatStyle.Flat;
+            NopCamo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NopCamo.ImageAlign = ContentAlignment.TopCenter;
+            NopCamo.Location = new Point(566, 473);
+            NopCamo.Name = "NopCamo";
+            NopCamo.Size = new Size(289, 110);
+            NopCamo.TabIndex = 557;
+            NopCamo.Text = "Enable Camo Index changes the game will stop updating your camo index with this (Enables slider and buttons) Camo will be set to 0% when an area changes";
+            NopCamo.UseVisualStyleBackColor = true;
+            NopCamo.Click += NopCamo_Click;
+            // 
+            // RestoreCamo
+            // 
+            RestoreCamo.BackgroundImage = (Image)resources.GetObject("RestoreCamo.BackgroundImage");
+            RestoreCamo.Cursor = Cursors.Hand;
+            RestoreCamo.FlatStyle = FlatStyle.Flat;
+            RestoreCamo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            RestoreCamo.ImageAlign = ContentAlignment.TopCenter;
+            RestoreCamo.Location = new Point(566, 632);
+            RestoreCamo.Name = "RestoreCamo";
+            RestoreCamo.Size = new Size(289, 61);
+            RestoreCamo.TabIndex = 558;
+            RestoreCamo.Text = "Restore Camo Index to normal (Locks the slider and buttons)";
+            RestoreCamo.UseVisualStyleBackColor = true;
+            RestoreCamo.Click += RestoreCamo_Click;
+            // 
+            // Read4ByteBeforeCamoAOB
+            // 
+            Read4ByteBeforeCamoAOB.BackgroundImage = (Image)resources.GetObject("Read4ByteBeforeCamoAOB.BackgroundImage");
+            Read4ByteBeforeCamoAOB.Cursor = Cursors.Hand;
+            Read4ByteBeforeCamoAOB.FlatStyle = FlatStyle.Flat;
+            Read4ByteBeforeCamoAOB.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            Read4ByteBeforeCamoAOB.ImageAlign = ContentAlignment.TopCenter;
+            Read4ByteBeforeCamoAOB.Location = new Point(566, 347);
+            Read4ByteBeforeCamoAOB.Name = "Read4ByteBeforeCamoAOB";
+            Read4ByteBeforeCamoAOB.Size = new Size(289, 80);
+            Read4ByteBeforeCamoAOB.TabIndex = 559;
+            Read4ByteBeforeCamoAOB.Text = "Read 4 Bytes Before Camo Index AOB";
+            Read4ByteBeforeCamoAOB.UseVisualStyleBackColor = true;
+            Read4ByteBeforeCamoAOB.Click += Read4ByteBeforeCamoAOB_Click;
+            // 
+            // LogAOBs
+            // 
+            LogAOBs.BackgroundImage = (Image)resources.GetObject("LogAOBs.BackgroundImage");
+            LogAOBs.Cursor = Cursors.Hand;
+            LogAOBs.FlatStyle = FlatStyle.Flat;
+            LogAOBs.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            LogAOBs.ImageAlign = ContentAlignment.TopCenter;
+            LogAOBs.Location = new Point(904, 65);
+            LogAOBs.Name = "LogAOBs";
+            LogAOBs.Size = new Size(241, 29);
+            LogAOBs.TabIndex = 560;
+            LogAOBs.Text = "Log Data for Debug";
+            LogAOBs.UseVisualStyleBackColor = true;
+            LogAOBs.Click += LogAOBs_Click;
+            // 
+            // Plus50Camo
+            // 
+            Plus50Camo.BackgroundImage = (Image)resources.GetObject("Plus50Camo.BackgroundImage");
+            Plus50Camo.Cursor = Cursors.Hand;
+            Plus50Camo.FlatStyle = FlatStyle.Flat;
+            Plus50Camo.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Plus50Camo.ImageAlign = ContentAlignment.TopCenter;
+            Plus50Camo.Location = new Point(806, 594);
+            Plus50Camo.Name = "Plus50Camo";
+            Plus50Camo.Size = new Size(49, 32);
+            Plus50Camo.TabIndex = 563;
+            Plus50Camo.Text = "+ 1";
+            Plus50Camo.UseVisualStyleBackColor = true;
+            Plus50Camo.Click += Plus50Camo_Click;
+            // 
+            // Minus50Camo
+            // 
+            Minus50Camo.BackgroundImage = (Image)resources.GetObject("Minus50Camo.BackgroundImage");
+            Minus50Camo.Cursor = Cursors.Hand;
+            Minus50Camo.FlatStyle = FlatStyle.Flat;
+            Minus50Camo.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Minus50Camo.ImageAlign = ContentAlignment.TopCenter;
+            Minus50Camo.Location = new Point(566, 594);
+            Minus50Camo.Name = "Minus50Camo";
+            Minus50Camo.Size = new Size(49, 32);
+            Minus50Camo.TabIndex = 562;
+            Minus50Camo.Text = "- 1";
+            Minus50Camo.UseVisualStyleBackColor = true;
+            Minus50Camo.Click += Minus50Camo_Click;
+            // 
+            // CamoIndexSlider
+            // 
+            CamoIndexSlider.BackColor = Color.FromArgb(36, 44, 36);
+            CamoIndexSlider.Location = new Point(619, 589);
+            CamoIndexSlider.Name = "CamoIndexSlider";
+            CamoIndexSlider.Size = new Size(181, 45);
+            CamoIndexSlider.TabIndex = 561;
+            CamoIndexSlider.Scroll += CamoIndexSlider_Scroll;
+            // 
+            // textBox2
+            // 
+            textBox2.BackColor = Color.Black;
+            textBox2.BorderStyle = BorderStyle.None;
+            textBox2.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox2.ForeColor = SystemColors.ButtonHighlight;
+            textBox2.Location = new Point(566, 433);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.PlaceholderText = "Camo Index";
+            textBox2.ReadOnly = true;
+            textBox2.Size = new Size(289, 34);
+            textBox2.TabIndex = 564;
+            textBox2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // textBox3
+            // 
+            textBox3.BackColor = SystemColors.ActiveCaptionText;
+            textBox3.BorderStyle = BorderStyle.None;
+            textBox3.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox3.ForeColor = SystemColors.ActiveCaptionText;
+            textBox3.Location = new Point(522, 64);
+            textBox3.Multiline = true;
+            textBox3.Name = "textBox3";
+            textBox3.PlaceholderText = "Click here to generate information for a log ->";
+            textBox3.ReadOnly = true;
+            textBox3.Size = new Size(380, 30);
+            textBox3.TabIndex = 565;
+            textBox3.TextAlign = HorizontalAlignment.Center;
+            // 
+            // btnReadCamoIndex
+            // 
+            btnReadCamoIndex.BackgroundImage = (Image)resources.GetObject("btnReadCamoIndex.BackgroundImage");
+            btnReadCamoIndex.Cursor = Cursors.Hand;
+            btnReadCamoIndex.FlatStyle = FlatStyle.Flat;
+            btnReadCamoIndex.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            btnReadCamoIndex.ImageAlign = ContentAlignment.TopCenter;
+            btnReadCamoIndex.Location = new Point(566, 261);
+            btnReadCamoIndex.Name = "btnReadCamoIndex";
+            btnReadCamoIndex.Size = new Size(289, 80);
+            btnReadCamoIndex.TabIndex = 566;
+            btnReadCamoIndex.Text = "Read Camo Index Value";
+            btnReadCamoIndex.UseVisualStyleBackColor = true;
+            btnReadCamoIndex.Click += btnReadCamoIndex_Click;
+            // 
+            // LadderSkip
+            // 
+            LadderSkip.BackgroundImage = (Image)resources.GetObject("LadderSkip.BackgroundImage");
+            LadderSkip.Cursor = Cursors.Hand;
+            LadderSkip.FlatStyle = FlatStyle.Flat;
+            LadderSkip.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            LadderSkip.ImageAlign = ContentAlignment.TopCenter;
+            LadderSkip.Location = new Point(28, 415);
+            LadderSkip.Name = "LadderSkip";
+            LadderSkip.Size = new Size(241, 179);
+            LadderSkip.TabIndex = 567;
+            LadderSkip.Text = resources.GetString("LadderSkip.Text");
+            LadderSkip.UseVisualStyleBackColor = true;
+            LadderSkip.Click += LadderSkip_Click_1;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(LadderSkip);
+            Controls.Add(btnReadCamoIndex);
+            Controls.Add(textBox3);
+            Controls.Add(textBox2);
+            Controls.Add(Plus50Camo);
+            Controls.Add(Minus50Camo);
+            Controls.Add(CamoIndexSlider);
+            Controls.Add(LogAOBs);
+            Controls.Add(Read4ByteBeforeCamoAOB);
+            Controls.Add(RestoreCamo);
+            Controls.Add(NopCamo);
             Controls.Add(SnakesXYZaob);
             Controls.Add(SnakeJump);
             Controls.Add(textBox1);
@@ -455,6 +637,7 @@
             Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -485,5 +668,16 @@
         private TextBox textBox1;
         private Button SnakeJump;
         private Button SnakesXYZaob;
+        private Button NopCamo;
+        private Button RestoreCamo;
+        private Button Read4ByteBeforeCamoAOB;
+        private Button LogAOBs;
+        private Button Plus50Camo;
+        private Button Minus50Camo;
+        private TrackBar CamoIndexSlider;
+        private TextBox textBox2;
+        private TextBox textBox3;
+        private Button btnReadCamoIndex;
+        private Button LadderSkip;
     }
 }

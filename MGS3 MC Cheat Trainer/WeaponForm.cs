@@ -12,6 +12,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WeaponForm_Load(object sender, EventArgs e)
         {
+            this.Location = MemoryManager.GetLastFormLocation();
 
             for (int i = 0; i < AllWeaponsChecklist.Items.Count; i++)
             {
@@ -1141,6 +1142,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void button6_Click(object sender, EventArgs e)
         {
             ItemForm form2 = new ItemForm();
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
             form2.Show();
             this.Hide();
             LoggingManager.Instance.Log("Navigating to Item Form from the Weapon Form");
@@ -1149,6 +1152,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void button5_Click(object sender, EventArgs e)
         {
             CamoForm form3 = new CamoForm();
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
             form3.Show();
             this.Hide();
             LoggingManager.Instance.Log("Navigating to Camo Form from the Weapon Form");
@@ -1157,6 +1162,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void button4_Click(object sender, EventArgs e)
         {
             MiscForm form4 = new MiscForm();
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
             form4.Show();
             this.Hide();
             LoggingManager.Instance.Log("Navigating to Misc Form from the Weapon Form");
@@ -1165,6 +1172,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void button3_Click(object sender, EventArgs e)
         {
             StatsAndAlertForm form5 = new();
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
             form5.Show();
             this.Hide();
             LoggingManager.Instance.Log("Navigating to Stats and Alert Form from the Weapon Form");
@@ -1173,6 +1182,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void button2_Click(object sender, EventArgs e)
         {
             BossForm form6 = new();
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
             form6.Show();
             this.Hide();
             LoggingManager.Instance.Log("Navigating to Boss Form from the Weapon Form");

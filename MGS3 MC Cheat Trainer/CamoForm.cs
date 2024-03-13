@@ -5,28 +5,6 @@ namespace MGS3_MC_Cheat_Trainer
     public partial class CamoForm : Form
     {
 
-        const string PROCESS_NAME = "METAL GEAR SOLID3";
-        static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
-
-        // PInvoke declarations
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref short lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-
-        public static extern bool ReadProcessMemory(
-        IntPtr hProcess,
-        IntPtr lpBaseAddress,
-        out short lpBuffer,
-        uint size,
-        out int lpNumberOfBytesRead);
-
-        [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr hObject);
-
         public CamoForm()
         {
             InitializeComponent();
@@ -35,11 +13,14 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void Form3_Load(object sender, EventArgs e)
         {
-
+            this.Location = MemoryManager.GetLastFormLocation();
         }
 
         private void WeaponFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Weapon Form from the Item Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
             WeaponForm form1 = new WeaponForm();
             form1.Show();
             this.Hide();
@@ -47,6 +28,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button1_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Item Form from the Camo Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
             ItemForm form2 = new ItemForm();
             form2.Show();
             this.Hide();
@@ -59,6 +43,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button3_Click(object sender, EventArgs e) // Load form4
         {
+            LoggingManager.Instance.Log("Navigating to Misc Form from the Camo Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
             MiscForm form4 = new MiscForm();
             form4.Show();
             this.Hide();
@@ -66,6 +53,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void HealthFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Health Form from the Camo Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "HealthForm");
             StatsAndAlertForm form5 = new StatsAndAlertForm();
             form5.Show();
             this.Hide();
@@ -73,6 +63,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void BossFormSwap_Click(object sender, EventArgs e)
         {
+            LoggingManager.Instance.Log("Navigating to Boss Form from the Camo Form");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
             BossForm form6 = new();
             form6.Show();
             this.Hide();

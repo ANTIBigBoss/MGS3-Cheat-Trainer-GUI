@@ -15,6 +15,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void BossForm_Load(object sender, EventArgs e)
         {
+            this.Location = MemoryManager.GetLastFormLocation();
+
             ConsistencyCheckTimer.Start();
             OcelotHealthSlider.Maximum = 3400; // Max health
             OcelotHealthSlider.Minimum = 1; // Min health
@@ -110,7 +112,7 @@ namespace MGS3_MC_Cheat_Trainer
                     // can locate the issue easier than the user being like "lol trainer doesn't work"
                     LoggingManager.Instance.Log("Looking for The Pain's AOB");
                     PainTextbox.Text = "Looking for The Pain Please wait...";
-                    BossManager.FindThePainAOB(); // Pain and Fear share the same AOB
+                    BossManager.FindTheFearAOB(); // Pain and Fear share the same AOB
                     PainHealthSlider.Enabled = true;
                     PainStaminaSlider.Enabled = true;
                     Pain0HP.Enabled = true;
@@ -465,6 +467,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WeaponFormSwap_Click(object sender, EventArgs e)
         {
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
             WeaponForm form1 = new WeaponForm();
             form1.Show();
             this.Hide();
@@ -473,6 +477,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ItemFormSwap_Click(object sender, EventArgs e)
         {
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
             ItemForm form2 = new ItemForm();
             form2.Show();
             this.Hide();
@@ -481,6 +487,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void CamoFormSwap_Click(object sender, EventArgs e)
         {
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
             CamoForm form3 = new CamoForm();
             form3.Show();
             this.Hide();
@@ -489,6 +497,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MiscFormSwap_Click(object sender, EventArgs e)
         {
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
             MiscForm form4 = new MiscForm();
             form4.Show();
             this.Hide();
@@ -497,6 +507,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void HealthFormSwap_Click(object sender, EventArgs e)
         {
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
             StatsAndAlertForm form5 = new StatsAndAlertForm();
             form5.Show();
             this.Hide();

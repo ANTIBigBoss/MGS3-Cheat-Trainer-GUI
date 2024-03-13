@@ -23,6 +23,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void WeaponFormSwap_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Weapon form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
             WeaponForm form1 = new();
             form1.Show();
             this.Hide();
@@ -31,6 +33,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void ItemFormSwap_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Item form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
             ItemForm form2 = new();
             form2.Show();
             this.Hide();
@@ -39,6 +43,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void CamoFormSwap_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Camo form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
             CamoForm form3 = new();
             form3.Show();
             this.Hide();
@@ -47,6 +53,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void MiscFormSwap_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Misc form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
             MiscForm form4 = new();
             form4.Show();
             this.Hide();
@@ -55,6 +63,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void HealthFormSwap_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
             StatsAndAlertForm form5 = new();
             form5.Show();
             this.Hide();
@@ -63,6 +73,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void BossFormSwap_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Boss form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
             BossForm form6 = new();
             form6.Show();
             this.Hide();
@@ -71,6 +83,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void BossRefactorForm_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("User is changing to the Boss form from the Main Menu form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossRefactorForm");
             DebugDevForm form7 = new();
             form7.Show();
             this.Hide();
@@ -84,8 +98,10 @@ namespace MGS3_MC_Cheat_Trainer
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
             LoggingManager.Instance.Log("Start of logging for this session.\nApplication started successfully.\n");
+            AlertManager.StartLocationTracking();
+            LoggingManager.Instance.Log("Now Tracking the player's map location.\n");
         }
 
-        
+
     }
 }
