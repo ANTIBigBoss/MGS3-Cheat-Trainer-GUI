@@ -1,13 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms; // For MessageBox
+// Use MemoryManager
+using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
 {
     public class StringManager
     {
+        private static StringManager instance;
+        private static readonly object lockObj = new object();
+
+        // Private constructor to prevent external instantiation
+        private StringManager() { }
+
+        // Public property to access the instance
+        public static StringManager Instance
+        {
+            get
+            {
+                lock (lockObj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new StringManager();
+                    }
+                    return instance;
+                }
+            }
+        }
 
         /* List of strings for areas of the game that can be read to use for conditional checks 
            A few things to note:
@@ -199,8 +221,86 @@ namespace MGS3_MC_Cheat_Trainer
             { LocationString.s211a, "Wig: Interior" },
             { LocationString.ending, "Credits" }
         };
+
+        // Similar to an AOB scan but using the strings above instead
+        public string FindLocationStringDirectlyInRange()
+        {
+            Process process = GetMGS3Process();
+            if (process == null)
+            {
+                return "Game process not found.";
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            IntPtr baseAddress = process.MainModule.BaseAddress;
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1C00000);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1D00000);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            foreach (StringManager.LocationString location in Enum.GetValues(typeof(StringManager.LocationString)))
+            {
+                var locationString = location.ToString();
+                byte[] pattern = Encoding.ASCII.GetBytes(locationString);
+                string mask = new string('x', pattern.Length);
+
+                IntPtr foundAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size, pattern, mask);
+                if (foundAddress != IntPtr.Zero)
+                {
+                    string areaName = StringManager.LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+
+                    // Checking for cutscene indicators
+                    foreach (var suffix in new[] { "_0", "_1" })
+                    {
+                        byte[] cutscenePattern = Encoding.ASCII.GetBytes(locationString + suffix);
+                        IntPtr cutsceneFoundAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size, cutscenePattern, mask + "x" + "x");
+
+                        if (cutsceneFoundAddress != IntPtr.Zero)
+                        {
+                            NativeMethods.CloseHandle(processHandle);
+                            return $"Location String: {locationString}{suffix} (Cutscene) \nArea Name: {areaName} \nMemory Address: {cutsceneFoundAddress.ToString("X")}";
+                        }
+                    }
+
+                    NativeMethods.CloseHandle(processHandle);
+                    return $"Location String: {locationString} \nArea Name: {areaName} \nMemory Address: {foundAddress.ToString("X")}";
+                }
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+            return "No Location String found in specified range.";
+        }
+
+        /* Same as the above function but only to find the location string it 
+           currently is only used in the BossForm use the player's area to 
+           know which boss they can tamper with for the UI elements */
+        public string ExtractLocationStringFromResult(string result)
+        {
+            string[] parts = result.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length > 0)
+            {
+                string locationStringPart = parts[0];
+                string[] locationStringParts = locationStringPart.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                if (locationStringParts.Length > 1)
+                {
+                    string locationString = locationStringParts[1].Trim();
+
+                    if (locationString.EndsWith("_0") || locationString.EndsWith("_1"))
+                    {
+                        return locationString + " (Cutscene)";
+                    }
+                    else
+                    {
+                        return locationString;
+                    }
+                }
+            }
+            return "Unknown";
+        }
     }
 }
 
+
+// I think the best address was further back in memory so the update might've
+// made things indirectly more consistent for finding the map name
 // 1.4.1 "METAL GEAR SOLID3.exe"+1D4AF40
-// 1.5.0 
+// 1.5.0 "METAL GEAR SOLID3.exe"+1CFB200

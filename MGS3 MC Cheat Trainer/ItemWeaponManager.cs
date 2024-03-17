@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -21,9 +16,11 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 // Assuming the toggle address is the same as the weapon's base address (adjust as needed)
                 MemoryManager.Instance.WriteShortToMemory(weaponAddress, stateValue);
+                LoggingManager.Instance.Log($"Toggled {weapon.Name} {(enable ? "on" : "off")}");
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -38,9 +35,11 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 // Modify the short value at the item's address
                 MemoryManager.Instance.WriteShortToMemory(itemAddress, stateValue);
+                LoggingManager.Instance.Log($"Toggled {item.Name} {(enable ? "on" : "off")}");
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {item.Name}");
             }
         }
 
@@ -67,9 +66,11 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {item.Name}");
             }
         }
 
+        // Should try and implement in the ItemForm eventually
         internal static void ModifyMaxItemCapacity(Item item, string itemCountStr)
         {
             short newCapacity;
@@ -100,6 +101,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {item.Name}");
             }
         }
 
@@ -122,6 +124,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -142,6 +145,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -168,6 +172,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -195,6 +200,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -221,6 +227,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -249,6 +256,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
             }
         }
 
@@ -263,9 +271,11 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 // Calculate the address for the suppressor toggle
                 suppressorAddress = IntPtr.Add(weaponAddress, suppressableWeapon.SuppressorToggleOffset.ToInt32());
+                LoggingManager.Instance.Log($"Suppressor address: {suppressorAddress}");
             }
             else
             {
+                LoggingManager.Instance.Log($"Failed to retrieve address for {suppressableWeapon.Name}");
                 return;
             }
 
@@ -277,6 +287,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch
             {
+                LoggingManager.Instance.Log("Failed to retrieve MGS3 process");
                 return;
             }
 
@@ -285,11 +296,13 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (!ReadWriteToggledSuppressorValue(processHandle, suppressorAddress))
             {
+                LoggingManager.Instance.Log($"Failed to toggle suppressor for {suppressableWeapon.Name}");
             }
 
             NativeMethods.CloseHandle(processHandle);
         }
 
+        // Not much use for these functions since I release V2.0 of the trainer, but it feels like a waste to remove it.
         internal static void AdjustSuppressorCapacity(Item suppressorItem, bool increaseCapacity)
         {
             IntPtr suppressorAddress = ItemAddresses.GetAddress(suppressorItem.Index, MemoryManager.Instance);
@@ -323,12 +336,38 @@ namespace MGS3_MC_Cheat_Trainer
             int bytesWritten = MemoryManager.WriteShortToMemory(processHandle, suppressorAddress, (short)newValue);
             if (bytesWritten != sizeof(short))
             {
+                LoggingManager.Instance.Log($"Failed to change suppressor capacity for {suppressorItem.Name}");
             }
             else
             {
+                LoggingManager.Instance.Log($"Changed suppressor capacity to {newValue}");
             }
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public static bool ReadWriteToggledSuppressorValue(IntPtr processHandle, IntPtr address)
+        {
+            bool success = NativeMethods.ReadProcessMemory(processHandle, address, out short currentValue, sizeof(short), out int bytesRead);
+            if (!success || bytesRead != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read suppressor value at {address}");
+                return false;
+            }
+
+            short valueToWrite = (currentValue == 16) ? (short)0 : (short)16;
+
+            try
+            {
+                int bytesWritten = WriteShortToMemory(processHandle, address, valueToWrite);
+                LoggingManager.Instance.Log($"Toggled suppressor to {(valueToWrite == 16 ? "on" : "off")}");
+                return bytesWritten == sizeof(short);
+            }
+            catch
+            {
+                LoggingManager.Instance.Log($"Failed to write suppressor value at {address}");
+                return false;
+            }
         }
     }
 }

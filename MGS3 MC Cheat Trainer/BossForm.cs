@@ -81,8 +81,8 @@ namespace MGS3_MC_Cheat_Trainer
         // Hold the switch case in a function instead to make it accessible outside of the form load
         private void SearchForBossAOB()
         {
-            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
 
             // Make a switch statement for the result string
             switch (locationString)
@@ -347,7 +347,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ConsistencyCheckTimer_Tick(object sender, EventArgs e)
         {
-            string newLocation = MemoryManager.Instance.ExtractLocationStringFromResult(MemoryManager.Instance.FindLocationStringDirectlyInRange());
+            string newLocation = StringManager.Instance.ExtractLocationStringFromResult(StringManager.Instance.FindLocationStringDirectlyInRange());
 
             // Check if the area has changed
             if (newLocation != currentLocation)
@@ -704,8 +704,8 @@ namespace MGS3_MC_Cheat_Trainer
     private void End0HP_Click(object sender, EventArgs e)
         {
 
-            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
                 
@@ -733,8 +733,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void End0Stam_Click(object sender, EventArgs e)
         {
 
-            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
                 BossManager.WriteTheEnds063aStamina(0x0001);
@@ -761,8 +761,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void EndHealthSlider_Scroll(object sender, EventArgs e)
         {
 
-            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
                 short newHealthValue = (short)EndHealthSlider.Value;
@@ -807,8 +807,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void EndStaminaSlider_Scroll(object sender, EventArgs e)
         {
 
-            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
                 short newStaminaValue = (short)EndStaminaSlider.Value;
@@ -852,8 +852,8 @@ namespace MGS3_MC_Cheat_Trainer
         private void EndTimer_Tick(object sender, EventArgs e)
         {
 
-            string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = MemoryManager.Instance.ExtractLocationStringFromResult(result);
+            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
             if (locationString == "s063a")
             {
                 EndHealthSlider.Scroll -= EndHealthSlider_Scroll;

@@ -4,6 +4,7 @@ using static MGS3_MC_Cheat_Trainer.MemoryManager;
 using static MGS3_MC_Cheat_Trainer.Constants;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Buffers;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -55,7 +56,7 @@ namespace MGS3_MC_Cheat_Trainer
         private static void LocationChangeTimer_Tick(object sender, EventArgs e)
         {
             // Directly use the result from FindLocationStringDirectlyInRange, which includes all details.
-            string currentLocationInfo = MemoryManager.Instance.FindLocationStringDirectlyInRange();
+            string currentLocationInfo = StringManager.Instance.FindLocationStringDirectlyInRange();
 
             if (currentLocationInfo != _lastKnownLocation)
             {
@@ -77,10 +78,8 @@ namespace MGS3_MC_Cheat_Trainer
         private static void AlertTimer_Tick(object sender, EventArgs e)
         {
             // Assuming the alert memory region is already found and stored
-            var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
-            var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAob("AlertMemoryRegion");
 
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
 
             if (alertMemoryRegion != IntPtr.Zero)
             {
@@ -126,7 +125,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (!infiniteEvasionEnabled) return;
 
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAob("AlertMemoryRegion");
             if (alertMemoryRegion == IntPtr.Zero) return;
 
             short alertTimerValue = ReadAlertTimerValue(alertMemoryRegion);
@@ -217,10 +216,8 @@ namespace MGS3_MC_Cheat_Trainer
         internal static void SetEvasionBits()
         {
             MemoryManager memoryManager = new MemoryManager();
-            var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
-            var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
+            IntPtr alertMemoryRegion = memoryManager.FindAob("AlertMemoryRegion");
 
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
             if (alertMemoryRegion == IntPtr.Zero)
             {
 
@@ -243,10 +240,8 @@ namespace MGS3_MC_Cheat_Trainer
         internal static void RemoveEvasionAndCaution()
         {
             MemoryManager memoryManager = new MemoryManager();
-            var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
-            var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
 
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
+            IntPtr alertMemoryRegion = memoryManager.FindAob("AlertMemoryRegion");
             if (alertMemoryRegion == IntPtr.Zero)
             {
 
@@ -268,31 +263,34 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void TriggerAlert(AlertModes alertMode)
         {
-            MemoryManager memoryManager = new MemoryManager();
-            var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
-            var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
+            MemoryManager memoryManager = MemoryManager.Instance; // Use the singleton instance of MemoryManager
 
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
+            // Use FindAob method and specify the key for the alert memory region
+            IntPtr alertMemoryRegion = memoryManager.FindAob("AlertMemoryRegion");
             if (alertMemoryRegion == IntPtr.Zero)
             {
-
+                MessageBox.Show("Failed to find alert memory region.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             // The alert triggering address is 64 bytes after the found region
+            // Adjusted to 78 based on your original code, but make sure this offset is correct
             IntPtr triggerAddress = IntPtr.Add(alertMemoryRegion, 78);
 
             // Set the alert value based on the provided alertMode
             byte alertValue = (byte)alertMode;
 
+            // Write the alert value to the memory
             MemoryManager.WriteByteValueToMemory(triggerAddress, alertValue);
 
             if (alertMode == AlertModes.Evasion)
             {
                 // Set the evasion bits using your existing logic
+                // Ensure this method exists and is correctly implemented
                 SetEvasionBits();
             }
         }
+
 
         public const int AlertTimerOffset = -6;
         public const int EvasionTimerOffset = 18;

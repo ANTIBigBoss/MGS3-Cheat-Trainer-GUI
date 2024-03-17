@@ -15,6 +15,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static MemoryManager Instance => _instance ?? (_instance = new MemoryManager());
 
+        #region Form Location Saving Functions
+
         // This will save form location in memory for when a new form is opened so each form opens relative to the last form
         public static void LogFormLocation(Form form, string formName)
         {
@@ -33,6 +35,10 @@ namespace MGS3_MC_Cheat_Trainer
         {
             return lastFormLocation;
         }
+
+        #endregion
+
+        #region DllImports
 
         // PInvoke declarations
         public static class NativeMethods
@@ -61,7 +67,11 @@ namespace MGS3_MC_Cheat_Trainer
 
         }
 
-        //static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
+        #endregion
+
+        #region Base Address and Process Handling
+
+        // This gets the base address of the game from Constants.cs which is METAL GEAR SOLID3.exe
         public static IntPtr PROCESS_BASE_ADDRESS = IntPtr.Zero;
 
         public static Process GetMGS3Process()
@@ -94,6 +104,149 @@ namespace MGS3_MC_Cheat_Trainer
             return NativeMethods.ReadProcessMemory(processHandle, address, buffer, size, out bytesRead);
         }
 
+        #endregion
+
+        #region Memory Reading
+
+        // Expand this for documentation on how to utilize the read operations
+        #region Read Operations Explanation 
+        /*
+        Usage looks like: byte value = MemoryManager.Instance.ReadByteFromMemory(processHandle, address);
+        IntPtr processHandle is the game process and
+        IntPtr address is the address to modify (Typically somewhere an AOB is pointing to)
+        Using Alert triggering as an example the AOB is found like this:
+        IntPtr alertMemoryRegion = memoryManager.FindAob("AlertMemoryRegion");
+        Then hypothetically you'd go forward or backward using .Add or .Subtract to get to where you want to read like so:
+        IntPtr modifyAddress = IntPtr.Add(alertMemoryRegion, 78); // We take the variable alertMemoryRegion and add 78 to it
+        Then you'd read the byte like so:
+        byte value = MemoryManager.Instance.ReadByteFromMemory(processHandle, modifyAddress);
+        Then you can tie it into a button event to read the value and display it or log it like so:
+        LoggingManager.Instance.Log($"Alert value: {value}");
+        MessageBox.Show($"Alert value: {value}", "Alert Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        This logic also remains the same for reading other data types like short, int, and float like so:
+        short value = MemoryManager.Instance.ReadShortFromMemory(processHandle, modifyAddress);
+        int value = MemoryManager.Instance.ReadMemoryBytes(processHandle, modifyAddress); // Can be used for anything larger than 2 bytes
+        float value = MemoryManager.Instance.ReadFloatFromMemory(processHandle, modifyAddress);
+        The only difference is the data type and the function used to read it.
+        Calling the function in a form would remain the exact same as the byte example.
+        */
+        #endregion
+
+        // Haven't had much usage for single byte reads, but it's here if needed.
+        public static byte ReadByteFromMemory(IntPtr processHandle, IntPtr address)
+        {
+            byte[] buffer = new byte[1];
+            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
+            {
+                return buffer[0];
+            }
+
+            throw new IOException("Failed to read byte from memory.");
+        }
+
+        public static short ReadShortFromMemory(IntPtr processHandle, IntPtr address)
+        {
+            if (NativeMethods.ReadProcessMemory(processHandle, address, out short value, sizeof(short), out int bytesRead))
+            {
+                if (bytesRead == sizeof(short))
+                {
+                    return value;
+                }
+            }
+            // return -1 is to ensure we don't crash the program if the read fails.
+            // i.e. if you don't find a boss short value since you're not fighting that particular boss.
+            // There's probably a better way to handle this but this works for now.
+            return -1;
+        }
+
+        // Similar to reading a 4 byte value but this is if the data holds in a floating-point value.
+        // To read floats in sequence you could do this:
+        // float value1 = MemoryManager.Instance.ReadFloatFromMemory(processHandle, modifyAddress);
+        // float value2 = MemoryManager.Instance.ReadFloatFromMemory(processHandle, IntPtr.Add(modifyAddress, 4));
+        // float value3 = MemoryManager.Instance.ReadFloatFromMemory(processHandle, IntPtr.Add(modifyAddress, 8));
+        // The (modifyAddress, 4) and (modifyAddress, 8) are the offsets from the original address.
+        // This has only been useful for me for Xyz coordinates.
+        public static float ReadFloatFromMemory(IntPtr processHandle, IntPtr address)
+        {
+            byte[] buffer = new byte[4];
+            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
+            {
+                return BitConverter.ToSingle(buffer, 0);
+            }
+
+            return -1;
+        }
+
+        // Alternatively you could read all 3 floats at once like so:
+        // float[] values = MemoryManager.Instance.ReadMemoryBytes(processHandle, modifyAddress, 12);
+
+        public static byte[] ReadMemoryBytes(IntPtr processHandle, IntPtr address, int bytesToRead)
+        {
+            // bytesToRead is the number of bytes to read you'll since in single byte reads it's always 1
+            // but this could also be used in 4 byte or 8 byte reads like so:
+            // byte[] buffer = ReadMemoryBytes(processHandle, address, 4);
+            // byte[] buffer = ReadMemoryBytes(processHandle, address, 8);
+            byte[] buffer = new byte[bytesToRead];
+            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
+            {
+                return buffer;
+            }
+            return null;
+        }
+
+        #endregion
+
+        #region Memory Writing
+
+        #region Write Operations Explanation
+        /*
+        Basic usage is as follows:
+        For Bitwise operations like setting specific bits in a short value:
+        short value = MemoryManager.SetSpecificBits(value, 0, 3, 1);
+        Single byte writes: MemoryManager.WriteByteValueToMemory(address, value);
+        Short writes: MemoryManager.WriteShortToMemory(address, value);
+        Int writes: MemoryManager.WriteIntToMemory(processHandle, address, value);
+        Float writes: MemoryManager.WriteFloatToMemory(processHandle, address, value);
+        
+        You can also use a read operation to validate the write like so:
+        byte value = MemoryManager.ReadByteFromMemory(processHandle, address);
+        if (value == 1)
+        {
+            LoggingManager.Instance.Log("Write successful.");
+            // You can also use MessageBox.Show if you want to let the user know write was successful.
+            // and to show what value was written. I wouldn't recommend doing this for every write
+            // as many messageboxes can get annoying but it's useful for debugging.
+            MessageBox.Show($"Write successful. Effect value is now: {value}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        else
+        {
+            LoggingManager.Instance.Log("Write failed.");
+            // You can use MessageBox.Show if you want to let the user know write failed.
+            MessageBox.Show("Write failed. At this effect", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // This is also useful if you know probable actions the user might do you can advise them how to fix it.
+        }
+        
+        Setting Bits isn't something I have a read for also so here is an explanation of how to use it:
+        I made this since there was no native way to set an evasion status so I found a really roundabout way to do it
+        What this function does is it takes a short value and sets specific bits in it
+        To break it down: maskLength is the length of the mask, mask is the mask itself, and valueToSet is the value to set
+        The function then takes the current value and sets the bits in the mask to the valueToSet
+        This is useful for setting specific bits in a short value like the evasion status
+        In AlertManager.cs SetEvasionBits is a full example of how to use this function
+        for a short explanation this code snippet should help explain how to use it:
+        short currentValue = MemoryManager.ReadShortFromMemory(processHandle, modifyAddress);
+        short modifiedValue = SetSpecificBits(currentValue, 5, 14, 596); / 5 = start bit, 14 = end bit, and 596 = value to set
+        MemoryManager.WriteShortToMemory(processHandle, modifyAddress, modifiedValue); 
+        */
+        #endregion
+        public static short SetSpecificBits(short currentValue, int startBit, int endBit, int valueToSet)
+        {
+            int maskLength = endBit - startBit + 1;
+            int mask = ((1 << maskLength) - 1) << startBit;
+            return (short)((currentValue & ~mask) | ((valueToSet << startBit) & mask));
+        }
+
+        // Like the read byte method, haven't had much usage for single byte writes, but it's here if needed.
         public static void ModifyByteValueObject(IntPtr objectOffset, byte value)
         {
             Process process;
@@ -123,40 +276,85 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
         }
 
-        public static bool ReadWriteToggledSuppressorValue(IntPtr processHandle, IntPtr address)
+        public bool WriteIntToMemory(IntPtr processHandle, IntPtr address, int value)
         {
-            bool success = NativeMethods.ReadProcessMemory(processHandle, address, out short currentValue, sizeof(short), out int bytesRead);
-            if (!success || bytesRead != sizeof(short))
-            {
-                return false;
-            }
+            // Convert int to byte array
+            byte[] bytes = BitConverter.GetBytes(value);
 
-            short valueToWrite = (currentValue == 16) ? (short)0 : (short)16;
-            //success = NativeMethods.WriteProcessMemory(processHandle, address, ref valueToWrite, sizeof(short), out int bytesWritten);
-            //return success && bytesWritten == sizeof(short);
-
-            try
-            {
-                int bytesWritten = WriteShortToMemory(processHandle, address, valueToWrite);
-                return bytesWritten == sizeof(short);
-            }
-            catch
-            {
-                return false;
-            }
+            // Call WriteProcessMemory
+            return NativeMethods.WriteProcessMemory(processHandle, address, bytes, (uint)bytes.Length, out _);
         }
 
-        public static float ReadFloatFromMemory(IntPtr processHandle, IntPtr address)
+        public void WriteShortToMemory(IntPtr address, short value)
         {
-            byte[] buffer = new byte[4];
-            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
+            Process process = GetMGS3Process();
+            if (process == null)
             {
-                return BitConverter.ToSingle(buffer, 0);
+                return;
             }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+
+                return;
+            }
+
+            bool success = NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten);
+            if (!success || bytesWritten != sizeof(short))
+            {
+
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
+        // I think I made this write specifically for bosses to avoid crashes when writing to memory
+        // Should look into it and see if these functions can be combined
+        public static int WriteShortToMemory(IntPtr processHandle, IntPtr address, short value)
+        {
+            if (NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten))
+                return bytesWritten;
 
             return -1;
         }
 
+        public static void WriteByteValueToMemory(IntPtr address, byte value)
+        {
+            Process process = GetMGS3Process();
+            if (process == null)
+            {
+                return;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+
+                return;
+            }
+
+            bool success = NativeMethods.WriteProcessMemory(processHandle, address, new byte[] { value }, 1, out int bytesWritten);
+            if (!success || bytesWritten != 1)
+            {
+
+            }
+
+            NativeMethods.CloseHandle(processHandle);
+        }
+
+        
+        // If you have a float value you want to write to memory you can use this function like so:
+        // MemoryManager.WriteFloatToMemory(processHandle, modifyAddress, value);
+
+        // That being said sometimes you might have 3 or more float values you want to write in sequence
+        // You can do that like so:
+        // MemoryManager.WriteFloatToMemory(processHandle, modifyAddress, value1);
+        // MemoryManager.WriteFloatToMemory(processHandle, IntPtr.Add(modifyAddress, 4), value2);
+        // MemoryManager.WriteFloatToMemory(processHandle, IntPtr.Add(modifyAddress, 8), value3);
+        // The (modifyAddress, 4) and (modifyAddress, 8) are the offsets from the original address.
+        // For a more detailed explanation look as MiscForm.cs and XyzManager.cs
+        
         public static bool WriteFloatToMemory(IntPtr processHandle, IntPtr address, float value)
         {
             byte[] buffer = BitConverter.GetBytes(value);
@@ -194,54 +392,10 @@ namespace MGS3_MC_Cheat_Trainer
             return true;
         }
 
-        public static short ReadShortFromMemory(IntPtr processHandle, IntPtr address)
-        {
-            if (NativeMethods.ReadProcessMemory(processHandle, address, out short value, sizeof(short), out int bytesRead))
-            {
-                if (bytesRead == sizeof(short))
-                {
-                    return value;
-                }
-            }
 
-            return -1;
-        }
+        #endregion
 
-        public static int WriteShortToMemory(IntPtr processHandle, IntPtr address, short value)
-        {
-            if (NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten))
-                return bytesWritten;
-
-            return -1;
-        }
-
-        public static byte ReadByteFromMemory(IntPtr processHandle, IntPtr address)
-        {
-            byte[] buffer = new byte[1];
-            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
-            {
-                return buffer[0];
-            }
-
-            throw new IOException("Failed to read byte from memory.");
-        }
-
-        public static short SetSpecificBits(short currentValue, int startBit, int endBit, int valueToSet)
-        {
-            int maskLength = endBit - startBit + 1;
-            int mask = ((1 << maskLength) - 1) << startBit;
-            return (short)((currentValue & ~mask) | ((valueToSet << startBit) & mask));
-        }
-
-        public static byte[] ReadMemoryBytes(IntPtr processHandle, IntPtr address, int bytesToRead)
-        {
-            byte[] buffer = new byte[bytesToRead];
-            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
-            {
-                return buffer;
-            }
-            return null;
-        }
+        #region Aob Scanning and Helpers
 
         public IntPtr ScanMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
@@ -303,7 +457,55 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
-        // This currently seems it would work for wildcards but I don't think it does
+        public IntPtr FindDynamicAob(string key)
+        {
+            if (!AobManager.AOBs.TryGetValue(key, out var aobData))
+            {
+                MessageBox.Show($"Dynamic AOB Key '{key}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return IntPtr.Zero;
+            }
+
+            var process = GetMGS3Process();
+            if (process == null || process.MainModule == null)
+            {
+                MessageBox.Show("Failed to locate MGS3 process for dynamic AOB scan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return IntPtr.Zero;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open MGS3 process for dynamic AOB scan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return IntPtr.Zero;
+            }
+
+            // If start and end addresses are defined, use them to calculate size. Otherwise, signal an error or default to full range scan.
+            if (!aobData.StartOffset.HasValue || !aobData.EndOffset.HasValue)
+            {
+                MessageBox.Show($"Start or end address not defined for AOB '{key}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NativeMethods.CloseHandle(processHandle);
+                return IntPtr.Zero;
+            }
+
+            IntPtr startAddress = aobData.StartOffset.Value;
+            long size = aobData.EndOffset.Value.ToInt64() - startAddress.ToInt64();
+
+            // Use ScanWideMemory for scanning the specified dynamic memory range
+            IntPtr foundAddress = ScanWideMemory(processHandle, startAddress, size, aobData.Pattern, aobData.Mask);
+
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddress == IntPtr.Zero)
+            {
+                MessageBox.Show($"Failed to find dynamic AOB for key '{key}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return foundAddress;
+        }
+
+
+        // Mask should be in the format "x x x x x x x" for no wildcards
+        // or "x ? x ? ? ? x ? x" for wildcards with ? being the wildcard byte
         public bool IsMatch(byte[] buffer, int position, byte[] pattern, string mask)
         {
             for (int i = 0; i < pattern.Length; i++)
@@ -320,510 +522,45 @@ namespace MGS3_MC_Cheat_Trainer
             return true;
         }
 
-        
-
-        // Should realy just make a master AOB function for this and setup an enum or something for the different AOBs
-        public IntPtr FindAOBInWeaponAndItemTableRange(byte[] aobPattern, string mask)
+        // string key is the key for the AOB in AobManager.cs
+        // i.e. "ModelDistortion", "NotUpsideDownCamera", "WeaponsTable", "CamoOperations", etc. 
+        public IntPtr FindAob(string key)
         {
-            Process process = GetMGS3Process();
-            if (process == null)
+            if (!AobManager.AOBs.TryGetValue(key, out var aobData))
             {
+                MessageBox.Show($"AOB Key '{key}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return IntPtr.Zero;
             }
 
-            IntPtr baseAddress = IntPtr.Zero;
-            int moduleSize = 0;
-            foreach (ProcessModule module in process.Modules)
+            var process = GetMGS3Process();
+            if (process == null || process.MainModule == null)
             {
-                if (module.ModuleName == "METAL GEAR SOLID3.exe")
-                {
-                    baseAddress = module.BaseAddress;
-                    moduleSize = module.ModuleMemorySize;
-                    break;
-                }
-            }
-
-            if (baseAddress == IntPtr.Zero)
-            {
-
+                MessageBox.Show("Failed to locate MGS3 process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return IntPtr.Zero;
-            }
-
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1000000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1E00000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
-            if (address != IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log($"Found AOB at address {address.ToString("X")}.");
-                return address;
-            }
-
-            return IntPtr.Zero;
-        }
-
-
-        public IntPtr FindAOBIn1ERange(byte[] aobPattern, string mask)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return IntPtr.Zero;
-            }
-
-            IntPtr baseAddress = IntPtr.Zero;
-            int moduleSize = 0;
-            foreach (ProcessModule module in process.Modules)
-            {
-                if (module.ModuleName == "METAL GEAR SOLID3.exe")
-                {
-                    baseAddress = module.BaseAddress;
-                    moduleSize = module.ModuleMemorySize;
-                    break;
-                }
-            }
-
-            if (baseAddress == IntPtr.Zero)
-            {
-
-                return IntPtr.Zero;
-            }
-
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1E00000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1FF0000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
-            if (address != IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log($"Found AOB at address {address.ToString("X")}.");
-                return address;
-            }
-
-            return IntPtr.Zero;
-        }
-
-        public void AdjustCamoIndex(int newValue)
-        {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                // Ensure the game process is running and accessible
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
-
-                // Hardcoded address for the camo index, assuming "METAL GEAR SOLID3.exe"+1DE58A4 is the base address + offset notation
-                IntPtr baseAddress = process.MainModule.BaseAddress;
-                IntPtr offset = new IntPtr(0x1DE58A4); // The offset you provided
-                IntPtr targetAddress = IntPtr.Add(baseAddress, offset.ToInt32()); // Calculate the actual memory address
-
-                // Write the new camo index value to the hardcoded address
-                bool result = MemoryManager.Instance.WriteIntToMemory(processHandle, targetAddress, newValue);
-                if (!result)
-                {
-                    // Log failure or handle it
-                    LoggingManager.Instance.Log("Failed to write the new camo index value.");
-                }
-                else
-                {
-                    // Optionally log success
-                    LoggingManager.Instance.Log($"Successfully wrote new camo index value: {newValue} at {targetAddress.ToString("X")}");
-                }
-            }
-            finally
-            {
-                // Always close the process handle if it's not zero
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-        }
-
-
-        /* Commenting out until a stable AOB is found for this
-        public void AdjustCamoIndex(int newValue)
-        {
-            // AOB Pattern and Mask for the camo index
-            byte[] aobPattern = Constants.AOBs["Alphabet"].Pattern;
-            string mask = Constants.AOBs["Alphabet"].Mask;
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                // Ensure the game process is running and accessible
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
-
-                // Find the AOB in the designated memory range
-                IntPtr aobAddress = MemoryManager.Instance.FindAOBIn1ERange(aobPattern, mask);
-                if (aobAddress == IntPtr.Zero) return; // If AOB not found, exit
-
-                // Calculate the target address using the AOB address and the offset to the camo index
-                int camoIndexOffset = 0x2ACE // 10958 in decimal
-                    ; // Example offset in hex, replace with actual
-                IntPtr targetAddress = IntPtr.Subtract(aobAddress, camoIndexOffset);
-
-                // Write the new camo index value to the calculated address
-                bool result = MemoryManager.Instance.WriteIntToMemory(processHandle, targetAddress, newValue);
-                if (!result)
-                {
-                    // Log failure or handle it
-                    LoggingManager.Instance.Log("Failed to write the new camo index value.");
-                }
-                else
-                {
-                    // Optionally log success
-                    LoggingManager.Instance.Log($"Successfully wrote new camo index value: {newValue} at {targetAddress.ToString("X")}");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-        }
-        */
-
-        public string ReadValueAtAddressInHexAndDecimal(IntPtr address)
-        {
-            IntPtr processHandle = IntPtr.Zero;
-            string result = string.Empty;
-
-            try
-            {
-                // Ensure the game process is running and accessible
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    return "Process not found.";
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    return "Failed to open process.";
-                }
-
-                // Use the ReadIntFromMemory method to read the value at the target address
-                int value = MemoryManager.Instance.ReadIntFromMemory(processHandle, address);
-
-                // Convert the value to hexadecimal format
-                string hexValue = value.ToString("X");
-
-                // Log and return the value in both hexadecimal and decimal formats
-                result = $"Value at address {address.ToString("X")}: Hex = {hexValue}, Decimal = {value}";
-                LoggingManager.Instance.Log(result);
-            }
-            catch (Exception ex)
-            {
-                result = $"Error reading memory: {ex.Message}";
-                LoggingManager.Instance.Log(result);
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero)
-                {
-                    MemoryManager.NativeMethods.CloseHandle(processHandle);
-                }
-            }
-
-            return result;
-        }
-
-        public string GetCamoIndexReadout()
-        {
-            IntPtr aobAddress = FindAOBIn1ERange(Constants.AOBs["ItemsTable"].Pattern, Constants.AOBs["ItemsTable"].Mask);
-            if (aobAddress == IntPtr.Zero)
-            {
-                return "AOB not found.";
-            }
-
-            int camoIndexOffset = 0x89AE; // Example offset, adjust as needed
-            IntPtr targetAddress = IntPtr.Add(aobAddress, camoIndexOffset);
-            return ReadValueAtAddressInHexAndDecimal(targetAddress);
-        }
-
-        public int ReadIntFromMemory(IntPtr processHandle, IntPtr address)
-        {
-            int bytesRead;
-            byte[] buffer = new byte[4]; // 4 bytes for an int
-            bool success = NativeMethods.ReadProcessMemory(processHandle, address, buffer, 4, out bytesRead);
-            if (success && bytesRead == 4)
-            {
-                return BitConverter.ToInt32(buffer, 0); // Convert bytes to int
-            }
-            else
-            {
-                throw new Exception("Failed to read memory.");
-            }
-        }
-
-
-        public bool WriteIntToMemory(IntPtr processHandle, IntPtr address, int value)
-        {
-            // Convert int to byte array
-            byte[] bytes = BitConverter.GetBytes(value);
-
-            // Call WriteProcessMemory
-            return NativeMethods.WriteProcessMemory(processHandle, address, bytes, (uint)bytes.Length, out _);
-        }
-
-        public void WriteShortToMemory(IntPtr address, short value)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return;
-            }
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten);
-            if (!success || bytesWritten != sizeof(short))
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        public static void WriteByteValueToMemory(IntPtr address, byte value)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return;
-            }
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, new byte[] { value }, 1, out int bytesWritten);
-            if (!success || bytesWritten != 1)
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        // AOB pattern located at Constant.cs name is "CamoOperations" for aobPattern and mask
-        public IntPtr FindCamoIndexMemoryRegion(byte[] aobPattern, string mask)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return IntPtr.Zero;
-            }
-
-            IntPtr baseAddress = IntPtr.Zero;
-            foreach (ProcessModule module in process.Modules)
-            {
-                if (module.ModuleName == "METAL GEAR SOLID3.exe")
-                {
-                    baseAddress = module.BaseAddress;
-                    break;
-                }
-            }
-
-            if (baseAddress == IntPtr.Zero)
-            {
-
-                return IntPtr.Zero;
-            }
-
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x100000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x430000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            IntPtr address = ScanMemory(process.Handle, startAddress, size, aobPattern, mask);
-            if (address != IntPtr.Zero)
-            {
-                return address;
-            }
-
-
-            return IntPtr.Zero;
-        }
-
-        public static bool NOPCamoIndex(IntPtr processHandle, IntPtr address)
-        {
-            IntPtr targetAddress = IntPtr.Subtract(address, 4);
-            byte[] nopBytes = new byte[] { 0x90, 0x90, 0x90, 0x90 };
-            return NativeMethods.WriteProcessMemory(processHandle, targetAddress, nopBytes, (uint)nopBytes.Length, out int bytesWritten) && bytesWritten == nopBytes.Length;
-        }
-
-        public static bool RestoreCamoIndex(IntPtr processHandle, IntPtr address)
-        {
-            IntPtr targetAddress = IntPtr.Subtract(address, 4);
-            byte[] restoreBytes = new byte[] { 0x89, 0x44, 0x2B, 0x24 };
-            return NativeMethods.WriteProcessMemory(processHandle, targetAddress, restoreBytes, (uint)restoreBytes.Length, out int bytesWritten) && bytesWritten == restoreBytes.Length;
-        }
-
-        public void EnableNOPCamoIndex()
-        {
-            Process process = MemoryManager.GetMGS3Process(); // Correctly using class name for static method
-            if (process == null) return;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process); // Correctly using class name for static method
-            if (processHandle == IntPtr.Zero) return;
-
-            // Correctly accessing pattern and mask
-            var aob = Constants.AOBs["CamoOperations"];
-            IntPtr camoIndexAddress = this.FindCamoIndexMemoryRegion(aob.Pattern, aob.Mask);
-            if (camoIndexAddress != IntPtr.Zero)
-            {
-                MemoryManager.NOPCamoIndex(processHandle, camoIndexAddress);
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        // Method to restore the camo index
-        public static void RestoreCamoIndex()
-        {
-            Process process = MemoryManager.GetMGS3Process(); // Correctly using class name for static method
-            if (process == null) return;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process); // Correctly using class name for static method
-            if (processHandle == IntPtr.Zero) return;
-
-            // Correctly accessing pattern and mask
-            var aob = Constants.AOBs["CamoOperations"];
-            IntPtr camoIndexAddress = MemoryManager.Instance.FindCamoIndexMemoryRegion(aob.Pattern, aob.Mask);
-            if (camoIndexAddress != IntPtr.Zero)
-            {
-                MemoryManager.RestoreCamoIndex(processHandle, camoIndexAddress);
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        public static byte[] ReadOriginalBytesBeforeAOB(IntPtr processHandle, IntPtr address)
-        {
-            // Address of the 4 bytes before the AOB pattern
-            IntPtr targetAddress = IntPtr.Subtract(address, 4);
-            byte[] buffer = new byte[4]; // To hold the original 4-byte value
-            if (NativeMethods.ReadProcessMemory(processHandle, targetAddress, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
-            {
-                return buffer;
-            }
-            else
-            {
-                throw new IOException("Failed to read original bytes before AOB.");
-            }
-        }
-
-        public string Read4BytesBeforeCamoAOB()
-        {
-            try
-            {
-                var process = GetMGS3Process();
-                if (process == null)
-                {
-                    return "Process not found.";
-                }
-
-                IntPtr processHandle = OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    return "Failed to open process.";
-                }
-
-                var (pattern, mask) = Constants.AOBs["CamoOperations"];
-                IntPtr camoIndexAddress = FindCamoIndexMemoryRegion(pattern, mask);
-                if (camoIndexAddress == IntPtr.Zero)
-                {
-                    NativeMethods.CloseHandle(processHandle);
-                    return "Camo Index AOB not found.";
-                }
-
-                byte[] originalBytes = ReadOriginalBytesBeforeAOB(processHandle, camoIndexAddress);
-                NativeMethods.CloseHandle(processHandle);
-
-                // Reverse the array to match Cheat Engine's display order
-                Array.Reverse(originalBytes);
-
-                // Convert the read bytes into a hexadecimal string format
-                return BitConverter.ToString(originalBytes).Replace("-", " ");
-            }
-            catch (Exception ex)
-            {
-                return $"Error: {ex.Message}";
-            }
-        }
-
-        // This is mostly to help me stay ahead of game updates so I can log the offset differences quicker if anything gets shifted around
-        public void LogAOBAddresses()
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                LoggingManager.Instance.Log("Process not found.");
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to open process.");
-                return;
             }
 
             IntPtr baseAddress = process.MainModule.BaseAddress;
             long moduleSize = process.MainModule.ModuleMemorySize;
 
-            foreach (var aobEntry in Constants.AOBs)
+            // Adjust baseAddress based on StartOffset
+            IntPtr startAddress = aobData.StartOffset.HasValue ? IntPtr.Add(baseAddress, (int)aobData.StartOffset.GetValueOrDefault()) : baseAddress;
+
+            // Calculate size based on EndOffset if provided; otherwise, use module size
+            // Correctly handle arithmetic to prevent overflow
+            long endAddress = aobData.EndOffset.HasValue ? IntPtr.Add(baseAddress, (int)aobData.EndOffset.GetValueOrDefault()).ToInt64() : baseAddress.ToInt64() + moduleSize;
+            long size = endAddress - startAddress.ToInt64();
+
+            IntPtr resultAddress = ScanMemory(process.Handle, startAddress, size, aobData.Pattern, aobData.Mask);
+
+            if (resultAddress == IntPtr.Zero)
             {
-                string name = aobEntry.Key;
-                if (string.IsNullOrEmpty(name)) continue; // Skip empty placeholder entries
-
-                byte[] pattern = aobEntry.Value.Pattern;
-                string mask = aobEntry.Value.Mask;
-
-                var foundAddresses = ScanForAllAobInstances(processHandle, baseAddress, moduleSize, pattern, mask);
-                if (foundAddresses.Count > 0)
-                {
-                    foreach (var address in foundAddresses)
-                    {
-                        long offset = address.ToInt64() - baseAddress.ToInt64();
-                        // Read the AOB bytes from the found address
-                        byte[] aobBytes = new byte[pattern.Length];
-                        if (NativeMethods.ReadProcessMemory(processHandle, address, aobBytes, (uint)aobBytes.Length, out _))
-                        {
-                            string aobHexString = BitConverter.ToString(aobBytes).Replace("-", " ");
-                            LoggingManager.Instance.Log($"{name}: Instance found at: {address.ToString("X")}, METAL GEAR SOLID3.exe+{offset:X}, AOB: {aobHexString}");
-                        }
-                        else
-                        {
-                            LoggingManager.Instance.Log($"{name}: Instance found at: {address.ToString("X")}, METAL GEAR SOLID3.exe+{offset:X}, but failed to read AOB bytes.");
-                        }
-                    }
-                }
-                else
-                {
-                    LoggingManager.Instance.Log($"{name}: AOB not found.");
-                }
+                MessageBox.Show($"Failed to find AOB for key '{key}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            NativeMethods.CloseHandle(processHandle);
+            return resultAddress;
         }
 
-        private List<IntPtr> ScanForAllAobInstances(IntPtr processHandle, IntPtr baseAddress, long moduleSize, byte[] pattern, string mask)
+        public List<IntPtr> ScanForAllAobInstances(IntPtr processHandle, IntPtr baseAddress, long moduleSize, byte[] pattern, string mask)
         {
             List<IntPtr> foundAddresses = new List<IntPtr>();
             IntPtr endAddress = IntPtr.Add(baseAddress, (int)moduleSize);
@@ -854,160 +591,6 @@ namespace MGS3_MC_Cheat_Trainer
             return foundAddresses;
         }
 
-        public IntPtr FoundSnakePositionAddress { get; private set; } = IntPtr.Zero;
-
-        public bool FindAndStoreSnakesPositionAOB()
-        {
-            var process = GetMGS3Process();
-            if (process == null)
-            {
-
-                return false;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return false;
-            }
-
-            // Corrected access to tuple elements: .Pattern and .Mask
-            var patternStanding = Constants.AOBs["SnakeAndBossesStanding"].Pattern;
-            var maskStanding = Constants.AOBs["SnakeAndBossesStanding"].Mask;
-
-            var patternProne = Constants.AOBs["SnakeAndGuardProne"].Pattern;
-            var maskProne = Constants.AOBs["SnakeAndGuardProne"].Mask;
-
-            IntPtr startAddress = new IntPtr(0x100FFFFFFFF); // Example start range
-            IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            // Search for the first pattern
-            IntPtr foundAddressStanding = ScanWideMemory(processHandle, startAddress, size, patternStanding, maskStanding);
-            if (foundAddressStanding != IntPtr.Zero)
-            {
-                FoundSnakePositionAddress = foundAddressStanding;
-                NativeMethods.CloseHandle(processHandle);
-                return true;
-            }
-
-            // If the first pattern wasn't found, search for the second pattern
-            IntPtr foundAddressProne = ScanWideMemory(processHandle, startAddress, size, patternProne, maskProne);
-            if (foundAddressProne != IntPtr.Zero)
-            {
-                FoundSnakePositionAddress = foundAddressProne;
-                NativeMethods.CloseHandle(processHandle);
-                return true;
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-            return false;
-        }
-
-        public float[] ReadSnakePosition(IntPtr processHandle)
-        {
-            IntPtr baseAddress = IntPtr.Add(FoundSnakePositionAddress, 7);
-
-            float[] position = new float[3];
-            for (int i = 0; i < position.Length; i++)
-            {
-                IntPtr currentAddress = IntPtr.Add(baseAddress, i * 4); // 4 bytes per float
-                position[i] = ReadFloatFromMemory(processHandle, currentAddress);
-            }
-
-            return position;
-        }
-
-        public void TeleportSnake(float[][] coordinates)
-        {
-            if (FoundSnakePositionAddress == IntPtr.Zero && !FindAndStoreSnakesPositionAOB())
-            {
-                LoggingManager.Instance.Log("Failed to find or verify Snake's position AOB.");
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(GetMGS3Process());
-            if (processHandle == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to open process handle.");
-                return;
-            }
-
-            foreach (var set in coordinates)
-            {
-                float x = set[0];
-                float y = set[1];
-                float z = set[2];
-                // Execute the teleport to new position using the current set of coordinates
-                // Note: Implement the TeleportToPosition method as previously described
-                TeleportToPosition(processHandle, x, y, z);
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-
-        private void TeleportToPosition(IntPtr processHandle, float x, float y, float z)
-        {
-            float[] newPosition = new float[] { x, y, z };
-            for (int i = 0; i < newPosition.Length; i++)
-            {
-                IntPtr currentAddress = IntPtr.Add(FoundSnakePositionAddress, 7 + i * 4); // Adjust the offset as necessary
-                bool success = WriteFloatToMemory(processHandle, currentAddress, newPosition[i]);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log($"Failed to teleport Snake to new position: X={x}, Y={y}, Z={z}.");
-                    break; // Exit if any teleport fails
-                }
-            }
-        }
-
-        public void RaiseSnakeYBy4000()
-        {
-            if (FoundSnakePositionAddress == IntPtr.Zero && !FindAndStoreSnakesPositionAOB())
-            {
-                LoggingManager.Instance.Log("Failed to find or verify Snake's position AOB.");
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(GetMGS3Process());
-            if (processHandle == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to open process handle.");
-                return;
-            }
-
-            // Read current position
-            float[] currentPosition = ReadSnakePosition(processHandle);
-            if (currentPosition == null || currentPosition.Length < 3)
-            {
-                LoggingManager.Instance.Log("Failed to read Snake's current position.");
-                NativeMethods.CloseHandle(processHandle);
-                return;
-            }
-
-            // Increase Y by 4000 units
-            float newY = currentPosition[1] + 4000f;
-
-            // Prepare the address for Y coordinate
-            IntPtr yAddress = IntPtr.Add(FoundSnakePositionAddress, 7 + 4); // Assuming Y is the second float after the AOB pattern
-
-            // Write the new Y position
-            bool success = WriteFloatToMemory(processHandle, yAddress, newY);
-            if (success)
-            {
-                LoggingManager.Instance.Log($"Successfully raised Snake's Y position by 4000 units to {newY}.");
-            }
-            else
-            {
-                LoggingManager.Instance.Log("Failed to update Snake's Y position.");
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-
         public List<IntPtr> ScanForAllInstances(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
             List<IntPtr> foundAddresses = new List<IntPtr>();
@@ -1035,181 +618,6 @@ namespace MGS3_MC_Cheat_Trainer
             return foundAddresses;
         }
 
-        public List<IntPtr> FindAllGuardsPositionAOBs()
-        {
-            var process = GetMGS3Process();
-            if (process == null)
-            {
-
-                return new List<IntPtr>();
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return new List<IntPtr>();
-            }
-
-            var (pattern, mask) = Constants.AOBs["GuardPatroling"];
-            IntPtr startAddress = new IntPtr(0x100FFFFFFFF); // Adjust as necessary
-            IntPtr endAddress = new IntPtr(0x30000000000); // Adjust as necessary
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            var guardsAddresses = ScanForAllInstances(processHandle, startAddress, size, pattern, mask);
-            NativeMethods.CloseHandle(processHandle);
-
-            return guardsAddresses;
-        }
-
-        public List<float[]> ReadGuardsPositions(IntPtr processHandle, List<IntPtr> guardsAddresses)
-        {
-            List<float[]> guardsPositions = new List<float[]>();
-            foreach (IntPtr baseAddress in guardsAddresses)
-            {
-                float[] position = new float[3];
-                for (int i = 0; i < position.Length; i++)
-                {
-                    IntPtr currentAddress = IntPtr.Add(baseAddress, 7 + i * 4); // Assuming the same offset and structure
-                    position[i] = ReadFloatFromMemory(processHandle, currentAddress);
-                }
-                guardsPositions.Add(position);
-            }
-            return guardsPositions;
-        }       
-
-        public void MoveGuardsToPosition(IntPtr processHandle, List<IntPtr> guardsAddresses, float[] newPosition)
-        {
-            foreach (IntPtr guardBaseAddress in guardsAddresses)
-            {
-                // Calculate the correct address offsets for X, Y, Z positions
-                for (int i = 0; i < newPosition.Length; i++)
-                {
-                    IntPtr currentAddress = IntPtr.Add(guardBaseAddress, 7 + i * 4);
-                    bool success = WriteFloatToMemory(processHandle, currentAddress, newPosition[i]);
-                    if (!success)
-                    {
-
-                    }
-                }
-            }
-        }
-
-        public void MoveAllGuardsToSnake()
-        {
-            IntPtr processHandle = OpenGameProcess(GetMGS3Process());
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return;
-            }
-
-            FindAndStoreSnakesPositionAOB();
-            if (FoundSnakePositionAddress == IntPtr.Zero)
-            {
-
-                NativeMethods.CloseHandle(processHandle);
-                return;
-            }
-
-            float[] snakePosition = ReadSnakePosition(processHandle);
-            var guardsAddresses = FindAllGuardsPositionAOBs();
-            if (guardsAddresses.Count > 0)
-            {
-                MoveGuardsToPosition(processHandle, guardsAddresses, snakePosition);
-
-            }
-            else
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        public string FindLocationStringDirectlyInRange()
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return "Game process not found.";
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            IntPtr baseAddress = process.MainModule.BaseAddress;
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1C00000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1D00000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            foreach (StringManager.LocationString location in Enum.GetValues(typeof(StringManager.LocationString)))
-            {
-                var locationString = location.ToString();
-                byte[] pattern = Encoding.ASCII.GetBytes(locationString);
-                string mask = new string('x', pattern.Length);
-
-                IntPtr foundAddress = ScanMemory(processHandle, startAddress, size, pattern, mask);
-                if (foundAddress != IntPtr.Zero)
-                {
-                    string areaName = StringManager.LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
-
-                    // Checking for cutscene indicators
-                    foreach (var suffix in new[] { "_0", "_1" })
-                    {
-                        byte[] cutscenePattern = Encoding.ASCII.GetBytes(locationString + suffix);
-                        IntPtr cutsceneFoundAddress = ScanMemory(processHandle, startAddress, size, cutscenePattern, mask + "x" + "x");
-
-                        if (cutsceneFoundAddress != IntPtr.Zero)
-                        {
-                            NativeMethods.CloseHandle(processHandle);
-                            return $"Location String: {locationString}{suffix} (Cutscene) \nArea Name: {areaName} \nMemory Address: {cutsceneFoundAddress.ToString("X")}";
-                        }
-                    }
-
-                    NativeMethods.CloseHandle(processHandle);
-                    return $"Location String: {locationString} \nArea Name: {areaName} \nMemory Address: {foundAddress.ToString("X")}";
-                }
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-            return "No Location String found in specified range.";
-        }
-
-        /* Same as the above function but only to find the location string it 
-           currently is only used in the BossForm use the player's area to 
-           know which boss they can tamper with for the UI elements */
-        public string ExtractLocationStringFromResult(string result)
-        {
-            string[] parts = result.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length > 0)
-            {
-                string locationStringPart = parts[0];
-                string[] locationStringParts = locationStringPart.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                if (locationStringParts.Length > 1)
-                {
-                    string locationString = locationStringParts[1].Trim();
-
-                    if (locationString.EndsWith("_0") || locationString.EndsWith("_1"))
-                    {
-                        return locationString + " (Cutscene)";
-                    }
-                    else
-                    {
-                        return locationString;
-                    }
-                }
-            }
-            return "Unknown";
-        }
-
-        public IntPtr ReadIntPtr(IntPtr processHandle, IntPtr address)
-        {
-            byte[] buffer = new byte[8]; // Correct for 64-bit
-            if (ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
-            {
-                return (IntPtr)BitConverter.ToInt64(buffer, 0);
-            }
-            return IntPtr.Zero;
-        }
-
+        #endregion
     }
 }

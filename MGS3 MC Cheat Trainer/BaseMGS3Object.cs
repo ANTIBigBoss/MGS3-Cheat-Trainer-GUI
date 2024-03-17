@@ -10,12 +10,6 @@ using static MGS3_MC_Cheat_Trainer.MemoryManager;
 namespace MGS3_MC_Cheat_Trainer
 {
 
-    /*
-    We can probably just have two base classes one for weapons and one for items
-    based on how the game data is structured the weapons go from Survival Knife to Directional Microphone
-    and the items go from Life Medicine to USA face paint.
-    */
-
     #region Base classes
     public class GameObject
     {
@@ -26,8 +20,6 @@ namespace MGS3_MC_Cheat_Trainer
     public interface IMGS3Object
     {
         private static string name = "";
-
-        //internal GameObject gameObject { get; set; }
 
         public static string Name { get { return name; } }
     }
@@ -43,11 +35,11 @@ namespace MGS3_MC_Cheat_Trainer
                                                // Suppressor capacity is actually considered an item and not a weapon
         public static IntPtr GetAddress(int index, MemoryManager memoryManager)
         {
-            IntPtr aobResult = memoryManager.FindAOBInWeaponAndItemTableRange(Constants.AOBs["WeaponsTable"].Pattern, Constants.AOBs["WeaponsTable"].Mask);
+            IntPtr aobResult = memoryManager.FindAob("WeaponsTable");
             if (aobResult != IntPtr.Zero)
             {
                 // Calculate the specific weapon address
-                return IntPtr.Add(aobResult, Constants.AOBs["WeaponsTable"].Pattern.Length + 12 + (WeaponOffset * index));
+                return IntPtr.Add(aobResult, AobManager.AOBs["WeaponsTable"].Pattern.Length + 12 + (WeaponOffset * index));
             }
             else
             {
@@ -85,11 +77,11 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static IntPtr GetAddress(int index, MemoryManager memoryManager)
         {
-            IntPtr aobResult = memoryManager.FindAOBInWeaponAndItemTableRange(Constants.AOBs["ItemsTable"].Pattern, Constants.AOBs["ItemsTable"].Mask);
+            IntPtr aobResult = memoryManager.FindAob("ItemsTable");
             if (aobResult != IntPtr.Zero)
             {
                 // Calculate the specific item address
-                return IntPtr.Add(aobResult, Constants.AOBs["ItemsTable"].Pattern.Length + 12 + (ItemOffset * index));
+                return IntPtr.Add(aobResult, AobManager.AOBs["ItemsTable"].Pattern.Length + 12 + (ItemOffset * index));
             }
             else
             {
@@ -124,8 +116,6 @@ namespace MGS3_MC_Cheat_Trainer
         }
     }
 
-
-
         public abstract class BaseMGS3Object : IMGS3Object
         {
             protected GameObject gameObject { get; set; }
@@ -148,14 +138,15 @@ namespace MGS3_MC_Cheat_Trainer
             public int Index { get; private set; } // Add this line
 
 
-        // Constructor for a weapon
-        public Weapon(string name, int index, string aobKey, bool hasAmmo = false, bool hasClip = false, bool hasSuppressorToggle = false)
-    : base(name, IntPtr.Zero) // Initially, we don't have the address
-        {
-            Index = index; // Set the index
-            AobKey = aobKey;
+            // Constructor for a weapon
+            public Weapon(string name, int index, string aobKey, bool hasAmmo = false, bool hasClip = false,
+                bool hasSuppressorToggle = false)
+                : base(name, IntPtr.Zero) // Initially, we don't have the address
+            {
+                Index = index; // Set the index
+                AobKey = aobKey;
 
-            if (hasAmmo)
+                if (hasAmmo)
                 {
                     MaxAmmoOffset = WeaponAddresses.GetMaxAmmoAddress(this.MemoryOffset);
                 }

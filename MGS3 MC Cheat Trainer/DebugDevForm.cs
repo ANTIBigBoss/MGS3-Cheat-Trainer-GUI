@@ -32,12 +32,12 @@ namespace MGS3_MC_Cheat_Trainer
         {
 
 
-            if (MemoryManager.Instance.FoundSnakePositionAddress != IntPtr.Zero)
+            if (AobManager.Instance.FoundSnakePositionAddress != IntPtr.Zero)
             {
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
                 if (processHandle != IntPtr.Zero)
                 {
-                    float[] snakePosition = MemoryManager.Instance.ReadSnakePosition(processHandle);
+                    float[] snakePosition = XyzManager.Instance.ReadSnakePosition(processHandle);
                     MessageBox.Show($"Snake's Position: \nX={snakePosition[0]}, \nY={snakePosition[1]}, \nZ={snakePosition[2]}", "Snake Position", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     NativeMethods.CloseHandle(processHandle);
@@ -57,7 +57,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             try
             {
-                string result = MemoryManager.Instance.FindLocationStringDirectlyInRange();
+                string result = StringManager.Instance.FindLocationStringDirectlyInRange();
                 MessageBox.Show(result, "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
@@ -70,13 +70,13 @@ namespace MGS3_MC_Cheat_Trainer
         // Read The Fury's health value from boss manager
         private void button5_Click(object sender, EventArgs e)
         {
-            var guardsAddresses = MemoryManager.Instance.FindAllGuardsPositionAOBs();
+            var guardsAddresses = XyzManager.Instance.FindAllGuardsPositionAOBs();
             if (guardsAddresses.Count > 0)
             {
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
                 if (processHandle != IntPtr.Zero)
                 {
-                    var guardsPositions = MemoryManager.Instance.ReadGuardsPositions(processHandle, guardsAddresses);
+                    var guardsPositions = XyzManager.Instance.ReadGuardsPositions(processHandle, guardsAddresses);
                     StringBuilder sb = new StringBuilder();
                     foreach (var position in guardsPositions)
                     {
@@ -100,11 +100,8 @@ namespace MGS3_MC_Cheat_Trainer
         // This was more of a debug button to see the values of the alert timers so I could determine the offsets of the timers
         private void button6_Click(object sender, EventArgs e)
         {
-            MemoryManager memoryManager = new MemoryManager();
-            var aobPattern = Constants.AOBs["AlertMemoryRegion"].Pattern;
-            var mask = Constants.AOBs["AlertMemoryRegion"].Mask;
 
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(aobPattern, mask);
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAob("AlertMemoryRegion");
             if (alertMemoryRegion == IntPtr.Zero)
             {
                 MessageBox.Show("Failed to find alert memory region.");
@@ -120,7 +117,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button10_Click(object sender, EventArgs e)
         {
-            MemoryManager.Instance.FindAndStoreSnakesPositionAOB();
+            AobManager.Instance.FindAndStoreSnakesPositionAOB();
 
         }
 
@@ -128,122 +125,18 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void button9_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("Starting AOB scan for Ocelot.");
-            var process = MemoryManager.GetMGS3Process();
-            if (process == null)
-            {
-                LoggingManager.Instance.Log("MGS3 process not found.");
-                return;
-            }
 
-            IntPtr baseAddress = IntPtr.Zero;
-            foreach (ProcessModule module in process.Modules)
-            {
-                if (module.ModuleName.Equals("METAL GEAR SOLID3.exe", StringComparison.OrdinalIgnoreCase))
-                {
-                    baseAddress = module.BaseAddress;
-                    LoggingManager.Instance.Log($"METAL GEAR SOLID3.exe module found at: 0x{baseAddress.ToString("X")}");
-                    break;
-                }
-            }
-
-            if (baseAddress == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("METAL GEAR SOLID3.exe module not found.");
-                return;
-            }
-            LoggingManager.Instance.Log("Opening process for scanning.");
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            LoggingManager.Instance.Log($"Process handle: {processHandle}");
-            if (processHandle == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to open process for scanning.");
-                return;
-            }
-
-            byte[] pattern = new byte[] { 0xC0, 0x37, 0x00, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x20, 0x11, 0x00, 0x00, 0x00, 0x7F };
-            string mask = "xx???xxxxx???x";
-            LoggingManager.Instance.Log("Using pattern of length: " + pattern.Length);
-            LoggingManager.Instance.Log("Using mask pattern of length: " + mask.Length);
-            LoggingManager.Instance.Log("Scanning in range: 0x1D00000 - 0x1E00000");
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
-            long size = 0x1E00000 - 0x1D00000;
-
-            IntPtr foundAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size, pattern, mask);
-            if (foundAddress != IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log($"AOB found at: 0x{foundAddress.ToString("X")}");
-                // Adjust foundAddress by subtracting 848 bytes to get the actual target address
-                dynamicAddress = IntPtr.Subtract(foundAddress, 848);
-                LoggingManager.Instance.Log("Going back 848 bytes to get the actual target address.");
-            }
-            else
-            {
-                LoggingManager.Instance.Log("AOB not found within specified range.");
-            }
-            LoggingManager.Instance.Log($"Dynamic AOB address is: 0x{dynamicAddress.ToString("X")}");
-            NativeMethods.CloseHandle(processHandle);
         }
-
-
 
         private void button8_Click(object sender, EventArgs e)
         {
-            var process = MemoryManager.GetMGS3Process();
-            if (process == null)
-            {
-                LoggingManager.Instance.Log("MGS3 process not found.");
-                return;
-            }
-
-            if (dynamicAddress == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Dynamic address not set. Run AOB scan first.");
-                return;
-            }
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to open process for scanning.");
-                return;
-            }
-
-            IntPtr pointerAddress = MemoryManager.Instance.ReadIntPtr(processHandle, dynamicAddress);
-            if (pointerAddress == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to read pointer from dynamic address.");
-                return;
-            }
-
-            IntPtr dynamicTargetAddress = IntPtr.Add(pointerAddress, 0x5DC);
-            IntPtr targetAddress = IntPtr.Subtract(dynamicTargetAddress, 916);
-
-            short valueBefore = MemoryManager.ReadShortFromMemory(processHandle, targetAddress);
-            LoggingManager.Instance.Log($"Value before writing: {valueBefore} at 0x{targetAddress.ToString("X")}");
-
-            short valueToWrite = 0;
-            int bytesWritten = MemoryManager.WriteShortToMemory(processHandle, targetAddress, valueToWrite);
-
-            if (bytesWritten == sizeof(short))
-            {
-                LoggingManager.Instance.Log($"Successfully wrote {valueToWrite} to 0x{targetAddress.ToString("X")}");
-            }
-            else
-            {
-                LoggingManager.Instance.Log("Failed to write to memory.");
-            }
-
-            short valueAfter = MemoryManager.ReadShortFromMemory(processHandle, targetAddress);
-            LoggingManager.Instance.Log($"Value after writing: {valueAfter} at 0x{targetAddress.ToString("X")}");
-
-            NativeMethods.CloseHandle(processHandle);
+           
         }
 
 
         private void button7_Click(object sender, EventArgs e)
         {
-            MemoryManager.Instance.MoveAllGuardsToSnake();
+            XyzManager.Instance.MoveAllGuardsToSnake();
         }
 
         #endregion

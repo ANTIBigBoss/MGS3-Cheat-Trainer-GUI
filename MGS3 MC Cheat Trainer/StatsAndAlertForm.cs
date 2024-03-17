@@ -2,11 +2,14 @@
 
 namespace MGS3_MC_Cheat_Trainer
 {
+    
     public partial class StatsAndAlertForm : Form
     {
         private bool infiniteAlertCheckboxState;
         private bool infiniteEvasionCheckboxState;
         private bool infiniteCautionCheckboxState;
+
+        #region Form Load and Close
 
         public StatsAndAlertForm()
         {
@@ -32,7 +35,6 @@ namespace MGS3_MC_Cheat_Trainer
             continuousMonitoringTimer.Interval = 1000; // Update every second
             continuousMonitoringTimer.Tick += new EventHandler(ContinuousMonitoringTimer_Tick);
             continuousMonitoringTimer.Start();
-
         }
 
         private void InitializeProgressBars()
@@ -58,6 +60,8 @@ namespace MGS3_MC_Cheat_Trainer
         {
             Application.Exit();
         }
+        #endregion
+
         #region Form Swaps
         private void WeaponFormSwap_Click(object sender, EventArgs e)
         {
@@ -86,7 +90,7 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("Navigating to Camo Form from the Stats Form");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "CamoForm");
-            ItemForm f3 = new ItemForm();
+            CamoForm f3 = new CamoForm();
             f3.Show();
             this.Hide();
         }
@@ -224,7 +228,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-
         private void InfiniteCaution_CheckedChanged(object sender, EventArgs e)
         {
             if (suppressAlertMessages)
@@ -255,7 +258,7 @@ namespace MGS3_MC_Cheat_Trainer
         private void EvasionButton_Click(object sender, EventArgs e)
         {
             // First, find the alert memory region to read the timer values
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAob("AlertMemoryRegion");
             if (alertMemoryRegion == IntPtr.Zero)
             {
                 return;
@@ -336,7 +339,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ContinuousMonitoringTimer_Tick(object sender, EventArgs e)
         {
-            IntPtr alertMemoryRegion = AobManager.Instance.FindAlertMemoryRegion(Constants.AOBs["AlertMemoryRegion"].Pattern, Constants.AOBs["AlertMemoryRegion"].Mask);
+            IntPtr alertMemoryRegion = MemoryManager.Instance.FindAob("AlertMemoryRegion");
             if (alertMemoryRegion == IntPtr.Zero)
             {
                 Console.WriteLine("Error: Alert memory region not found.");
@@ -357,22 +360,12 @@ namespace MGS3_MC_Cheat_Trainer
             });
         }
 
-        private void UpdateProgressBar(ProgressBar progressBar, int newValue)
-        {
-            if (newValue < progressBar.Minimum) newValue = progressBar.Minimum;
-            if (newValue > progressBar.Maximum) newValue = progressBar.Maximum;
-
-            progressBar.Value = newValue;
-        }
-
-
         private void ClearCautionAndEvasion_Click(object sender, EventArgs e)
         {
             AlertManager.RemoveEvasionAndCaution();
         }
 
         #endregion
-
 
         #region Snake's Serious Injuries
         private void BurnInjury_Click(object sender, EventArgs e)
@@ -441,8 +434,5 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
-
-
-        
     }
 }
