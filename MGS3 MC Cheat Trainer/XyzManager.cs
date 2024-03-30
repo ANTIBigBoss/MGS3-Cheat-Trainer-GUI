@@ -50,43 +50,6 @@ namespace MGS3_MC_Cheat_Trainer
             return position;
         }
 
-        public float ReadSnakeX(IntPtr processHandle)
-        {
-            IntPtr xAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 0); // X is at the starting position
-            return ReadFloatFromMemory(processHandle, xAddress);
-        }
-
-        public float ReadSnakeY(IntPtr processHandle)
-        {
-            IntPtr yAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 4); // Y follows X, assuming 4 bytes per float
-            return ReadFloatFromMemory(processHandle, yAddress);
-        }
-
-        public float ReadSnakeZ(IntPtr processHandle)
-        {
-            IntPtr zAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 8); // Z follows Y, assuming 4 bytes per float
-            return ReadFloatFromMemory(processHandle, zAddress);
-        }
-
-        public void ModifySnakeX(IntPtr processHandle, float newX)
-        {
-            IntPtr xAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 0); // X is at the starting position
-            WriteFloatToMemory(processHandle, xAddress, newX);
-        }
-
-        public void ModifySnakeY(IntPtr processHandle, float newY)
-        {
-            IntPtr yAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 4); // Y follows X, assuming 4 bytes per float
-            WriteFloatToMemory(processHandle, yAddress, newY);
-        }
-
-        public void ModifySnakeZ(IntPtr processHandle, float newZ)
-        {
-            IntPtr zAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 8); // Z follows Y, assuming 4 bytes per float
-            WriteFloatToMemory(processHandle, zAddress, newZ);
-        }
-
-
         public void TeleportSnake(float[][] coordinates)
         {
             if (AobManager.Instance.FoundSnakePositionAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreSnakesPositionAOB())
@@ -133,6 +96,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public void RaiseSnakeYBy4000()
         {
+            LoggingManager.Instance.Log("Raise Snake's Y button clicked");
             if (AobManager.Instance.FoundSnakePositionAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreSnakesPositionAOB())
             {
                 LoggingManager.Instance.Log("Failed to find or verify Snake's position AOB.");
@@ -177,23 +141,24 @@ namespace MGS3_MC_Cheat_Trainer
 
         public List<IntPtr> FindAllGuardsPositionAOBs()
         {
+            LoggingManager.Instance.Log("Searching for guards button clicked");
             Process process = MemoryManager.GetMGS3Process();
             if (process == null)
             {
-                MessageBox.Show("Process not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("Process not found.");
                 return new List<IntPtr>();
             }
 
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open process handle.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("Failed to open process handle.");
                 return new List<IntPtr>();
             }
 
             if (!AobManager.AOBs.TryGetValue("GuardPatroling", out var aobData))
             {
-                MessageBox.Show("AOB not found for 'GuardPatroling'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LoggingManager.Instance.Log("AOB not found for 'GuardPatroling'.");
                 return new List<IntPtr>();
             }
 

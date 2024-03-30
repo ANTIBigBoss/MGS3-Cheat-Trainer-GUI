@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Xml.Linq;
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -42,6 +43,7 @@ namespace MGS3_MC_Cheat_Trainer
                     {
                         instance = new LoggingManager();
                     }
+
                     return instance;
                 }
             }
@@ -53,6 +55,7 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 Directory.CreateDirectory(logFolderPath);
             }
+
             if (!File.Exists(logPath))
             {
                 using (var stream = File.Create(logPath))
@@ -106,7 +109,9 @@ namespace MGS3_MC_Cheat_Trainer
                 byte[] pattern = aobEntry.Value.Pattern;
                 string mask = aobEntry.Value.Mask;
 
-                var foundAddresses = MemoryManager.Instance.ScanForAllAobInstances(processHandle, baseAddress, moduleSize, pattern, mask);
+                var foundAddresses =
+                    MemoryManager.Instance.ScanForAllAobInstances(processHandle, baseAddress, moduleSize, pattern,
+                        mask);
                 if (foundAddresses.Count > 0)
                 {
                     foreach (var address in foundAddresses)
@@ -114,14 +119,17 @@ namespace MGS3_MC_Cheat_Trainer
                         long offset = address.ToInt64() - baseAddress.ToInt64();
                         // Read the AOB bytes from the found address
                         byte[] aobBytes = new byte[pattern.Length];
-                        if (NativeMethods.ReadProcessMemory(processHandle, address, aobBytes, (uint)aobBytes.Length, out _))
+                        if (NativeMethods.ReadProcessMemory(processHandle, address, aobBytes, (uint)aobBytes.Length,
+                                out _))
                         {
                             string aobHexString = BitConverter.ToString(aobBytes).Replace("-", " ");
-                            LoggingManager.Instance.Log($"{name}: Instance found at: {address.ToString("X")}, METAL GEAR SOLID3.exe+{offset:X}, AOB: {aobHexString}");
+                            LoggingManager.Instance.Log(
+                                $"{name}: Instance found at: {address.ToString("X")}, METAL GEAR SOLID3.exe+{offset:X}, AOB: {aobHexString}");
                         }
                         else
                         {
-                            LoggingManager.Instance.Log($"{name}: Instance found at: {address.ToString("X")}, METAL GEAR SOLID3.exe+{offset:X}, but failed to read AOB bytes.");
+                            LoggingManager.Instance.Log(
+                                $"{name}: Instance found at: {address.ToString("X")}, METAL GEAR SOLID3.exe+{offset:X}, but failed to read AOB bytes.");
                         }
                     }
                 }
@@ -138,7 +146,7 @@ namespace MGS3_MC_Cheat_Trainer
 
 
 /* Button to implement later to locate the log file/folder
- 
+
    private void btnOpenLogFolder_Click(object sender, EventArgs e)
    {
        // Use the Process.Start method to open the log folder in File Explorer

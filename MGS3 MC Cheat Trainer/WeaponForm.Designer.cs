@@ -1953,7 +1953,7 @@
             Controls.Add(MK22TextBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "WeaponForm";
-            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss";
+            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss  - Version 2.0";
             Load += WeaponForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox31).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();

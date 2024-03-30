@@ -461,28 +461,27 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
             {
-                MessageBox.Show($"Dynamic AOB Key '{key}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return IntPtr.Zero;
             }
 
             var process = GetMGS3Process();
             if (process == null || process.MainModule == null)
             {
-                MessageBox.Show("Failed to locate MGS3 process for dynamic AOB scan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return IntPtr.Zero;
             }
 
             IntPtr processHandle = OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                MessageBox.Show("Failed to open MGS3 process for dynamic AOB scan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return IntPtr.Zero;
             }
 
             // If start and end addresses are defined, use them to calculate size. Otherwise, signal an error or default to full range scan.
             if (!aobData.StartOffset.HasValue || !aobData.EndOffset.HasValue)
             {
-                MessageBox.Show($"Start or end address not defined for AOB '{key}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 NativeMethods.CloseHandle(processHandle);
                 return IntPtr.Zero;
             }
@@ -497,7 +496,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (foundAddress == IntPtr.Zero)
             {
-                MessageBox.Show($"Failed to find dynamic AOB for key '{key}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
 
             return foundAddress;
@@ -528,14 +527,14 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
             {
-                MessageBox.Show($"AOB Key '{key}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return IntPtr.Zero;
             }
 
             var process = GetMGS3Process();
             if (process == null || process.MainModule == null)
             {
-                MessageBox.Show("Failed to locate MGS3 process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return IntPtr.Zero;
             }
 
@@ -554,7 +553,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (resultAddress == IntPtr.Zero)
             {
-                MessageBox.Show($"Failed to find AOB for key '{key}'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
 
             return resultAddress;

@@ -52,8 +52,6 @@
             textBox1 = new TextBox();
             SnakeJump = new Button();
             SnakesXYZaob = new Button();
-            NopCamo = new Button();
-            RestoreCamo = new Button();
             LogAOBs = new Button();
             CamoIndexSlider = new TrackBar();
             textBox2 = new TextBox();
@@ -72,6 +70,9 @@
             ReadTextBoxSnakeY = new TextBox();
             ReadTextBoxSnakeX = new TextBox();
             textBox14 = new TextBox();
+            CamoIndexTimer = new System.Windows.Forms.Timer(components);
+            CamoIndexChanges = new CheckBox();
+            CamoIndexTextbox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             SuspendLayout();
@@ -280,7 +281,7 @@
             // 
             ModelCurrentValue.Cursor = Cursors.IBeam;
             ModelCurrentValue.Enabled = false;
-            ModelCurrentValue.Location = new Point(845, 256);
+            ModelCurrentValue.Location = new Point(846, 250);
             ModelCurrentValue.Name = "ModelCurrentValue";
             ModelCurrentValue.Size = new Size(34, 23);
             ModelCurrentValue.TabIndex = 511;
@@ -291,7 +292,7 @@
             textBox8.BorderStyle = BorderStyle.None;
             textBox8.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             textBox8.ForeColor = SystemColors.ActiveCaptionText;
-            textBox8.Location = new Point(622, 251);
+            textBox8.Location = new Point(623, 245);
             textBox8.Multiline = true;
             textBox8.Name = "textBox8";
             textBox8.PlaceholderText = "Current Model # value:";
@@ -392,36 +393,6 @@
             SnakesXYZaob.UseVisualStyleBackColor = true;
             SnakesXYZaob.Click += SnakesXYZaob_Click;
             // 
-            // NopCamo
-            // 
-            NopCamo.BackgroundImage = (Image)resources.GetObject("NopCamo.BackgroundImage");
-            NopCamo.Cursor = Cursors.Hand;
-            NopCamo.FlatStyle = FlatStyle.Flat;
-            NopCamo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            NopCamo.ImageAlign = ContentAlignment.TopCenter;
-            NopCamo.Location = new Point(304, 140);
-            NopCamo.Name = "NopCamo";
-            NopCamo.Size = new Size(289, 110);
-            NopCamo.TabIndex = 557;
-            NopCamo.Text = "Enable Camo Index changes the game will stop updating your camo index with this and Camo will be set to 0% when an area changes";
-            NopCamo.UseVisualStyleBackColor = true;
-            NopCamo.Click += NopCamo_Click;
-            // 
-            // RestoreCamo
-            // 
-            RestoreCamo.BackgroundImage = (Image)resources.GetObject("RestoreCamo.BackgroundImage");
-            RestoreCamo.Cursor = Cursors.Hand;
-            RestoreCamo.FlatStyle = FlatStyle.Flat;
-            RestoreCamo.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            RestoreCamo.ImageAlign = ContentAlignment.TopCenter;
-            RestoreCamo.Location = new Point(304, 299);
-            RestoreCamo.Name = "RestoreCamo";
-            RestoreCamo.Size = new Size(289, 38);
-            RestoreCamo.TabIndex = 558;
-            RestoreCamo.Text = "Restore Camo Index to normal";
-            RestoreCamo.UseVisualStyleBackColor = true;
-            RestoreCamo.Click += RestoreCamo_Click;
-            // 
             // LogAOBs
             // 
             LogAOBs.BackgroundImage = (Image)resources.GetObject("LogAOBs.BackgroundImage");
@@ -440,7 +411,7 @@
             // CamoIndexSlider
             // 
             CamoIndexSlider.BackColor = Color.FromArgb(36, 44, 36);
-            CamoIndexSlider.Location = new Point(304, 256);
+            CamoIndexSlider.Location = new Point(304, 170);
             CamoIndexSlider.Name = "CamoIndexSlider";
             CamoIndexSlider.Size = new Size(289, 45);
             CamoIndexSlider.TabIndex = 561;
@@ -497,7 +468,7 @@
             textBox6.BorderStyle = BorderStyle.None;
             textBox6.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox6.ForeColor = SystemColors.ActiveCaptionText;
-            textBox6.Location = new Point(283, 478);
+            textBox6.Location = new Point(275, 285);
             textBox6.Multiline = true;
             textBox6.Name = "textBox6";
             textBox6.PlaceholderText = "Snake's X ";
@@ -512,14 +483,14 @@
             // 
             // TextBoxSnakeX
             // 
-            TextBoxSnakeX.Location = new Point(286, 613);
+            TextBoxSnakeX.Location = new Point(278, 420);
             TextBoxSnakeX.Name = "TextBoxSnakeX";
             TextBoxSnakeX.Size = new Size(116, 23);
             TextBoxSnakeX.TabIndex = 574;
             // 
             // TextBoxSnakeY
             // 
-            TextBoxSnakeY.Location = new Point(408, 613);
+            TextBoxSnakeY.Location = new Point(400, 420);
             TextBoxSnakeY.Name = "TextBoxSnakeY";
             TextBoxSnakeY.Size = new Size(119, 23);
             TextBoxSnakeY.TabIndex = 576;
@@ -530,7 +501,7 @@
             textBox9.BorderStyle = BorderStyle.None;
             textBox9.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox9.ForeColor = SystemColors.ActiveCaptionText;
-            textBox9.Location = new Point(407, 478);
+            textBox9.Location = new Point(399, 285);
             textBox9.Multiline = true;
             textBox9.Name = "textBox9";
             textBox9.PlaceholderText = "Snake's Y ";
@@ -541,7 +512,7 @@
             // 
             // TextBoxSnakeZ
             // 
-            TextBoxSnakeZ.Location = new Point(533, 613);
+            TextBoxSnakeZ.Location = new Point(525, 420);
             TextBoxSnakeZ.Name = "TextBoxSnakeZ";
             TextBoxSnakeZ.Size = new Size(126, 23);
             TextBoxSnakeZ.TabIndex = 578;
@@ -552,7 +523,7 @@
             textBox12.BorderStyle = BorderStyle.None;
             textBox12.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox12.ForeColor = SystemColors.ActiveCaptionText;
-            textBox12.Location = new Point(530, 478);
+            textBox12.Location = new Point(522, 285);
             textBox12.Multiline = true;
             textBox12.Name = "textBox12";
             textBox12.PlaceholderText = "Snake's Z";
@@ -568,11 +539,11 @@
             ParseTextBoxesPositions.FlatStyle = FlatStyle.Flat;
             ParseTextBoxesPositions.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ParseTextBoxesPositions.ImageAlign = ContentAlignment.TopCenter;
-            ParseTextBoxesPositions.Location = new Point(286, 637);
+            ParseTextBoxesPositions.Location = new Point(276, 444);
             ParseTextBoxesPositions.Name = "ParseTextBoxesPositions";
-            ParseTextBoxesPositions.Size = new Size(376, 53);
+            ParseTextBoxesPositions.Size = new Size(375, 37);
             ParseTextBoxesPositions.TabIndex = 579;
-            ParseTextBoxesPositions.Text = "Use textboxes position to change Snake's location";
+            ParseTextBoxesPositions.Text = "Change Snake's location";
             ParseTextBoxesPositions.UseVisualStyleBackColor = true;
             ParseTextBoxesPositions.Click += ParseTextBoxesPositions_Click;
             // 
@@ -582,7 +553,7 @@
             textBox7.BorderStyle = BorderStyle.None;
             textBox7.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             textBox7.ForeColor = SystemColors.ActiveCaptionText;
-            textBox7.Location = new Point(283, 577);
+            textBox7.Location = new Point(275, 384);
             textBox7.Multiline = true;
             textBox7.Name = "textBox7";
             textBox7.PlaceholderText = "Edit these to change Snake's location";
@@ -593,21 +564,24 @@
             // 
             // ReadTextBoxSnakeZ
             // 
-            ReadTextBoxSnakeZ.Location = new Point(530, 548);
+            ReadTextBoxSnakeZ.Enabled = false;
+            ReadTextBoxSnakeZ.Location = new Point(522, 355);
             ReadTextBoxSnakeZ.Name = "ReadTextBoxSnakeZ";
             ReadTextBoxSnakeZ.Size = new Size(129, 23);
             ReadTextBoxSnakeZ.TabIndex = 583;
             // 
             // ReadTextBoxSnakeY
             // 
-            ReadTextBoxSnakeY.Location = new Point(405, 548);
+            ReadTextBoxSnakeY.Enabled = false;
+            ReadTextBoxSnakeY.Location = new Point(397, 355);
             ReadTextBoxSnakeY.Name = "ReadTextBoxSnakeY";
             ReadTextBoxSnakeY.Size = new Size(119, 23);
             ReadTextBoxSnakeY.TabIndex = 582;
             // 
             // ReadTextBoxSnakeX
             // 
-            ReadTextBoxSnakeX.Location = new Point(283, 548);
+            ReadTextBoxSnakeX.Enabled = false;
+            ReadTextBoxSnakeX.Location = new Point(275, 355);
             ReadTextBoxSnakeX.Name = "ReadTextBoxSnakeX";
             ReadTextBoxSnakeX.Size = new Size(116, 23);
             ReadTextBoxSnakeX.TabIndex = 581;
@@ -618,7 +592,7 @@
             textBox14.BorderStyle = BorderStyle.None;
             textBox14.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             textBox14.ForeColor = SystemColors.ActiveCaptionText;
-            textBox14.Location = new Point(283, 514);
+            textBox14.Location = new Point(275, 321);
             textBox14.Multiline = true;
             textBox14.Name = "textBox14";
             textBox14.PlaceholderText = "These textboxes only read Snake's location";
@@ -627,12 +601,40 @@
             textBox14.TabIndex = 584;
             textBox14.TextAlign = HorizontalAlignment.Center;
             // 
+            // CamoIndexTimer
+            // 
+            CamoIndexTimer.Tick += CamoIndexTimer_Tick;
+            // 
+            // CamoIndexChanges
+            // 
+            CamoIndexChanges.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            CamoIndexChanges.FlatStyle = FlatStyle.Flat;
+            CamoIndexChanges.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            CamoIndexChanges.Image = (Image)resources.GetObject("CamoIndexChanges.Image");
+            CamoIndexChanges.Location = new Point(304, 192);
+            CamoIndexChanges.Name = "CamoIndexChanges";
+            CamoIndexChanges.Size = new Size(289, 87);
+            CamoIndexChanges.TabIndex = 586;
+            CamoIndexChanges.Text = "Enable Camo Index changes the game\r\n will stop updating your camo index \r\nwith this and Camo will be set to 0% \r\nwhen an area changes";
+            CamoIndexChanges.UseVisualStyleBackColor = true;
+            CamoIndexChanges.CheckedChanged += CamoIndexChanges_CheckedChanged;
+            // 
+            // CamoIndexTextbox
+            // 
+            CamoIndexTextbox.Enabled = false;
+            CamoIndexTextbox.Location = new Point(304, 139);
+            CamoIndexTextbox.Name = "CamoIndexTextbox";
+            CamoIndexTextbox.Size = new Size(289, 23);
+            CamoIndexTextbox.TabIndex = 588;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(CamoIndexTextbox);
+            Controls.Add(CamoIndexChanges);
             Controls.Add(textBox14);
             Controls.Add(ReadTextBoxSnakeZ);
             Controls.Add(ReadTextBoxSnakeY);
@@ -650,8 +652,6 @@
             Controls.Add(textBox2);
             Controls.Add(CamoIndexSlider);
             Controls.Add(LogAOBs);
-            Controls.Add(RestoreCamo);
-            Controls.Add(NopCamo);
             Controls.Add(SnakesXYZaob);
             Controls.Add(SnakeJump);
             Controls.Add(textBox1);
@@ -677,7 +677,7 @@
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss";
+            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.0";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
@@ -708,8 +708,6 @@
         private TextBox textBox1;
         private Button SnakeJump;
         private Button SnakesXYZaob;
-        private Button NopCamo;
-        private Button RestoreCamo;
         private Button LogAOBs;
         private TrackBar CamoIndexSlider;
         private TextBox textBox2;
@@ -728,5 +726,8 @@
         private TextBox ReadTextBoxSnakeY;
         private TextBox ReadTextBoxSnakeX;
         private TextBox textBox14;
+        private System.Windows.Forms.Timer CamoIndexTimer;
+        private CheckBox CamoIndexChanges;
+        private TextBox CamoIndexTextbox;
     }
 }

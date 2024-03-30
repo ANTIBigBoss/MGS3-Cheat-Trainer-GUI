@@ -59,5 +59,15 @@ namespace MGS3_MC_Cheat_Trainer.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Selected_MGS3_Menu_without_button {
+            get {
+                object obj = ResourceManager.GetObject("Selected_MGS3_Menu_without_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

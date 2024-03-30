@@ -7,34 +7,144 @@ namespace MGS3_MC_Cheat_Trainer
     public partial class MiscForm : Form
     {
         #region Form Load and Close
+        private int userCamoIndex;
+
         public MiscForm()
         {
             InitializeComponent();
+            // Check if the camo index is nopped and set the checkbox accordingly
+            CamoCheckBoxCheck();
+            this.Activated += MiscForm_Activated;
+            this.Deactivate += MiscForm_Deactivate;
+            // Add event handlers
             this.FormClosing += new FormClosingEventHandler(Form4_FormClosing);
+            CamoIndexChanges.CheckedChanged += new EventHandler(CamoIndexChanges_CheckedChanged);
 
-            // Range for the model manipulation
+            // All UI information for Model Distortion/Manipulation
             ModelSlider.Minimum = 0;
             ModelSlider.Maximum = 255;
             ModelSlider.Value = 40; // Default byte value and where the slider should start at
-            CamoIndexSlider.Minimum = -1000;
-            CamoIndexSlider.Maximum = 1000;
             ChangeModelNumber.Click += new EventHandler(ChangeModelNumber_Click);
             ModelSlider.Scroll += new EventHandler(ModelSlider_Scroll);
+
+            // Timer to check Snake's position once his AOB is found
             SnakesPosition.Enabled = true;
             SnakesPosition.Interval = 1000; // Update every second
             SnakesPosition.Tick += new EventHandler(SnakesPosition_Tick);
 
+            // Timer and slider information for camo index
+            System.Windows.Forms.Timer camoIndexTimer = new System.Windows.Forms.Timer();
+            CamoIndexSlider.Minimum = -1000;
+            CamoIndexSlider.Maximum = 1000;
+            camoIndexTimer.Interval = 1000; // Update every second, adjust as needed
+            camoIndexTimer.Tick += CamoIndexTimer_Tick;
+            camoIndexTimer.Start();
+        }
+
+        private void MiscForm_Activated(object sender, EventArgs e)
+        {
+            CamoIndexSlider.Value = Math.Max(CamoIndexSlider.Minimum, Math.Min(TimerManager.UserCamoIndex, CamoIndexSlider.Maximum));
+            
+        }
+
+        private void MiscForm_Deactivate(object sender, EventArgs e)
+        {
+            TimerManager.UserCamoIndex = CamoIndexSlider.Value;
         }
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            // Detach event handler while loading the form
+            CamoIndexChanges.CheckedChanged -= CamoIndexChanges_CheckedChanged;
+
+            // Set form location
             this.Location = MemoryManager.GetLastFormLocation();
+
+            // Reattach event handler after loading the form
+            CamoIndexChanges.CheckedChanged += CamoIndexChanges_CheckedChanged;
+            
         }
 
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
+
+        // using MiscManager.Instance.IsCamoIndexNopped(); we make a function to check if the camo index is nopped so we can use it when the form is loaded to determine if the checkbox should be checked or not
+        #region Camo  
+
+
+        private void CamoIndexSlider_Scroll(object sender, EventArgs e)
+        {
+            // Store the user's camo index value when the slider is adjusted
+            TimerManager.UserCamoIndex = CamoIndexSlider.Value;
+
+            // Adjust the camo index value if necessary
+            if (MiscManager.Instance.IsCamoIndexNopped())
+            {
+                int newValue = CamoIndexSlider.Value;
+                MiscManager.Instance.AdjustCamoIndex(newValue);
+            }
+            else
+            {
+                MessageBox.Show("Please check the box to enable camo index changes.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void CamoIndexTimer_Tick(object sender, EventArgs e)
+        {
+            // Optional: Update the UI or log only if needed, to reduce performance overhead
+            int currentCamoIndex = MiscManager.Instance.ReadCamoIndex();
+            float percentage = (float)currentCamoIndex / 10;
+            CamoIndexTextbox.Text = $"Camo Index is at {percentage}%";
+
+            // The critical part: Adjust camo index continuously if NOP is applied
+            if (MiscManager.Instance.IsCamoIndexNopped())
+            {
+                TimerManager.UserCamoIndex = CamoIndexSlider.Value;
+                MiscManager.Instance.AdjustCamoIndex(TimerManager.UserCamoIndex);
+            }
+
+            // Ensure the slider is enabled/disabled based on NOP status
+            CamoIndexSlider.Enabled = MiscManager.Instance.IsCamoIndexNopped();
+        }
+
+
+        private void CamoIndexChanges_CheckedChanged(object sender, EventArgs e)
+        {
+            {
+                // Check if the checkbox is checked
+                if (CamoIndexChanges.Checked)
+                {
+                    MiscManager.Instance.EnableNOPCamoIndex();
+                }
+                else
+                {
+                    MiscManager.RestoreCamoIndex();
+                }
+            }
+        }
+
+        private bool CamoCheckBoxCheck()
+        {
+            // if the camo index is nopped, return true and make sure the checkbox is checked
+            if (MiscManager.Instance.IsCamoIndexNopped())
+            {
+                CamoIndexChanges.Checked = true;
+                return true;
+            }
+
+            // if the camo index is not nopped, return false and make sure the checkbox is not checked
+            else
+            {
+                CamoIndexChanges.Checked = false;
+                return false;
+            }
+        }
+
+        #endregion
+
+
         #endregion
 
         #region Form Swaps
@@ -171,35 +281,6 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
-        #region Camo  
-        private void NopCamo_Click(object sender, EventArgs e)
-        {
-            // Ensure the MemoryManager has the necessary method to perform the NOP operation
-            MiscManager.Instance.EnableNOPCamoIndex();
-        }
-
-
-        private void RestoreCamo_Click(object sender, EventArgs e)
-        {
-            MiscManager.RestoreCamoIndex();
-        }
-
-        private void LogAOBs_Click(object sender, EventArgs e)
-        {
-            LoggingManager.Instance.LogAOBAddresses();
-        }
-
-        private void CamoIndexSlider_Scroll(object sender, EventArgs e)
-        {
-            // Get the new value from the slider
-            int newValue = CamoIndexSlider.Value;
-
-            // Call the method to adjust the camo index
-            MiscManager.Instance.AdjustCamoIndex(newValue);
-        }
-
-        #endregion
-
         #region Xyz Manipulation
         private void TeleportGuardsToSnake_Click(object sender, EventArgs e)
         {
@@ -260,9 +341,7 @@ namespace MGS3_MC_Cheat_Trainer
                 await Task.Delay(1000); // 500 milliseconds = 0.5 seconds
             }
         }
-        #endregion
-
-
+        
 
         private void ParseTextBoxesPositions_Click(object sender, EventArgs e)
         {
@@ -304,7 +383,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-
         private void SnakesPosition_Tick(object sender, EventArgs e)
         {
             FetchAndDisplaySnakePosition();
@@ -330,12 +408,12 @@ namespace MGS3_MC_Cheat_Trainer
                     }
                     else
                     {
-                        Log("Failed to read Snake's position.");
+                        LoggingManager.Instance.Log("Failed to read Snake's position.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log($"Exception while reading Snake's position: {ex.Message}");
+                    LoggingManager.Instance.Log($"Exception while reading Snake's position: {ex.Message}");
                 }
                 finally
                 {
@@ -344,17 +422,14 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
-                Log("Failed to open game process.");
+                LoggingManager.Instance.Log("Failed to open game process.");
             }
         }
+        #endregion
 
-        private void Log(string message)
+        private void LogAOBs_Click(object sender, EventArgs e)
         {
-            // Implement logging to your preference
-            Console.WriteLine(message);
+            LoggingManager.Instance.LogAOBAddresses();
         }
-
-
-
     }
 }

@@ -22,9 +22,9 @@ namespace MGS3_MC_Cheat_Trainer
             InitializeProgressBars();
 
             // Set the initial checkbox state based on the infiniteAlertEnabled variable
-            InfiniteAlert.Checked = AlertManager.IsInfiniteAlertEnabled;
-            InfiniteEvasion.Checked = AlertManager.IsInfiniteEvasionEnabled;
-            InfiniteCaution.Checked = AlertManager.IsInfiniteCautionEnabled;
+            InfiniteAlert.Checked = TimerManager.IsInfiniteAlertEnabled;
+            InfiniteEvasion.Checked = TimerManager.IsInfiniteEvasionEnabled;
+            InfiniteCaution.Checked = TimerManager.IsInfiniteCautionEnabled;
 
             // Update the class-level variable with the checkbox state
             infiniteAlertCheckboxState = InfiniteAlert.Checked;
@@ -196,17 +196,19 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (InfiniteEvasion.Checked)
             {
-                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                // The t/f statements are just to stop multiple checkboxes from being checked at once
+                // As it could have unintended consequences so this was a good way to stop that
+                suppressAlertMessages = true;
                 InfiniteAlert.Checked = false;
                 MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Evasion Mode to use this.");
-                suppressAlertMessages = false; // Allow messages to be shown again
+                suppressAlertMessages = false;
             }
             else if (InfiniteCaution.Checked)
             {
-                suppressAlertMessages = true; // Suppress other alert messages temporarily
+                suppressAlertMessages = true;
                 InfiniteAlert.Checked = false;
                 MessageBox.Show("Only one Infinite Status allowed at once. \nDeselect Caution Mode to use this.");
-                suppressAlertMessages = false; // Allow messages to be shown again
+                suppressAlertMessages = false;
             }
             else
             {
@@ -218,12 +220,12 @@ namespace MGS3_MC_Cheat_Trainer
                 {
                     AlertManager.TriggerAlert(AlertModes.Alert);
                     // Start the alert timer when the checkbox is checked
-                    AlertManager.ToggleInfiniteAlert(true);
+                    TimerManager.ToggleInfiniteAlert(true);
                 }
                 else
                 {
                     // Stop the alert timer when the checkbox is unchecked
-                    AlertManager.ToggleInfiniteAlert(false);
+                    TimerManager.ToggleInfiniteAlert(false);
                 }
             }
         }
@@ -251,7 +253,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
-                AlertManager.ToggleInfiniteCaution(InfiniteCaution.Checked);
+                TimerManager.ToggleInfiniteCaution(InfiniteCaution.Checked);
             }
         }
 
@@ -276,7 +278,7 @@ namespace MGS3_MC_Cheat_Trainer
             else
             {
                 // Safe to trigger the evasion sequence
-                AlertManager.StartEvasionSequence();
+                TimerManager.StartEvasionSequence();
             }
         }
 
@@ -304,7 +306,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
-                AlertManager.ToggleInfiniteEvasion(InfiniteEvasion.Checked);
+                TimerManager.ToggleInfiniteEvasion(InfiniteEvasion.Checked);
             }
         }
 

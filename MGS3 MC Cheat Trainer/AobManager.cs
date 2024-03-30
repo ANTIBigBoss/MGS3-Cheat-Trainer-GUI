@@ -96,6 +96,7 @@ namespace MGS3_MC_Cheat_Trainer
                         // IntPtr.Add(aobResult, Constants.TestAOBs["WeaponsTable"].Pattern.Length + 12 + (WeaponOffset * index));
                         )
                 },
+
                 {    
                     "ItemsTable", // 00 00 DA 5A 2B 00
                     (new byte[] { 0x00, 0x00, 0xDA, 0x5A, 0x2B, 0x00 },
@@ -139,6 +140,7 @@ namespace MGS3_MC_Cheat_Trainer
                         new IntPtr(0x1000000)
                     )
                 },
+
                 {
                     "UpsideDownCamera", // BF 00 00 00 00 00 00 80 3F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
                     (new byte[]
@@ -384,9 +386,6 @@ namespace MGS3_MC_Cheat_Trainer
             return false;
         }
 
-        
-
-
         public IntPtr FoundOcelotAddress { get; private set; } = IntPtr.Zero;
         public IntPtr FoundTheFearAddress { get; private set; } = IntPtr.Zero;
         public IntPtr FoundTheEnds063aAddress { get; private set; } = IntPtr.Zero;
@@ -486,19 +485,6 @@ namespace MGS3_MC_Cheat_Trainer
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Not as Dynamic as I hoped but the logic in theory is still good if a consistent AOB is found
   
@@ -688,39 +674,4 @@ namespace MGS3_MC_Cheat_Trainer
        return false;
    }
    
-   
-   // This will work on The Fear, Pain and Volgin if our pointer way of doing things doesn't work
-   public bool DynamicBackupToFindAndStoreTheFearAOB()
-   {
-       var process = GetMGS3Process();
-       if (process == null)
-       {
-   
-           return false;
-       }
-   
-       IntPtr processHandle = OpenGameProcess(process);
-       if (processHandle == IntPtr.Zero)
-       {
-   
-           return false;
-       }
-   
-       var (pattern, mask) = Constants.AOBs["TheFearAOB"];
-       IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
-       IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
-       long size = endAddress.ToInt64() - startAddress.ToInt64();
-   
-       IntPtr foundAddress = MemoryManager.Instance.ScanWideMemory(processHandle, startAddress, size, pattern, mask);
-       NativeMethods.CloseHandle(processHandle);
-   
-       if (foundAddress != IntPtr.Zero)
-       {
-           FoundTheFearAddress = foundAddress; // Store found address
-           return true;
-       }
-   
-       return false;
-   }
-   #endregion
    */
