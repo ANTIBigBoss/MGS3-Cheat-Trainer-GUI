@@ -177,7 +177,7 @@ namespace MGS3_MC_Cheat_Trainer
                 // Hardcoded address for the camo index for the time being I've been trying to
                 // find a good AOB but it has been a pain in the ass with the region it's in
                 IntPtr baseAddress = process.MainModule.BaseAddress;
-                IntPtr offset = new IntPtr(0x1DE58A4);
+                IntPtr offset = new IntPtr(0x1DE6964);
                 IntPtr targetAddress = IntPtr.Add(baseAddress, offset.ToInt32());
 
                 bool result = MemoryManager.Instance.WriteIntToMemory(processHandle, targetAddress, newValue);
@@ -253,7 +253,77 @@ namespace MGS3_MC_Cheat_Trainer
             return false;
         }
 
-        // We can now use this in the form to run a check if the camo index is NOP'd out or not like so:
-        // MiscManager.Instance.IsCamoIndexNopped();
+        public void SetFovSlider(float newFovValue)
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return;
+
+                // Find the target address using the AOB pattern
+                IntPtr aobResult = MemoryManager.Instance.FindAob("FovSlider");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find FOV AOB pattern.");
+                    return;
+                }
+
+                // Adjust the address to get to the location of the FOV value
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
+
+                // Write the new FOV value to memory using WriteFloatToMemory method
+                bool result = MemoryManager.WriteFloatToMemory(processHandle, targetAddress, newFovValue);
+                if (!result)
+                {
+                    LoggingManager.Instance.Log("Failed to write the new FOV value.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        public float ReadFovSlider()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+            float fovValue = 0.0f;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return fovValue;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return fovValue;
+
+                // Find the target address using the AOB pattern
+                IntPtr aobResult = MemoryManager.Instance.FindAob("FovSlider");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find FOV AOB pattern.");
+                    return fovValue;
+                }
+
+                // Assuming FOV value is 4 bytes before the AOB pattern, adjust the address accordingly
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4);
+
+                // Read the FOV value as a float from memory using the MemoryManager class
+                fovValue = MemoryManager.ReadFloatFromMemory(processHandle, targetAddress);
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+
+            return fovValue;
+        }
+
+
     }
 }

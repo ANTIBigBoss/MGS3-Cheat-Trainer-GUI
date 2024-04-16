@@ -78,9 +78,31 @@
             CommonColdInjury = new Button();
             RemoveInjuries = new Button();
             SwapToBossForm = new Button();
+            textBox4 = new TextBox();
+            LethalGroupBox = new GroupBox();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton3 = new RadioButton();
+            radioButton4 = new RadioButton();
+            radioButton5 = new RadioButton();
+            groupBox2 = new GroupBox();
+            radioButton6 = new RadioButton();
+            radioButton7 = new RadioButton();
+            radioButton8 = new RadioButton();
+            radioButton9 = new RadioButton();
+            radioButton10 = new RadioButton();
+            groupBox3 = new GroupBox();
+            radioButton11 = new RadioButton();
+            radioButton12 = new RadioButton();
+            radioButton13 = new RadioButton();
+            radioButton14 = new RadioButton();
+            radioButton15 = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            LethalGroupBox.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // MaxHpTo1
@@ -489,7 +511,7 @@
             textBox3.BorderStyle = BorderStyle.None;
             textBox3.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox3.ForeColor = SystemColors.ActiveCaptionText;
-            textBox3.Location = new Point(430, 60);
+            textBox3.Location = new Point(254, 60);
             textBox3.Multiline = true;
             textBox3.Name = "textBox3";
             textBox3.PlaceholderText = "Serious Injuries";
@@ -505,7 +527,7 @@
             BurnInjury.FlatStyle = FlatStyle.Flat;
             BurnInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             BurnInjury.ImageAlign = ContentAlignment.TopCenter;
-            BurnInjury.Location = new Point(430, 100);
+            BurnInjury.Location = new Point(254, 100);
             BurnInjury.Name = "BurnInjury";
             BurnInjury.Size = new Size(228, 31);
             BurnInjury.TabIndex = 537;
@@ -520,7 +542,7 @@
             CutInjury.FlatStyle = FlatStyle.Flat;
             CutInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             CutInjury.ImageAlign = ContentAlignment.TopCenter;
-            CutInjury.Location = new Point(430, 139);
+            CutInjury.Location = new Point(254, 139);
             CutInjury.Name = "CutInjury";
             CutInjury.Size = new Size(228, 31);
             CutInjury.TabIndex = 538;
@@ -535,7 +557,7 @@
             GunshotRifleInjury.FlatStyle = FlatStyle.Flat;
             GunshotRifleInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             GunshotRifleInjury.ImageAlign = ContentAlignment.TopCenter;
-            GunshotRifleInjury.Location = new Point(430, 178);
+            GunshotRifleInjury.Location = new Point(254, 178);
             GunshotRifleInjury.Name = "GunshotRifleInjury";
             GunshotRifleInjury.Size = new Size(228, 31);
             GunshotRifleInjury.TabIndex = 539;
@@ -550,7 +572,7 @@
             GunshotShotgunInjury.FlatStyle = FlatStyle.Flat;
             GunshotShotgunInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             GunshotShotgunInjury.ImageAlign = ContentAlignment.TopCenter;
-            GunshotShotgunInjury.Location = new Point(430, 218);
+            GunshotShotgunInjury.Location = new Point(254, 218);
             GunshotShotgunInjury.Name = "GunshotShotgunInjury";
             GunshotShotgunInjury.Size = new Size(228, 31);
             GunshotShotgunInjury.TabIndex = 540;
@@ -565,7 +587,7 @@
             BoneFractureInjury.FlatStyle = FlatStyle.Flat;
             BoneFractureInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             BoneFractureInjury.ImageAlign = ContentAlignment.TopCenter;
-            BoneFractureInjury.Location = new Point(430, 258);
+            BoneFractureInjury.Location = new Point(254, 258);
             BoneFractureInjury.Name = "BoneFractureInjury";
             BoneFractureInjury.Size = new Size(228, 31);
             BoneFractureInjury.TabIndex = 541;
@@ -580,7 +602,7 @@
             BulletBeeInjury.FlatStyle = FlatStyle.Flat;
             BulletBeeInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             BulletBeeInjury.ImageAlign = ContentAlignment.TopCenter;
-            BulletBeeInjury.Location = new Point(430, 299);
+            BulletBeeInjury.Location = new Point(254, 299);
             BulletBeeInjury.Name = "BulletBeeInjury";
             BulletBeeInjury.Size = new Size(228, 31);
             BulletBeeInjury.TabIndex = 542;
@@ -595,7 +617,7 @@
             LeechesInjury.FlatStyle = FlatStyle.Flat;
             LeechesInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             LeechesInjury.ImageAlign = ContentAlignment.TopCenter;
-            LeechesInjury.Location = new Point(430, 340);
+            LeechesInjury.Location = new Point(254, 340);
             LeechesInjury.Name = "LeechesInjury";
             LeechesInjury.Size = new Size(228, 31);
             LeechesInjury.TabIndex = 543;
@@ -610,7 +632,7 @@
             ArrowInjury.FlatStyle = FlatStyle.Flat;
             ArrowInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ArrowInjury.ImageAlign = ContentAlignment.TopCenter;
-            ArrowInjury.Location = new Point(430, 381);
+            ArrowInjury.Location = new Point(254, 381);
             ArrowInjury.Name = "ArrowInjury";
             ArrowInjury.Size = new Size(228, 31);
             ArrowInjury.TabIndex = 544;
@@ -625,7 +647,7 @@
             TranqInjury.FlatStyle = FlatStyle.Flat;
             TranqInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             TranqInjury.ImageAlign = ContentAlignment.TopCenter;
-            TranqInjury.Location = new Point(430, 423);
+            TranqInjury.Location = new Point(254, 423);
             TranqInjury.Name = "TranqInjury";
             TranqInjury.Size = new Size(228, 31);
             TranqInjury.TabIndex = 545;
@@ -640,7 +662,7 @@
             VenomPoisoningInjury.FlatStyle = FlatStyle.Flat;
             VenomPoisoningInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             VenomPoisoningInjury.ImageAlign = ContentAlignment.TopCenter;
-            VenomPoisoningInjury.Location = new Point(430, 465);
+            VenomPoisoningInjury.Location = new Point(254, 465);
             VenomPoisoningInjury.Name = "VenomPoisoningInjury";
             VenomPoisoningInjury.Size = new Size(228, 31);
             VenomPoisoningInjury.TabIndex = 546;
@@ -655,7 +677,7 @@
             FoodPoisoningInjury.FlatStyle = FlatStyle.Flat;
             FoodPoisoningInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             FoodPoisoningInjury.ImageAlign = ContentAlignment.TopCenter;
-            FoodPoisoningInjury.Location = new Point(430, 506);
+            FoodPoisoningInjury.Location = new Point(254, 506);
             FoodPoisoningInjury.Name = "FoodPoisoningInjury";
             FoodPoisoningInjury.Size = new Size(228, 31);
             FoodPoisoningInjury.TabIndex = 547;
@@ -670,7 +692,7 @@
             CommonColdInjury.FlatStyle = FlatStyle.Flat;
             CommonColdInjury.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             CommonColdInjury.ImageAlign = ContentAlignment.TopCenter;
-            CommonColdInjury.Location = new Point(430, 548);
+            CommonColdInjury.Location = new Point(254, 548);
             CommonColdInjury.Name = "CommonColdInjury";
             CommonColdInjury.Size = new Size(228, 31);
             CommonColdInjury.TabIndex = 548;
@@ -685,7 +707,7 @@
             RemoveInjuries.FlatStyle = FlatStyle.Flat;
             RemoveInjuries.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveInjuries.ImageAlign = ContentAlignment.TopCenter;
-            RemoveInjuries.Location = new Point(430, 590);
+            RemoveInjuries.Location = new Point(254, 590);
             RemoveInjuries.Name = "RemoveInjuries";
             RemoveInjuries.Size = new Size(228, 31);
             RemoveInjuries.TabIndex = 550;
@@ -709,12 +731,277 @@
             SwapToBossForm.UseVisualStyleBackColor = true;
             SwapToBossForm.Click += SwapToBossForm_Click;
             // 
+            // textBox4
+            // 
+            textBox4.BackColor = SystemColors.ActiveCaptionText;
+            textBox4.BorderStyle = BorderStyle.None;
+            textBox4.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox4.ForeColor = SystemColors.ActiveCaptionText;
+            textBox4.Location = new Point(619, 60);
+            textBox4.Multiline = true;
+            textBox4.Name = "textBox4";
+            textBox4.PlaceholderText = "Guard Strength";
+            textBox4.ReadOnly = true;
+            textBox4.Size = new Size(228, 34);
+            textBox4.TabIndex = 552;
+            textBox4.TextAlign = HorizontalAlignment.Center;
+            // 
+            // LethalGroupBox
+            // 
+            LethalGroupBox.BackColor = Color.FromArgb(156, 156, 124);
+            LethalGroupBox.BackgroundImageLayout = ImageLayout.None;
+            LethalGroupBox.Controls.Add(radioButton4);
+            LethalGroupBox.Controls.Add(radioButton5);
+            LethalGroupBox.Controls.Add(radioButton3);
+            LethalGroupBox.Controls.Add(radioButton2);
+            LethalGroupBox.Controls.Add(radioButton1);
+            LethalGroupBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            LethalGroupBox.Location = new Point(619, 111);
+            LethalGroupBox.Name = "LethalGroupBox";
+            LethalGroupBox.Size = new Size(228, 156);
+            LethalGroupBox.TabIndex = 553;
+            LethalGroupBox.TabStop = false;
+            LethalGroupBox.Text = "Lethal";
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton1.Location = new Point(6, 21);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(94, 24);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Invincible";
+            radioButton1.UseVisualStyleBackColor = false;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton2.Location = new Point(6, 48);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(110, 24);
+            radioButton2.TabIndex = 1;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Very Strong";
+            radioButton2.UseVisualStyleBackColor = false;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton3.Location = new Point(6, 76);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(80, 24);
+            radioButton3.TabIndex = 554;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "Normal";
+            radioButton3.UseVisualStyleBackColor = false;
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton4.Location = new Point(6, 128);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(117, 24);
+            radioButton4.TabIndex = 556;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "One Shot Kill";
+            radioButton4.UseVisualStyleBackColor = false;
+            // 
+            // radioButton5
+            // 
+            radioButton5.AutoSize = true;
+            radioButton5.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton5.Location = new Point(6, 101);
+            radioButton5.Name = "radioButton5";
+            radioButton5.Size = new Size(102, 24);
+            radioButton5.TabIndex = 555;
+            radioButton5.TabStop = true;
+            radioButton5.Text = "Very Weak";
+            radioButton5.UseVisualStyleBackColor = false;
+            // 
+            // groupBox2
+            // 
+            groupBox2.BackColor = Color.FromArgb(156, 156, 124);
+            groupBox2.BackgroundImageLayout = ImageLayout.None;
+            groupBox2.Controls.Add(radioButton6);
+            groupBox2.Controls.Add(radioButton7);
+            groupBox2.Controls.Add(radioButton8);
+            groupBox2.Controls.Add(radioButton9);
+            groupBox2.Controls.Add(radioButton10);
+            groupBox2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox2.Location = new Point(619, 287);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(228, 156);
+            groupBox2.TabIndex = 557;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Sleep";
+            // 
+            // radioButton6
+            // 
+            radioButton6.AutoSize = true;
+            radioButton6.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton6.Location = new Point(6, 128);
+            radioButton6.Name = "radioButton6";
+            radioButton6.Size = new Size(117, 24);
+            radioButton6.TabIndex = 556;
+            radioButton6.TabStop = true;
+            radioButton6.Text = "One Shot Kill";
+            radioButton6.UseVisualStyleBackColor = false;
+            // 
+            // radioButton7
+            // 
+            radioButton7.AutoSize = true;
+            radioButton7.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton7.Location = new Point(6, 101);
+            radioButton7.Name = "radioButton7";
+            radioButton7.Size = new Size(102, 24);
+            radioButton7.TabIndex = 555;
+            radioButton7.TabStop = true;
+            radioButton7.Text = "Very Weak";
+            radioButton7.UseVisualStyleBackColor = false;
+            // 
+            // radioButton8
+            // 
+            radioButton8.AutoSize = true;
+            radioButton8.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton8.Location = new Point(6, 76);
+            radioButton8.Name = "radioButton8";
+            radioButton8.Size = new Size(80, 24);
+            radioButton8.TabIndex = 554;
+            radioButton8.TabStop = true;
+            radioButton8.Text = "Normal";
+            radioButton8.UseVisualStyleBackColor = false;
+            // 
+            // radioButton9
+            // 
+            radioButton9.AutoSize = true;
+            radioButton9.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton9.Location = new Point(6, 48);
+            radioButton9.Name = "radioButton9";
+            radioButton9.Size = new Size(110, 24);
+            radioButton9.TabIndex = 1;
+            radioButton9.TabStop = true;
+            radioButton9.Text = "Very Strong";
+            radioButton9.UseVisualStyleBackColor = false;
+            // 
+            // radioButton10
+            // 
+            radioButton10.AutoSize = true;
+            radioButton10.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton10.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton10.Location = new Point(6, 21);
+            radioButton10.Name = "radioButton10";
+            radioButton10.Size = new Size(94, 24);
+            radioButton10.TabIndex = 0;
+            radioButton10.TabStop = true;
+            radioButton10.Text = "Invincible";
+            radioButton10.UseVisualStyleBackColor = false;
+            // 
+            // groupBox3
+            // 
+            groupBox3.BackColor = Color.FromArgb(156, 156, 124);
+            groupBox3.BackgroundImageLayout = ImageLayout.None;
+            groupBox3.Controls.Add(radioButton11);
+            groupBox3.Controls.Add(radioButton12);
+            groupBox3.Controls.Add(radioButton13);
+            groupBox3.Controls.Add(radioButton14);
+            groupBox3.Controls.Add(radioButton15);
+            groupBox3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBox3.Location = new Point(619, 467);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(228, 156);
+            groupBox3.TabIndex = 557;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Stun";
+            // 
+            // radioButton11
+            // 
+            radioButton11.AutoSize = true;
+            radioButton11.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton11.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton11.Location = new Point(6, 128);
+            radioButton11.Name = "radioButton11";
+            radioButton11.Size = new Size(117, 24);
+            radioButton11.TabIndex = 556;
+            radioButton11.TabStop = true;
+            radioButton11.Text = "One Shot Kill";
+            radioButton11.UseVisualStyleBackColor = false;
+            // 
+            // radioButton12
+            // 
+            radioButton12.AutoSize = true;
+            radioButton12.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton12.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton12.Location = new Point(6, 101);
+            radioButton12.Name = "radioButton12";
+            radioButton12.Size = new Size(102, 24);
+            radioButton12.TabIndex = 555;
+            radioButton12.TabStop = true;
+            radioButton12.Text = "Very Weak";
+            radioButton12.UseVisualStyleBackColor = false;
+            // 
+            // radioButton13
+            // 
+            radioButton13.AutoSize = true;
+            radioButton13.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton13.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton13.Location = new Point(6, 76);
+            radioButton13.Name = "radioButton13";
+            radioButton13.Size = new Size(80, 24);
+            radioButton13.TabIndex = 554;
+            radioButton13.TabStop = true;
+            radioButton13.Text = "Normal";
+            radioButton13.UseVisualStyleBackColor = false;
+            // 
+            // radioButton14
+            // 
+            radioButton14.AutoSize = true;
+            radioButton14.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton14.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton14.Location = new Point(6, 48);
+            radioButton14.Name = "radioButton14";
+            radioButton14.Size = new Size(110, 24);
+            radioButton14.TabIndex = 1;
+            radioButton14.TabStop = true;
+            radioButton14.Text = "Very Strong";
+            radioButton14.UseVisualStyleBackColor = false;
+            // 
+            // radioButton15
+            // 
+            radioButton15.AutoSize = true;
+            radioButton15.BackColor = Color.FromArgb(156, 156, 124);
+            radioButton15.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            radioButton15.Location = new Point(6, 21);
+            radioButton15.Name = "radioButton15";
+            radioButton15.Size = new Size(94, 24);
+            radioButton15.TabIndex = 0;
+            radioButton15.TabStop = true;
+            radioButton15.Text = "Invincible";
+            radioButton15.UseVisualStyleBackColor = false;
+            // 
             // StatsAndAlertForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(groupBox3);
+            Controls.Add(groupBox2);
+            Controls.Add(LethalGroupBox);
+            Controls.Add(textBox4);
             Controls.Add(SwapToBossForm);
             Controls.Add(RemoveInjuries);
             Controls.Add(CommonColdInjury);
@@ -762,11 +1049,17 @@
             Controls.Add(Plus100HpValue);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsAndAlertForm";
-            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.0";
+            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.1";
             Load += StatsAndAlertForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            LethalGroupBox.ResumeLayout(false);
+            LethalGroupBox.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -817,5 +1110,24 @@
         private Button FakeDeathPillInjury;
         private Button RemoveInjuries;
         private Button SwapToBossForm;
+        private TextBox textBox4;
+        private GroupBox LethalGroupBox;
+        private RadioButton radioButton1;
+        private RadioButton radioButton4;
+        private RadioButton radioButton5;
+        private RadioButton radioButton3;
+        private RadioButton radioButton2;
+        private GroupBox groupBox2;
+        private RadioButton radioButton6;
+        private RadioButton radioButton7;
+        private RadioButton radioButton8;
+        private RadioButton radioButton9;
+        private RadioButton radioButton10;
+        private GroupBox groupBox3;
+        private RadioButton radioButton11;
+        private RadioButton radioButton12;
+        private RadioButton radioButton13;
+        private RadioButton radioButton14;
+        private RadioButton radioButton15;
     }
 }

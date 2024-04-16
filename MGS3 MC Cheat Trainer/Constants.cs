@@ -53,7 +53,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
-        internal const int MainPointerRegionOffset = 0x00A9C9D8;
+        internal const int MainPointerRegionOffset = 0x00A9DA98;
         internal static IntPtr HudOffset = (IntPtr)0xAE345F;// Remove-able unless we want to find it again
 
         public static class InjuryData

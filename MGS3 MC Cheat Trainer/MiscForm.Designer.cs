@@ -73,8 +73,16 @@
             CamoIndexTimer = new System.Windows.Forms.Timer(components);
             CamoIndexChanges = new CheckBox();
             CamoIndexTextbox = new TextBox();
+            button3 = new Button();
+            button4 = new Button();
+            FovSlider = new TrackBar();
+            textBox10 = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)FovSlider).BeginInit();
             SuspendLayout();
             // 
             // button1
@@ -627,12 +635,109 @@
             CamoIndexTextbox.Size = new Size(289, 23);
             CamoIndexTextbox.TabIndex = 588;
             // 
+            // button3
+            // 
+            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
+            button3.Cursor = Cursors.Hand;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button3.ImageAlign = ContentAlignment.TopCenter;
+            button3.Location = new Point(690, 382);
+            button3.Name = "button3";
+            button3.Size = new Size(241, 29);
+            button3.TabIndex = 589;
+            button3.Text = "r_sna01 + Map";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button4
+            // 
+            button4.BackgroundImage = (Image)resources.GetObject("button4.BackgroundImage");
+            button4.Cursor = Cursors.Hand;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            button4.ImageAlign = ContentAlignment.TopCenter;
+            button4.Location = new Point(690, 420);
+            button4.Name = "button4";
+            button4.Size = new Size(241, 29);
+            button4.TabIndex = 590;
+            button4.Text = "r_sna01 + Map All Instances";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // FovSlider
+            // 
+            FovSlider.BackColor = Color.FromArgb(36, 44, 36);
+            FovSlider.Location = new Point(861, 655);
+            FovSlider.Name = "FovSlider";
+            FovSlider.Size = new Size(299, 45);
+            FovSlider.TabIndex = 591;
+            FovSlider.Scroll += FovSlider_Scroll;
+            // 
+            // textBox10
+            // 
+            textBox10.BackColor = SystemColors.ActiveCaptionText;
+            textBox10.BorderStyle = BorderStyle.None;
+            textBox10.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox10.ForeColor = SystemColors.ActiveCaptionText;
+            textBox10.Location = new Point(861, 613);
+            textBox10.Multiline = true;
+            textBox10.Name = "textBox10";
+            textBox10.PlaceholderText = "FOV Slider";
+            textBox10.ReadOnly = true;
+            textBox10.Size = new Size(299, 36);
+            textBox10.TabIndex = 592;
+            textBox10.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.FromArgb(36, 44, 36);
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.ButtonHighlight;
+            label1.Location = new Point(860, 683);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 20);
+            label1.TabIndex = 593;
+            label1.Text = "0.5";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(36, 44, 36);
+            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.ButtonHighlight;
+            label2.Location = new Point(1132, 683);
+            label2.Name = "label2";
+            label2.Size = new Size(31, 20);
+            label2.TabIndex = 594;
+            label2.Text = "1.5";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = Color.FromArgb(36, 44, 36);
+            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.ButtonHighlight;
+            label3.Location = new Point(987, 683);
+            label3.Name = "label3";
+            label3.Size = new Size(31, 20);
+            label3.TabIndex = 595;
+            label3.Text = "1.0";
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(textBox10);
+            Controls.Add(FovSlider);
+            Controls.Add(button4);
+            Controls.Add(button3);
             Controls.Add(CamoIndexTextbox);
             Controls.Add(CamoIndexChanges);
             Controls.Add(textBox14);
@@ -677,10 +782,11 @@
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.0";
+            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.1";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
+            ((System.ComponentModel.ISupportInitialize)FovSlider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -729,5 +835,12 @@
         private System.Windows.Forms.Timer CamoIndexTimer;
         private CheckBox CamoIndexChanges;
         private TextBox CamoIndexTextbox;
+        private Button button3;
+        private Button button4;
+        private TrackBar FovSlider;
+        private TextBox textBox10;
+        private Label label1;
+        private Label label2;
+        private Label label3;
     }
 }

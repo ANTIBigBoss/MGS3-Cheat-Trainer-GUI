@@ -73,6 +73,7 @@ namespace MGS3_MC_Cheat_Trainer
                 */
                 #endregion
 
+                #region Memory Region Finding AOBs
                 {
                     "AlertMemoryRegion", // ?? ?? 00 00 ?? ?? 00 00 50 46 00 00 FF FF FF FF
                     // ??xx??xxxxxxxxxx
@@ -90,7 +91,7 @@ namespace MGS3_MC_Cheat_Trainer
                     (new byte[] { 0x00, 0x00, 0xAA, 0x77, 0x63, 0x00 },
                         "x x x x x x",
                         new IntPtr(0x1C00000),
-                        new IntPtr(0x1D00000)
+                        new IntPtr(0x1E00000)
                         // Once found 12 bytes forward is the Survival Knife
                         // Usage to travel forward looks like this it would also be using the class information from BaseMGS3Object.cs:
                         // IntPtr.Add(aobResult, Constants.TestAOBs["WeaponsTable"].Pattern.Length + 12 + (WeaponOffset * index));
@@ -102,7 +103,7 @@ namespace MGS3_MC_Cheat_Trainer
                     (new byte[] { 0x00, 0x00, 0xDA, 0x5A, 0x2B, 0x00 },
                         "x x x x x x",
                         new IntPtr(0x1C00000),
-                        new IntPtr(0x1D00000)
+                        new IntPtr(0x1F00000)
                         // Same as weapons but 12 bytes to get to the Life Medicine
                         // Usage to travel forward looks like this it would also be using the class information from BaseMGS3Object.cs:
                         //IntPtr.Add(aobResult, Constants.TestAOBs["ItemsTable"].Pattern.Length + 12 + (ItemOffset * index));
@@ -119,6 +120,27 @@ namespace MGS3_MC_Cheat_Trainer
                     )
                 },
 
+                // These are all placeholder ranges until I solve where everything is
+                {
+                    "Alphabet", // 30 00 00 31 00 00 32 00 00 33 - 10958/2ACE is the camo index
+                    (new byte[] { 0x30, 0x00, 0x00, 0x31, 0x00, 0x00, 0x32, 0x00, 0x00, 0x33 },
+                        "x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+
+                {
+                    "CamoOperations", // 3D E8 03 00 00 7C 07 B9 13 00 00 00 EB
+                    (new byte[] { 0x3D, 0xE8, 0x03, 0x00, 0x00, 0x7C, 0x07, 0xB9, 0x13, 0x00, 0x00, 0x00, 0xEB },
+                        "x x x x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x430000)
+                    )
+                },
+                #endregion
+                
+                #region Camera and Model AOBs
                 {
                     "ModelDistortion", // 45 0F 29 43 C8 45 0F 29 4B B8 45 0F 29 53 A8 45 0F 29 5B 98 45 0F 29 63 88 44 0F 29 6C 24 30
                     (new byte[] { 0x45, 0x0F, 0x29, 0x43, 0xC8, 0x45, 0x0F, 0x29, 0x4B, 0xB8, 0x45, 0x0F, 0x29, 0x53, 0xA8, 0x45, 0x0F, 0x29, 0x5B, 0x98, 0x45, 0x0F, 0x29, 0x63, 0x88, 0x44, 0x0F, 0x29, 0x6C, 0x24, 0x30 },
@@ -126,6 +148,27 @@ namespace MGS3_MC_Cheat_Trainer
                         new IntPtr(0x000000),
                         new IntPtr(0xC00000)
                         )
+                },
+
+                
+                {   // The float value before this AOB is the FOV value negative values will crash the game
+                    // Best range for this float value is 0.5 - 1.5 it can go higher and lower but it sort of
+                    // doesn't render certain game assets properly
+                    "FovSlider", // 4C 89 6C 24 78 4C 89 6D 88 4C 89 6D 90 4C 89 6D A4 44 89 6D A0 E8 7F 9B FF
+                    (new byte[] { 0x4C, 0x89, 0x6C, 0x24, 0x78, 0x4C, 0x89, 0x6D, 0x88, 0x4C, 0x89, 0x6D, 0x90, 0x4C, 0x89, 0x6D, 0xA4, 0x44, 0x89, 0x6D, 0xA0, 0xE8, 0x7F, 0x9B, 0xFF },
+                        "x x x x x x x x x x x x x x x x x x x x x x x x x",
+                        new IntPtr(0x10000),
+                        new IntPtr(0xF0000)
+                    )
+                },
+                
+                {
+                    "PissFilter", // 00 00 A0 49 00 00 00 00 FF FF FF 7F
+                    (new byte[] { 0x00, 0x00, 0xA0, 0x49, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x7F },
+                        "x x x x x x x x x x x x",
+                        new IntPtr(0x1C00000),
+                        new IntPtr(0x1F00000)
+                    )
                 },
 
                 {
@@ -155,15 +198,6 @@ namespace MGS3_MC_Cheat_Trainer
                 },
 
                 {
-                    "CamoOperations", // 3D E8 03 00 00 7C 07 B9 13 00 00 00 EB
-                    (new byte[] { 0x3D, 0xE8, 0x03, 0x00, 0x00, 0x7C, 0x07, 0xB9, 0x13, 0x00, 0x00, 0x00, 0xEB },
-                        "x x x x x x x x x x x x x",
-                        new IntPtr(0x100000),
-                        new IntPtr(0x430000)
-                    )
-                },
-
-                {
                     "LeftBandana", // 33 33 93 3F 9A 99 B9 3F 9A 99 B9 3F
                     (new byte[] { 0x33, 0x33, 0x93, 0x3F, 0x9A, 0x99, 0xB9, 0x3F, 0x9A, 0x99, 0xB9, 0x3F },
                         "x x x x x x x x x x x x",
@@ -181,23 +215,16 @@ namespace MGS3_MC_Cheat_Trainer
                     )
                 },
 
-                // These are all placeholder ranges until I solve where everything is
-                {
-                    "Alphabet", // 30 00 00 31 00 00 32 00 00 33 - 10958/2ACE is the camo index
-                    (new byte[] { 0x30, 0x00, 0x00, 0x31, 0x00, 0x00, 0x32, 0x00, 0x00, 0x33 },
-                        "x x x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
-                    )
-                },
+                #endregion
 
+                #region Health and Stamina Damage AOBs
                 // All Damages are the two bytes before the AOB
                 {
                     "MostWeaponsDamage", // 00 00 E8 98 65 FF FF 8B
                     (new byte[] { 0x00, 0x00, 0xE8, 0x98, 0x65, 0xFF, 0xFF, 0x8B },
                         "x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
@@ -205,8 +232,8 @@ namespace MGS3_MC_Cheat_Trainer
                     "M63Damage", // 00 00 E8 6B 6C FF FF 8B
                     (new byte[] { 0x00, 0x00, 0xE8, 0x6B, 0x6C, 0xFF, 0xFF, 0x8B },
                         "x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
@@ -214,8 +241,8 @@ namespace MGS3_MC_Cheat_Trainer
                     "ExplosionDamage", // 00 00 8B CD E8 30 3E 56
                     (new byte[] { 0x00, 0x00, 0x8B, 0xCD, 0xE8, 0x30, 0x3E, 0x56 },
                         "x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
@@ -226,8 +253,8 @@ namespace MGS3_MC_Cheat_Trainer
                     "ShotgunDamage", // E9 05 09 00 00 8B 96 04 01 00 00 8B CD E8 55 46 56 00 8B 8E 38 01 00 00
                     (new byte[] { 0xE9, 0x05, 0x09, 0x00, 0x00, 0x8B, 0x96, 0x04, 0x01, 0x00, 0x00, 0x8B, 0xCD, 0xE8, 0x55, 0x46, 0x56, 0x00, 0x8B, 0x8E, 0x38, 0x01, 0x00, 0x00 },
                         "x x x x x x x x x x x x x x x x x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
@@ -237,8 +264,8 @@ namespace MGS3_MC_Cheat_Trainer
                     "ThroatSlitDamage", // 83 C4 20 5F C3 48 8D 93 00 04 00 00 41 B9 29 
                     (new byte[] { 0x83, 0xC4, 0x20, 0x5F, 0xC3, 0x48, 0x8D, 0x93, 0x00, 0x04, 0x00, 0x00, 0x41, 0xB9, 0x29 },
                         "x x x x x x x x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
@@ -246,8 +273,8 @@ namespace MGS3_MC_Cheat_Trainer
                     "NeckSnapDamage", // 83 C4 20 5F C3 48 8D 93 00 04 00 00 41 B9 2B 00 00 00 4C 8D 05 A2 CA 94
                     (new byte[] { 0x83, 0xC4, 0x20, 0x5F, 0xC3, 0x48, 0x8D, 0x93, 0x00, 0x04, 0x00, 0x00, 0x41, 0xB9, 0x2B },
                         "x x x x x x x x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
@@ -255,11 +282,33 @@ namespace MGS3_MC_Cheat_Trainer
                     "WpNadeDamage", // C3 CC CC CC CC CC 33 C0 39 81 38
                     (new byte[] { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x33, 0xC0, 0x39, 0x81, 0x38 },
                         "x x x x x x x x x x x",
-                        new IntPtr(0x000000),
-                        new IntPtr(0xC00000)
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
                     )
                 },
 
+                {   // 0 Bytes before the AOB is the 6-byte code value to change from:
+                    // 89 87 48 01 00 00 -> 90 90 90 90 90 90
+                    "SleepControl", // 83 F8 01 7D 2F 66 0F 6E
+                    (new byte[] { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x33, 0xC0, 0x39, 0x81, 0x38 },
+                        "x x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+
+                {   // 0 Bytes after the AOB is the 4-byte code value to change from:
+                    // 89 87 48 01 00 00 -> 90 90 90 90 90 90
+                    "CQCSlamNormal", // CC 48 8B 05 41 78 8F 00 0F B7 50 06 66 83 FA 1E 7F 0C C7 81 40 01 00 00
+                    (new byte[] { 0xCC, 0x48, 0x8B, 0x05, 0x41, 0x78, 0x8F, 0x00, 0x0F, 0xB7, 0x50, 0x06, 0x66, 0x83, 0xFA, 0x1E, 0x7F, 0x0C, 0xC7, 0x81, 0x40, 0x01, 0x00, 0x00 },
+                        "x x x x x x x x x x x x x x x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+                #endregion
+
+                #region Boss AOBs
                 {
                     // Fear, Pain and Volgin are confirmed for this AOB Ocelot did not work
                     "TheFearAOB", // F0 49 02 00 F0 49 02 00
@@ -334,8 +383,9 @@ namespace MGS3_MC_Cheat_Trainer
                         new IntPtr(0x30000000000)
                     )
                 },
+                #endregion
 
-
+                #region Xyz Position Finding AOBs
                 {
                     "GuardPatroling", // 00 00 00 90 01 52 03
                     (new byte[] { 0x00, 0x00, 0x00, 0x90, 0x01, 0x52, 0x03 },
@@ -349,8 +399,8 @@ namespace MGS3_MC_Cheat_Trainer
                     "SnakeAndBossesStanding", // 00 00 00 90 01 20 03
                     (new byte[] { 0x00, 0x00, 0x00, 0x90, 0x01, 0x20, 0x03 },
                         "x x x x x x x",
-                    new IntPtr(0x100FFFFFFFF),
-                    new IntPtr(0x30000000000)
+                        new IntPtr(0x100FFFFFFFF),
+                        new IntPtr(0x30000000000)
                     )
                 },
 
@@ -358,10 +408,12 @@ namespace MGS3_MC_Cheat_Trainer
                     "SnakeAndGuardProne", // 00 00 00 96 00 2C 01
                     (new byte[] { 0x00, 0x00, 0x00, 0x96, 0x00, 0x2C, 0x01 },
                         "x x x x x x x",
-                    new IntPtr(0x100FFFFFFFF),
-                    new IntPtr(0x30000000000)
+                        new IntPtr(0x100FFFFFFFF),
+                        new IntPtr(0x30000000000)
                     )
                 },
+                #endregion
+                
             };
 
         public IntPtr FoundSnakePositionAddress { get; private set; } = IntPtr.Zero;

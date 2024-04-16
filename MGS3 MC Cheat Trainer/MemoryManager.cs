@@ -457,6 +457,50 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
+        public IntPtr ScanForStringMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern)
+        {
+            int bufferSize = 65536; // 64 KB
+            byte[] buffer = new byte[bufferSize];
+            int bytesRead;
+
+            long endAddress = startAddress.ToInt64() + size;
+            for (long address = startAddress.ToInt64(); address < endAddress; address += bufferSize)
+            {
+                int effectiveSize = (int)Math.Min(bufferSize, endAddress - address);
+                bool success = MemoryManager.ReadProcessMemory(processHandle, new IntPtr(address), buffer, (uint)effectiveSize, out bytesRead);
+                if (!success || bytesRead == 0)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i <= bytesRead - pattern.Length; i++)
+                {
+                    if (IsDirectMatch(buffer, i, pattern, bytesRead))
+                    {
+                        return new IntPtr(address + i);
+                    }
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        public bool IsDirectMatch(byte[] buffer, int position, byte[] pattern, int bytesRead)
+        {
+            if (position + pattern.Length > bytesRead) return false;
+
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                if (buffer[position + i] != pattern[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+
         public IntPtr FindDynamicAob(string key)
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
@@ -520,6 +564,9 @@ namespace MGS3_MC_Cheat_Trainer
             // All bytes matched
             return true;
         }
+
+        
+
 
         // string key is the key for the AOB in AobManager.cs
         // i.e. "ModelDistortion", "NotUpsideDownCamera", "WeaponsTable", "CamoOperations", etc. 

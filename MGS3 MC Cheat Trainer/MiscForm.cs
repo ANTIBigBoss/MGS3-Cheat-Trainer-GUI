@@ -8,6 +8,10 @@ namespace MGS3_MC_Cheat_Trainer
     {
         #region Form Load and Close
         private int userCamoIndex;
+        const float MinFov = 0.5f;
+        const float MaxFov = 1.5f;
+        const int SliderMin = 0;
+        const int SliderMax = 15;
 
         public MiscForm()
         {
@@ -29,22 +33,32 @@ namespace MGS3_MC_Cheat_Trainer
 
             // Timer to check Snake's position once his AOB is found
             SnakesPosition.Enabled = true;
-            SnakesPosition.Interval = 1000; // Update every second
+            SnakesPosition.Interval = 1000;
             SnakesPosition.Tick += new EventHandler(SnakesPosition_Tick);
 
             // Timer and slider information for camo index
             System.Windows.Forms.Timer camoIndexTimer = new System.Windows.Forms.Timer();
             CamoIndexSlider.Minimum = -1000;
             CamoIndexSlider.Maximum = 1000;
-            camoIndexTimer.Interval = 1000; // Update every second, adjust as needed
+            camoIndexTimer.Interval = 1000;
             camoIndexTimer.Tick += CamoIndexTimer_Tick;
             camoIndexTimer.Start();
+
+            // Slider range mapping constants
+            
+            const int SliderMin = 0;
+            const int SliderMax = 15;
+            // Initialize slider range
+            FovSlider.Minimum = SliderMin;
+            FovSlider.Maximum = SliderMax;
+
+
         }
 
         private void MiscForm_Activated(object sender, EventArgs e)
         {
             CamoIndexSlider.Value = Math.Max(CamoIndexSlider.Minimum, Math.Min(TimerManager.UserCamoIndex, CamoIndexSlider.Maximum));
-            
+
         }
 
         private void MiscForm_Deactivate(object sender, EventArgs e)
@@ -62,7 +76,16 @@ namespace MGS3_MC_Cheat_Trainer
 
             // Reattach event handler after loading the form
             CamoIndexChanges.CheckedChanged += CamoIndexChanges_CheckedChanged;
-            
+
+            // Read the current FOV value from game memory
+            float currentFovValue = MiscManager.Instance.ReadFovSlider();
+
+            // Map the FOV value to the slider range
+            int sliderValue = (int)((currentFovValue - MinFov) / (MaxFov - MinFov) * (SliderMax - SliderMin));
+
+            // Set the FOV slider position
+            FovSlider.Value = Math.Max(FovSlider.Minimum, Math.Min(sliderValue, FovSlider.Maximum));
+
         }
 
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
@@ -219,6 +242,24 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("Camera has been set to upside down");
         }
 
+        private void FovSlider_Scroll(object sender, EventArgs e)
+        {
+            // Read current slider value
+            int sliderValue = FovSlider.Value;
+
+            // Map slider value to FOV range
+            float newFovValue = MinFov + (sliderValue - SliderMin) * (MaxFov - MinFov) / (SliderMax - SliderMin);
+
+            // Update slider value ensuring it's within the valid range
+            int clampedSliderValue = Math.Max(FovSlider.Minimum, Math.Min(sliderValue, FovSlider.Maximum));
+
+            // Update slider value without triggering the Scroll event
+            FovSlider.Value = clampedSliderValue;
+
+            // Set new FOV value in game memory
+            MiscManager.Instance.SetFovSlider(newFovValue);
+        }
+
         #endregion
 
         #region Model Manipulation
@@ -341,7 +382,7 @@ namespace MGS3_MC_Cheat_Trainer
                 await Task.Delay(1000); // 500 milliseconds = 0.5 seconds
             }
         }
-        
+
 
         private void ParseTextBoxesPositions_Click(object sender, EventArgs e)
         {
@@ -431,5 +472,29 @@ namespace MGS3_MC_Cheat_Trainer
         {
             LoggingManager.Instance.LogAOBAddresses();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Call the method and store the result in a variable
+            string result = StringManager.Instance.FindLocationStringFollowingR_Sna01();
+
+            // Display the result in a MessageBox
+            MessageBox.Show(result, "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            // Call the new method and store the result in a variable
+            List<string> results = StringManager.Instance.FindAllR_Sna01AndLocationStringInstances();
+
+            // Concatenate all results into a single string for display
+            string concatenatedResults = string.Join(Environment.NewLine, results);
+
+            // Display the results in a MessageBox
+            MessageBox.Show(concatenatedResults, "Search Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoggingManager.Instance.Log($"{results.Count} instances of R_Sna01 and LocationString found. Search results are as follows:\n{concatenatedResults}");
+        }
+
+        
     }
 }
