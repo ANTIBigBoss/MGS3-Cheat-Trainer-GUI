@@ -273,10 +273,9 @@ namespace MGS3_MC_Cheat_Trainer
                     return;
                 }
 
-                // Adjust the address to get to the location of the FOV value
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
+                IntPtr targetAddress =
+                    IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
 
-                // Write the new FOV value to memory using WriteFloatToMemory method
                 bool result = MemoryManager.WriteFloatToMemory(processHandle, targetAddress, newFovValue);
                 if (!result)
                 {
@@ -310,10 +309,8 @@ namespace MGS3_MC_Cheat_Trainer
                     return fovValue;
                 }
 
-                // Assuming FOV value is 4 bytes before the AOB pattern, adjust the address accordingly
                 IntPtr targetAddress = IntPtr.Subtract(aobResult, 4);
 
-                // Read the FOV value as a float from memory using the MemoryManager class
                 fovValue = MemoryManager.ReadFloatFromMemory(processHandle, targetAddress);
             }
             finally
@@ -324,6 +321,300 @@ namespace MGS3_MC_Cheat_Trainer
             return fovValue;
         }
 
+        // Using the AOB name "PissFilter" we go back 1595/5525 Byte before this AOB is the filter value the default is either 42 or 00 in hex we want it to be 44 to disable the piss filter
+        public void DisablePissFilter()
+        {
+            IntPtr processHandle = IntPtr.Zero;
 
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return;
+
+                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Piss Filter AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
+
+                // Write the new byte value to memory using WriteByteValueToMemory method
+                MemoryManager.WriteByteValueToMemory(targetAddress, 0x44);
+
+                LoggingManager.Instance.Log("Piss filter disabled successfully.");
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Restore the piss filter to its default value of 00
+        public void EnablePissFilter()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return;
+
+                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Piss Filter AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
+
+                // Write the default byte value to memory using WriteByteValueToMemory method
+                MemoryManager.WriteByteValueToMemory(targetAddress, 0x00);
+
+                LoggingManager.Instance.Log("Piss filter restored successfully.");
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Read Value at the piss filter address
+
+        public byte ReadPissFilterValue()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+            byte pissFilterValue = 0x00;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return pissFilterValue;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return pissFilterValue;
+
+                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Piss Filter AOB pattern.");
+                    return pissFilterValue;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
+
+                pissFilterValue = MemoryManager.ReadByteFromMemory(processHandle, targetAddress);
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+
+            return pissFilterValue;
+        }
+        /*
+               // The byte before this AOB is the instruction value for what changes the filter when a new area loads
+               // All wee do here is change 48 into 90 to disable the instruction
+               // ADD/2781 bytes after this is the instructions for it writing a value to the filter and checking if the
+               // correct value is there changing F3 0F 11 99 78 03 00 00 to 90 90 90 90 90 90 90 90 will allow a checkbox
+               // to permanently disable the piss filter or turn it back on
+               "PissFilterInstructions", // C7 81 74 03 00 00 00 00 7F 43
+               (new byte[] { 0xC7, 0x81, 0x74, 0x03, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x43 },
+                   "x x x x x x x x x x",
+                   new IntPtr(0x10000),
+                   new IntPtr(0xF0000)
+               )
+           },
+
+         */
+
+        public void DisablePissFilterInstructions()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return;
+
+                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
+                    return;
+                }
+
+                // Disable the instruction at -1 offset
+                IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
+                // 48 original byte
+                MemoryManager.WriteByteValueToMemory(targetAddress1, 0x90);
+
+                // Disable the second part at +2781 offset
+                IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
+                // F3 0F 11 99 78 03 00 00 original bytes
+                byte[] disableBytes2 = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
+                MemoryManager.WriteBytesToMemory(targetAddress2, disableBytes2);
+
+                LoggingManager.Instance.Log("Piss filter instructions disabled successfully.");
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Restore the piss filter instructions to their original values
+        public void EnablePissFilterInstructions()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return;
+
+                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
+                if (aobResult == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
+                    return;
+                }
+
+                // Restore the instruction at -1 offset
+                IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
+                // 90 original byte
+                MemoryManager.WriteByteValueToMemory(targetAddress1, 0x48);
+
+                // Restore the second part at +2781 offset
+                IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
+                // 90 90 90 90 90 90 90 90 original bytes
+                byte[] restoreBytes2 = new byte[] { 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 };
+                MemoryManager.WriteBytesToMemory(targetAddress2, restoreBytes2);
+
+                LoggingManager.Instance.Log("Piss filter instructions restored successfully.");
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Check if the piss filter instructions are disabled
+
+        public bool IsPissFilterInstructionsNopped()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return false;
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return false;
+
+            IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
+            if (aobResult == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
+                return false;
+            }
+
+            // Check the first instruction at -1 offset
+            IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
+            byte[] buffer1 = new byte[1];
+            if (!MemoryManager.ReadProcessMemory(processHandle, targetAddress1, buffer1, 1, out _))
+            {
+                return false;
+            }
+
+            // Check the second instruction at +2781 offset
+            IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
+            byte[] buffer2 = new byte[8];
+            if (!MemoryManager.ReadProcessMemory(processHandle, targetAddress2, buffer2, 8, out _))
+            {
+                return false;
+            }
+
+            return buffer1[0] == 0x90 && buffer2[0] == 0x90 && buffer2[1] == 0x90 && buffer2[2] == 0x90 &&
+                   buffer2[3] == 0x90 && buffer2[4] == 0x90 && buffer2[5] == 0x90 && buffer2[6] == 0x90 &&
+                   buffer2[7] == 0x90;
+        }
+
+        // Display the memory address and value of the first instruction of the piss filter
+
+        public (IntPtr, byte) GetPissFilterInstructionsAddress()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return (IntPtr.Zero, 0x00);
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return (IntPtr.Zero, 0x00);
+
+            IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
+            if (aobResult == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
+                return (IntPtr.Zero, 0x00);
+            }
+
+            // Check the first instruction at -1 offset
+            IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
+            byte buffer1 = MemoryManager.ReadByteFromMemory(processHandle, targetAddress1);
+
+            return (targetAddress1, buffer1);
+        }
+
+
+        // Display the memory address and value of the second instruction of the piss filter and read the entire 8 bytes
+        // i.e. is it's 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 or 0x90 0x90 0x90 0x90 0x90 0x90 0x90 0x90
+        // // byte[] buffer = ReadMemoryBytes(processHandle, address, 8); to read the 8 bytes
+
+        public (IntPtr, byte[]) GetPissFilterInstructionsAddress2()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return (IntPtr.Zero, new byte[8]);
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return (IntPtr.Zero, new byte[8]);
+
+            IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
+            if (aobResult == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
+                return (IntPtr.Zero, new byte[8]);
+            }
+
+            // Check the second instruction at +2781 offset
+            IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
+            byte[] buffer2 = MemoryManager.ReadMemoryBytes(processHandle, targetAddress2, 8);
+
+            return (targetAddress2, buffer2);
+        }
+
+        // Method to get the address and value for the first instruction
+        public string GetPissFilterInstructionsDetails()
+        {
+            var (address, value) = GetPissFilterInstructionsAddress();
+            return $"First Instruction Address: {address.ToInt64():X8}, Value: {value:X2}";
+        }
+
+        // Method to get the address and values for the second instruction
+        public string GetPissFilterInstructionsDetails2()
+        {
+            var (address, values) = GetPissFilterInstructionsAddress2();
+            return
+                $"Second Instruction Address: {address.ToInt64():X8}, Values: {BitConverter.ToString(values).Replace("-", " ")}";
+        }
     }
 }

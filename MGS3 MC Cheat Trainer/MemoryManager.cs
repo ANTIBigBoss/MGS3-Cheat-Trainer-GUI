@@ -194,6 +194,72 @@ namespace MGS3_MC_Cheat_Trainer
             return null;
         }
 
+        //Usage look like:
+        //int intValue = ReadMemoryValue<int>(processHandle, address, sizeof(int));
+        //short shortValue = ReadMemoryValue<short>(processHandle, address, sizeof(short));
+        //float floatValue = ReadMemoryValue<float>(processHandle, address, sizeof(float));
+
+        public static string ReadMemoryValueAsString<T>(IntPtr processHandle, IntPtr address, int bytesToRead) where T : struct
+        {
+            // Get the process as you normally do, which is proven to work in your environment
+            Process process = GetMGS3Process();
+            if (process == null || process.MainModule == null)
+            {
+                return "Process not found or has exited.";
+            }
+
+            byte[] buffer = ReadMemoryBytes(processHandle, address, bytesToRead);
+            string addressHex = $"0x{address.ToInt64():X}";
+            string moduleOffset = $"METAL GEAR SOLID3.exe+{(address.ToInt64() - process.MainModule.BaseAddress.ToInt64()):X}";
+
+            if (buffer != null && buffer.Length == bytesToRead)
+            {
+                string ValueName = "";
+                string ValueStrDecimal = "";
+                string ValueStrHex = "";
+                
+
+                if (typeof(T) == typeof(byte) && buffer.Length == 1)
+                {
+                    ValueName = "Byte";
+                    ValueStrDecimal = buffer[0].ToString();
+                    ValueStrHex = buffer[0].ToString("X");
+                }
+                else if (typeof(T) == typeof(short) && buffer.Length == 2)
+                {
+                    ValueName = "Short";
+                    ValueStrDecimal = BitConverter.ToInt16(buffer, 0).ToString();
+                    ValueStrHex = BitConverter.ToInt16(buffer, 0).ToString("X");
+                }
+                else if (typeof(T) == typeof(int) && buffer.Length == 4)
+                {
+                    ValueName = "Integer";
+                    ValueStrDecimal = BitConverter.ToInt32(buffer, 0).ToString();
+                    ValueStrHex = BitConverter.ToInt32(buffer, 0).ToString("X");
+                }
+                else if (typeof(T) == typeof(float) && buffer.Length == 4)
+                {
+                    ValueName = "Float";
+                    ValueStrDecimal = BitConverter.ToSingle(buffer, 0).ToString();
+                    ValueStrHex = BitConverter.ToSingle(buffer, 0).ToString("X");
+                }
+                else if (typeof(T) == typeof(double) && buffer.Length == 8)
+                {
+                    ValueName = "Double";
+                    ValueStrDecimal = BitConverter.ToDouble(buffer, 0).ToString();
+                    ValueStrHex = BitConverter.ToDouble(buffer, 0).ToString("X");
+                }
+                else
+                {
+                    return $"Unexpected data type or size mismatch: {typeof(T).Name} expected, buffer size {buffer.Length} bytes.";
+                }
+
+                return $"{ValueName} / {typeof(T).Name} \nBase Address + Offset: {moduleOffset} \nAddress Offset in Hex: {addressHex} \nValue Result in Decimal: {ValueStrDecimal}\nValue Result in Hex: {ValueStrHex}";
+            }
+            return $"Failed to read: {typeof(T).Name} From: {moduleOffset} (Address: {addressHex}).";
+        }
+
+
         #endregion
 
         #region Memory Writing
@@ -247,30 +313,25 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         // Like the read byte method, haven't had much usage for single byte writes, but it's here if needed.
-        public static void ModifyByteValueObject(IntPtr objectOffset, byte value)
+        public static void WriteByteValueToMemory(IntPtr address, byte value)
         {
-            Process process;
-
-            try
-            {
-                process = GetMGS3Process();
-            }
-            catch
+            Process process = GetMGS3Process();
+            if (process == null)
             {
                 return;
             }
 
-            PROCESS_BASE_ADDRESS = process.MainModule.BaseAddress;
-            IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
-            int bytesWritten;
-
-            byte[] buffer = new byte[] { value }; // Value to write
-            IntPtr targetAddress = IntPtr.Add(PROCESS_BASE_ADDRESS, (int)objectOffset); // Adjusted to add base address
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, targetAddress, buffer, (uint)buffer.Length, out bytesWritten);
-
-            if (!success || bytesWritten != buffer.Length)
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
             {
+
+                return;
+            }
+
+            bool success = NativeMethods.WriteProcessMemory(processHandle, address, new byte[] { value }, 1, out int bytesWritten);
+            if (!success || bytesWritten != 1)
+            {
+
             }
 
             NativeMethods.CloseHandle(processHandle);
@@ -283,6 +344,23 @@ namespace MGS3_MC_Cheat_Trainer
 
             // Call WriteProcessMemory
             return NativeMethods.WriteProcessMemory(processHandle, address, bytes, (uint)bytes.Length, out _);
+        }
+
+        public static void WriteBytesToMemory(IntPtr address, byte[] values)
+        {
+            Process process = GetMGS3Process();
+            if (process == null) return;
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return;
+
+            bool success = NativeMethods.WriteProcessMemory(processHandle, address, values, (uint)values.Length, out int bytesWritten);
+            if (!success || bytesWritten != values.Length)
+            {
+
+            }
+
+            NativeMethods.CloseHandle(processHandle);
         }
 
         public void WriteShortToMemory(IntPtr address, short value)
@@ -319,31 +397,6 @@ namespace MGS3_MC_Cheat_Trainer
             return -1;
         }
 
-        public static void WriteByteValueToMemory(IntPtr address, byte value)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return;
-            }
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, new byte[] { value }, 1, out int bytesWritten);
-            if (!success || bytesWritten != 1)
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        
         // If you have a float value you want to write to memory you can use this function like so:
         // MemoryManager.WriteFloatToMemory(processHandle, modifyAddress, value);
 

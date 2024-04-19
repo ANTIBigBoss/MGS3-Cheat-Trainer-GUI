@@ -1,18 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace MGS3_MC_Cheat_Trainer
 {
     public class Constants
     {
-       
-        // Can probably remove HUD unless we feel like finding it again
-        public enum HudOptions // 0xADB40F options
-        {
-            None = 0,
-            Normal = 63,
-            Shrunk = 64
-        }
-
         public enum CameraOptions // 0xAE3B37 options
         {
             Normal = 191,
@@ -53,6 +45,21 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
+
+
+        public static IntPtr GetBaseAddress(Process process)
+        {
+            try
+            {
+                return process.MainModule.BaseAddress;
+            }
+            catch
+            {
+                return IntPtr.Zero; // Handle the exception, perhaps log it
+            }
+        }
+
+
         internal const int MainPointerRegionOffset = 0x00A9DA98;
         internal static IntPtr HudOffset = (IntPtr)0xAE345F;// Remove-able unless we want to find it again
 

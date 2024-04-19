@@ -45,7 +45,7 @@ namespace MGS3_MC_Cheat_Trainer
             camoIndexTimer.Start();
 
             // Slider range mapping constants
-            
+
             const int SliderMin = 0;
             const int SliderMax = 15;
             // Initialize slider range
@@ -85,6 +85,8 @@ namespace MGS3_MC_Cheat_Trainer
 
             // Set the FOV slider position
             FovSlider.Value = Math.Max(FovSlider.Minimum, Math.Min(sliderValue, FovSlider.Maximum));
+
+            PissFilterCheckBox.Checked = MiscManager.Instance.IsPissFilterInstructionsNopped();
 
         }
 
@@ -495,6 +497,65 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log($"{results.Count} instances of R_Sna01 and LocationString found. Search results are as follows:\n{concatenatedResults}");
         }
 
-        
+
+        private void PissFilterCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (PissFilterCheckBox.Checked)
+            {
+                // Disable the piss filter instructions and the filter itself
+                MiscManager.Instance.DisablePissFilterInstructions();
+                MiscManager.Instance.DisablePissFilter();
+            }
+
+            else
+            {
+                // Enable the piss filter instructions and the filter itself
+                MiscManager.Instance.EnablePissFilterInstructions();
+                MiscManager.Instance.EnablePissFilter();
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            {
+                try
+                {
+                    // Retrieve formatted strings from MiscManager
+                    string details1 = MiscManager.Instance.GetPissFilterInstructionsDetails();
+                    string details2 = MiscManager.Instance.GetPissFilterInstructionsDetails2();
+
+                    // Display the results in a MessageBox
+                    MessageBox.Show($"{details1}\n{details2}", "Memory Address Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions, possibly logging them or displaying a different message
+                    MessageBox.Show("Failed to retrieve memory details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(MiscManager.Instance.ReadPissFilterValue().ToString("X"));
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            MiscManager.Instance.DisablePissFilterInstructions();
+            MiscManager.Instance.DisablePissFilter();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            MiscManager.Instance.EnablePissFilterInstructions();
+            MiscManager.Instance.EnablePissFilter();
+        }
+
+        private void CopySnakesLocationToTextboxes_Click(object sender, EventArgs e)
+        {
+            string message = DamageManager.Instance.ReadMostWeaponsDamage();
+            CustomMessageBoxManager.CustomMessageBox(message, "Most Weapons Damage");
+        }
     }
 }

@@ -80,6 +80,8 @@
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
+            PissFilterCheckBox = new CheckBox();
+            CopySnakesLocationToTextboxes = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FovSlider).BeginInit();
@@ -491,14 +493,14 @@
             // 
             // TextBoxSnakeX
             // 
-            TextBoxSnakeX.Location = new Point(278, 420);
+            TextBoxSnakeX.Location = new Point(275, 465);
             TextBoxSnakeX.Name = "TextBoxSnakeX";
-            TextBoxSnakeX.Size = new Size(116, 23);
+            TextBoxSnakeX.Size = new Size(119, 23);
             TextBoxSnakeX.TabIndex = 574;
             // 
             // TextBoxSnakeY
             // 
-            TextBoxSnakeY.Location = new Point(400, 420);
+            TextBoxSnakeY.Location = new Point(400, 465);
             TextBoxSnakeY.Name = "TextBoxSnakeY";
             TextBoxSnakeY.Size = new Size(119, 23);
             TextBoxSnakeY.TabIndex = 576;
@@ -520,9 +522,9 @@
             // 
             // TextBoxSnakeZ
             // 
-            TextBoxSnakeZ.Location = new Point(525, 420);
+            TextBoxSnakeZ.Location = new Point(525, 465);
             TextBoxSnakeZ.Name = "TextBoxSnakeZ";
-            TextBoxSnakeZ.Size = new Size(126, 23);
+            TextBoxSnakeZ.Size = new Size(125, 23);
             TextBoxSnakeZ.TabIndex = 578;
             // 
             // textBox12
@@ -547,9 +549,9 @@
             ParseTextBoxesPositions.FlatStyle = FlatStyle.Flat;
             ParseTextBoxesPositions.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ParseTextBoxesPositions.ImageAlign = ContentAlignment.TopCenter;
-            ParseTextBoxesPositions.Location = new Point(276, 444);
+            ParseTextBoxesPositions.Location = new Point(275, 489);
             ParseTextBoxesPositions.Name = "ParseTextBoxesPositions";
-            ParseTextBoxesPositions.Size = new Size(375, 37);
+            ParseTextBoxesPositions.Size = new Size(376, 37);
             ParseTextBoxesPositions.TabIndex = 579;
             ParseTextBoxesPositions.Text = "Change Snake's location";
             ParseTextBoxesPositions.UseVisualStyleBackColor = true;
@@ -561,7 +563,7 @@
             textBox7.BorderStyle = BorderStyle.None;
             textBox7.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             textBox7.ForeColor = SystemColors.ActiveCaptionText;
-            textBox7.Location = new Point(275, 384);
+            textBox7.Location = new Point(275, 429);
             textBox7.Multiline = true;
             textBox7.Name = "textBox7";
             textBox7.PlaceholderText = "Edit these to change Snake's location";
@@ -575,7 +577,7 @@
             ReadTextBoxSnakeZ.Enabled = false;
             ReadTextBoxSnakeZ.Location = new Point(522, 355);
             ReadTextBoxSnakeZ.Name = "ReadTextBoxSnakeZ";
-            ReadTextBoxSnakeZ.Size = new Size(129, 23);
+            ReadTextBoxSnakeZ.Size = new Size(128, 23);
             ReadTextBoxSnakeZ.TabIndex = 583;
             // 
             // ReadTextBoxSnakeY
@@ -589,7 +591,7 @@
             // ReadTextBoxSnakeX
             // 
             ReadTextBoxSnakeX.Enabled = false;
-            ReadTextBoxSnakeX.Location = new Point(275, 355);
+            ReadTextBoxSnakeX.Location = new Point(276, 355);
             ReadTextBoxSnakeX.Name = "ReadTextBoxSnakeX";
             ReadTextBoxSnakeX.Size = new Size(116, 23);
             ReadTextBoxSnakeX.TabIndex = 581;
@@ -642,7 +644,7 @@
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.Location = new Point(690, 382);
+            button3.Location = new Point(28, 528);
             button3.Name = "button3";
             button3.Size = new Size(241, 29);
             button3.TabIndex = 589;
@@ -657,7 +659,7 @@
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             button4.ImageAlign = ContentAlignment.TopCenter;
-            button4.Location = new Point(690, 420);
+            button4.Location = new Point(28, 566);
             button4.Name = "button4";
             button4.Size = new Size(241, 29);
             button4.TabIndex = 590;
@@ -725,12 +727,43 @@
             label3.TabIndex = 595;
             label3.Text = "1.0";
             // 
+            // PissFilterCheckBox
+            // 
+            PissFilterCheckBox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            PissFilterCheckBox.FlatStyle = FlatStyle.Flat;
+            PissFilterCheckBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            PissFilterCheckBox.Image = (Image)resources.GetObject("PissFilterCheckBox.Image");
+            PissFilterCheckBox.Location = new Point(904, 211);
+            PissFilterCheckBox.Name = "PissFilterCheckBox";
+            PissFilterCheckBox.Size = new Size(241, 67);
+            PissFilterCheckBox.TabIndex = 596;
+            PissFilterCheckBox.Text = "Disable/Enable the Piss Filter used in the game";
+            PissFilterCheckBox.UseVisualStyleBackColor = true;
+            PissFilterCheckBox.CheckedChanged += PissFilterCheckBox_CheckedChanged;
+            // 
+            // CopySnakesLocationToTextboxes
+            // 
+            CopySnakesLocationToTextboxes.BackgroundImage = (Image)resources.GetObject("CopySnakesLocationToTextboxes.BackgroundImage");
+            CopySnakesLocationToTextboxes.Cursor = Cursors.Hand;
+            CopySnakesLocationToTextboxes.FlatStyle = FlatStyle.Flat;
+            CopySnakesLocationToTextboxes.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            CopySnakesLocationToTextboxes.ImageAlign = ContentAlignment.TopCenter;
+            CopySnakesLocationToTextboxes.Location = new Point(275, 386);
+            CopySnakesLocationToTextboxes.Name = "CopySnakesLocationToTextboxes";
+            CopySnakesLocationToTextboxes.Size = new Size(375, 37);
+            CopySnakesLocationToTextboxes.TabIndex = 597;
+            CopySnakesLocationToTextboxes.Text = "Copy Snake's Current location to the textboxes";
+            CopySnakesLocationToTextboxes.UseVisualStyleBackColor = true;
+            CopySnakesLocationToTextboxes.Click += CopySnakesLocationToTextboxes_Click;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(CopySnakesLocationToTextboxes);
+            Controls.Add(PissFilterCheckBox);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -842,5 +875,8 @@
         private Label label1;
         private Label label2;
         private Label label3;
+        private CheckBox checkBox1;
+        private CheckBox PissFilterCheckBox;
+        private Button CopySnakesLocationToTextboxes;
     }
 }

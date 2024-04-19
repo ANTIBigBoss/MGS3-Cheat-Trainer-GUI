@@ -162,12 +162,26 @@ namespace MGS3_MC_Cheat_Trainer
                     )
                 },
                 
-                {
+                {// 1595/5525 Byte before this AOB is the filter value (Side note this might work for Animations too)
                     "PissFilter", // 00 00 A0 49 00 00 00 00 FF FF FF 7F
                     (new byte[] { 0x00, 0x00, 0xA0, 0x49, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x7F },
                         "x x x x x x x x x x x x",
                         new IntPtr(0x1C00000),
                         new IntPtr(0x1F00000)
+                    )
+                },
+
+                {
+                    // The byte before this AOB is the instruction value for what changes the filter when a new area loads
+                    // All wee do here is change 48 into 90 to disable the instruction
+                    // ADD/2781 bytes after this is the instructions for it writing a value to the filter and checking if the 
+                    // correct value is there changing F3 0F 11 99 78 03 00 00 to 90 90 90 90 90 90 90 90 will allow a checkbox
+                    // to permanently disable the piss filter or turn it back on
+                    "PissFilterInstructions", // C7 81 74 03 00 00 00 00 7F 43
+                    (new byte[] { 0xC7, 0x81, 0x74, 0x03, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x43 },
+                        "x x x x x x x x x x",
+                        new IntPtr(0x10000),
+                        new IntPtr(0xF0000)
                     )
                 },
 
@@ -237,16 +251,16 @@ namespace MGS3_MC_Cheat_Trainer
                     )
                 },
 
-                {
-                    "ExplosionDamage", // 00 00 8B CD E8 30 3E 56
-                    (new byte[] { 0x00, 0x00, 0x8B, 0xCD, 0xE8, 0x30, 0x3E, 0x56 },
+                {   // The 2 byte value after this AOB is the value for the damage all explosions do except for the WP Grenade
+                    // Default value is 1000 setting to 0 will make all explosions do no damage
+                    "ExplosionDamage", // 41 B9 3E 00 00 00 48 8B CF 41 8D 51 C3 E8 61 FB FE FF E9 9F 01 00 00 BA
+                    (new byte[] { 0x41, 0xB9, 0x3E, 0x00, 0x00, 0x00, 0x48, 0x8B, 0xCF, 0x41, 0x8D, 0x51, 0xC3, 0xE8, 0x61, 0xFB, 0xFE, 0xFF, 0xE9, 0x9F, 0x01, 0x00, 0x00, 0xBA },
                         "x x x x x x x x",
                         new IntPtr(0x100000),
                         new IntPtr(0x1F0000)
                     )
                 },
 
-                // Shotgun and throat slit are different from other weapons
                 {
                     // This AOB is directly before the 2 byte value that needs to be set to 90 90 to
                     // disable the damage C8 2B is the default for allowing Shotgun Damage 
