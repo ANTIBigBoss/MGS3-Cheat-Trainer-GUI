@@ -15,16 +15,18 @@ namespace MGS3_MC_Cheat_Trainer
         private static readonly Color MGS3ButtonColor = Color.FromArgb(156, 156, 124);
         private static readonly Color SurvivalViewerColor = Color.FromArgb(36, 44, 36);
 
-
+        private static Point _lastClick;
 
         public static void CustomMessageBox(string message, string caption)
         {
 
-            
+            // Future implementation for sound effects:
+            // PlayMessageBoxSound("path_to_your_sound_file.wav");
+
             // Create a new form
             Form messageBoxForm = new Form()
             {
-                FormBorderStyle = FormBorderStyle.FixedDialog,
+                FormBorderStyle = FormBorderStyle.None, // No default title bar
                 Text = caption,
                 StartPosition = FormStartPosition.CenterScreen,
                 MinimizeBox = false,
@@ -32,23 +34,60 @@ namespace MGS3_MC_Cheat_Trainer
                 BackColor = SurvivalViewerColor // Set background color
             };
 
-            // Influence the title bar color
-            
-            
+            // Custom icon implementation for later use
+            //SetMessageBoxIcon(messageBoxForm, "path_to_your_icon_file.ico");
 
+            // Create a custom title bar panel
+            Panel titleBarPanel = new Panel()
+            {
+                Dock = DockStyle.Top,
+                Height = SystemInformation.CaptionHeight, // Set height to match system caption height
+                BackColor = MGS3ButtonColor,
+            };
+            messageBoxForm.Controls.Add(titleBarPanel);
 
-            // Create a label and set its properties
+            // Create a label for the title text
+            Label titleLabel = new Label()
+            {
+                Text = caption,
+                AutoSize = true,
+                ForeColor = Color.Black, // Set color of the title text
+                BackColor = MGS3ButtonColor,
+                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold),
+                Location = new Point(10, (titleBarPanel.Height - 20) / 2) // Center vertically
+            };
+            titleBarPanel.Controls.Add(titleLabel);
+
+            // Mouse down event for form movement
+            titleBarPanel.MouseDown += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    _lastClick = e.Location;
+                }
+            };
+
+            // Mouse move event for form movement
+            titleBarPanel.MouseMove += (sender, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    messageBoxForm.Left += e.X - _lastClick.X;
+                    messageBoxForm.Top += e.Y - _lastClick.Y;
+                }
+            };
+
+            // Create a label for the message content
             Label messageLabel = new Label()
             {
                 Text = message,
-                AutoSize = true, // Adjust label size based on content
+                AutoSize = true,
                 Left = 20,
-                Top = 20,
-                MaximumSize = new Size(440, 0), // Limit label width to 440 pixels
-                ForeColor = Color.Black,// Set text color
+                Top = titleBarPanel.Bottom + 20,
+                MaximumSize = new Size(440, 0),
+                ForeColor = Color.Black,
                 BackColor = MGS3ButtonColor,
-                // Set font as Segoe UI, 11.25pt, style=Bold
-                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold),
             };
             messageBoxForm.Controls.Add(messageLabel);
 
@@ -73,38 +112,65 @@ namespace MGS3_MC_Cheat_Trainer
                 Height = 30,
                 DialogResult = DialogResult.OK,
                 Location = new Point(buttonLeft, messageLabel.Bottom + 10), // Slightly higher
-                BackColor = MGS3ButtonColor, // Set button background color
-                ForeColor = Color.Black,// Set button text color
-                // Remove border around the button
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold)
-
+                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold),
+                BackColor = MGS3ButtonColor,
+                ForeColor = Color.Black // Set button text color
             };
-            copyButton.Click += (sender, e) => {
+            copyButton.Click += (sender, e) =>
+            {
                 Clipboard.SetText(message);
             };
             messageBoxForm.Controls.Add(copyButton);
 
             // Create a close button
-            Button closeButton = new Button()
+            Button okButton = new Button()
             {
                 Text = "Ok",
                 Width = 75,
                 Height = 30,
                 DialogResult = DialogResult.Cancel,
                 Location = new Point(copyButton.Right + 20, copyButton.Top), // Next to the copy button
-                BackColor = MGS3ButtonColor, // Set button background color
-                ForeColor = Color.Black,// Set button text color
-                // Remove border around the button
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11.25f, FontStyle.Bold),
+                BackColor = MGS3ButtonColor,
+                ForeColor = Color.Black // Set button text color
             };
-            messageBoxForm.Controls.Add(closeButton);
+            okButton.Click += (sender, e) =>
+            {
+                messageBoxForm.Close();
+            };
+            messageBoxForm.Controls.Add(okButton);
 
             // Show the form as a dialog
             messageBoxForm.ShowDialog();
         }
-
-
     }
 }
+
+/* Future Implementations for Icons and sounds:
+
+private static void PlayMessageBoxSound(string soundFilePath)
+   {
+       try
+       {
+           SoundPlayer soundPlayer = new SoundPlayer(soundFilePath);
+           soundPlayer.Play();
+       }
+       catch (Exception ex)
+       {
+           Console.WriteLine("Error playing sound: " + ex.Message);
+       }
+   }
+
+   private static void SetMessageBoxIcon(Form form, string iconFilePath)
+   {
+       try
+       {
+           form.Icon = new Icon(iconFilePath);
+       }
+       catch (Exception ex)
+       {
+           Console.WriteLine("Error setting custom icon: " + ex.Message);
+       }
+   }
+
+*/

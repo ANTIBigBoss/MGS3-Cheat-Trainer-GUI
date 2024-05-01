@@ -52,13 +52,11 @@ namespace MGS3_MC_Cheat_Trainer
             FovSlider.Minimum = SliderMin;
             FovSlider.Maximum = SliderMax;
 
-
         }
 
         private void MiscForm_Activated(object sender, EventArgs e)
         {
             CamoIndexSlider.Value = Math.Max(CamoIndexSlider.Minimum, Math.Min(TimerManager.UserCamoIndex, CamoIndexSlider.Maximum));
-
         }
 
         private void MiscForm_Deactivate(object sender, EventArgs e)
@@ -95,7 +93,6 @@ namespace MGS3_MC_Cheat_Trainer
             Application.Exit();
         }
 
-        // using MiscManager.Instance.IsCamoIndexNopped(); we make a function to check if the camo index is nopped so we can use it when the form is loaded to determine if the checkbox should be checked or not
         #region Camo  
 
 
@@ -168,7 +165,6 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         #endregion
-
 
         #endregion
 
@@ -473,6 +469,7 @@ namespace MGS3_MC_Cheat_Trainer
         private void LogAOBs_Click(object sender, EventArgs e)
         {
             LoggingManager.Instance.LogAOBAddresses();
+            LoggingManager.Instance.LogAllMemoryAddressesandValues();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -554,8 +551,9 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void CopySnakesLocationToTextboxes_Click(object sender, EventArgs e)
         {
-            string message = DamageManager.Instance.ReadMostWeaponsDamage();
-            CustomMessageBoxManager.CustomMessageBox(message, "Most Weapons Damage");
+            TextBoxSnakeX.Text = ReadTextBoxSnakeX.Text;
+            TextBoxSnakeY.Text = ReadTextBoxSnakeY.Text;
+            TextBoxSnakeZ.Text = ReadTextBoxSnakeZ.Text;
         }
     }
 }

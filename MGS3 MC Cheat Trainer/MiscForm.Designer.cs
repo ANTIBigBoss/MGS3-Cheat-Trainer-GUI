@@ -161,7 +161,7 @@
             textBox4.Name = "textBox4";
             textBox4.PlaceholderText = "HUD/Camera";
             textBox4.ReadOnly = true;
-            textBox4.Size = new Size(241, 36);
+            textBox4.Size = new Size(256, 36);
             textBox4.TabIndex = 486;
             textBox4.TextAlign = HorizontalAlignment.Center;
             // 
@@ -174,7 +174,7 @@
             NormalCam.ImageAlign = ContentAlignment.TopCenter;
             NormalCam.Location = new Point(904, 142);
             NormalCam.Name = "NormalCam";
-            NormalCam.Size = new Size(241, 29);
+            NormalCam.Size = new Size(256, 29);
             NormalCam.TabIndex = 489;
             NormalCam.Text = "Normal Camera";
             NormalCam.UseVisualStyleBackColor = true;
@@ -189,7 +189,7 @@
             UpsideDownCam.ImageAlign = ContentAlignment.TopCenter;
             UpsideDownCam.Location = new Point(904, 177);
             UpsideDownCam.Name = "UpsideDownCam";
-            UpsideDownCam.Size = new Size(241, 29);
+            UpsideDownCam.Size = new Size(256, 29);
             UpsideDownCam.TabIndex = 490;
             UpsideDownCam.Text = "Upside Down Camera";
             UpsideDownCam.UseVisualStyleBackColor = true;
@@ -412,7 +412,7 @@
             LogAOBs.ImageAlign = ContentAlignment.TopCenter;
             LogAOBs.Location = new Point(904, 65);
             LogAOBs.Name = "LogAOBs";
-            LogAOBs.Size = new Size(241, 29);
+            LogAOBs.Size = new Size(256, 29);
             LogAOBs.TabIndex = 560;
             LogAOBs.Text = "Log Data for Debug";
             LogAOBs.UseVisualStyleBackColor = true;
@@ -735,9 +735,9 @@
             PissFilterCheckBox.Image = (Image)resources.GetObject("PissFilterCheckBox.Image");
             PissFilterCheckBox.Location = new Point(904, 211);
             PissFilterCheckBox.Name = "PissFilterCheckBox";
-            PissFilterCheckBox.Size = new Size(241, 67);
+            PissFilterCheckBox.Size = new Size(256, 67);
             PissFilterCheckBox.TabIndex = 596;
-            PissFilterCheckBox.Text = "Disable/Enable the Piss Filter used in the game";
+            PissFilterCheckBox.Text = "Disable/Enable the Piss Filter \r\nUnchecked = Enabled (Default)\r\nChecked = Disabled\r\n";
             PissFilterCheckBox.UseVisualStyleBackColor = true;
             PissFilterCheckBox.CheckedChanged += PissFilterCheckBox_CheckedChanged;
             // 

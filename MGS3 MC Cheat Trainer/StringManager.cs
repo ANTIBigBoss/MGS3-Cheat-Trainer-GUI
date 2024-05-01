@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Windows.Forms; // For MessageBox
-// Use MemoryManager
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -12,12 +9,10 @@ namespace MGS3_MC_Cheat_Trainer
         private static StringManager instance;
         private static readonly object lockObj = new object();
 
-        // Private constructor to prevent external instantiation
         private StringManager()
         {
         }
 
-        // Public property to access the instance
         public static StringManager Instance
         {
             get
@@ -440,10 +435,3 @@ namespace MGS3_MC_Cheat_Trainer
         }
     }
 }
-
-
-
-// I think the best address was further back in memory so the update might've
-// made things indirectly more consistent for finding the map name
-// 1.4.1 "METAL GEAR SOLID3.exe"+1D4AF40
-// 1.5.0 "METAL GEAR SOLID3.exe"+1CFB200

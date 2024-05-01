@@ -9,45 +9,54 @@ namespace MGS3_MC_Cheat_Trainer
         {
             short stateValue = enable ? (short)1 : (short)-1;
 
-            // Retrieve the updated address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
 
             if (weaponAddress != IntPtr.Zero)
             {
-                // Assuming the toggle address is the same as the weapon's base address (adjust as needed)
-                MemoryManager.Instance.WriteShortToMemory(weaponAddress, stateValue);
+                MemoryManager.WriteMemory(processHandle, weaponAddress, stateValue);
                 LoggingManager.Instance.Log($"Toggled {weapon.Name} {(enable ? "on" : "off")}");
+
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
             else
             {
                 LoggingManager.Instance.Log($"Failed to retrieve address for {weapon.Name}");
+                if (processHandle != IntPtr.Zero)
+                {
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
             }
         }
 
         internal static void ToggleItemState(Item item, bool enable)
         {
             short stateValue = enable ? (short)1 : (short)-1;
-
-            // Retrieve the updated address for the item
             IntPtr itemAddress = ItemAddresses.GetAddress(item.Index, MemoryManager.Instance);
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
 
-            if (itemAddress != IntPtr.Zero)
+            if (itemAddress != IntPtr.Zero && processHandle != IntPtr.Zero)
             {
-                // Modify the short value at the item's address
-                MemoryManager.Instance.WriteShortToMemory(itemAddress, stateValue);
+                MemoryManager.WriteMemory(processHandle, itemAddress, stateValue);
                 LoggingManager.Instance.Log($"Toggled {item.Name} {(enable ? "on" : "off")}");
+
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
             else
             {
-                LoggingManager.Instance.Log($"Failed to retrieve address for {item.Name}");
+                LoggingManager.Instance.Log($"Failed to retrieve address or open process for {item.Name}");
+                if (processHandle != IntPtr.Zero)
+                {
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
             }
         }
 
         internal static void ModifyItemCapacity(Item item, string itemCountStr)
         {
-            short newCapacity;
-            if (!short.TryParse(itemCountStr, out newCapacity))
+            if (!short.TryParse(itemCountStr, out short newCapacity))
             {
+                LoggingManager.Instance.Log("Invalid item count string.");
                 return;
             }
 
@@ -56,13 +65,28 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (itemAddress != IntPtr.Zero)
             {
-                // Calculate specific addresses for current capacity and maximum capacity
-                IntPtr currentCapacityAddress = IntPtr.Add(itemAddress, ItemAddresses.CurrentCapacityOffset);
-                IntPtr maxCapacityAddress = IntPtr.Add(itemAddress, item.MaxCapacityOffset.ToInt32());
+                // Open the process handle
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
 
-                // Write the new capacity value to the calculated addresses
-                MemoryManager.Instance.WriteShortToMemory(currentCapacityAddress, newCapacity);
-                MemoryManager.Instance.WriteShortToMemory(maxCapacityAddress, newCapacity);
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Calculate specific addresses for current capacity and maximum capacity
+                    IntPtr currentCapacityAddress = IntPtr.Add(itemAddress, ItemAddresses.CurrentCapacityOffset);
+                    IntPtr maxCapacityAddress = IntPtr.Add(itemAddress, item.MaxCapacityOffset.ToInt32());
+
+                    // Use the static WriteMemory method to write the new capacity value to the calculated addresses
+                    MemoryManager.WriteMemory(processHandle, currentCapacityAddress, newCapacity);
+                    MemoryManager.WriteMemory(processHandle, maxCapacityAddress, newCapacity);
+
+                    LoggingManager.Instance.Log($"Updated capacity for {item.Name} to {newCapacity}.");
+
+                    // Close the process handle after use
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -73,9 +97,9 @@ namespace MGS3_MC_Cheat_Trainer
         // Should try and implement in the ItemForm eventually
         internal static void ModifyMaxItemCapacity(Item item, string itemCountStr)
         {
-            short newCapacity;
-            if (!short.TryParse(itemCountStr, out newCapacity))
+            if (!short.TryParse(itemCountStr, out short newCapacity))
             {
+                LoggingManager.Instance.Log("Invalid capacity value.");
                 return;
             }
 
@@ -84,19 +108,29 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (itemAddress != IntPtr.Zero)
             {
-                // Check if the item has a maximum capacity
-                if (item.MaxCapacityOffset != IntPtr.Zero)
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
                 {
-                    // Calculate the address for the maximum capacity
-                    IntPtr maxCapacityAddress = IntPtr.Add(itemAddress, item.MaxCapacityOffset.ToInt32());
+                    if (item.MaxCapacityOffset != IntPtr.Zero)
+                    {
+                        // Calculate the address for the maximum capacity
+                        IntPtr maxCapacityAddress = IntPtr.Add(itemAddress, item.MaxCapacityOffset.ToInt32());
 
-                    // Write the new capacity to the maximum capacity address
-                    MemoryManager.Instance.WriteShortToMemory(maxCapacityAddress, newCapacity);
+                        // Use the generic WriteMemory method to write the new capacity
+                        MemoryManager.WriteMemory(processHandle, maxCapacityAddress, newCapacity);
+                    }
+                    else
+                    {
+                        // If the item doesn't have a maximum capacity, modify the short value at the item's address
+                        MemoryManager.WriteMemory(processHandle, itemAddress, newCapacity);
+                    }
+
+                    LoggingManager.Instance.Log($"Updated max capacity for {item.Name} to {newCapacity}.");
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
                 }
                 else
                 {
-                    // If the item doesn't have a maximum capacity, simply modify the short value at the item's address
-                    MemoryManager.Instance.WriteShortToMemory(itemAddress, newCapacity);
+                    LoggingManager.Instance.Log("Failed to open process handle.");
                 }
             }
             else
@@ -105,22 +139,29 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-
         internal static void ModifyClipSize(Weapon weapon, string clipSize)
         {
-            short newSize;
-            if (!short.TryParse(clipSize, out newSize))
+            if (!short.TryParse(clipSize, out short newSize))
             {
+                LoggingManager.Instance.Log("Invalid clip size value.");
                 return;
             }
 
-            // Retrieve the updated base address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
-
             if (weaponAddress != IntPtr.Zero)
             {
-                IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
-                MemoryManager.Instance.WriteShortToMemory(clipSizeAddress, newSize);
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
+                    MemoryManager.WriteMemory(processHandle, clipSizeAddress, newSize);
+                    LoggingManager.Instance.Log($"Updated clip size for {weapon.Name} to {newSize}.");
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -130,18 +171,27 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void ModifyMaxClipSize(Weapon weapon, string clipSize)
         {
-            short newSize;
-            if (!short.TryParse(clipSize, out newSize))
+            if (!short.TryParse(clipSize, out short newSize))
             {
+                LoggingManager.Instance.Log("Invalid max clip size value.");
                 return;
             }
 
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
-
             if (weaponAddress != IntPtr.Zero)
             {
-                IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
-                MemoryManager.Instance.WriteShortToMemory(maxClipSizeAddress, newSize);
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
+                    MemoryManager.WriteMemory(processHandle, maxClipSizeAddress, newSize);
+                    LoggingManager.Instance.Log($"Updated max clip size for {weapon.Name} to {newSize}.");
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -151,24 +201,33 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void ModifyCurrentAndMaxClipSize(Weapon weapon, string clipSize)
         {
-            short newSize;
-            if (!short.TryParse(clipSize, out newSize))
+            if (!short.TryParse(clipSize, out short newSize))
             {
+                LoggingManager.Instance.Log("Invalid clip size value.");
                 return;
             }
 
-            // Retrieve the updated base address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
-
             if (weaponAddress != IntPtr.Zero)
             {
-                // Calculate specific addresses for clip size and maximum clip size
-                IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
-                IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Calculate specific addresses for current and maximum clip size
+                    IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
+                    IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
 
-                // Write the new clip size to the calculated addresses
-                MemoryManager.Instance.WriteShortToMemory(clipSizeAddress, newSize);
-                MemoryManager.Instance.WriteShortToMemory(maxClipSizeAddress, newSize);
+                    // Use the generic WriteMemory method to write the new size to both addresses
+                    MemoryManager.WriteMemory(processHandle, clipSizeAddress, newSize);
+                    MemoryManager.WriteMemory(processHandle, maxClipSizeAddress, newSize);
+                    LoggingManager.Instance.Log($"Updated current and max clip sizes for {weapon.Name} to {newSize}.");
+
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -176,27 +235,33 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-
         internal static void ModifyAmmo(Weapon weapon, string ammoCount)
         {
-            short ammoValue;
-            if (!short.TryParse(ammoCount, out ammoValue))
+            if (!short.TryParse(ammoCount, out short ammoValue))
             {
+                LoggingManager.Instance.Log("Invalid ammo count value.");
                 return;
             }
 
-            // Retrieve the updated base address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
-
             if (weaponAddress != IntPtr.Zero)
             {
-                // Calculate specific addresses for current ammo, max ammo, and clip
-                IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);              
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Calculate specific address for current ammo
+                    IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
 
-                // Write the ammo value to the calculated addresses
-                MemoryManager.Instance.WriteShortToMemory(currentAmmoAddress, ammoValue);
-                // You can also update the clip if needed
-                // MemoryManager.Instance.WriteShortToMemory(clipAddress, ammoValue);
+                    // Use the generic WriteMemory method to write the ammo value
+                    MemoryManager.WriteMemory(processHandle, currentAmmoAddress, ammoValue);
+                    LoggingManager.Instance.Log($"Updated ammo for {weapon.Name} to {ammoValue}.");
+
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -207,23 +272,32 @@ namespace MGS3_MC_Cheat_Trainer
         // This Changes this max ammo but not the current ammo
         internal static void ModifyMaxAmmo(Weapon weapon, string ammoCount)
         {
-            short ammoValue;
-            if (!short.TryParse(ammoCount, out ammoValue))
+            if (!short.TryParse(ammoCount, out short ammoValue))
             {
+                LoggingManager.Instance.Log("Invalid max ammo count value.");
                 return;
             }
 
-            // Retrieve the updated address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
-
             if (weaponAddress != IntPtr.Zero)
             {
-                // Calculate the specific ammo address
-                int offset = weapon.MaxAmmoOffset.ToInt32(); // Convert IntPtr to int
-                IntPtr ammoAddress = IntPtr.Add(weaponAddress, offset);
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Calculate the specific address for max ammo
+                    int offset = weapon.MaxAmmoOffset.ToInt32(); // Convert IntPtr to int
+                    IntPtr ammoAddress = IntPtr.Add(weaponAddress, offset);
 
-                // Write the ammo value to the calculated address
-                MemoryManager.Instance.WriteShortToMemory(ammoAddress, ammoValue);
+                    // Use the generic WriteMemory method to write the max ammo value
+                    MemoryManager.WriteMemory(processHandle, ammoAddress, ammoValue);
+                    LoggingManager.Instance.Log($"Updated max ammo for {weapon.Name} to {ammoValue}.");
+
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -233,26 +307,33 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void ModifyCurrentAndMaxAmmo(Weapon weapon, string ammoCount)
         {
-            short ammoValue;
-            if (!short.TryParse(ammoCount, out ammoValue))
+            if (!short.TryParse(ammoCount, out short ammoValue))
             {
+                LoggingManager.Instance.Log("Invalid ammo count value.");
                 return;
             }
 
-            // Retrieve the updated base address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
-
             if (weaponAddress != IntPtr.Zero)
             {
-                // Calculate specific addresses for current ammo, max ammo, and clip
-                IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
-                IntPtr maxAmmoAddress = IntPtr.Add(weaponAddress, weapon.MaxAmmoOffset.ToInt32());
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    // Calculate specific addresses for current ammo and max ammo
+                    IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
+                    IntPtr maxAmmoAddress = IntPtr.Add(weaponAddress, weapon.MaxAmmoOffset.ToInt32());
 
-                // Write the ammo value to the calculated addresses
-                MemoryManager.Instance.WriteShortToMemory(currentAmmoAddress, ammoValue);
-                MemoryManager.Instance.WriteShortToMemory(maxAmmoAddress, ammoValue);
-                // You can also update the clip if needed
-                // MemoryManager.Instance.WriteShortToMemory(clipAddress, ammoValue);
+                    // Use the generic WriteMemory method to write the ammo value to both addresses
+                    MemoryManager.WriteMemory(processHandle, currentAmmoAddress, ammoValue);
+                    MemoryManager.WriteMemory(processHandle, maxAmmoAddress, ammoValue);
+                    LoggingManager.Instance.Log($"Updated current and max ammo for {weapon.Name} to {ammoValue}.");
+
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to open process handle.");
+                }
             }
             else
             {
@@ -269,7 +350,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (weaponAddress != IntPtr.Zero)
             {
-                // Calculate the address for the suppressor toggle
                 suppressorAddress = IntPtr.Add(weaponAddress, suppressableWeapon.SuppressorToggleOffset.ToInt32());
                 LoggingManager.Instance.Log($"Suppressor address: {suppressorAddress}");
             }
@@ -302,53 +382,9 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
         }
 
-        // Not much use for these functions since I release V2.0 of the trainer, but it feels like a waste to remove it.
-        internal static void AdjustSuppressorCapacity(Item suppressorItem, bool increaseCapacity)
-        {
-            IntPtr suppressorAddress = ItemAddresses.GetAddress(suppressorItem.Index, MemoryManager.Instance);
-
-            if (suppressorAddress == IntPtr.Zero)
-            {
-                return;
-            }
-
-            Process process = MemoryManager.GetMGS3Process();
-            IntPtr processHandle = MemoryManager.NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
-
-            if (processHandle == IntPtr.Zero)
-            {
-                return;
-            }
-
-            // Read the current suppressor capacity
-            short currentValue = MemoryManager.ReadShortFromMemory(processHandle, suppressorAddress);
-
-            // Ensure the value stays within ushort bounds
-            ushort newValue = (ushort)(increaseCapacity ? Math.Min((ushort)currentValue + 30, ushort.MaxValue) : Math.Max((ushort)currentValue - 30, ushort.MinValue));
-
-            if (newValue == currentValue)
-            {
-                MemoryManager.NativeMethods.CloseHandle(processHandle);
-                return;
-            }
-
-            // Write the new suppressor capacity value
-            int bytesWritten = MemoryManager.WriteShortToMemory(processHandle, suppressorAddress, (short)newValue);
-            if (bytesWritten != sizeof(short))
-            {
-                LoggingManager.Instance.Log($"Failed to change suppressor capacity for {suppressorItem.Name}");
-            }
-            else
-            {
-                LoggingManager.Instance.Log($"Changed suppressor capacity to {newValue}");
-            }
-
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
-        }
-
         public static bool ReadWriteToggledSuppressorValue(IntPtr processHandle, IntPtr address)
         {
-            bool success = NativeMethods.ReadProcessMemory(processHandle, address, out short currentValue, sizeof(short), out int bytesRead);
+            bool success = MemoryManager.NativeMethods.ReadProcessMemory(processHandle, address, out short currentValue, sizeof(short), out int bytesRead);
             if (!success || bytesRead != sizeof(short))
             {
                 LoggingManager.Instance.Log($"Failed to read suppressor value at {address}");
@@ -359,9 +395,9 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                int bytesWritten = WriteShortToMemory(processHandle, address, valueToWrite);
+                success = MemoryManager.WriteMemory(processHandle, address, valueToWrite);
                 LoggingManager.Instance.Log($"Toggled suppressor to {(valueToWrite == 16 ? "on" : "off")}");
-                return bytesWritten == sizeof(short);
+                return success;
             }
             catch
             {

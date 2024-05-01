@@ -6,17 +6,17 @@ namespace MGS3_MC_Cheat_Trainer
 {
     internal class AlertManager
     {
-        
+
         internal static void WriteMaxAlertTimerValue(IntPtr alertMemoryRegion)
         {
-            var memoryManager = new MemoryManager();
             IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr timerAddress = IntPtr.Add(alertMemoryRegion, AlertTimerOffset);
             short maxTimerValue = short.MaxValue; // Maximum value for a 2-byte variable
-            MemoryManager.WriteShortToMemory(processHandle, timerAddress, maxTimerValue);
+
+            // Using the generic WriteMemory method to write the short value
+            MemoryManager.WriteMemory(processHandle, timerAddress, maxTimerValue);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
-
         internal static void SetEvasionBits()
         {
             MemoryManager memoryManager = new MemoryManager();
@@ -24,19 +24,35 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (alertMemoryRegion == IntPtr.Zero)
             {
-
                 LoggingManager.Instance.Log("Alert memory region not found.\n");
                 return;
             }
 
             IntPtr modifyAddress = IntPtr.Add(alertMemoryRegion, 78); // Same address as TriggerAlert
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
 
-            Process process = MemoryManager.GetMGS3Process();
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            // Read current value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, modifyAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {modifyAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return;
+            }
 
-            short currentValue = MemoryManager.ReadShortFromMemory(processHandle, modifyAddress);
+            short currentValue = BitConverter.ToInt16(buffer, 0);
             short modifiedValue = SetSpecificBits(currentValue, 5, 14, 596);
-            MemoryManager.WriteShortToMemory(processHandle, modifyAddress, modifiedValue);
+
+            // Using the generic WriteMemory method to apply the new value
+            bool writeSuccess = MemoryManager.WriteMemory(processHandle, modifyAddress, modifiedValue);
+            if (!writeSuccess)
+            {
+                LoggingManager.Instance.Log($"Failed to write memory at {modifyAddress}");
+            }
+            else
+            {
+                LoggingManager.Instance.Log($"Evasion bits successfully set to {modifiedValue} at {modifyAddress}");
+            }
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -44,26 +60,43 @@ namespace MGS3_MC_Cheat_Trainer
         internal static void RemoveEvasionAndCaution()
         {
             MemoryManager memoryManager = new MemoryManager();
-
             IntPtr alertMemoryRegion = memoryManager.FindAob("AlertMemoryRegion");
+
             if (alertMemoryRegion == IntPtr.Zero)
             {
-
+                LoggingManager.Instance.Log("Alert memory region not found.\n");
                 return;
             }
 
             IntPtr modifyAddress = IntPtr.Add(alertMemoryRegion, 78);
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
 
-            Process process = MemoryManager.GetMGS3Process();
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            // Read current value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, modifyAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {modifyAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return;
+            }
 
-            short currentValue = MemoryManager.ReadShortFromMemory(processHandle, modifyAddress);
+            short currentValue = BitConverter.ToInt16(buffer, 0);
             short modifiedValue = SetSpecificBits(currentValue, 6, 15, 400);
-            MemoryManager.WriteShortToMemory(processHandle, modifyAddress, modifiedValue);
+
+            // Using the generic WriteMemory method to apply the new value
+            bool writeSuccess = MemoryManager.WriteMemory(processHandle, modifyAddress, modifiedValue);
+            if (!writeSuccess)
+            {
+                LoggingManager.Instance.Log($"Failed to write memory at {modifyAddress}");
+            }
+            else
+            {
+                LoggingManager.Instance.Log("Evasion and Caution bits removed.");
+            }
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
-            LoggingManager.Instance.Log("Evasion and Caution bits removed.\n");
         }
+
 
         internal static void TriggerAlert(AlertModes alertMode)
         {
@@ -77,23 +110,37 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            // The alert triggering address is 64 bytes after the found region
-            // Adjusted to 78 based on your original code, but make sure this offset is correct
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Failed to open game process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // The alert triggering address is 78 bytes after the found region
             IntPtr triggerAddress = IntPtr.Add(alertMemoryRegion, 78);
 
             // Set the alert value based on the provided alertMode
             byte alertValue = (byte)alertMode;
 
-            // Write the alert value to the memory
-            MemoryManager.WriteByteValueToMemory(triggerAddress, alertValue);
-
-            if (alertMode == AlertModes.Evasion)
+            // Write the alert value to the memory using the generic WriteMemory method
+            bool writeSuccess = WriteMemory(processHandle, triggerAddress, alertValue);
+            if (!writeSuccess)
             {
-                // Set the evasion bits using your existing logic
-                // Ensure this method exists and is correctly implemented
-                SetEvasionBits();
+                MessageBox.Show("Failed to write alert value.", "Write Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else
+            {
+                if (alertMode == AlertModes.Evasion)
+                {
+                    // Set the evasion bits using your existing logic
+                    SetEvasionBits(); // Ensure this method exists and is correctly implemented
+                }
+            }
+
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
+
 
         public const int AlertTimerOffset = -6;
         public const int EvasionTimerOffset = 18;
@@ -104,7 +151,15 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = MemoryManager.GetMGS3Process();
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             IntPtr timerAddress = IntPtr.Add(alertMemoryRegion, AlertTimerOffset);
-            return MemoryManager.ReadShortFromMemory(processHandle, timerAddress);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, timerAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read alert timer value at {timerAddress}");
+                return 0;
+            }
+
+            return BitConverter.ToInt16(buffer, 0);
         }
 
         internal static short ReadEvasionTimerValue(IntPtr alertMemoryRegion)
@@ -112,7 +167,15 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = MemoryManager.GetMGS3Process();
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             IntPtr timerAddress = IntPtr.Add(alertMemoryRegion, EvasionTimerOffset);
-            return MemoryManager.ReadShortFromMemory(processHandle, timerAddress);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, timerAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read evasion timer value at {timerAddress}");
+                return 0;
+            }
+
+            return BitConverter.ToInt16(buffer, 0);
         }
 
         internal static short ReadCautionTimerValue(IntPtr alertMemoryRegion)
@@ -120,7 +183,15 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = MemoryManager.GetMGS3Process();
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             IntPtr timerAddress = IntPtr.Add(alertMemoryRegion, CautionTimerOffset);
-            return MemoryManager.ReadShortFromMemory(processHandle, timerAddress);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, timerAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read caution timer value at {timerAddress}");
+                return 0;
+            }
+
+            return BitConverter.ToInt16(buffer, 0);
         }
 
     }

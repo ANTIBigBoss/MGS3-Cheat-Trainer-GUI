@@ -13,13 +13,10 @@ namespace MGS3_MC_Cheat_Trainer
         private static XyzManager instance;
         private static readonly object lockObj = new object();
 
-
-        // Private constructor to prevent external instantiation
         private XyzManager()
         {
         }
 
-        // Public property to access the instance
         public static XyzManager Instance
         {
             get
@@ -40,15 +37,25 @@ namespace MGS3_MC_Cheat_Trainer
         {
             IntPtr baseAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 7);
 
-            float[] position = new float[3];
+            // 3 for X, Y, Z each is a float
+            float[] position = new float[3]; 
             for (int i = 0; i < position.Length; i++)
             {
-                IntPtr currentAddress = IntPtr.Add(baseAddress, i * 4); // 4 bytes per float
-                position[i] = ReadFloatFromMemory(processHandle, currentAddress);
+                IntPtr currentAddress = IntPtr.Add(baseAddress, i * 4);
+                byte[] bytes = ReadMemoryBytes(processHandle, currentAddress, 4);
+                if (bytes != null && bytes.Length == 4)
+                {
+                    position[i] = BitConverter.ToSingle(bytes, 0);
+                }
+                else
+                {
+                    position[i] = 0;
+                }
             }
 
             return position;
         }
+
 
         public void TeleportSnake(float[][] coordinates)
         {
@@ -61,7 +68,6 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr processHandle = OpenGameProcess(GetMGS3Process());
             if (processHandle == IntPtr.Zero)
             {
-                LoggingManager.Instance.Log("Failed to open process handle.");
                 return;
             }
 
@@ -70,26 +76,22 @@ namespace MGS3_MC_Cheat_Trainer
                 float x = set[0];
                 float y = set[1];
                 float z = set[2];
-                // Execute the teleport to new position using the current set of coordinates
-                // Note: Implement the TeleportToPosition method as previously described
                 TeleportToPosition(processHandle, x, y, z);
             }
 
             NativeMethods.CloseHandle(processHandle);
         }
 
-
         private void TeleportToPosition(IntPtr processHandle, float x, float y, float z)
         {
             float[] newPosition = new float[] { x, y, z };
             for (int i = 0; i < newPosition.Length; i++)
             {
-                IntPtr currentAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 7 + i * 4); // Adjust the offset as necessary
-                bool success = WriteFloatToMemory(processHandle, currentAddress, newPosition[i]);
+                IntPtr currentAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 7 + i * 4);
+                bool success = MemoryManager.WriteMemory<float>(processHandle, currentAddress, newPosition[i]);
                 if (!success)
                 {
-                    LoggingManager.Instance.Log($"Failed to teleport Snake to new position: X={x}, Y={y}, Z={z}.");
-                    break; // Exit if any teleport fails
+                    break;
                 }
             }
         }
@@ -103,19 +105,18 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            IntPtr processHandle = OpenGameProcess(GetMGS3Process());
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             if (processHandle == IntPtr.Zero)
             {
-                LoggingManager.Instance.Log("Failed to open process handle.");
                 return;
             }
 
             // Read current position
-            float[] currentPosition = ReadSnakePosition(processHandle);
+            float[] currentPosition = XyzManager.Instance.ReadSnakePosition(processHandle);
             if (currentPosition == null || currentPosition.Length < 3)
             {
                 LoggingManager.Instance.Log("Failed to read Snake's current position.");
-                NativeMethods.CloseHandle(processHandle);
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return;
             }
 
@@ -123,10 +124,10 @@ namespace MGS3_MC_Cheat_Trainer
             float newY = currentPosition[1] + 4000f;
 
             // Prepare the address for Y coordinate
-            IntPtr yAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 7 + 4); // Assuming Y is the second float after the AOB pattern
+            IntPtr yAddress = IntPtr.Add(AobManager.Instance.FoundSnakePositionAddress, 7 + 4);
 
-            // Write the new Y position
-            bool success = WriteFloatToMemory(processHandle, yAddress, newY);
+            // Use the generic WriteMemory method to write the new Y position
+            bool success = MemoryManager.WriteMemory<float>(processHandle, yAddress, newY);
             if (success)
             {
                 LoggingManager.Instance.Log($"Successfully raised Snake's Y position by 4000 units to {newY}.");
@@ -136,7 +137,7 @@ namespace MGS3_MC_Cheat_Trainer
                 LoggingManager.Instance.Log("Failed to update Snake's Y position.");
             }
 
-            NativeMethods.CloseHandle(processHandle);
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public List<IntPtr> FindAllGuardsPositionAOBs()
@@ -145,14 +146,12 @@ namespace MGS3_MC_Cheat_Trainer
             Process process = MemoryManager.GetMGS3Process();
             if (process == null)
             {
-                LoggingManager.Instance.Log("Process not found.");
                 return new List<IntPtr>();
             }
 
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-                LoggingManager.Instance.Log("Failed to open process handle.");
                 return new List<IntPtr>();
             }
 
@@ -164,8 +163,8 @@ namespace MGS3_MC_Cheat_Trainer
 
             byte[] pattern = aobData.Pattern;
             string mask = aobData.Mask;
-            IntPtr startOffset = aobData.StartOffset ?? IntPtr.Zero; // Provide a default if null
-            IntPtr endOffset = aobData.EndOffset ?? new IntPtr(long.MaxValue); // Provide a default if null
+            IntPtr startOffset = aobData.StartOffset ?? IntPtr.Zero;
+            IntPtr endOffset = aobData.EndOffset ?? new IntPtr(long.MaxValue);
             long size = (long)(endOffset.ToInt64() - startOffset.ToInt64());
 
             var guardsAddresses = MemoryManager.Instance.ScanForAllInstances(processHandle, startOffset, size, pattern, mask);
@@ -182,8 +181,16 @@ namespace MGS3_MC_Cheat_Trainer
                 float[] position = new float[3];
                 for (int i = 0; i < position.Length; i++)
                 {
-                    IntPtr currentAddress = IntPtr.Add(baseAddress, 7 + i * 4); // Assuming the same offset and structure
-                    position[i] = ReadFloatFromMemory(processHandle, currentAddress);
+                    IntPtr currentAddress = IntPtr.Add(baseAddress, 7 + i * 4);
+                    byte[] bytes = ReadMemoryBytes(processHandle, currentAddress, 4);
+                    if (bytes != null && bytes.Length == 4)
+                    {
+                        position[i] = BitConverter.ToSingle(bytes, 0);
+                    }
+                    else
+                    {
+                        position[i] = 0;
+                    }
                 }
                 guardsPositions.Add(position);
             }
@@ -194,14 +201,14 @@ namespace MGS3_MC_Cheat_Trainer
         {
             foreach (IntPtr guardBaseAddress in guardsAddresses)
             {
-                // Calculate the correct address offsets for X, Y, Z positions
                 for (int i = 0; i < newPosition.Length; i++)
                 {
                     IntPtr currentAddress = IntPtr.Add(guardBaseAddress, 7 + i * 4);
-                    bool success = WriteFloatToMemory(processHandle, currentAddress, newPosition[i]);
+                    bool success = MemoryManager.WriteMemory<float>(processHandle, currentAddress, newPosition[i]);
                     if (!success)
                     {
-
+                        LoggingManager.Instance.Log($"Failed to move guard at {guardBaseAddress.ToInt64():X} to new position {newPosition[i]} for coordinate index {i}.");
+                        break;
                     }
                 }
             }

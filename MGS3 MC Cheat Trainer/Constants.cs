@@ -5,21 +5,39 @@ namespace MGS3_MC_Cheat_Trainer
 {
     public class Constants
     {
-        public enum CameraOptions // 0xAE3B37 options
+        // For reading different memory types and their values
+        public enum DataType
+        {
+            // UInt = Unsigned Integer (No negative values)
+            // Int = Signed Integer (Negative and positive values)
+            UInt8, // Unsigned Byte
+            Int8,  // Signed Byte
+            Int16, // Signed Short
+            UInt16,// Unsigned Short
+            Int32, // Signed 4 byte integer
+            UInt32, // Unsigned 4 byte integer
+            Float, // 4 byte floating point number
+            Int64, // Signed 8 byte integer
+            UInt64, // Unsigned 8 byte integer
+            Double, // 8 byte floating point number
+            ByteArray, // For anything in between or larger than 8 bytes
+        }
+
+        public enum CameraOptions
         {
             Normal = 191,
             UpsideDown = 64
         }
 
-        public enum AlertModes // 0x1D9C3D8 options
+        public enum AlertModes
         {
-            Normal = 0,
+            Normal = 0, // Never used in trainer but good to have just in case 
             Alert = 16,
             Caution = 32,
             Evasion = 128 // Doesn't trigger evasion but this is the value for it
         }
 
-        public enum HealthType // Can probably use these enums for boss/eva's stats
+        public enum HealthType
         {
             CurrentHealth,
             MaxHealth,
@@ -46,22 +64,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
 
-
-        public static IntPtr GetBaseAddress(Process process)
-        {
-            try
-            {
-                return process.MainModule.BaseAddress;
-            }
-            catch
-            {
-                return IntPtr.Zero; // Handle the exception, perhaps log it
-            }
-        }
-
-
         internal const int MainPointerRegionOffset = 0x00A9DA98;
-        internal static IntPtr HudOffset = (IntPtr)0xAE345F;// Remove-able unless we want to find it again
 
         public static class InjuryData
         {

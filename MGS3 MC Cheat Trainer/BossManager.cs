@@ -14,36 +14,62 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static short FindOcelotAOB()
         {
+            // Try twice to find the Ocelot AOB if the first attempt fails
             if (!AobManager.Instance.FindAndStoreOcelotAOB())
+            {
                 if (!AobManager.Instance.FindAndStoreOcelotAOB())
                 {
                     LoggingManager.Instance.Log("Ocelot AOB address not found.");
-                    return -1; // Indicate failure
+                    return -1;
                 }
+            }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundOcelotAddress);
+            IntPtr ocelotAddress = AobManager.Instance.FoundOcelotAddress;
+
+            // Read health value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, ocelotAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {ocelotAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static void WriteOcelotHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 916); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
+
 
         public static short ReadOcelotHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress =
-                IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 916); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 916); // Adjust for actual health offset
+
+            // Read health value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1; // Return an error indicator, such as -1
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsOcelotDead()
         {
@@ -54,19 +80,27 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 908); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadOcelotStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress =
-                IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 908); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundOcelotAddress, 908);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+
 
         public static bool IsOcelotStunned()
         {
@@ -77,18 +111,29 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadThePainHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16);
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Adjust for actual health offset
+
+            // Read health value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1; // Return an error indicator, such as -1
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsThePainDead()
         {
@@ -99,19 +144,27 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8);
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadThePainStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8);
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+
 
         public static bool IsThePainStunned()
         {
@@ -122,36 +175,56 @@ namespace MGS3_MC_Cheat_Trainer
         {
 
             if (!AobManager.Instance.FindAndStoreTheFearAOB())
+            {
                 if (!AobManager.Instance.FindAndStoreTheFearAOB())
                 {
                     LoggingManager.Instance.Log("The Fear AOB address not found.");
-                    return -1; // Indicate failure
+                    return -1;
                 }
+            }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue =
-                MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundTheFearAddress);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheFearAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheFearAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
+
 
         public static void WriteTheFearHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadTheFearHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress =
-                IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Adjust for actual health offset
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsTheFearDead()
         {
@@ -162,7 +235,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8);
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
@@ -170,10 +243,20 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8);
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+
 
         public static bool IsTheFearStunned()
         {
@@ -184,7 +267,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static short FindTheEnds063aAOB()
         {
-
             if (!AobManager.Instance.FindAndStoreTheEnds063aAOB())
             {
                 LoggingManager.Instance.Log("The Ends063a AOB address not found.");
@@ -192,7 +274,16 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundTheEnds063aAddress);
+            // Read health value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheEnds063aAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheEnds063aAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
@@ -203,7 +294,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds063aAddress, 1360);
             // Interesting accident find but if we go back to 1384 instead of 1360 we can just make
             // The End invincible maybe something to look into once everyone else is implemented
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
@@ -211,7 +302,16 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds063aAddress, 1360);
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
@@ -225,18 +325,29 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds063aAddress, 1364);
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadTheEnds063aStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds063aAddress, 1364);
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds063aAddress, 1364); // Adjust for actual stamina offset
+
+            // Read stamina value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1; // Return an error indicator, such as -1
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+
 
         public static bool IsTheEnds063aStunned()
         {
@@ -246,7 +357,6 @@ namespace MGS3_MC_Cheat_Trainer
         // This find will apply to s064a as well as s065a so the case in BossForm will use this but then use the offset differences that s064a has to get to The End's health and stamina
         public static short FindTheEnds065aAOB()
         {
-
             if (!AobManager.Instance.FindAndStoreTheEnds065aAOB())
             {
                 LoggingManager.Instance.Log("The Ends065a AOB address not found.");
@@ -254,11 +364,19 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundTheEnds063aAddress);
+            // Read health value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheEnds065aAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheEnds065aAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
-
 
         public static void WriteTheEnds065aHealth(short value)
         {
@@ -266,7 +384,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds065aAddress, 608);
             // Interesting accident find but if we go back to 1384 instead of 1360 we can just make
             // The End invincible maybe something to look into once everyone else is implemented
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
@@ -275,10 +393,20 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds065aAddress, 608);
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsTheEnds065aDead()
         {
@@ -289,25 +417,25 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds065aAddress, 612);
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
-
-        public static short ReadTheEnds064aStamina()
-        {
-            var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds065aAddress, 612);
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
-            return staminaValue;
-        }
-
 
         public static short ReadTheEnds065aStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds065aAddress, 612);
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+
+            // Read stamina value using the new ReadMemoryBytes function
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
@@ -322,15 +450,22 @@ namespace MGS3_MC_Cheat_Trainer
         #region The Fury
         public static short FindTheFuryAOB()
         {
-
             if (!AobManager.Instance.FindAndStoreTheFuryAOB())
             {
                 LoggingManager.Instance.Log("The Fury AOB address not found.");
-                return -1; // Indicate failure
+                return -1;
             }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundTheFuryAddress);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheFuryAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheFuryAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
@@ -338,16 +473,25 @@ namespace MGS3_MC_Cheat_Trainer
         public static void WriteTheFuryHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 160); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 160);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadTheFuryHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 160); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 160);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
@@ -360,20 +504,29 @@ namespace MGS3_MC_Cheat_Trainer
         public static void WriteTheFuryStamina(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 152); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 152);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadTheFuryStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 152); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFuryAddress, 152);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
-        
+
         public static bool IsTheFuryStunned()
         {
             return ReadTheFuryStamina() == 0;
@@ -386,19 +539,29 @@ namespace MGS3_MC_Cheat_Trainer
         public static void WriteVolginHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadVolginHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 16);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsVolginDead()
         {
@@ -408,16 +571,25 @@ namespace MGS3_MC_Cheat_Trainer
         public static void WriteVolginStamina(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadVolginStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheFearAddress, 8);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
@@ -433,32 +605,49 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static short FindShagohodAOB()
         {
-
             if (!AobManager.Instance.FindAndStoreShagohodAOB())
             {
                 LoggingManager.Instance.Log("Shagohod AOB address not found.");
-                return -1; // Indicate failure
+                return -1;
             }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundShagohodAddress);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundShagohodAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundShagohodAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
 
+
         public static void WriteShagohodHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundShagohodAddress, 105); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundShagohodAddress, 105);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadShagohodHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundShagohodAddress, 105); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundShagohodAddress, 105);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
@@ -476,32 +665,49 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static short FindVolginOnShagohodAOB()
         {
-
             if (!AobManager.Instance.FindAndStoreVolginOnShagohodAOB())
             {
                 LoggingManager.Instance.Log("Volgin on Shagohod AOB address not found.");
-                return -1; // Indicate failure
+                return -1;
             }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundVolginOnShagohodAddress);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundVolginOnShagohodAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundVolginOnShagohodAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static void WriteVolginOnShagohodHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 936); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadVolginOnShagohodHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 936); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 936);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
@@ -514,19 +720,29 @@ namespace MGS3_MC_Cheat_Trainer
         public static void WriteVolginOnShagohodStamina(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 928); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 928);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadVolginOnShagohodStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 928); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundVolginOnShagohodAddress, 928);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+
 
         public static bool IsVolginOnShagohodStunned()
         {
@@ -539,7 +755,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static short FindTheBossAOB()
         {
-
             if (!AobManager.Instance.FindAndStoreTheBossAOB())
             {
                 LoggingManager.Instance.Log("The Boss AOB address not found.");
@@ -547,27 +762,46 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, AobManager.Instance.FoundTheBossAddress);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheBossAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheBossAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static void WriteTheBossHealth(short value)
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheBossAddress, 1444); // Health offset
-            MemoryManager.WriteShortToMemory(processHandle, healthAddress, value);
+            MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadTheBossHealth()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheBossAddress, 1444); // Adjust for actual health offset
-            short healthValue = MemoryManager.ReadShortFromMemory(processHandle, healthAddress);
+            IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheBossAddress, 1444);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short healthValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return healthValue;
         }
+
 
         public static bool IsTheBossDead()
         {
@@ -578,18 +812,28 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheBossAddress, 1440); // Stamina offset
-            MemoryManager.WriteShortToMemory(processHandle, staminaAddress, value);
+            MemoryManager.WriteMemory(processHandle, staminaAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
         public static short ReadTheBossStamina()
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheBossAddress, 1440); // Adjust for actual stamina offset
-            short staminaValue = MemoryManager.ReadShortFromMemory(processHandle, staminaAddress);
+            IntPtr staminaAddress = IntPtr.Subtract(AobManager.Instance.FoundTheBossAddress, 1440);
+
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
+            if (buffer == null || buffer.Length != sizeof(short))
+            {
+                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+                return -1;
+            }
+
+            short staminaValue = BitConverter.ToInt16(buffer, 0);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return staminaValue;
         }
+
 
         public static bool IsTheBossStunned()
         {

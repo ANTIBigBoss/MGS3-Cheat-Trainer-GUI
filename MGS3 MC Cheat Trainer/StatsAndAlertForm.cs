@@ -2,7 +2,7 @@
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    
+
     public partial class StatsAndAlertForm : Form
     {
         private bool infiniteAlertCheckboxState;
@@ -14,6 +14,7 @@ namespace MGS3_MC_Cheat_Trainer
         public StatsAndAlertForm()
         {
             InitializeComponent();
+            this.Load += StatsAndAlertForm_Load;
             this.FormClosing += new FormClosingEventHandler(StatsAndAlertForm_FormClosing);
 
             // Optionally, re-apply effects when form is shown or focused
@@ -35,6 +36,7 @@ namespace MGS3_MC_Cheat_Trainer
             continuousMonitoringTimer.Interval = 1000; // Update every second
             continuousMonitoringTimer.Tick += new EventHandler(ContinuousMonitoringTimer_Tick);
             continuousMonitoringTimer.Start();
+
         }
 
         private void InitializeProgressBars()
@@ -54,6 +56,113 @@ namespace MGS3_MC_Cheat_Trainer
         private void StatsAndAlertForm_Load(object sender, EventArgs e)
         {
             this.Location = MemoryManager.GetLastFormLocation();
+
+            LoggingManager.Instance.Log("Checking lethal damage values...");
+
+            DamageManager.Instance.ReadAllLethalValues();
+
+            bool isDefault = DamageManager.Instance.AreLethalValuesDefault();
+
+            bool isInvincible = DamageManager.Instance.AreLethalValuesInvincible();
+
+            //bool isOneShotKill = DamageManager.Instance.AreLethalValuesOneShotKill();
+
+            if (isDefault)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to default.");
+                NormalLethalRadio.Checked = true;
+            }
+            else if (isInvincible)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to invincible.");
+                NeckSnapLethalRadio.Checked = true;
+            }
+            /*else if (isOneShotKill)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to one-shot kill.");
+                OneShotKillLethalRadio.Checked = true;
+            }*/
+            else
+            {
+                LoggingManager.Instance.Log("Damage settings are custom or unrecognized.");
+            }
+        }
+
+        private void NeckSnapLethalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            DamageManager.Instance.WriteAllLethalInvincibleValues();
+        }
+
+        private void VeryStrongLethalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NormalLethalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+            DamageManager.Instance.WriteAllLethalDefaultValues();
+        }
+
+        private void VeryWeakLethalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OneShotKillLethalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void InvincibleZzzRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VeryStrongZzzRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NormalZzzRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VeryWeakZzzRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OneShotSleepZzzRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NeckSnapStunRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VeryStrongStunRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NormalStunRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VeryWeakStunRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OneShotStunStunRadio_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void StatsAndAlertForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -435,6 +544,7 @@ namespace MGS3_MC_Cheat_Trainer
             MainPointerManager.RemoveAllInjuries();
         }
         #endregion
+
 
     }
 }

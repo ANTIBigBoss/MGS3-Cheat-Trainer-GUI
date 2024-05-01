@@ -11,12 +11,10 @@ namespace MGS3_MC_Cheat_Trainer
         private static MiscManager instance;
         private static readonly object lockObj = new object();
 
-        // Private constructor to prevent external instantiation
         private MiscManager()
         {
         }
 
-        // Public property to access the instance
         public static MiscManager Instance
         {
             get
@@ -75,31 +73,63 @@ namespace MGS3_MC_Cheat_Trainer
 
         internal static void ChangeCamera(Constants.CameraOptions cameraOption)
         {
-            IntPtr cameraAddress = IntPtr.Zero;
+            IntPtr processHandle = IntPtr.Zero;
 
-            // Determine which AOB key to use based on the cameraOption
-            switch (cameraOption)
+            try
             {
-                case Constants.CameraOptions.Normal:
-                    cameraAddress = MemoryManager.Instance.FindAob("NotUpsideDownCamera");
-                    break;
-                case Constants.CameraOptions.UpsideDown:
-                    cameraAddress = MemoryManager.Instance.FindAob("UpsideDownCamera");
-                    break;
-            }
+                // Ensure the game process is running and accessible
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    CustomMessageBoxManager.CustomMessageBox("Game process not found.", "Error");
+                    return;
+                }
 
-            // If a valid address was found, write the new camera setting value
-            if (cameraAddress != IntPtr.Zero)
-            {
-                byte cameraSetting = (byte)cameraOption;
-                MemoryManager.WriteByteValueToMemory(cameraAddress, cameraSetting);
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    CustomMessageBoxManager.CustomMessageBox("Failed to open game process.", "Error");
+                    return;
+                }
+
+                IntPtr cameraAddress = IntPtr.Zero;
+
+                // Determine which AOB key to use based on the cameraOption
+                switch (cameraOption)
+                {
+                    case Constants.CameraOptions.Normal:
+                        cameraAddress = MemoryManager.Instance.FindAob("NotUpsideDownCamera");
+                        break;
+                    case Constants.CameraOptions.UpsideDown:
+                        cameraAddress = MemoryManager.Instance.FindAob("UpsideDownCamera");
+                        break;
+                }
+
+                // If a valid address was found, write the new camera setting value
+                if (cameraAddress != IntPtr.Zero)
+                {
+                    byte cameraSetting = (byte)cameraOption;
+                    bool writeSuccess = MemoryManager.WriteMemory(processHandle, cameraAddress, cameraSetting);
+                    if (!writeSuccess)
+                    {
+                        CustomMessageBoxManager.CustomMessageBox("Failed to change the camera setting.", "Write Error");
+                    }
+                }
+                else
+                {
+                    CustomMessageBoxManager.CustomMessageBox("Failed to find the camera in the game's memory.", "Error");
+                }
             }
-            else
+            finally
             {
-                // Optionally, log an error or handle the case where the address wasn't found
-                MessageBox.Show("Camera AOB not found in memory.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Always close the process handle if it was opened
+                if (processHandle != IntPtr.Zero)
+                {
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
             }
         }
+
 
         public static bool NOPCamoIndex(IntPtr processHandle, IntPtr address)
         {
@@ -169,33 +199,45 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 // Ensure the game process is running and accessible
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find the game process.");
+                    return;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open the game process.");
+                    return;
+                }
 
-                // Hardcoded address for the camo index for the time being I've been trying to
-                // find a good AOB but it has been a pain in the ass with the region it's in
+                // Hardcoded address for the camo index for the time being
                 IntPtr baseAddress = process.MainModule.BaseAddress;
-                IntPtr offset = new IntPtr(0x1DE6964);
+                IntPtr offset = new IntPtr(0x1DE6964); // Example offset, replace with actual
                 IntPtr targetAddress = IntPtr.Add(baseAddress, offset.ToInt32());
 
-                bool result = MemoryManager.Instance.WriteIntToMemory(processHandle, targetAddress, newValue);
+                // Use the generic WriteMemory<T> method to write the integer value
+                bool result = MemoryManager.WriteMemory(processHandle, targetAddress, newValue);
                 if (!result)
                 {
                     LoggingManager.Instance.Log("Failed to write the new camo index value.");
                 }
                 else
                 {
-                    // Commented out to avoid spamming log file uncomment if needed for debugging
-                    //LoggingManager.Instance.Log($"Successfully wrote new camo index value: {newValue} at {targetAddress.ToString("X")}");
+                    LoggingManager.Instance.Log($"Successfully wrote new camo index value: {newValue} at {targetAddress.ToString("X")}");
                 }
             }
             finally
             {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+                // Always close the handle if it was opened
+                if (processHandle != IntPtr.Zero)
+                {
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
             }
         }
+
 
         public int ReadCamoIndex()
         {
@@ -205,30 +247,45 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return camoIndexValue;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Process not found.");
+                    return camoIndexValue;  // Returning default value if process not found
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return camoIndexValue;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return camoIndexValue;  // Returning default value if unable to open process
+                }
 
                 IntPtr baseAddress = process.MainModule.BaseAddress;
-                IntPtr offset = new IntPtr(0x1DE58A4);
+                IntPtr offset = new IntPtr(0x1DE6964); // Adjust the offset as necessary
                 IntPtr targetAddress = IntPtr.Add(baseAddress, offset.ToInt32());
 
-                byte[] buffer = new byte[4];
-                if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 4, out _))
+                // Using ReadMemoryBytes to encapsulate reading process
+                byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, 4);
+                if (buffer != null && buffer.Length == 4)
                 {
                     camoIndexValue = BitConverter.ToInt32(buffer, 0);
-                    // Commented out the logging to avoid spamming the log file uncomment if needed for debugging
-                    //LoggingManager.Instance.Log($"Current camo index value: {camoIndexValue}");
+                    // Optionally log the read value for debugging
+                    // LoggingManager.Instance.Log($"Current camo index value: {camoIndexValue}");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to read camo index from memory.");
                 }
             }
             finally
             {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+                if (processHandle != IntPtr.Zero)
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
 
             return camoIndexValue;
         }
+
 
         // Read instructions which are directly before IntPtr camoIndexAddress = MemoryManager.Instance.FindAob("CamoOperations"); and it's length is 4 bytes we want to check if the instructions are NOP'd out based on the other functions we have named NOPCamoIndex and RestoreCamoIndex
 
@@ -273,10 +330,10 @@ namespace MGS3_MC_Cheat_Trainer
                     return;
                 }
 
-                IntPtr targetAddress =
-                    IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
 
-                bool result = MemoryManager.WriteFloatToMemory(processHandle, targetAddress, newFovValue);
+                // Use the generic WriteMemory method to write the new FOV value
+                bool result = MemoryManager.WriteMemory<float>(processHandle, targetAddress, newFovValue);
                 if (!result)
                 {
                     LoggingManager.Instance.Log("Failed to write the new FOV value.");
@@ -288,6 +345,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
+
         public float ReadFovSlider()
         {
             IntPtr processHandle = IntPtr.Zero;
@@ -296,10 +354,18 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return fovValue;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Process not found.");
+                    return fovValue;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return fovValue;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return fovValue;
+                }
 
                 // Find the target address using the AOB pattern
                 IntPtr aobResult = MemoryManager.Instance.FindAob("FovSlider");
@@ -309,9 +375,18 @@ namespace MGS3_MC_Cheat_Trainer
                     return fovValue;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4);
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4);  // Adjust offset as needed
 
-                fovValue = MemoryManager.ReadFloatFromMemory(processHandle, targetAddress);
+                // Reading the memory as float
+                byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, sizeof(float));
+                if (buffer == null || buffer.Length != sizeof(float))
+                {
+                    LoggingManager.Instance.Log("Failed to read FOV value from memory.");
+                    return fovValue;
+                }
+
+                // Interpreting the buffer correctly as float
+                fovValue = BitConverter.ToSingle(buffer, 0);
             }
             finally
             {
@@ -321,6 +396,7 @@ namespace MGS3_MC_Cheat_Trainer
             return fovValue;
         }
 
+
         // Using the AOB name "PissFilter" we go back 1595/5525 Byte before this AOB is the filter value the default is either 42 or 00 in hex we want it to be 44 to disable the piss filter
         public void DisablePissFilter()
         {
@@ -329,10 +405,18 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
                 if (aobResult == IntPtr.Zero)
@@ -343,10 +427,17 @@ namespace MGS3_MC_Cheat_Trainer
 
                 IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
 
-                // Write the new byte value to memory using WriteByteValueToMemory method
-                MemoryManager.WriteByteValueToMemory(targetAddress, 0x44);
-
-                LoggingManager.Instance.Log("Piss filter disabled successfully.");
+                // Write the new byte value to memory using WriteMemory<T> method
+                byte newFilterValue = 0x44; // Disabling the piss filter
+                bool writeSuccess = MemoryManager.WriteMemory(processHandle, targetAddress, newFilterValue);
+                if (!writeSuccess)
+                {
+                    LoggingManager.Instance.Log("Failed to disable the piss filter.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Piss filter disabled successfully.");
+                }
             }
             finally
             {
@@ -354,7 +445,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // Restore the piss filter to its default value of 00
         public void EnablePissFilter()
         {
             IntPtr processHandle = IntPtr.Zero;
@@ -362,10 +452,18 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
                 if (aobResult == IntPtr.Zero)
@@ -376,18 +474,23 @@ namespace MGS3_MC_Cheat_Trainer
 
                 IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
 
-                // Write the default byte value to memory using WriteByteValueToMemory method
-                MemoryManager.WriteByteValueToMemory(targetAddress, 0x00);
-
-                LoggingManager.Instance.Log("Piss filter restored successfully.");
+                // Write the default byte value to memory using WriteMemory<T> method
+                byte defaultFilterValue = 0x00; // Restoring the piss filter
+                bool writeSuccess = MemoryManager.WriteMemory(processHandle, targetAddress, defaultFilterValue);
+                if (!writeSuccess)
+                {
+                    LoggingManager.Instance.Log("Failed to restore the piss filter.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Piss filter restored successfully.");
+                }
             }
             finally
             {
                 if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
         }
-
-        // Read Value at the piss filter address
 
         public byte ReadPissFilterValue()
         {
@@ -397,10 +500,18 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return pissFilterValue;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to get the MGS3 process.");
+                    return pissFilterValue;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return pissFilterValue;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open the MGS3 process.");
+                    return pissFilterValue;
+                }
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
                 if (aobResult == IntPtr.Zero)
@@ -410,8 +521,16 @@ namespace MGS3_MC_Cheat_Trainer
                 }
 
                 IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
+                byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, 1);
 
-                pissFilterValue = MemoryManager.ReadByteFromMemory(processHandle, targetAddress);
+                if (buffer != null && buffer.Length > 0)
+                {
+                    pissFilterValue = buffer[0];
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Failed to read memory at the target address for Piss Filter.");
+                }
             }
             finally
             {
@@ -420,6 +539,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             return pissFilterValue;
         }
+
         /*
                // The byte before this AOB is the instruction value for what changes the filter when a new area loads
                // All wee do here is change 48 into 90 to disable the instruction
@@ -443,10 +563,18 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
                 if (aobResult == IntPtr.Zero)
@@ -457,16 +585,27 @@ namespace MGS3_MC_Cheat_Trainer
 
                 // Disable the instruction at -1 offset
                 IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
-                // 48 original byte
-                MemoryManager.WriteByteValueToMemory(targetAddress1, 0x90);
+                byte nop1 = 0x90; // NOP instruction
+                bool success1 = MemoryManager.WriteMemory(processHandle, targetAddress1, nop1);
+                if (!success1)
+                {
+                    LoggingManager.Instance.Log("Failed to disable first part of the piss filter instructions.");
+                }
 
                 // Disable the second part at +2781 offset
                 IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-                // F3 0F 11 99 78 03 00 00 original bytes
-                byte[] disableBytes2 = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
-                MemoryManager.WriteBytesToMemory(targetAddress2, disableBytes2);
+                byte[] disableBytes2 = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }; // NOP instructions
+                bool success2 = MemoryManager.WriteMemory(processHandle, targetAddress2, disableBytes2);
+                if (!success2)
+                {
+                    LoggingManager.Instance.Log("Failed to disable second part of the piss filter instructions.");
+                }
 
-                LoggingManager.Instance.Log("Piss filter instructions disabled successfully.");
+
+                if (success1 && success2)
+                {
+                    LoggingManager.Instance.Log("Piss filter instructions disabled successfully.");
+                }
             }
             finally
             {
@@ -474,7 +613,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // Restore the piss filter instructions to their original values
         public void EnablePissFilterInstructions()
         {
             IntPtr processHandle = IntPtr.Zero;
@@ -482,10 +620,18 @@ namespace MGS3_MC_Cheat_Trainer
             try
             {
                 Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
                 if (aobResult == IntPtr.Zero)
@@ -496,14 +642,19 @@ namespace MGS3_MC_Cheat_Trainer
 
                 // Restore the instruction at -1 offset
                 IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
-                // 90 original byte
-                MemoryManager.WriteByteValueToMemory(targetAddress1, 0x48);
+                byte originalByte1 = 0x48; // the original byte to restore
+                if (!MemoryManager.WriteMemory(processHandle, targetAddress1, originalByte1))
+                {
+                    LoggingManager.Instance.Log("Failed to restore the first part of the piss filter instructions.");
+                }
 
                 // Restore the second part at +2781 offset
                 IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-                // 90 90 90 90 90 90 90 90 original bytes
-                byte[] restoreBytes2 = new byte[] { 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 };
-                MemoryManager.WriteBytesToMemory(targetAddress2, restoreBytes2);
+                byte[] restoreBytes2 = new byte[] { 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 }; // the original bytes to restore
+                if (!MemoryManager.WriteMemory(processHandle, targetAddress2, restoreBytes2))
+                {
+                    LoggingManager.Instance.Log("Failed to restore the second part of the piss filter instructions.");
+                }
 
                 LoggingManager.Instance.Log("Piss filter instructions restored successfully.");
             }
@@ -513,7 +664,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // Check if the piss filter instructions are disabled
 
         public bool IsPissFilterInstructionsNopped()
         {
@@ -556,10 +706,18 @@ namespace MGS3_MC_Cheat_Trainer
         public (IntPtr, byte) GetPissFilterInstructionsAddress()
         {
             Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return (IntPtr.Zero, 0x00);
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Failed to get the MGS3 process.");
+                return (IntPtr.Zero, 0x00);
+            }
 
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero) return (IntPtr.Zero, 0x00);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open the MGS3 process.");
+                return (IntPtr.Zero, 0x00);
+            }
 
             IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
             if (aobResult == IntPtr.Zero)
@@ -569,11 +727,17 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             // Check the first instruction at -1 offset
-            IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
-            byte buffer1 = MemoryManager.ReadByteFromMemory(processHandle, targetAddress1);
+            IntPtr targetAddress = IntPtr.Subtract(aobResult, 1);
+            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, 1);
+            if (buffer == null || buffer.Length == 0)
+            {
+                LoggingManager.Instance.Log("Failed to read memory at the target address.");
+                return (targetAddress, 0x00);
+            }
 
-            return (targetAddress1, buffer1);
+            return (targetAddress, buffer[0]);
         }
+
 
 
         // Display the memory address and value of the second instruction of the piss filter and read the entire 8 bytes

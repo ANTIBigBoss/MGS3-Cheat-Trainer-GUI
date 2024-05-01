@@ -85,7 +85,7 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("User is changing to the Boss form from the Main Menu form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "BossRefactorForm");
-            DebugDevForm form7 = new();
+            DebuggerForm form7 = new();
             form7.Show();
             this.Hide();
         }

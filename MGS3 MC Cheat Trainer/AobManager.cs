@@ -1,20 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms; // For MessageBox
-// Use MemoryManager
-using static MGS3_MC_Cheat_Trainer.MemoryManager;
-
-namespace MGS3_MC_Cheat_Trainer
+﻿namespace MGS3_MC_Cheat_Trainer
 {
     public class AobManager
     {
         private static AobManager instance;
         private static readonly object lockObj = new object();
 
-        // Private constructor to prevent external instantiation
         private AobManager() { }
 
-        // Public property to access the instance
         public static AobManager Instance
         {
             get
@@ -76,7 +68,6 @@ namespace MGS3_MC_Cheat_Trainer
                 #region Memory Region Finding AOBs
                 {
                     "AlertMemoryRegion", // ?? ?? 00 00 ?? ?? 00 00 50 46 00 00 FF FF FF FF
-                    // ??xx??xxxxxxxxxx
                     (new byte[] { 0x00, 0x00, 0x50, 0x46, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF },
                         "? ? x x ? ? x x x x x x x x x x",
                         
@@ -255,18 +246,18 @@ namespace MGS3_MC_Cheat_Trainer
                     // Default value is 1000 setting to 0 will make all explosions do no damage
                     "ExplosionDamage", // 41 B9 3E 00 00 00 48 8B CF 41 8D 51 C3 E8 61 FB FE FF E9 9F 01 00 00 BA
                     (new byte[] { 0x41, 0xB9, 0x3E, 0x00, 0x00, 0x00, 0x48, 0x8B, 0xCF, 0x41, 0x8D, 0x51, 0xC3, 0xE8, 0x61, 0xFB, 0xFE, 0xFF, 0xE9, 0x9F, 0x01, 0x00, 0x00, 0xBA },
-                        "x x x x x x x x",
+                        "x x x x x x x x x x x x x x x x x x x x x x x x",
                         new IntPtr(0x100000),
                         new IntPtr(0x1F0000)
                     )
                 },
 
                 {
-                    // This AOB is directly before the 2 byte value that needs to be set to 90 90 to
-                    // disable the damage C8 2B is the default for allowing Shotgun Damage 
-                    "ShotgunDamage", // E9 05 09 00 00 8B 96 04 01 00 00 8B CD E8 55 46 56 00 8B 8E 38 01 00 00
-                    (new byte[] { 0xE9, 0x05, 0x09, 0x00, 0x00, 0x8B, 0x96, 0x04, 0x01, 0x00, 0x00, 0x8B, 0xCD, 0xE8, 0x55, 0x46, 0x56, 0x00, 0x8B, 0x8E, 0x38, 0x01, 0x00, 0x00 },
-                        "x x x x x x x x x x x x x x x x x x x x x x x x",
+                    // This AOB is directly before the 6 byte array instruction to change from:
+                    // 89 8E 38 01 00 00 -> 90 90 90 90 90 90
+                    "ShotgunDamage", // 7F 1A 85 C9 7E 16 48 8B
+                    (new byte[] { 0x7F, 0x1A, 0x85, 0xC9, 0x7E, 0x16, 0x48, 0x8B },
+                        "x x x x x x x x",
                         new IntPtr(0x100000),
                         new IntPtr(0x1F0000)
                     )
@@ -283,16 +274,19 @@ namespace MGS3_MC_Cheat_Trainer
                     )
                 },
 
-                {   // 22 Bytes before the AOB is the 4-byte damage value
-                    "NeckSnapDamage", // 83 C4 20 5F C3 48 8D 93 00 04 00 00 41 B9 2B 00 00 00 4C 8D 05 A2 CA 94
-                    (new byte[] { 0x83, 0xC4, 0x20, 0x5F, 0xC3, 0x48, 0x8D, 0x93, 0x00, 0x04, 0x00, 0x00, 0x41, 0xB9, 0x2B },
-                        "x x x x x x x x x x x x x x x",
+                
+                {
+                    // This AOB is directly before the 6 byte array instruction to change from:
+                    // 29 86 38 01 00 00 -> 90 90 90 90 90 90
+                    "KnifeForkDamage", // 48 8B D6 48 8B CF E8 CE E6 FE
+                    (new byte[] { 0x48, 0x8B, 0xD6, 0x48, 0x8B, 0xCF, 0xE8, 0xCE, 0xE6, 0xFE },
+                        "x x x x x x x x x x",
                         new IntPtr(0x100000),
                         new IntPtr(0x1F0000)
                     )
                 },
 
-                {   // 0 Bytes before the AOB is the 4-byte damage value
+                {   // 4 Bytes before the AOB is the 4-byte damage value
                     "WpNadeDamage", // C3 CC CC CC CC CC 33 C0 39 81 38
                     (new byte[] { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x33, 0xC0, 0x39, 0x81, 0x38 },
                         "x x x x x x x x x x x",
@@ -301,18 +295,38 @@ namespace MGS3_MC_Cheat_Trainer
                     )
                 },
 
-                {   // 0 Bytes before the AOB is the 6-byte code value to change from:
-                    // 89 87 48 01 00 00 -> 90 90 90 90 90 90
-                    "SleepControl", // 83 F8 01 7D 2F 66 0F 6E
-                    (new byte[] { 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0x33, 0xC0, 0x39, 0x81, 0x38 },
-                        "x x x x x x x x x x x",
+                {   // The 6 bytes before this AOB is the code to change the damage value from:
+                    // 89 86 48 01 00 00 -> 90 90 90 90 90 90
+                    "SleepControl", // 83 FB 05 74 0A 83 FB 10 74 05 83 FB 07 75 1B 8B 96 10
+                    (new byte[] { 0x83, 0xFB, 0x05, 0x74, 0x0A, 0x83, 0xFB, 0x10, 0x74, 0x05, 0x83, 0xFB, 0x07, 0x75, 0x1B, 0x8B, 0x96, 0x10 },
+                        "x x x x x x x x x x x x x x x x x x", 
                         new IntPtr(0x100000),
                         new IntPtr(0x1F0000)
                     )
                 },
 
-                {   // 0 Bytes after the AOB is the 4-byte code value to change from:
+                {   // The 6 bytes before this AOB is the code to change the damage value from:
                     // 89 87 48 01 00 00 -> 90 90 90 90 90 90
+                    "SleepControl2", // 83 F8 01 7D 2F 66 0F 6E
+                    (new byte[] { 0x83, 0xF8, 0x01, 0x7D, 0x2F, 0x66, 0x0F, 0x6E },
+                        "x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+
+                {   // The Signed 4 bytes default value of 4000 before this AOB control the ZZZ weapons damage
+                    "ZZZWeaponsDamage", // E8 26 41 FF FF 8B D0 8B CD E8 2D 1D 56 00 8B 8B 48 01 00 00
+                    (new byte[] { 0xE8, 0x26, 0x41, 0xFF, 0xFF, 0x8B, 0xD0, 0x8B, 0xCD, 0xE8, 0x2D, 0x1D, 0x56, 0x00, 0x8B, 0x8B, 0x48, 0x01, 0x00, 0x00 },
+                        "x x x x x x x x x x x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+
+
+                {   // 0 Bytes after the AOB is 4 bytes default value is signed -90000
+                    // 12 Bytes after the AOB is 4 bytes default value is signed -36000 (This is for extreme mode)
                     "CQCSlamNormal", // CC 48 8B 05 41 78 8F 00 0F B7 50 06 66 83 FA 1E 7F 0C C7 81 40 01 00 00
                     (new byte[] { 0xCC, 0x48, 0x8B, 0x05, 0x41, 0x78, 0x8F, 0x00, 0x0F, 0xB7, 0x50, 0x06, 0x66, 0x83, 0xFA, 0x1E, 0x7F, 0x0C, 0xC7, 0x81, 0x40, 0x01, 0x00, 0x00 },
                         "x x x x x x x x x x x x x x x x x x x x x x x x",
@@ -320,6 +334,48 @@ namespace MGS3_MC_Cheat_Trainer
                         new IntPtr(0x1F0000)
                     )
                 },
+
+                {   // The 6 bytes before this AOB is the code to change the damage value from:
+                    // 29 86 40 01 00 00 -> 90 90 90 90 90 90
+                    "StunRollDamage", // 4C 8D 4F 30 8B 97 1C 08 00 00 33 C0
+                    (new byte[] { 0x4C, 0x8D, 0x4F, 0x30, 0x8B, 0x97, 0x1C, 0x08, 0x00, 0x00, 0x33, 0xC0 },
+                        "x x x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+
+                {
+                    // The 6 bytes before this AOB is the code to change the damage value from:
+                    // 29 86 40 01 00 00 -> 90 90 90 90 90 90
+                    "StunNadeDamage", // 83 BE 40 01 00 00 00 0F 8E AC
+                    (new byte[] { 0x83, 0xBE, 0x40, 0x01, 0x00, 0x00, 0x00, 0x0F, 0x8E, 0xAC },
+                        "x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+
+                {   // Might as well use this AOB for all the stun punch damages
+
+                    // Directly after the AOB is the 6 Byte Array to change from
+                    // 29 86 40 01 00 00 -> 90 90 90 90 90 90
+                    // This sorta stops the guards being stunned by punches works better when combined with single and triple punch damage
+
+                    // 2 Bytes before this AOB is the single byte value for single punch damage default value is 1
+
+                    // 1775 bytes before this AOB is the single byte value for triple punch damage default value is 232
+                    
+                    // 34 Bytes after is the Single byte value for the threshold for knocking a guard over (Not Stunning) with a punch
+                    // By default that single byte's value is 1
+                    "StunPunchDamage", // 00 00 B9 0A 00 00 00 0F 45 D1 0F AF 96 04 01 00 00 8B CD E8 30 40 56 00
+                    (new byte[] { 0x00, 0x00, 0xB9, 0x0A, 0x00, 0x00, 0x00, 0x0F, 0x45, 0xD1, 0x0F, 0xAF, 0x96, 0x04, 0x01, 0x00, 0x00, 0x8B, 0xCD, 0xE8, 0x30, 0x40, 0x56, 0x00 },
+                        "x x x x x x x x x x x x x x x x x x x x x x x x",
+                        new IntPtr(0x100000),
+                        new IntPtr(0x1F0000)
+                    )
+                },
+                
                 #endregion
 
                 #region Boss AOBs

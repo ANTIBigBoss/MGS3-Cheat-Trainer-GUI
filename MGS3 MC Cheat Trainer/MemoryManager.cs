@@ -1,10 +1,7 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using static MGS3_MC_Cheat_Trainer.Constants;
-using System.Threading.Tasks;
-using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
 {
@@ -47,9 +44,6 @@ namespace MGS3_MC_Cheat_Trainer
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
-            // Declare WriteProcessMemory with short
-            [DllImport("kernel32.dll", SetLastError = true)]
-            public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, ref short lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
             // and with bytes
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
@@ -86,17 +80,27 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static IntPtr OpenGameProcess(Process process)
         {
-            if (process == null)
+            try
             {
+                if (process == null)
+                {
+                    throw new InvalidOperationException("Process not found.");
+                }
+
+                IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
+                if (processHandle == IntPtr.Zero)
+                {
+                    throw new InvalidOperationException("Failed to open process.");
+                }
+
+                return processHandle;
+            }
+            catch (Exception ex)
+            {
+                LoggingManager.Instance.Log($"Error occurred in OpenGameProcess: {ex.Message}");
+                MessageBox.Show($"An error occurred while opening the game process: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return IntPtr.Zero;
             }
-
-            IntPtr processHandle = NativeMethods.OpenProcess(0x1F0FFF, false, process.Id);
-            if (processHandle == IntPtr.Zero)
-            {
-            }
-
-            return processHandle;
         }
 
         public static bool ReadProcessMemory(IntPtr processHandle, IntPtr address, byte[] buffer, uint size, out int bytesRead)
@@ -108,84 +112,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         #region Memory Reading
 
-        // Expand this for documentation on how to utilize the read operations
-        #region Read Operations Explanation 
-        /*
-        Usage looks like: byte value = MemoryManager.Instance.ReadByteFromMemory(processHandle, address);
-        IntPtr processHandle is the game process and
-        IntPtr address is the address to modify (Typically somewhere an AOB is pointing to)
-        Using Alert triggering as an example the AOB is found like this:
-        IntPtr alertMemoryRegion = memoryManager.FindAob("AlertMemoryRegion");
-        Then hypothetically you'd go forward or backward using .Add or .Subtract to get to where you want to read like so:
-        IntPtr modifyAddress = IntPtr.Add(alertMemoryRegion, 78); // We take the variable alertMemoryRegion and add 78 to it
-        Then you'd read the byte like so:
-        byte value = MemoryManager.Instance.ReadByteFromMemory(processHandle, modifyAddress);
-        Then you can tie it into a button event to read the value and display it or log it like so:
-        LoggingManager.Instance.Log($"Alert value: {value}");
-        MessageBox.Show($"Alert value: {value}", "Alert Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        This logic also remains the same for reading other data types like short, int, and float like so:
-        short value = MemoryManager.Instance.ReadShortFromMemory(processHandle, modifyAddress);
-        int value = MemoryManager.Instance.ReadMemoryBytes(processHandle, modifyAddress); // Can be used for anything larger than 2 bytes
-        float value = MemoryManager.Instance.ReadFloatFromMemory(processHandle, modifyAddress);
-        The only difference is the data type and the function used to read it.
-        Calling the function in a form would remain the exact same as the byte example.
-        */
-        #endregion
-
-        // Haven't had much usage for single byte reads, but it's here if needed.
-        public static byte ReadByteFromMemory(IntPtr processHandle, IntPtr address)
-        {
-            byte[] buffer = new byte[1];
-            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
-            {
-                return buffer[0];
-            }
-
-            throw new IOException("Failed to read byte from memory.");
-        }
-
-        public static short ReadShortFromMemory(IntPtr processHandle, IntPtr address)
-        {
-            if (NativeMethods.ReadProcessMemory(processHandle, address, out short value, sizeof(short), out int bytesRead))
-            {
-                if (bytesRead == sizeof(short))
-                {
-                    return value;
-                }
-            }
-            // return -1 is to ensure we don't crash the program if the read fails.
-            // i.e. if you don't find a boss short value since you're not fighting that particular boss.
-            // There's probably a better way to handle this but this works for now.
-            return -1;
-        }
-
-        // Similar to reading a 4 byte value but this is if the data holds in a floating-point value.
-        // To read floats in sequence you could do this:
-        // float value1 = MemoryManager.Instance.ReadFloatFromMemory(processHandle, modifyAddress);
-        // float value2 = MemoryManager.Instance.ReadFloatFromMemory(processHandle, IntPtr.Add(modifyAddress, 4));
-        // float value3 = MemoryManager.Instance.ReadFloatFromMemory(processHandle, IntPtr.Add(modifyAddress, 8));
-        // The (modifyAddress, 4) and (modifyAddress, 8) are the offsets from the original address.
-        // This has only been useful for me for Xyz coordinates.
-        public static float ReadFloatFromMemory(IntPtr processHandle, IntPtr address)
-        {
-            byte[] buffer = new byte[4];
-            if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead) && bytesRead == buffer.Length)
-            {
-                return BitConverter.ToSingle(buffer, 0);
-            }
-
-            return -1;
-        }
-
-        // Alternatively you could read all 3 floats at once like so:
-        // float[] values = MemoryManager.Instance.ReadMemoryBytes(processHandle, modifyAddress, 12);
-
         public static byte[] ReadMemoryBytes(IntPtr processHandle, IntPtr address, int bytesToRead)
         {
-            // bytesToRead is the number of bytes to read you'll since in single byte reads it's always 1
-            // but this could also be used in 4 byte or 8 byte reads like so:
-            // byte[] buffer = ReadMemoryBytes(processHandle, address, 4);
-            // byte[] buffer = ReadMemoryBytes(processHandle, address, 8);
             byte[] buffer = new byte[bytesToRead];
             if (NativeMethods.ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _))
             {
@@ -194,14 +122,8 @@ namespace MGS3_MC_Cheat_Trainer
             return null;
         }
 
-        //Usage look like:
-        //int intValue = ReadMemoryValue<int>(processHandle, address, sizeof(int));
-        //short shortValue = ReadMemoryValue<short>(processHandle, address, sizeof(short));
-        //float floatValue = ReadMemoryValue<float>(processHandle, address, sizeof(float));
-
-        public static string ReadMemoryValueAsString<T>(IntPtr processHandle, IntPtr address, int bytesToRead) where T : struct
+        public static string ReadMemoryValueAsString(IntPtr processHandle, IntPtr address, int bytesToRead, DataType dataType)
         {
-            // Get the process as you normally do, which is proven to work in your environment
             Process process = GetMGS3Process();
             if (process == null || process.MainModule == null)
             {
@@ -212,239 +134,115 @@ namespace MGS3_MC_Cheat_Trainer
             string addressHex = $"0x{address.ToInt64():X}";
             string moduleOffset = $"METAL GEAR SOLID3.exe+{(address.ToInt64() - process.MainModule.BaseAddress.ToInt64()):X}";
 
-            if (buffer != null && buffer.Length == bytesToRead)
-            {
-                string ValueName = "";
-                string ValueStrDecimal = "";
-                string ValueStrHex = "";
-                
+            if (buffer == null || buffer.Length != bytesToRead)
+                return $"Failed to read memory from: {moduleOffset} (Address: {addressHex}).";
 
-                if (typeof(T) == typeof(byte) && buffer.Length == 1)
-                {
-                    ValueName = "Byte";
-                    ValueStrDecimal = buffer[0].ToString();
-                    ValueStrHex = buffer[0].ToString("X");
-                }
-                else if (typeof(T) == typeof(short) && buffer.Length == 2)
-                {
-                    ValueName = "Short";
-                    ValueStrDecimal = BitConverter.ToInt16(buffer, 0).ToString();
-                    ValueStrHex = BitConverter.ToInt16(buffer, 0).ToString("X");
-                }
-                else if (typeof(T) == typeof(int) && buffer.Length == 4)
-                {
-                    ValueName = "Integer";
-                    ValueStrDecimal = BitConverter.ToInt32(buffer, 0).ToString();
-                    ValueStrHex = BitConverter.ToInt32(buffer, 0).ToString("X");
-                }
-                else if (typeof(T) == typeof(float) && buffer.Length == 4)
-                {
-                    ValueName = "Float";
-                    ValueStrDecimal = BitConverter.ToSingle(buffer, 0).ToString();
-                    ValueStrHex = BitConverter.ToSingle(buffer, 0).ToString("X");
-                }
-                else if (typeof(T) == typeof(double) && buffer.Length == 8)
-                {
-                    ValueName = "Double";
-                    ValueStrDecimal = BitConverter.ToDouble(buffer, 0).ToString();
-                    ValueStrHex = BitConverter.ToDouble(buffer, 0).ToString("X");
-                }
-                else
-                {
-                    return $"Unexpected data type or size mismatch: {typeof(T).Name} expected, buffer size {buffer.Length} bytes.";
-                }
-
-                return $"{ValueName} / {typeof(T).Name} \nBase Address + Offset: {moduleOffset} \nAddress Offset in Hex: {addressHex} \nValue Result in Decimal: {ValueStrDecimal}\nValue Result in Hex: {ValueStrHex}";
-            }
-            return $"Failed to read: {typeof(T).Name} From: {moduleOffset} (Address: {addressHex}).";
+            return FormatMemoryRead(buffer, bytesToRead, addressHex, moduleOffset, dataType);
         }
 
+        private static string FormatMemoryRead(byte[] buffer, int bytesToRead, string addressHex, string moduleOffset, DataType dataType)
+        {
+            StringBuilder result = new StringBuilder();
+            result.Append($"Address Offset: {moduleOffset}\n");
+            result.Append($"Address in Hex: {addressHex}\n");
+
+            switch (dataType)
+            {
+                case DataType.UInt8:
+                    result.Append($"UInt8/Byte\nValue in Decimal: {buffer[0]}\nValue in Hex: {buffer[0]:X2}\n");
+                    break;
+                case DataType.Int8:
+                    sbyte sbyteVal = (sbyte)buffer[0];
+                    result.Append($"Int8/Signed Byte\nValue in Decimal: {sbyteVal}\nValue in Hex: {sbyteVal:X2}\n");
+                    break;
+                case DataType.Int16:
+                    short shortVal = BitConverter.ToInt16(buffer, 0);
+                    result.Append($"Int16\nValue in Decimal: {shortVal}\nValue in Hex: {shortVal:X4}\n");
+                    break;
+                case DataType.UInt16:
+                    ushort ushortVal = BitConverter.ToUInt16(buffer, 0);
+                    result.Append($"UInt16\nValue in Decimal: {ushortVal}\nValue in Hex: {ushortVal:X4}\n");
+                    break;
+                case DataType.Int32:
+                    int intVal = BitConverter.ToInt32(buffer, 0);
+                    result.Append($"Int32\nValue in Decimal: {intVal}\nValue in Hex: {intVal:X8}\n");
+                    break;
+                case DataType.UInt32:
+                    uint uintVal = BitConverter.ToUInt32(buffer, 0);
+                    result.Append($"UInt32\nValue in Decimal: {uintVal}\nValue in Hex: {uintVal:X8}\n");
+                    break;
+                case DataType.Int64:
+                    long longVal = BitConverter.ToInt64(buffer, 0);
+                    result.Append($"Int64\nValue in Decimal: {longVal}\nValue in Hex: {longVal:X16}\n");
+                    break;
+                case DataType.UInt64:
+                    ulong ulongVal = BitConverter.ToUInt64(buffer, 0);
+                    result.Append($"UInt64\nValue in Decimal: {ulongVal}\nValue in Hex: {ulongVal:X16}\n");
+                    break;
+                case DataType.Float:
+                    float floatVal = BitConverter.ToSingle(buffer, 0);
+                    result.Append($"Float\nValue in Decimal: {floatVal}\nValue in Hex: {BitConverter.ToInt32(buffer, 0):X8}\n");
+                    break;
+                case DataType.Double:
+                    double doubleVal = BitConverter.ToDouble(buffer, 0);
+                    result.Append($"Double\nValue in Decimal: {doubleVal}\nValue in Hex: {BitConverter.ToInt64(buffer, 0):X16}\n");
+                    break;
+                case DataType.ByteArray:
+                    result.Append("Byte Array\nValues in Decimal: ");
+                    for (int i = 0; i < bytesToRead; i++)
+                    {
+                        result.Append($"{buffer[i]} ");
+                    }
+                    result.Append("\nValues in Hex: ");
+                    for (int i = 0; i < bytesToRead; i++)
+                    {
+                        result.Append($"{buffer[i]:X2} ");
+                    }
+                    break;
+                default:
+                    throw new InvalidOperationException("Unsupported data type.");
+            }
+
+            return result.ToString().Trim();
+        }
 
         #endregion
 
         #region Memory Writing
 
-        #region Write Operations Explanation
-        /*
-        Basic usage is as follows:
-        For Bitwise operations like setting specific bits in a short value:
-        short value = MemoryManager.SetSpecificBits(value, 0, 3, 1);
-        Single byte writes: MemoryManager.WriteByteValueToMemory(address, value);
-        Short writes: MemoryManager.WriteShortToMemory(address, value);
-        Int writes: MemoryManager.WriteIntToMemory(processHandle, address, value);
-        Float writes: MemoryManager.WriteFloatToMemory(processHandle, address, value);
-        
-        You can also use a read operation to validate the write like so:
-        byte value = MemoryManager.ReadByteFromMemory(processHandle, address);
-        if (value == 1)
+        public static bool WriteMemory<T>(IntPtr processHandle, IntPtr address, T value)
         {
-            LoggingManager.Instance.Log("Write successful.");
-            // You can also use MessageBox.Show if you want to let the user know write was successful.
-            // and to show what value was written. I wouldn't recommend doing this for every write
-            // as many messageboxes can get annoying but it's useful for debugging.
-            MessageBox.Show($"Write successful. Effect value is now: {value}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            byte[] buffer;
+
+            if (typeof(T) == typeof(byte[]))
+            {
+                buffer = value as byte[];
+            }
+            else
+            {
+                int size = Marshal.SizeOf(typeof(T));
+                buffer = new byte[size];
+                IntPtr ptr = Marshal.AllocHGlobal(size);
+                try
+                {
+                    Marshal.StructureToPtr(value, ptr, false);
+                    Marshal.Copy(ptr, buffer, 0, size);
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(ptr);
+                }
+            }
+
+            return NativeMethods.WriteProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _);
         }
-        else
-        {
-            LoggingManager.Instance.Log("Write failed.");
-            // You can use MessageBox.Show if you want to let the user know write failed.
-            MessageBox.Show("Write failed. At this effect", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            // This is also useful if you know probable actions the user might do you can advise them how to fix it.
-        }
-        
-        Setting Bits isn't something I have a read for also so here is an explanation of how to use it:
-        I made this since there was no native way to set an evasion status so I found a really roundabout way to do it
-        What this function does is it takes a short value and sets specific bits in it
-        To break it down: maskLength is the length of the mask, mask is the mask itself, and valueToSet is the value to set
-        The function then takes the current value and sets the bits in the mask to the valueToSet
-        This is useful for setting specific bits in a short value like the evasion status
-        In AlertManager.cs SetEvasionBits is a full example of how to use this function
-        for a short explanation this code snippet should help explain how to use it:
-        short currentValue = MemoryManager.ReadShortFromMemory(processHandle, modifyAddress);
-        short modifiedValue = SetSpecificBits(currentValue, 5, 14, 596); / 5 = start bit, 14 = end bit, and 596 = value to set
-        MemoryManager.WriteShortToMemory(processHandle, modifyAddress, modifiedValue); 
-        */
-        #endregion
+
         public static short SetSpecificBits(short currentValue, int startBit, int endBit, int valueToSet)
         {
             int maskLength = endBit - startBit + 1;
             int mask = ((1 << maskLength) - 1) << startBit;
             return (short)((currentValue & ~mask) | ((valueToSet << startBit) & mask));
         }
-
-        // Like the read byte method, haven't had much usage for single byte writes, but it's here if needed.
-        public static void WriteByteValueToMemory(IntPtr address, byte value)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return;
-            }
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, new byte[] { value }, 1, out int bytesWritten);
-            if (!success || bytesWritten != 1)
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        public bool WriteIntToMemory(IntPtr processHandle, IntPtr address, int value)
-        {
-            // Convert int to byte array
-            byte[] bytes = BitConverter.GetBytes(value);
-
-            // Call WriteProcessMemory
-            return NativeMethods.WriteProcessMemory(processHandle, address, bytes, (uint)bytes.Length, out _);
-        }
-
-        public static void WriteBytesToMemory(IntPtr address, byte[] values)
-        {
-            Process process = GetMGS3Process();
-            if (process == null) return;
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero) return;
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, values, (uint)values.Length, out int bytesWritten);
-            if (!success || bytesWritten != values.Length)
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        public void WriteShortToMemory(IntPtr address, short value)
-        {
-            Process process = GetMGS3Process();
-            if (process == null)
-            {
-                return;
-            }
-
-            IntPtr processHandle = OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-
-                return;
-            }
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten);
-            if (!success || bytesWritten != sizeof(short))
-            {
-
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-        }
-
-        // I think I made this write specifically for bosses to avoid crashes when writing to memory
-        // Should look into it and see if these functions can be combined
-        public static int WriteShortToMemory(IntPtr processHandle, IntPtr address, short value)
-        {
-            if (NativeMethods.WriteProcessMemory(processHandle, address, ref value, sizeof(short), out int bytesWritten))
-                return bytesWritten;
-
-            return -1;
-        }
-
-        // If you have a float value you want to write to memory you can use this function like so:
-        // MemoryManager.WriteFloatToMemory(processHandle, modifyAddress, value);
-
-        // That being said sometimes you might have 3 or more float values you want to write in sequence
-        // You can do that like so:
-        // MemoryManager.WriteFloatToMemory(processHandle, modifyAddress, value1);
-        // MemoryManager.WriteFloatToMemory(processHandle, IntPtr.Add(modifyAddress, 4), value2);
-        // MemoryManager.WriteFloatToMemory(processHandle, IntPtr.Add(modifyAddress, 8), value3);
-        // The (modifyAddress, 4) and (modifyAddress, 8) are the offsets from the original address.
-        // For a more detailed explanation look as MiscForm.cs and XyzManager.cs
-        
-        public static bool WriteFloatToMemory(IntPtr processHandle, IntPtr address, float value)
-        {
-            byte[] buffer = BitConverter.GetBytes(value);
-
-            // Log attempt to write float value
-            LoggingManager.Instance.Log($"Attempting to write float value {value} to address {address.ToString("X")}.");
-
-            bool success = NativeMethods.WriteProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesWritten);
-
-            if (!success)
-            {
-                int errorCode = Marshal.GetLastWin32Error();
-                // Log failure with error code
-                LoggingManager.Instance.Log($"Failed to write float value {value} to memory. Win32 Error Code: {errorCode}");
-                return false;
-            }
-            if (bytesWritten != buffer.Length)
-            {
-                // Log partial write
-                LoggingManager.Instance.Log($"Partial write. Attempted to write {buffer.Length} bytes, but only {bytesWritten} were written.");
-                return false;
-            }
-
-            // Optional: Validate the write operation
-            float writtenValue = ReadFloatFromMemory(processHandle, address);
-            if (Math.Abs(writtenValue - value) > float.Epsilon)
-            {
-                // Log validation failure
-                LoggingManager.Instance.Log($"Validation failed. Expected value {value}, but read back {writtenValue}.");
-                return false;
-            }
-
-            // Log success
-            LoggingManager.Instance.Log($"Successfully wrote float value {value} to address {address.ToString("X")}.");
-            return true;
-        }
-
 
         #endregion
 

@@ -80,23 +80,23 @@
             SwapToBossForm = new Button();
             textBox4 = new TextBox();
             LethalGroupBox = new GroupBox();
-            radioButton1 = new RadioButton();
-            radioButton2 = new RadioButton();
-            radioButton3 = new RadioButton();
-            radioButton4 = new RadioButton();
-            radioButton5 = new RadioButton();
+            OneShotKillLethalRadio = new RadioButton();
+            VeryWeakLethalRadio = new RadioButton();
+            NormalLethalRadio = new RadioButton();
+            VeryStrongLethalRadio = new RadioButton();
+            NeckSnapLethalRadio = new RadioButton();
             groupBox2 = new GroupBox();
-            radioButton6 = new RadioButton();
-            radioButton7 = new RadioButton();
-            radioButton8 = new RadioButton();
-            radioButton9 = new RadioButton();
-            radioButton10 = new RadioButton();
+            OneShotSleepZzzRadio = new RadioButton();
+            VeryWeakZzzRadio = new RadioButton();
+            NormalZzzRadio = new RadioButton();
+            VeryStrongZzzRadio = new RadioButton();
+            InvincibleZzzRadio = new RadioButton();
             groupBox3 = new GroupBox();
-            radioButton11 = new RadioButton();
-            radioButton12 = new RadioButton();
-            radioButton13 = new RadioButton();
-            radioButton14 = new RadioButton();
-            radioButton15 = new RadioButton();
+            OneShotStunStunRadio = new RadioButton();
+            VeryWeakStunRadio = new RadioButton();
+            NormalStunRadio = new RadioButton();
+            VeryStrongStunRadio = new RadioButton();
+            NeckSnapStunRadio = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -750,247 +750,262 @@
             // 
             LethalGroupBox.BackColor = Color.FromArgb(156, 156, 124);
             LethalGroupBox.BackgroundImageLayout = ImageLayout.None;
-            LethalGroupBox.Controls.Add(radioButton4);
-            LethalGroupBox.Controls.Add(radioButton5);
-            LethalGroupBox.Controls.Add(radioButton3);
-            LethalGroupBox.Controls.Add(radioButton2);
-            LethalGroupBox.Controls.Add(radioButton1);
+            LethalGroupBox.Controls.Add(OneShotKillLethalRadio);
+            LethalGroupBox.Controls.Add(VeryWeakLethalRadio);
+            LethalGroupBox.Controls.Add(NormalLethalRadio);
+            LethalGroupBox.Controls.Add(VeryStrongLethalRadio);
+            LethalGroupBox.Controls.Add(NeckSnapLethalRadio);
             LethalGroupBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            LethalGroupBox.Location = new Point(619, 111);
+            LethalGroupBox.Location = new Point(619, 102);
             LethalGroupBox.Name = "LethalGroupBox";
             LethalGroupBox.Size = new Size(228, 156);
             LethalGroupBox.TabIndex = 553;
             LethalGroupBox.TabStop = false;
             LethalGroupBox.Text = "Lethal";
             // 
-            // radioButton1
+            // OneShotKillLethalRadio
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton1.Location = new Point(6, 21);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(94, 24);
-            radioButton1.TabIndex = 0;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Invincible";
-            radioButton1.UseVisualStyleBackColor = false;
+            OneShotKillLethalRadio.AutoSize = true;
+            OneShotKillLethalRadio.BackColor = Color.FromArgb(156, 156, 124);
+            OneShotKillLethalRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            OneShotKillLethalRadio.Location = new Point(6, 128);
+            OneShotKillLethalRadio.Name = "OneShotKillLethalRadio";
+            OneShotKillLethalRadio.Size = new Size(117, 24);
+            OneShotKillLethalRadio.TabIndex = 556;
+            OneShotKillLethalRadio.TabStop = true;
+            OneShotKillLethalRadio.Text = "One Shot Kill";
+            OneShotKillLethalRadio.UseVisualStyleBackColor = false;
+            OneShotKillLethalRadio.CheckedChanged += OneShotKillLethalRadio_CheckedChanged;
             // 
-            // radioButton2
+            // VeryWeakLethalRadio
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton2.Location = new Point(6, 48);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(110, 24);
-            radioButton2.TabIndex = 1;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Very Strong";
-            radioButton2.UseVisualStyleBackColor = false;
+            VeryWeakLethalRadio.AutoSize = true;
+            VeryWeakLethalRadio.BackColor = Color.FromArgb(156, 156, 124);
+            VeryWeakLethalRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            VeryWeakLethalRadio.Location = new Point(6, 101);
+            VeryWeakLethalRadio.Name = "VeryWeakLethalRadio";
+            VeryWeakLethalRadio.Size = new Size(102, 24);
+            VeryWeakLethalRadio.TabIndex = 555;
+            VeryWeakLethalRadio.TabStop = true;
+            VeryWeakLethalRadio.Text = "Very Weak";
+            VeryWeakLethalRadio.UseVisualStyleBackColor = false;
+            VeryWeakLethalRadio.CheckedChanged += VeryWeakLethalRadio_CheckedChanged;
             // 
-            // radioButton3
+            // NormalLethalRadio
             // 
-            radioButton3.AutoSize = true;
-            radioButton3.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton3.Location = new Point(6, 76);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(80, 24);
-            radioButton3.TabIndex = 554;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "Normal";
-            radioButton3.UseVisualStyleBackColor = false;
+            NormalLethalRadio.AutoSize = true;
+            NormalLethalRadio.BackColor = Color.FromArgb(156, 156, 124);
+            NormalLethalRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NormalLethalRadio.Location = new Point(6, 76);
+            NormalLethalRadio.Name = "NormalLethalRadio";
+            NormalLethalRadio.Size = new Size(80, 24);
+            NormalLethalRadio.TabIndex = 554;
+            NormalLethalRadio.TabStop = true;
+            NormalLethalRadio.Text = "Normal";
+            NormalLethalRadio.UseVisualStyleBackColor = false;
+            NormalLethalRadio.CheckedChanged += NormalLethalRadio_CheckedChanged;
             // 
-            // radioButton4
+            // VeryStrongLethalRadio
             // 
-            radioButton4.AutoSize = true;
-            radioButton4.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton4.Location = new Point(6, 128);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(117, 24);
-            radioButton4.TabIndex = 556;
-            radioButton4.TabStop = true;
-            radioButton4.Text = "One Shot Kill";
-            radioButton4.UseVisualStyleBackColor = false;
+            VeryStrongLethalRadio.AutoSize = true;
+            VeryStrongLethalRadio.BackColor = Color.FromArgb(156, 156, 124);
+            VeryStrongLethalRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            VeryStrongLethalRadio.Location = new Point(6, 48);
+            VeryStrongLethalRadio.Name = "VeryStrongLethalRadio";
+            VeryStrongLethalRadio.Size = new Size(110, 24);
+            VeryStrongLethalRadio.TabIndex = 1;
+            VeryStrongLethalRadio.TabStop = true;
+            VeryStrongLethalRadio.Text = "Very Strong";
+            VeryStrongLethalRadio.UseVisualStyleBackColor = false;
+            VeryStrongLethalRadio.CheckedChanged += VeryStrongLethalRadio_CheckedChanged;
             // 
-            // radioButton5
+            // NeckSnapLethalRadio
             // 
-            radioButton5.AutoSize = true;
-            radioButton5.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton5.Location = new Point(6, 101);
-            radioButton5.Name = "radioButton5";
-            radioButton5.Size = new Size(102, 24);
-            radioButton5.TabIndex = 555;
-            radioButton5.TabStop = true;
-            radioButton5.Text = "Very Weak";
-            radioButton5.UseVisualStyleBackColor = false;
+            NeckSnapLethalRadio.AutoSize = true;
+            NeckSnapLethalRadio.BackColor = Color.FromArgb(156, 156, 124);
+            NeckSnapLethalRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NeckSnapLethalRadio.Location = new Point(6, 21);
+            NeckSnapLethalRadio.Name = "NeckSnapLethalRadio";
+            NeckSnapLethalRadio.Size = new Size(136, 24);
+            NeckSnapLethalRadio.TabIndex = 0;
+            NeckSnapLethalRadio.TabStop = true;
+            NeckSnapLethalRadio.Text = "Neck Snap Only";
+            NeckSnapLethalRadio.UseVisualStyleBackColor = false;
+            NeckSnapLethalRadio.CheckedChanged += NeckSnapLethalRadio_CheckedChanged;
             // 
             // groupBox2
             // 
             groupBox2.BackColor = Color.FromArgb(156, 156, 124);
             groupBox2.BackgroundImageLayout = ImageLayout.None;
-            groupBox2.Controls.Add(radioButton6);
-            groupBox2.Controls.Add(radioButton7);
-            groupBox2.Controls.Add(radioButton8);
-            groupBox2.Controls.Add(radioButton9);
-            groupBox2.Controls.Add(radioButton10);
+            groupBox2.Controls.Add(OneShotSleepZzzRadio);
+            groupBox2.Controls.Add(VeryWeakZzzRadio);
+            groupBox2.Controls.Add(NormalZzzRadio);
+            groupBox2.Controls.Add(VeryStrongZzzRadio);
+            groupBox2.Controls.Add(InvincibleZzzRadio);
             groupBox2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox2.Location = new Point(619, 287);
+            groupBox2.Location = new Point(619, 278);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(228, 156);
             groupBox2.TabIndex = 557;
             groupBox2.TabStop = false;
             groupBox2.Text = "Sleep";
             // 
-            // radioButton6
+            // OneShotSleepZzzRadio
             // 
-            radioButton6.AutoSize = true;
-            radioButton6.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton6.Location = new Point(6, 128);
-            radioButton6.Name = "radioButton6";
-            radioButton6.Size = new Size(117, 24);
-            radioButton6.TabIndex = 556;
-            radioButton6.TabStop = true;
-            radioButton6.Text = "One Shot Kill";
-            radioButton6.UseVisualStyleBackColor = false;
+            OneShotSleepZzzRadio.AutoSize = true;
+            OneShotSleepZzzRadio.BackColor = Color.FromArgb(156, 156, 124);
+            OneShotSleepZzzRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            OneShotSleepZzzRadio.Location = new Point(6, 128);
+            OneShotSleepZzzRadio.Name = "OneShotSleepZzzRadio";
+            OneShotSleepZzzRadio.Size = new Size(118, 24);
+            OneShotSleepZzzRadio.TabIndex = 556;
+            OneShotSleepZzzRadio.TabStop = true;
+            OneShotSleepZzzRadio.Text = "One Shot Zzz";
+            OneShotSleepZzzRadio.UseVisualStyleBackColor = false;
+            OneShotSleepZzzRadio.CheckedChanged += OneShotSleepZzzRadio_CheckedChanged;
             // 
-            // radioButton7
+            // VeryWeakZzzRadio
             // 
-            radioButton7.AutoSize = true;
-            radioButton7.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton7.Location = new Point(6, 101);
-            radioButton7.Name = "radioButton7";
-            radioButton7.Size = new Size(102, 24);
-            radioButton7.TabIndex = 555;
-            radioButton7.TabStop = true;
-            radioButton7.Text = "Very Weak";
-            radioButton7.UseVisualStyleBackColor = false;
+            VeryWeakZzzRadio.AutoSize = true;
+            VeryWeakZzzRadio.BackColor = Color.FromArgb(156, 156, 124);
+            VeryWeakZzzRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            VeryWeakZzzRadio.Location = new Point(6, 101);
+            VeryWeakZzzRadio.Name = "VeryWeakZzzRadio";
+            VeryWeakZzzRadio.Size = new Size(102, 24);
+            VeryWeakZzzRadio.TabIndex = 555;
+            VeryWeakZzzRadio.TabStop = true;
+            VeryWeakZzzRadio.Text = "Very Weak";
+            VeryWeakZzzRadio.UseVisualStyleBackColor = false;
+            VeryWeakZzzRadio.CheckedChanged += VeryWeakZzzRadio_CheckedChanged;
             // 
-            // radioButton8
+            // NormalZzzRadio
             // 
-            radioButton8.AutoSize = true;
-            radioButton8.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton8.Location = new Point(6, 76);
-            radioButton8.Name = "radioButton8";
-            radioButton8.Size = new Size(80, 24);
-            radioButton8.TabIndex = 554;
-            radioButton8.TabStop = true;
-            radioButton8.Text = "Normal";
-            radioButton8.UseVisualStyleBackColor = false;
+            NormalZzzRadio.AutoSize = true;
+            NormalZzzRadio.BackColor = Color.FromArgb(156, 156, 124);
+            NormalZzzRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NormalZzzRadio.Location = new Point(6, 76);
+            NormalZzzRadio.Name = "NormalZzzRadio";
+            NormalZzzRadio.Size = new Size(80, 24);
+            NormalZzzRadio.TabIndex = 554;
+            NormalZzzRadio.TabStop = true;
+            NormalZzzRadio.Text = "Normal";
+            NormalZzzRadio.UseVisualStyleBackColor = false;
+            NormalZzzRadio.CheckedChanged += NormalZzzRadio_CheckedChanged;
             // 
-            // radioButton9
+            // VeryStrongZzzRadio
             // 
-            radioButton9.AutoSize = true;
-            radioButton9.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton9.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton9.Location = new Point(6, 48);
-            radioButton9.Name = "radioButton9";
-            radioButton9.Size = new Size(110, 24);
-            radioButton9.TabIndex = 1;
-            radioButton9.TabStop = true;
-            radioButton9.Text = "Very Strong";
-            radioButton9.UseVisualStyleBackColor = false;
+            VeryStrongZzzRadio.AutoSize = true;
+            VeryStrongZzzRadio.BackColor = Color.FromArgb(156, 156, 124);
+            VeryStrongZzzRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            VeryStrongZzzRadio.Location = new Point(6, 48);
+            VeryStrongZzzRadio.Name = "VeryStrongZzzRadio";
+            VeryStrongZzzRadio.Size = new Size(110, 24);
+            VeryStrongZzzRadio.TabIndex = 1;
+            VeryStrongZzzRadio.TabStop = true;
+            VeryStrongZzzRadio.Text = "Very Strong";
+            VeryStrongZzzRadio.UseVisualStyleBackColor = false;
+            VeryStrongZzzRadio.CheckedChanged += VeryStrongZzzRadio_CheckedChanged;
             // 
-            // radioButton10
+            // InvincibleZzzRadio
             // 
-            radioButton10.AutoSize = true;
-            radioButton10.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton10.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton10.Location = new Point(6, 21);
-            radioButton10.Name = "radioButton10";
-            radioButton10.Size = new Size(94, 24);
-            radioButton10.TabIndex = 0;
-            radioButton10.TabStop = true;
-            radioButton10.Text = "Invincible";
-            radioButton10.UseVisualStyleBackColor = false;
+            InvincibleZzzRadio.AutoSize = true;
+            InvincibleZzzRadio.BackColor = Color.FromArgb(156, 156, 124);
+            InvincibleZzzRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            InvincibleZzzRadio.Location = new Point(6, 21);
+            InvincibleZzzRadio.Name = "InvincibleZzzRadio";
+            InvincibleZzzRadio.Size = new Size(94, 24);
+            InvincibleZzzRadio.TabIndex = 0;
+            InvincibleZzzRadio.TabStop = true;
+            InvincibleZzzRadio.Text = "Invincible";
+            InvincibleZzzRadio.UseVisualStyleBackColor = false;
+            InvincibleZzzRadio.CheckedChanged += InvincibleZzzRadio_CheckedChanged;
             // 
             // groupBox3
             // 
             groupBox3.BackColor = Color.FromArgb(156, 156, 124);
             groupBox3.BackgroundImageLayout = ImageLayout.None;
-            groupBox3.Controls.Add(radioButton11);
-            groupBox3.Controls.Add(radioButton12);
-            groupBox3.Controls.Add(radioButton13);
-            groupBox3.Controls.Add(radioButton14);
-            groupBox3.Controls.Add(radioButton15);
+            groupBox3.Controls.Add(OneShotStunStunRadio);
+            groupBox3.Controls.Add(VeryWeakStunRadio);
+            groupBox3.Controls.Add(NormalStunRadio);
+            groupBox3.Controls.Add(VeryStrongStunRadio);
+            groupBox3.Controls.Add(NeckSnapStunRadio);
             groupBox3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox3.Location = new Point(619, 467);
+            groupBox3.Location = new Point(619, 458);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(228, 156);
             groupBox3.TabIndex = 557;
             groupBox3.TabStop = false;
             groupBox3.Text = "Stun";
             // 
-            // radioButton11
+            // OneShotStunStunRadio
             // 
-            radioButton11.AutoSize = true;
-            radioButton11.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton11.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton11.Location = new Point(6, 128);
-            radioButton11.Name = "radioButton11";
-            radioButton11.Size = new Size(117, 24);
-            radioButton11.TabIndex = 556;
-            radioButton11.TabStop = true;
-            radioButton11.Text = "One Shot Kill";
-            radioButton11.UseVisualStyleBackColor = false;
+            OneShotStunStunRadio.AutoSize = true;
+            OneShotStunStunRadio.BackColor = Color.FromArgb(156, 156, 124);
+            OneShotStunStunRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            OneShotStunStunRadio.Location = new Point(6, 128);
+            OneShotStunStunRadio.Name = "OneShotStunStunRadio";
+            OneShotStunStunRadio.Size = new Size(127, 24);
+            OneShotStunStunRadio.TabIndex = 556;
+            OneShotStunStunRadio.TabStop = true;
+            OneShotStunStunRadio.Text = "One Shot Stun";
+            OneShotStunStunRadio.UseVisualStyleBackColor = false;
+            OneShotStunStunRadio.CheckedChanged += OneShotStunStunRadio_CheckedChanged;
             // 
-            // radioButton12
+            // VeryWeakStunRadio
             // 
-            radioButton12.AutoSize = true;
-            radioButton12.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton12.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton12.Location = new Point(6, 101);
-            radioButton12.Name = "radioButton12";
-            radioButton12.Size = new Size(102, 24);
-            radioButton12.TabIndex = 555;
-            radioButton12.TabStop = true;
-            radioButton12.Text = "Very Weak";
-            radioButton12.UseVisualStyleBackColor = false;
+            VeryWeakStunRadio.AutoSize = true;
+            VeryWeakStunRadio.BackColor = Color.FromArgb(156, 156, 124);
+            VeryWeakStunRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            VeryWeakStunRadio.Location = new Point(6, 101);
+            VeryWeakStunRadio.Name = "VeryWeakStunRadio";
+            VeryWeakStunRadio.Size = new Size(102, 24);
+            VeryWeakStunRadio.TabIndex = 555;
+            VeryWeakStunRadio.TabStop = true;
+            VeryWeakStunRadio.Text = "Very Weak";
+            VeryWeakStunRadio.UseVisualStyleBackColor = false;
+            VeryWeakStunRadio.CheckedChanged += VeryWeakStunRadio_CheckedChanged;
             // 
-            // radioButton13
+            // NormalStunRadio
             // 
-            radioButton13.AutoSize = true;
-            radioButton13.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton13.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton13.Location = new Point(6, 76);
-            radioButton13.Name = "radioButton13";
-            radioButton13.Size = new Size(80, 24);
-            radioButton13.TabIndex = 554;
-            radioButton13.TabStop = true;
-            radioButton13.Text = "Normal";
-            radioButton13.UseVisualStyleBackColor = false;
+            NormalStunRadio.AutoSize = true;
+            NormalStunRadio.BackColor = Color.FromArgb(156, 156, 124);
+            NormalStunRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NormalStunRadio.Location = new Point(6, 76);
+            NormalStunRadio.Name = "NormalStunRadio";
+            NormalStunRadio.Size = new Size(80, 24);
+            NormalStunRadio.TabIndex = 554;
+            NormalStunRadio.TabStop = true;
+            NormalStunRadio.Text = "Normal";
+            NormalStunRadio.UseVisualStyleBackColor = false;
+            NormalStunRadio.CheckedChanged += NormalStunRadio_CheckedChanged;
             // 
-            // radioButton14
+            // VeryStrongStunRadio
             // 
-            radioButton14.AutoSize = true;
-            radioButton14.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton14.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton14.Location = new Point(6, 48);
-            radioButton14.Name = "radioButton14";
-            radioButton14.Size = new Size(110, 24);
-            radioButton14.TabIndex = 1;
-            radioButton14.TabStop = true;
-            radioButton14.Text = "Very Strong";
-            radioButton14.UseVisualStyleBackColor = false;
+            VeryStrongStunRadio.AutoSize = true;
+            VeryStrongStunRadio.BackColor = Color.FromArgb(156, 156, 124);
+            VeryStrongStunRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            VeryStrongStunRadio.Location = new Point(6, 48);
+            VeryStrongStunRadio.Name = "VeryStrongStunRadio";
+            VeryStrongStunRadio.Size = new Size(110, 24);
+            VeryStrongStunRadio.TabIndex = 1;
+            VeryStrongStunRadio.TabStop = true;
+            VeryStrongStunRadio.Text = "Very Strong";
+            VeryStrongStunRadio.UseVisualStyleBackColor = false;
+            VeryStrongStunRadio.CheckedChanged += VeryStrongStunRadio_CheckedChanged;
             // 
-            // radioButton15
+            // NeckSnapStunRadio
             // 
-            radioButton15.AutoSize = true;
-            radioButton15.BackColor = Color.FromArgb(156, 156, 124);
-            radioButton15.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton15.Location = new Point(6, 21);
-            radioButton15.Name = "radioButton15";
-            radioButton15.Size = new Size(94, 24);
-            radioButton15.TabIndex = 0;
-            radioButton15.TabStop = true;
-            radioButton15.Text = "Invincible";
-            radioButton15.UseVisualStyleBackColor = false;
+            NeckSnapStunRadio.AutoSize = true;
+            NeckSnapStunRadio.BackColor = Color.FromArgb(156, 156, 124);
+            NeckSnapStunRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NeckSnapStunRadio.Location = new Point(6, 21);
+            NeckSnapStunRadio.Name = "NeckSnapStunRadio";
+            NeckSnapStunRadio.Size = new Size(136, 24);
+            NeckSnapStunRadio.TabIndex = 0;
+            NeckSnapStunRadio.TabStop = true;
+            NeckSnapStunRadio.Text = "Neck Snap Only";
+            NeckSnapStunRadio.UseVisualStyleBackColor = false;
+            NeckSnapStunRadio.CheckedChanged += NeckSnapStunRadio_CheckedChanged;
             // 
             // StatsAndAlertForm
             // 
@@ -1112,22 +1127,22 @@
         private Button SwapToBossForm;
         private TextBox textBox4;
         private GroupBox LethalGroupBox;
-        private RadioButton radioButton1;
-        private RadioButton radioButton4;
-        private RadioButton radioButton5;
-        private RadioButton radioButton3;
-        private RadioButton radioButton2;
+        private RadioButton NeckSnapLethalRadio;
+        private RadioButton OneShotKillLethalRadio;
+        private RadioButton VeryWeakLethalRadio;
+        private RadioButton NormalLethalRadio;
+        private RadioButton VeryStrongLethalRadio;
         private GroupBox groupBox2;
-        private RadioButton radioButton6;
-        private RadioButton radioButton7;
-        private RadioButton radioButton8;
-        private RadioButton radioButton9;
-        private RadioButton radioButton10;
+        private RadioButton OneShotSleepZzzRadio;
+        private RadioButton VeryWeakZzzRadio;
+        private RadioButton NormalZzzRadio;
+        private RadioButton VeryStrongZzzRadio;
+        private RadioButton InvincibleZzzRadio;
         private GroupBox groupBox3;
-        private RadioButton radioButton11;
-        private RadioButton radioButton12;
-        private RadioButton radioButton13;
-        private RadioButton radioButton14;
-        private RadioButton radioButton15;
+        private RadioButton OneShotStunStunRadio;
+        private RadioButton VeryWeakStunRadio;
+        private RadioButton NormalStunRadio;
+        private RadioButton VeryStrongStunRadio;
+        private RadioButton NeckSnapStunRadio;
     }
 }

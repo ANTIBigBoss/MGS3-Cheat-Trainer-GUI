@@ -141,6 +141,43 @@ namespace MGS3_MC_Cheat_Trainer
 
             NativeMethods.CloseHandle(processHandle);
         }
+
+        public void LogAllMemoryAddressesandValues()
+        {
+            var LogMemoryAddresses = new Dictionary<string, Func<string>>()
+            {
+                // Based on order within memory
+                { "CQC Slam Normal Damage", () => DebugFunctionManager.Instance.CQCSlamNormalDamage() },
+                { "CQC Slam Extreme Damage", () => DebugFunctionManager.Instance.CQCSlamExtremeDamage() },
+                { "Wp Grenade Damage", () => DebugFunctionManager.Instance.WpNadeDamage() },
+                { "Zzz Drain Instructions", () => DebugFunctionManager.Instance.ZzzDrain() },
+                { "Sleep Status Instructions 1", () => DebugFunctionManager.Instance.SleepStatus1() },
+                { "Shotgun Damage Instructions", () => DebugFunctionManager.Instance.ShotgunDamage() },
+                { "M63 Damage", () => DebugFunctionManager.Instance.M63Damage() },
+                { "Stun Grenade Damage", () => DebugFunctionManager.Instance.StunNadeDamage() },
+                { "Knife and Fork Damage Instructions", () => DebugFunctionManager.Instance.KnifeForkDamage() },
+                { "Stun Punch Triple", () => DebugFunctionManager.Instance.TriplePunchDamage() },
+                { "Stun Roll Damage", () => DebugFunctionManager.Instance.StunRollDamage() },
+                { "Zzz Weapons Damage 1", () => DebugFunctionManager.Instance.ZzzWeaponsDamage1() },
+                { "Sleep Status Instructions 2", () => DebugFunctionManager.Instance.SleepStatus2() },
+                { "Most Lethal Weapons Damage", () => DebugFunctionManager.Instance.MostLethalWeaponsDamage() },
+                { "Explosion Damage", () => DebugFunctionManager.Instance.ExplosionDamage() },
+                { "Stun Punch Single", () => DebugFunctionManager.Instance.SinglePunchDamage() },
+                { "Stun Punch Instructions", () => DebugFunctionManager.Instance.StunPunchInstructions() },
+                { "Stun Punch Knock over Threshold", () => DebugFunctionManager.Instance.PunchKnockOverThreshold() },
+                { "Zzz Weapons Damage 2", () => DebugFunctionManager.Instance.ZzzWeaponsDamage2() },
+                { "Throat Slit Damage", () => DebugFunctionManager.Instance.ThroatSlitDamage() },
+                { "Piss Filter", () => DebugFunctionManager.Instance.GetPissFilterValueAsString() },
+                { "Alert Status", () => DebugFunctionManager.Instance.ReadAlertStatus() },
+            };
+
+            foreach (var reading in LogMemoryAddresses)
+            {
+                string message = reading.Value.Invoke();
+                LoggingManager.Instance.Log($"{reading.Key}:\n{message}\n");
+            }
+        }
+
     }
 }
 
