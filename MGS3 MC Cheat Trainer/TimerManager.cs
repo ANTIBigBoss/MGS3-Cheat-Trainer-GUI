@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static MGS3_MC_Cheat_Trainer.Constants;
+﻿using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
 {
     internal class TimerManager
     {
-        public static int UserCamoIndex { get; set; } = 40; // Default value, adjust as needed
+        public static int UserCamoIndex { get; set; } = 40;
 
         static TimerManager()
         {
-            AlertTimer.Interval = 1000; // Set the interval to 1 second, adjust as needed
+            AlertTimer.Interval = 1000;
             AlertTimer.Tick += AlertTimer_Tick;
 
-            EvasionTimer.Interval = 1000; // Set the interval to 1 second, adjust as needed
+            EvasionTimer.Interval = 1000;
             EvasionTimer.Tick += EvasionTimer_Tick;
 
-            EvasionStepTimer.Interval = 3000; // First delay for caution
+            EvasionStepTimer.Interval = 3000;
             EvasionStepTimer.Tick += EvasionStepTimer_Tick;
 
-            CautionTimer.Interval = 1000; // 10 seconds for caution checks
+            CautionTimer.Interval = 1000;
             CautionTimer.Tick += CautionTimer_Tick;
 
-            _locationChangeTimer.Interval = 2000; // Check every 2 seconds, adjust as needed
-            _locationChangeTimer.Tick += LocationChangeTimer_Tick;
+            LocationChangeTimer.Interval = 2000;
+            LocationChangeTimer.Tick += LocationChangeTimer_Tick;
 
-            camoIndexTimer.Interval = 1000; // Example interval, adjust as necessary
+            camoIndexTimer.Interval = 1000;
             camoIndexTimer.Tick += CamoIndexTimer_Tick;
         }
 
@@ -138,7 +133,7 @@ namespace MGS3_MC_Cheat_Trainer
                 case 2:
                     // Trigger alert mode to finalize evasion
                     AlertManager.TriggerAlert(AlertModes.Alert);
-                    EvasionStepTimer.Stop(); // Sequence complete, stop the timer
+                    EvasionStepTimer.Stop(); // Stop the timer
                     EvasionStep = 0; // Reset for next time
                     break;
             }
@@ -154,8 +149,8 @@ namespace MGS3_MC_Cheat_Trainer
             short alertTimerValue = AlertManager.ReadAlertTimerValue(alertMemoryRegion);
             short evasionTimerValue = AlertManager.ReadEvasionTimerValue(alertMemoryRegion);
 
-            // Initiate evasion sequence if conditions are right
-            if (alertTimerValue <= 0 && evasionTimerValue <= 0 && EvasionStep == 0) // Make sure evasion sequence isn't already running
+            // Initiate evasion sequence if conditions are right and make sure it's not already in progress
+            if (alertTimerValue <= 0 && evasionTimerValue <= 0 && EvasionStep == 0) 
             {
                 StartEvasionSequence();
             }
@@ -166,7 +161,7 @@ namespace MGS3_MC_Cheat_Trainer
             infiniteEvasionEnabled = enable;
             if (enable)
             {
-                EvasionTimer.Start(); // Start checking conditions for evasion
+                EvasionTimer.Start();
                 LoggingManager.Instance.Log("Infinite Evasion enabled.\n");
             }
             else
@@ -189,7 +184,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (IsInfiniteCautionEnabled)
             {
-                // Assuming caution mode needs to be triggered when the timer reaches 0 or periodically
+                // Basically just trigger caution mode every second
                 AlertManager.TriggerAlert(AlertModes.Caution);
             }
         }
@@ -212,25 +207,23 @@ namespace MGS3_MC_Cheat_Trainer
         #endregion
 
         #region Map String Tracking
-        private static System.Windows.Forms.Timer _locationChangeTimer = new System.Windows.Forms.Timer();
+        private static System.Windows.Forms.Timer LocationChangeTimer = new System.Windows.Forms.Timer();
         private static string LastKnownLocation = "";
 
         private static void LocationChangeTimer_Tick(object sender, EventArgs e)
         {
-            // Directly use the result from FindLocationStringDirectlyInRange, which includes all details.
             string currentLocationInfo = StringManager.Instance.FindLocationStringDirectlyInRange();
 
             if (currentLocationInfo != LastKnownLocation)
             {
                 LastKnownLocation = currentLocationInfo;
-                // Log the change with full details (string, name, and address)
                 LoggingManager.Instance.Log($"Location changed: {currentLocationInfo}\n");
             }
         }
 
         public static void StartLocationTracking()
         {
-            _locationChangeTimer.Start();
+            LocationChangeTimer.Start();
             LoggingManager.Instance.Log("Location tracking started.");
         }
         #endregion

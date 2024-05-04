@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace MGS3_MC_Cheat_Trainer
+﻿namespace MGS3_MC_Cheat_Trainer
 {
     public class Constants
     {
@@ -21,6 +18,34 @@ namespace MGS3_MC_Cheat_Trainer
             UInt64, // Unsigned 8 byte integer
             Double, // 8 byte floating point number
             ByteArray, // For anything in between or larger than 8 bytes
+        }
+
+        // Add/Sub to indicate which IntPtr to use aka IntPtr.Add or IntPtr.Subtract
+        public enum AlertOffsets
+        {
+            AlertTriggerAdd = 78,
+            AlertTimerSub = 6,
+            EvasionTimerAdd = 18,
+            CautionTimerSub = 2,
+        }
+
+        public enum BossOffsets
+        {
+            OcelotHealthSub = 916,
+            OcelotStaminaSub = 908,
+            PainFearVolginHealthSub = 16,
+            PainFearVolginStaminaSub = 8,
+            Ends063aHealthSub = 1360, 
+            Ends063aStaminaSub = 1364,
+            Ends064as065aHealthSub = 608,
+            Ends064as065aStaminaSub = 612,
+            FuryHealthSub = 160,
+            FuryStaminaSub = 152,
+            ShagohodHealthSub = 105,
+            VolginOnShagohodHealthSub = 936,
+            VolginOnShagohodStaminaSub = 928,
+            TheBossHealthSub = 1444,
+            TheBossStaminaSub = 1440,
         }
 
         public enum CameraOptions
