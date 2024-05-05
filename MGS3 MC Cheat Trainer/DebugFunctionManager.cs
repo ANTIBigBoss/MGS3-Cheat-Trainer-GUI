@@ -49,112 +49,112 @@ namespace MGS3_MC_Cheat_Trainer
 
         public string CQCSlamNormalDamage()
         {
-            return ReadMemoryValue("CQCSlamNormal", 24, true, 4, DataType.Int32);
+            return ReadMemoryValue("CQCSlamNormal", (int)DamageOffsets.CQCSlam1Add, true, 4, DataType.Int32);
         }
 
         public string CQCSlamExtremeDamage()
         {
-            return ReadMemoryValue("CQCSlamNormal", 35, true, 4, DataType.Int32);
+            return ReadMemoryValue("CQCSlamNormal", (int)DamageOffsets.CQCSlam2Add, true, 4, DataType.Int32);
         }
 
         public string WpNadeDamage()
         {
-            return ReadMemoryValue("WpNadeDamage", 4, false, 4, DataType.UInt32);
+            return ReadMemoryValue("WpNadeDamage", (int)DamageOffsets.WpNadeSub, false, 4, DataType.UInt32);
         }
 
         public string ZzzDrain()
         {
-            return ReadMemoryValue("SleepControl2", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("SleepControl2", (int)DamageOffsets.ZzzDrainSub, false, 6, DataType.ByteArray);
         }
 
         public string ShotgunDamage()
         {
-            return ReadMemoryValue("ShotgunDamage", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("ShotgunDamage", (int)DamageOffsets.ShotgunSub, false, 6, DataType.ByteArray);
         }
 
         public string M63Damage()
         {
-            return ReadMemoryValue("M63Damage", 2, false, 2, DataType.UInt16);
+            return ReadMemoryValue("M63Damage", (int)DamageOffsets.M63Sub, false, 2, DataType.UInt16);
         }
 
         public string StunNadeDamage()
         {
-            return ReadMemoryValue("StunNadeDamage", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("StunNadeDamage", (int)DamageOffsets.StunNadeSub, false, 6, DataType.ByteArray);
         }
 
         public string KnifeForkDamage()
         {
-            return ReadMemoryValue("KnifeForkDamage", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("KnifeForkDamage", (int)DamageOffsets.KnifeForkSub, false, 6, DataType.ByteArray);
         }
 
         public string TriplePunchDamage()
         {
-            return ReadMemoryValue("StunPunchDamage", 1775, false, 1, DataType.UInt8);
+            return ReadMemoryValue("StunPunchDamage", (int)DamageOffsets.TriplePunchSub, false, 1, DataType.UInt8);
         }
 
         public string StunRollDamage()
         {
-            return ReadMemoryValue("StunRollDamage", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("StunRollDamage", (int)DamageOffsets.StunRollSub, false, 6, DataType.ByteArray);
         }
 
         public string ZzzWeaponsDamage1()
         {
-            return ReadMemoryValue("ZZZWeaponsDamage", 4, false, 4, DataType.UInt32);
+            return ReadMemoryValue("ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 4, DataType.UInt32);
         }
 
         public string ZzzWeaponsDamage2()
         {
-            return ReadMemoryValue("StunPunchDamage", 8970, true, 4, DataType.UInt32);
+            return ReadMemoryValue("StunPunchDamage", (int)DamageOffsets.ZzzWeapons2Add, true, 4, DataType.UInt32);
         }
 
         public string MostLethalWeaponsDamage()
         {
-            return ReadMemoryValue("MostWeaponsDamage", 2, false, 2, DataType.UInt16);
+            return ReadMemoryValue("MostWeaponsDamage", (int)DamageOffsets.MostLethalSub, false, 2, DataType.UInt16);
         }
 
         public string ExplosionDamage()
         {
-            return ReadMemoryValue("ExplosionDamage", 24, true, 4, DataType.UInt32);
+            return ReadMemoryValue("ExplosionDamage", (int)DamageOffsets.ExplosiveAdd, true, 4, DataType.UInt32);
         }
 
         public string ThroatSlitDamage()
         {
-            return ReadMemoryValue("ThroatSlitDamage", 26, false, 4, DataType.UInt32);
+            return ReadMemoryValue("ThroatSlitDamage", (int)DamageOffsets.ThroatSlitSub, false, 4, DataType.UInt32);
         }
 
         public string SleepStatus1()
         {
-            return ReadMemoryValue("SleepControl", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, 6, DataType.ByteArray);
         }
 
         public string SleepStatus2()
         {
-            return ReadMemoryValue("SleepControl", 6, false, 6, DataType.ByteArray);
+            return ReadMemoryValue("SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 6, DataType.ByteArray);
         }
 
         public string StunPunchInstructions()
         {
-            return ReadMemoryValue("StunPunchDamage", 24, true, 6, DataType.ByteArray);
+            return ReadMemoryValue("StunPunchDamage", (int)DamageOffsets.StunPunchInstructionsAdd, true, 6, DataType.ByteArray);
         }
 
         public string SinglePunchDamage()
         {
-            return ReadMemoryValue("StunPunchDamage", 2, false, 1, DataType.UInt8);
+            return ReadMemoryValue("StunPunchDamage", (int)DamageOffsets.SinglePunchSub, false, 1, DataType.UInt8);
         }
 
         public string PunchKnockOverThreshold()
         {
-            return ReadMemoryValue("StunPunchDamage", 33, true, 1, DataType.UInt8);
+            return ReadMemoryValue("StunPunchDamage", (int)DamageOffsets.PunchKnockOverAdd, true, 1, DataType.UInt8);
         }
 
         public string GetPissFilterValueAsString()
         {
-            return ReadMemoryValue("PissFilter", 5525, false, 1, DataType.Int8);
+            return ReadMemoryValue("PissFilter", (int)MiscOffsets.PissFilterSub, false, 1, DataType.Int8);
         }
 
         public string ReadAlertStatus()
         {
-            return ReadMemoryValue("AlertMemoryRegion", 78, true, 1, DataType.UInt8);
+            return ReadMemoryValue("AlertMemoryRegion", (int)AlertOffsets.AlertTriggerAdd, true, 1, DataType.UInt8);
         }
 
         #endregion
