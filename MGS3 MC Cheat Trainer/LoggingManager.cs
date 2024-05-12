@@ -168,6 +168,13 @@ namespace MGS3_MC_Cheat_Trainer
                 { "Zzz Weapons Damage 2", () => DebugFunctionManager.Instance.ZzzWeaponsDamage2() },
                 { "Throat Slit Damage", () => DebugFunctionManager.Instance.ThroatSlitDamage() },
                 { "Piss Filter", () => DebugFunctionManager.Instance.GetPissFilterValueAsString() },
+                { "Snake Long Sleep", () => DebugFunctionManager.Instance.GetSnakeLongSleepValue() },
+                { "Force Direction", () => DebugFunctionManager.Instance.GetForceDirectionValue() },
+                { "Snake Short Sleep", () => DebugFunctionManager.Instance.GetSnakeShortSleepValue() },
+                { "Vomit Fire", () => DebugFunctionManager.Instance.GetVomitFireValue() },
+                { "Box Crouch", () => DebugFunctionManager.Instance.GetBoxCrouchValue() },
+                { "Bunny Hop", () => DebugFunctionManager.Instance.GetBunnyHopValue() },
+                { "Fake Death", () => DebugFunctionManager.Instance.GetFakeDeathValue() },
                 { "Alert Status", () => DebugFunctionManager.Instance.ReadAlertStatus() },
             };
 

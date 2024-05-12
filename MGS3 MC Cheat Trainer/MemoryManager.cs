@@ -237,6 +237,24 @@ namespace MGS3_MC_Cheat_Trainer
             return NativeMethods.WriteProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _);
         }
 
+        // This function utilizes the WriteMemory but helps with writing to a specific address you navigate to with an AOB
+        // Example (From DamageManager) with Hex and Decimal formats depending on what you're trying to write:
+        // WriteValue(processHandle, "M63Damage", 2, false, 1000);  // Using direct decimal for ushort
+        // WriteValue(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x29, 0x86, 0x38, 0x01, 0x00, 0x00 }); 
+        public void WriteValue<T>(IntPtr processHandle, string aobKey, int offset, bool forward, T value)
+        {
+            IntPtr aobResult = MemoryManager.Instance.FindAob(aobKey);
+            if (aobResult == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log($"Error: AOB pattern not found for {aobKey}.");
+                return;
+            }
+
+            IntPtr targetAddress = forward ? IntPtr.Add(aobResult, offset) : IntPtr.Subtract(aobResult, offset);
+            bool writeResult = MemoryManager.WriteMemory(processHandle, targetAddress, value);
+            LoggingManager.Instance.Log(writeResult ? $"{aobKey} written successfully." : $"Failed to write {aobKey}.");
+        }
+
         public static short SetSpecificBits(short currentValue, int startBit, int endBit, int valueToSet)
         {
             int maskLength = endBit - startBit + 1;

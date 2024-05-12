@@ -27,7 +27,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        #region Misc Form Functions
 
         public string ReadMemoryValue(string aobKey, int offset, bool forwardInMemory, int bytesToRead, DataType dataType)
         {
@@ -151,13 +150,48 @@ namespace MGS3_MC_Cheat_Trainer
         {
             return ReadMemoryValue("PissFilter", (int)MiscOffsets.PissFilterSub, false, 1, DataType.Int8);
         }
+        
+        public string GetSnakeLongSleepValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.SnakeLongSleepSub, false, 1, DataType.Int8);
+        }
+
+        public string GetForceDirectionValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.ForceDirectionAdd, true, 1, DataType.UInt8);
+        }
+
+        public string GetSnakeShortSleepValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.SnakeShortSleepAdd, true, 1, DataType.UInt8);
+        }
+
+        public string GetVomitFireValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.VomitFireAdd, true, 1, DataType.UInt8);
+        }
+
+        public string GetBoxCrouchValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.BoxCrouchAdd, true, 1, DataType.UInt8);
+        }
+
+        public string GetBunnyHopValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.BunnyHopAdd, true, 1, DataType.UInt8);
+        }
+
+        public string GetFakeDeathValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)AnimationOffsets.FakeDeathAdd, true, 1, DataType.UInt8);
+        }
 
         public string ReadAlertStatus()
         {
             return ReadMemoryValue("AlertMemoryRegion", (int)AlertOffsets.AlertTriggerAdd, true, 1, DataType.UInt8);
         }
 
-        #endregion
+
 
     }
 }

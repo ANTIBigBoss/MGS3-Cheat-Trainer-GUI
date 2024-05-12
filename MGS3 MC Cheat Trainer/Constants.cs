@@ -77,6 +77,19 @@
             PissFilterSub = 5525
         }
 
+        public enum AnimationOffsets
+        {
+            // Difference from Piss Filter AOB not sure if anything closer is stable or not but we can compare post update if this works
+            SnakeLongSleepSub = 134918,
+            ForceDirectionAdd = 784173,
+            SnakeShortSleepAdd = 784187,
+            VomitFireAdd = 784188,
+            BoxCrouchAdd = 784198,
+            BunnyHopAdd = 784200,
+            FakeDeathAdd = 784202,
+
+        }
+
         public enum CameraOptions
         {
             Normal = 191,
