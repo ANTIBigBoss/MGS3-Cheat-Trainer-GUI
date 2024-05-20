@@ -61,14 +61,18 @@ namespace MGS3_MC_Cheat_Trainer
 
             DamageManager.Instance.ReadAllLethalValues();
 
-            
+            SetLethalRadio();
+            SetStunRadio();
+
+        }
+
+        private void SetLethalRadio()
+        {
             bool isInvincible = DamageManager.Instance.AreLethalValuesInvincible();
             bool isVeryStrong = DamageManager.Instance.AreLethalValuesVeryStrong();
             bool isDefault = DamageManager.Instance.AreLethalValuesDefault();
-            //bool isVeryWeak = DamageManager.Instance.AreLethalValuesVeryWeak();
+            bool isVeryWeak = DamageManager.Instance.AreLethalValuesVeryWeak();
             bool isOneShotKill = DamageManager.Instance.AreLethalValuesOneshot();
-
-            
 
             if (isInvincible)
             {
@@ -88,11 +92,11 @@ namespace MGS3_MC_Cheat_Trainer
                 NormalLethalRadio.Checked = true;
             }
 
-            //else if (isVeryWeak)
-            //{
-
-            //}
-
+            else if (isVeryWeak)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to very weak.");
+                VeryWeakLethalRadio.Checked = true;
+            }
 
             else if (isOneShotKill)
             {
@@ -104,7 +108,77 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 LoggingManager.Instance.Log("Damage settings are custom or unrecognized.");
             }
+        }
 
+        /*
+        private void SetSleepRadio()
+        {
+            bool isInvincible = DamageManager.Instance.AreSleepValuesInvincible();
+            bool isVeryStrong = DamageManager.Instance.AreSleepValuesVeryStrong();
+            bool isDefault = DamageManager.Instance.AreSleepValuesDefault();
+            bool isVeryWeak = DamageManager.Instance.AreSleepValuesVeryWeak();
+            bool isOneShotKill = DamageManager.Instance.AreSleepValuesOneshot();
+
+            if (isInvincible)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to invincible.");
+                InvincibleZzzRadio.Checked = true;
+            }
+
+            else if (isVeryStrong)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to very strong.");
+                VeryStrongZzzRadio.Checked = true;
+            }
+
+            else if (isDefault)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to default.");
+                NormalZzzRadio.Checked = true;
+            }
+
+            else if (isVeryWeak)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to very weak.");
+                VeryWeakZzzRadio.Checked = true;
+            }
+
+            else if (isOneShotKill)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to one-shot kill.");
+                OneShotSleepZzzRadio.Checked = true;
+            }
+
+            else
+            {
+                LoggingManager.Instance.Log("Damage settings are custom or unrecognized.");
+            }
+        }
+        */
+        public void SetStunRadio()
+        {
+            bool isNeckSnap = DamageManager.Instance.AreStunValuesInvincible();
+
+            bool isNormal = DamageManager.Instance.AreStunValuesDefault();
+            
+            if (isNeckSnap)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to neck snap/Invincible.");
+                NeckSnapStunRadio.Checked = true;
+            }
+
+            // Normal
+
+            else if (isNormal)
+            {
+                LoggingManager.Instance.Log("Damage settings are set to default.");
+                NormalStunRadio.Checked = true;
+            }
+
+            else
+            {
+                LoggingManager.Instance.Log("Damage settings are custom or unrecognized.");
+            }
         }
 
         private void NeckSnapLethalRadio_CheckedChanged(object sender, EventArgs e)
@@ -119,14 +193,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void NormalLethalRadio_CheckedChanged(object sender, EventArgs e)
         {
-
             DamageManager.Instance.WriteAllLethalDefaultValues();
-            
         }
 
         private void VeryWeakLethalRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            DamageManager.Instance.WriteAllLethalVeryWeakValues();
         }
 
         private void OneShotKillLethalRadio_CheckedChanged(object sender, EventArgs e)
@@ -162,17 +234,17 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void NeckSnapStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            DamageManager.Instance.WriteAllStunInvincibleValues();
         }
 
         private void VeryStrongStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            DamageManager.Instance.WriteAllStunVeryStrongValues();
         }
 
         private void NormalStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-
+            DamageManager.Instance.WriteAllStunDefaultValues();
         }
 
         private void VeryWeakStunRadio_CheckedChanged(object sender, EventArgs e)
