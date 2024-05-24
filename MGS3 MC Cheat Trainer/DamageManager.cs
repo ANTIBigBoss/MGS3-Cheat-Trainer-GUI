@@ -594,11 +594,135 @@ namespace MGS3_MC_Cheat_Trainer
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areNormal;
             }
-    
 
-    #endregion
+        public void WriteAllStunVeryWeakValues()
+        {
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log(
+                                       "Error: Could not open process when calling WriteAllLethalDefaultValues function.");
+                return;
+            }
+
+            WriteValues(processHandle, "CQCSlamNormal", (int)DamageOffsets.CQCSlam1Add, true, -99999);
+            WriteValues(processHandle, "CQCSlamNormal", (int)DamageOffsets.CQCSlam2Add, true, -99999);
+            WriteValues(processHandle, "StunNadeDamage", (int)DamageOffsets.StunNadeSub, false, new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.TriplePunchSub, false, 232);
+            WriteValues(processHandle, "StunRollDamage", (int)DamageOffsets.StunRollSub, false, new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.StunPunchInstructionsAdd, true, new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.SinglePunchSub, false, 200);
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.PunchKnockOverAdd, true, 1);
+
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public bool AreStunValuesVeryWeak()
+        {
+
+            Process process = MemoryManager.GetMGS3Process();
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Error: Could not open process when calling AreStunValuesNormal function.");
+                return false;
+            }
+
+            bool areNormal = true;
+
+            byte[] cqCSlamNormal1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam1Add), 4);
+            areNormal &= BitConverter.ToInt32(cqCSlamNormal1, 0) == -90000;
+
+            byte[] cqCSlamNormal2 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam2Add), 4);
+            areNormal &= BitConverter.ToInt32(cqCSlamNormal2, 0) == -36000;
+
+            byte[] stunNadeDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunNadeDamage"), (int)DamageOffsets.StunNadeSub), 6);
+            areNormal &= stunNadeDamage.SequenceEqual(new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+
+            byte[] triplePunchDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.TriplePunchSub), 1);
+            areNormal &= triplePunchDamage[0] == 232;
+
+            byte[] stunRollDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunRollDamage"), (int)DamageOffsets.StunRollSub), 6);
+            areNormal &= stunRollDamage.SequenceEqual(new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+
+            byte[] stunPunchInstructions = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.StunPunchInstructionsAdd), 6);
+            areNormal &= stunPunchInstructions.SequenceEqual(new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+
+            byte[] singlePunchDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.SinglePunchSub), 1);
+            areNormal &= singlePunchDamage[0] == 1;
+
+            byte[] punchKnockOverThreshold = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.PunchKnockOverAdd), 1);
+            areNormal &= punchKnockOverThreshold[0] == 1;
+
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return areNormal;
+        }
+
+        public void WriteAllStunOneShotValues()
+        {
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Error: Could not open process when calling WriteAllLethalDefaultValues function.");
+                return;
+            }
+
+            WriteValues(processHandle, "CQCSlamNormal", (int)DamageOffsets.CQCSlam1Add, true, -99999);
+            WriteValues(processHandle, "CQCSlamNormal", (int)DamageOffsets.CQCSlam2Add, true, -99999);
+            WriteValues(processHandle, "StunNadeDamage", (int)DamageOffsets.StunNadeSub, false, new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.TriplePunchSub, false, 232);
+            WriteValues(processHandle, "StunRollDamage", (int)DamageOffsets.StunRollSub, false, new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.StunPunchInstructionsAdd, true, new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.SinglePunchSub, false, 1);
+            WriteValues(processHandle, "StunPunchDamage", (int)DamageOffsets.PunchKnockOverAdd, true, 1);
+
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+        }
+
+        public bool AreStunValuesOneShot()
+        {
+
+            Process process = MemoryManager.GetMGS3Process();
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Error: Could not open process when calling AreStunValuesNormal function.");
+                return false;
+            }
+
+            bool areNormal = true;
+
+            byte[] cqCSlamNormal1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam1Add), 4);
+            areNormal &= BitConverter.ToInt32(cqCSlamNormal1, 0) == -99999;
+
+            byte[] cqCSlamNormal2 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam2Add), 4);
+            areNormal &= BitConverter.ToInt32(cqCSlamNormal2, 0) == -99999;
+
+            byte[] stunNadeDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunNadeDamage"), (int)DamageOffsets.StunNadeSub), 6);
+            areNormal &= stunNadeDamage.SequenceEqual(new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+
+            byte[] triplePunchDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.TriplePunchSub), 1);
+            areNormal &= triplePunchDamage[0] == 232;
+
+            byte[] stunRollDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunRollDamage"), (int)DamageOffsets.StunRollSub), 6);
+            areNormal &= stunRollDamage.SequenceEqual(new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+
+            byte[] stunPunchInstructions = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.StunPunchInstructionsAdd), 6);
+            areNormal &= stunPunchInstructions.SequenceEqual(new byte[] { 0x29, 0x86, 0x40, 0x01, 0x00, 0x00 });
+
+            byte[] singlePunchDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.SinglePunchSub), 1);
+            areNormal &= singlePunchDamage[0] == 1;
+
+            byte[] punchKnockOverThreshold = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.PunchKnockOverAdd), 1);
+            areNormal &= punchKnockOverThreshold[0] == 1;
+
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            return areNormal;
+        }
 
         #endregion
 
-        }
+        #endregion
+
+    }
 }

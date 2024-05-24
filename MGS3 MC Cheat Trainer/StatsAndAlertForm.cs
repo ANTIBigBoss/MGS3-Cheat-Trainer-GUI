@@ -117,7 +117,7 @@ namespace MGS3_MC_Cheat_Trainer
             bool isVeryStrong = DamageManager.Instance.AreSleepValuesVeryStrong();
             bool isDefault = DamageManager.Instance.AreSleepValuesDefault();
             bool isVeryWeak = DamageManager.Instance.AreSleepValuesVeryWeak();
-            bool isOneShotKill = DamageManager.Instance.AreSleepValuesOneshot();
+            bool isOneShotSleep = DamageManager.Instance.AreSleepValuesOneshot();
 
             if (isInvincible)
             {
@@ -143,7 +143,7 @@ namespace MGS3_MC_Cheat_Trainer
                 VeryWeakZzzRadio.Checked = true;
             }
 
-            else if (isOneShotKill)
+            else if (isOneShotSleep)
             {
                 LoggingManager.Instance.Log("Damage settings are set to one-shot kill.");
                 OneShotSleepZzzRadio.Checked = true;
@@ -155,24 +155,43 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
         */
+
         public void SetStunRadio()
         {
             bool isNeckSnap = DamageManager.Instance.AreStunValuesInvincible();
-
+            bool isVeryStrong = DamageManager.Instance.AreStunValuesVeryStrong();
             bool isNormal = DamageManager.Instance.AreStunValuesDefault();
+            bool isVeryWeak = DamageManager.Instance.AreStunValuesVeryWeak();
+            bool isOneShotStun = DamageManager.Instance.AreStunValuesOneShot();
             
             if (isNeckSnap)
             {
-                LoggingManager.Instance.Log("Damage settings are set to neck snap/Invincible.");
+                LoggingManager.Instance.Log("Damage settings are set to neck INVINCIBLE.");
                 NeckSnapStunRadio.Checked = true;
             }
 
-            // Normal
+            else if (isVeryStrong)
+            {
+                LoggingManager.Instance.Log("Stun settings are set to VERY STRONG");
+                VeryStrongStunRadio.Checked = true;
+            }
 
             else if (isNormal)
             {
-                LoggingManager.Instance.Log("Damage settings are set to default.");
+                LoggingManager.Instance.Log("Damage settings are set to DEFAULT.");
                 NormalStunRadio.Checked = true;
+            }
+
+            else if (isVeryWeak)
+            {
+                LoggingManager.Instance.Log("Stun settings are set to VERY WEAK");
+                VeryWeakStunRadio.Checked = true;
+            }
+
+            else if (isOneShotStun)
+            {
+                LoggingManager.Instance.Log("Stun settings are set to ONE SHOT STUN");
+                OneShotStunStunRadio.Checked = true;
             }
 
             else
