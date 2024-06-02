@@ -815,7 +815,7 @@
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.1";
+            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.2";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();

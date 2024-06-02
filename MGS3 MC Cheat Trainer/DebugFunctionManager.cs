@@ -66,6 +66,21 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadMemoryValue("SleepControl2", (int)DamageOffsets.ZzzDrainSub, false, 6, DataType.ByteArray);
         }
 
+        public string SleepStatus2()
+        {
+            return ReadMemoryValue("SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 4, DataType.Int32);
+        }
+
+        public string SleepStatus1()
+        {
+            return ReadMemoryValue("SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, 6, DataType.ByteArray);
+        }
+
+        public string ZzzWeaponsDamage1()
+        {
+            return ReadMemoryValue("ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 4, DataType.UInt32);
+        }
+
         public string ShotgunDamage()
         {
             return ReadMemoryValue("ShotgunDamage", (int)DamageOffsets.ShotgunSub, false, 6, DataType.ByteArray);
@@ -96,15 +111,6 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadMemoryValue("StunRollDamage", (int)DamageOffsets.StunRollSub, false, 6, DataType.ByteArray);
         }
 
-        public string ZzzWeaponsDamage1()
-        {
-            return ReadMemoryValue("ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 4, DataType.UInt32);
-        }
-
-        public string ZzzWeaponsDamage2()
-        {
-            return ReadMemoryValue("StunPunchDamage", (int)DamageOffsets.ZzzWeapons2Add, true, 4, DataType.UInt32);
-        }
 
         public string MostLethalWeaponsDamage()
         {
@@ -119,16 +125,6 @@ namespace MGS3_MC_Cheat_Trainer
         public string ThroatSlitDamage()
         {
             return ReadMemoryValue("ThroatSlitDamage", (int)DamageOffsets.ThroatSlitSub, false, 4, DataType.UInt32);
-        }
-
-        public string SleepStatus1()
-        {
-            return ReadMemoryValue("SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, 6, DataType.ByteArray);
-        }
-
-        public string SleepStatus2()
-        {
-            return ReadMemoryValue("SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 6, DataType.ByteArray);
         }
 
         public string StunPunchInstructions()

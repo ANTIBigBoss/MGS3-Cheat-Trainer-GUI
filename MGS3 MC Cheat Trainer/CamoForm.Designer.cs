@@ -2674,7 +2674,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CamoForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "MGS3 Cheat Trainer - Camos - ANTIBigBoss - Version 2.1";
+            Text = "MGS3 Cheat Trainer - Camos - ANTIBigBoss - Version 2.2";
             Load += Form3_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();

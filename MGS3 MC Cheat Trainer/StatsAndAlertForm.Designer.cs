@@ -454,7 +454,7 @@
             MiscFormSwap.Name = "MiscFormSwap";
             MiscFormSwap.Size = new Size(203, 32);
             MiscFormSwap.TabIndex = 533;
-            MiscFormSwap.Text = "Stats and Misc";
+            MiscFormSwap.Text = "Misc";
             MiscFormSwap.UseVisualStyleBackColor = true;
             MiscFormSwap.Click += MiscFormSwap_Click;
             // 
@@ -826,10 +826,10 @@
             NeckSnapLethalRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             NeckSnapLethalRadio.Location = new Point(6, 21);
             NeckSnapLethalRadio.Name = "NeckSnapLethalRadio";
-            NeckSnapLethalRadio.Size = new Size(136, 24);
+            NeckSnapLethalRadio.Size = new Size(151, 24);
             NeckSnapLethalRadio.TabIndex = 0;
             NeckSnapLethalRadio.TabStop = true;
-            NeckSnapLethalRadio.Text = "Neck Snap Only";
+            NeckSnapLethalRadio.Text = "Almost Unkillable";
             NeckSnapLethalRadio.UseVisualStyleBackColor = false;
             NeckSnapLethalRadio.CheckedChanged += NeckSnapLethalRadio_CheckedChanged;
             // 
@@ -843,7 +843,7 @@
             groupBox2.Controls.Add(VeryStrongZzzRadio);
             groupBox2.Controls.Add(InvincibleZzzRadio);
             groupBox2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox2.Location = new Point(619, 278);
+            groupBox2.Location = new Point(619, 273);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(228, 156);
             groupBox2.TabIndex = 557;
@@ -913,10 +913,10 @@
             InvincibleZzzRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             InvincibleZzzRadio.Location = new Point(6, 21);
             InvincibleZzzRadio.Name = "InvincibleZzzRadio";
-            InvincibleZzzRadio.Size = new Size(94, 24);
+            InvincibleZzzRadio.Size = new Size(201, 24);
             InvincibleZzzRadio.TabIndex = 0;
             InvincibleZzzRadio.TabStop = true;
-            InvincibleZzzRadio.Text = "Invincible";
+            InvincibleZzzRadio.Text = "Almost Immune to Sleep";
             InvincibleZzzRadio.UseVisualStyleBackColor = false;
             InvincibleZzzRadio.CheckedChanged += InvincibleZzzRadio_CheckedChanged;
             // 
@@ -1000,10 +1000,10 @@
             NeckSnapStunRadio.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             NeckSnapStunRadio.Location = new Point(6, 21);
             NeckSnapStunRadio.Name = "NeckSnapStunRadio";
-            NeckSnapStunRadio.Size = new Size(136, 24);
+            NeckSnapStunRadio.Size = new Size(171, 24);
             NeckSnapStunRadio.TabIndex = 0;
             NeckSnapStunRadio.TabStop = true;
-            NeckSnapStunRadio.Text = "Neck Snap Only";
+            NeckSnapStunRadio.Text = "Almost Unstunnable";
             NeckSnapStunRadio.UseVisualStyleBackColor = false;
             NeckSnapStunRadio.CheckedChanged += NeckSnapStunRadio_CheckedChanged;
             // 
@@ -1064,7 +1064,7 @@
             Controls.Add(Plus100HpValue);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsAndAlertForm";
-            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.1";
+            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.2";
             Load += StatsAndAlertForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();

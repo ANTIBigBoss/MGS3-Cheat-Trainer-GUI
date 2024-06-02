@@ -61,12 +61,11 @@
             TriplePunchSub = 1775,
             StunRollSub = 6,
             ZzzWeapons1Sub = 4,
-            ZzzWeapons2Add = 8970,
             MostLethalSub = 2,
             ExplosiveAdd = 24,
             ThroatSlitSub = 26,
             SleepStatus1Sub = 6,
-            SleepStatus2Sub = 6,
+            SleepStatus2Sub = 90,
             StunPunchInstructionsAdd = 24,
             SinglePunchSub = 2,
             PunchKnockOverAdd = 33
