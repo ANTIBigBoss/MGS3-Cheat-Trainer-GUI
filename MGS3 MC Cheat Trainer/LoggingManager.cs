@@ -177,6 +177,7 @@ namespace MGS3_MC_Cheat_Trainer
                 { "Bunny Hop", () => DebugFunctionManager.Instance.GetBunnyHopValue() },
                 { "Fake Death", () => DebugFunctionManager.Instance.GetFakeDeathValue() },
                 { "Alert Status", () => DebugFunctionManager.Instance.ReadAlertStatus() },
+                { "Battery Drain Instructions", () => DebugFunctionManager.Instance.ReadBatteryInstructions() },
             };
 
             foreach (var reading in LogMemoryAddresses)

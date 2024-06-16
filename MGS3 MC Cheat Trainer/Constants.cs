@@ -73,7 +73,8 @@
 
         public enum MiscOffsets
         {
-            PissFilterSub = 5525
+            PissFilterSub = 5525,
+            BatteryDrainInstructionsSub = 7,
         }
 
         public enum AnimationOffsets

@@ -375,6 +375,16 @@
                         new IntPtr(0x1F0000)
                     )
                 },
+
+                {
+                "BatteryDrain", // 48 8B 05 7E CA 75 00 66
+                (new byte[] { 0x48, 0x8B, 0x05, 0x7E, 0xCA, 0x75, 0x00, 0x66 }, 
+                    "x x x x x x x x",
+                    new IntPtr(0x100000),
+                    new IntPtr(0x900000)
+                    )
+                },
+
                 
                 #endregion
 

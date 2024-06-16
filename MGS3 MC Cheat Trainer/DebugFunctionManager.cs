@@ -187,7 +187,10 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadMemoryValue("AlertMemoryRegion", (int)AlertOffsets.AlertTriggerAdd, true, 1, DataType.UInt8);
         }
 
-
+        public string ReadBatteryInstructions()
+        {
+            return ReadMemoryValue("BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub, false, 7, DataType.ByteArray);
+        }
 
     }
 }

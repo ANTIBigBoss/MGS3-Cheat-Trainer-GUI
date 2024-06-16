@@ -97,6 +97,7 @@
             NormalStunRadio = new RadioButton();
             VeryStrongStunRadio = new RadioButton();
             NeckSnapStunRadio = new RadioButton();
+            BatteryDrainCheckBox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -229,9 +230,9 @@
             ZeroHP.BackgroundImage = (Image)resources.GetObject("ZeroHP.BackgroundImage");
             ZeroHP.FlatStyle = FlatStyle.Flat;
             ZeroHP.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            ZeroHP.Location = new Point(12, 109);
+            ZeroHP.Location = new Point(13, 109);
             ZeroHP.Name = "ZeroHP";
-            ZeroHP.Size = new Size(228, 31);
+            ZeroHP.Size = new Size(227, 31);
             ZeroHP.TabIndex = 505;
             ZeroHP.Text = "Kill Snake (0 HP)";
             ZeroHP.UseVisualStyleBackColor = true;
@@ -1007,12 +1008,27 @@
             NeckSnapStunRadio.UseVisualStyleBackColor = false;
             NeckSnapStunRadio.CheckedChanged += NeckSnapStunRadio_CheckedChanged;
             // 
+            // BatteryDrainCheckBox
+            // 
+            BatteryDrainCheckBox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            BatteryDrainCheckBox.FlatStyle = FlatStyle.Flat;
+            BatteryDrainCheckBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            BatteryDrainCheckBox.Image = (Image)resources.GetObject("BatteryDrainCheckBox.Image");
+            BatteryDrainCheckBox.Location = new Point(14, 504);
+            BatteryDrainCheckBox.Name = "BatteryDrainCheckBox";
+            BatteryDrainCheckBox.Size = new Size(226, 67);
+            BatteryDrainCheckBox.TabIndex = 597;
+            BatteryDrainCheckBox.Text = "Stop Battery Power From Draining";
+            BatteryDrainCheckBox.UseVisualStyleBackColor = true;
+            BatteryDrainCheckBox.CheckedChanged += BatteryDrainCheckBox_CheckedChanged;
+            // 
             // StatsAndAlertForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(BatteryDrainCheckBox);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(LethalGroupBox);
@@ -1064,7 +1080,7 @@
             Controls.Add(Plus100HpValue);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsAndAlertForm";
-            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.2";
+            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.3";
             Load += StatsAndAlertForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -1144,5 +1160,6 @@
         private RadioButton NormalStunRadio;
         private RadioButton VeryStrongStunRadio;
         private RadioButton NeckSnapStunRadio;
+        private CheckBox BatteryDrainCheckBox;
     }
 }

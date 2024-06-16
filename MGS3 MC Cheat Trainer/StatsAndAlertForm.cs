@@ -62,7 +62,11 @@ namespace MGS3_MC_Cheat_Trainer
             SetLethalRadio();
             SetSleepRadio();
             SetStunRadio();
-            
+
+            // Battery Drain Checkbox
+            CheckBatteryDrain();
+
+
         }
 
         private void SetLethalRadio()
@@ -162,7 +166,7 @@ namespace MGS3_MC_Cheat_Trainer
             bool isNormal = DamageManager.Instance.AreStunValuesDefault();
             bool isVeryWeak = DamageManager.Instance.AreStunValuesVeryWeak();
             bool isOneShotStun = DamageManager.Instance.AreStunValuesOneShot();
-            
+
             if (isNeckSnap)
             {
                 LoggingManager.Instance.Log("STUN DAMAGE settings are set to neck INVINCIBLE.");
@@ -657,6 +661,58 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
+
+        private void BatteryDrainCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (BatteryDrainCheckBox.Checked)
+            {
+                MiscManager.Instance.DisableBatteryDrain();
+            }
+
+            else
+            {
+                MiscManager.Instance.EnableBatteryDrain();
+            }
+        }
+
+        // Function to check if Battery Drain is enabled or not
+        // If the instruction is NOP then the checkbox is checked
+        /*public bool IsBatteryDrainNOP()
+           {
+               Process process = MemoryManager.GetMGS3Process();
+               if (process == null) return false;
+           
+               IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+               if (processHandle == IntPtr.Zero) return false;
+           
+               IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
+               if (batteryAddress == IntPtr.Zero) return false;
+           
+               IntPtr targetAddress = IntPtr.Add(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+               byte[] buffer = new byte[7];
+               if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 7, out _))
+               {
+                   return buffer[0] == 0x90 && buffer[1] == 0x90 && buffer[2] == 0x90 && buffer[3] == 0x90 &&
+                          buffer[4] == 0x90 && buffer[5] == 0x90 && buffer[6] == 0x90;
+               }
+           
+               return false;
+           
+           }*/
+        public void CheckBatteryDrain()
+        {
+            if (MiscManager.Instance.IsBatteryDrainNOP())
+            {
+                BatteryDrainCheckBox.Checked = true;
+            }
+
+            else
+            {
+                BatteryDrainCheckBox.Checked = false;
+            }
+            
+
+        }
 
     }
 }

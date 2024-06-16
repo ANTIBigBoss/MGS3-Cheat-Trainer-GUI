@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms; // For MessageBox
+using static MGS3_MC_Cheat_Trainer.Constants;
+
 // Use MemoryManager
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
@@ -117,7 +119,8 @@ namespace MGS3_MC_Cheat_Trainer
                 }
                 else
                 {
-                    CustomMessageBoxManager.CustomMessageBox("Failed to find the camera in the game's memory.", "Error");
+                    CustomMessageBoxManager.CustomMessageBox("Failed to find the camera in the game's memory.",
+                        "Error");
                 }
             }
             finally
@@ -225,7 +228,8 @@ namespace MGS3_MC_Cheat_Trainer
                 }
                 else
                 {
-                    LoggingManager.Instance.Log($"Successfully wrote new camo index value: {newValue} at {targetAddress.ToString("X")}");
+                    LoggingManager.Instance.Log(
+                        $"Successfully wrote new camo index value: {newValue} at {targetAddress.ToString("X")}");
                 }
             }
             finally
@@ -250,14 +254,14 @@ namespace MGS3_MC_Cheat_Trainer
                 if (process == null)
                 {
                     LoggingManager.Instance.Log("Process not found.");
-                    return camoIndexValue;  // Returning default value if process not found
+                    return camoIndexValue; // Returning default value if process not found
                 }
 
                 processHandle = MemoryManager.OpenGameProcess(process);
                 if (processHandle == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log("Failed to open game process.");
-                    return camoIndexValue;  // Returning default value if unable to open process
+                    return camoIndexValue; // Returning default value if unable to open process
                 }
 
                 IntPtr baseAddress = process.MainModule.BaseAddress;
@@ -330,7 +334,8 @@ namespace MGS3_MC_Cheat_Trainer
                     return;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
+                IntPtr targetAddress =
+                    IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
 
                 // Use the generic WriteMemory method to write the new FOV value
                 bool result = MemoryManager.WriteMemory<float>(processHandle, targetAddress, newFovValue);
@@ -375,7 +380,7 @@ namespace MGS3_MC_Cheat_Trainer
                     return fovValue;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4);  // Adjust offset as needed
+                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4); // Adjust offset as needed
 
                 // Reading the memory as float
                 byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, sizeof(float));
@@ -594,7 +599,8 @@ namespace MGS3_MC_Cheat_Trainer
 
                 // Disable the second part at +2781 offset
                 IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-                byte[] disableBytes2 = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }; // NOP instructions
+                byte[] disableBytes2 = new byte[]
+                    { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }; // NOP instructions
                 bool success2 = MemoryManager.WriteMemory(processHandle, targetAddress2, disableBytes2);
                 if (!success2)
                 {
@@ -650,7 +656,8 @@ namespace MGS3_MC_Cheat_Trainer
 
                 // Restore the second part at +2781 offset
                 IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-                byte[] restoreBytes2 = new byte[] { 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 }; // the original bytes to restore
+                byte[] restoreBytes2 = new byte[]
+                    { 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 }; // the original bytes to restore
                 if (!MemoryManager.WriteMemory(processHandle, targetAddress2, restoreBytes2))
                 {
                     LoggingManager.Instance.Log("Failed to restore the second part of the piss filter instructions.");
@@ -780,5 +787,145 @@ namespace MGS3_MC_Cheat_Trainer
             return
                 $"Second Instruction Address: {address.ToInt64():X8}, Values: {BitConverter.ToString(values).Replace("-", " ")}";
         }
+
+     
+        public bool IsBatteryDrainNOP()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return false;
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return false;
+
+            IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
+            if (batteryAddress == IntPtr.Zero) return false;
+
+            IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+            byte[] buffer = new byte[7];
+            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 7, out _))
+            {
+                return buffer[0] == 0x90 && buffer[1] == 0x90 && buffer[2] == 0x90 && buffer[3] == 0x90 &&
+                       buffer[4] == 0x90 && buffer[5] == 0x90 && buffer[6] == 0x90;
+            }
+
+            return false;
+
+        }
+
+        // Write the NOP instructions to disable the battery drain
+
+        public void DisableBatteryDrain()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
+                if (batteryAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Battery Drain AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+                byte[] nopBytes = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, nopBytes);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to disable the battery drain.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Battery drain disabled successfully.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+
+        public bool IsBatteryDrainNormal()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return false;
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return false;
+
+            IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
+            if (batteryAddress == IntPtr.Zero) return false;
+
+            IntPtr targetAddress = IntPtr.Add(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+            byte[] buffer = new byte[7];
+            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 7, out _))
+            {
+                return buffer[0] == 0x66 && buffer[1] == 0x29 && buffer[2] == 0x88 && buffer[3] == 0x4E &&
+                       buffer[4] == 0x0A && buffer[5] == 0x00 && buffer[6] == 0x00;
+            }
+
+            return false;
+        }
+
+        public void EnableBatteryDrain()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
+                if (batteryAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Battery Drain AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+                byte[] restoreBytes = new byte[] { 0x66, 0x29, 0x88, 0x4E, 0x0A, 0x00, 0x00 };
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, restoreBytes);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to enable the battery drain.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Battery drain enabled successfully.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
     }
 }

@@ -97,8 +97,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch (Exception ex)
             {
-                LoggingManager.Instance.Log($"Error occurred in OpenGameProcess: {ex.Message}");
-                MessageBox.Show($"An error occurred while opening the game process: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return IntPtr.Zero;
             }
         }
