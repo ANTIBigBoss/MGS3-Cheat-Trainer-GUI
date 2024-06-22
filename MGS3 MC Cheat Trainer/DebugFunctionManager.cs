@@ -146,7 +146,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             return ReadMemoryValue("PissFilter", (int)MiscOffsets.PissFilterSub, false, 1, DataType.Int8);
         }
-        
+
         public string GetSnakeLongSleepValue()
         {
             return ReadMemoryValue("PissFilter", (int)AnimationOffsets.SnakeLongSleepSub, false, 1, DataType.Int8);
@@ -190,6 +190,11 @@ namespace MGS3_MC_Cheat_Trainer
         public string ReadBatteryInstructions()
         {
             return ReadMemoryValue("BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub, false, 7, DataType.ByteArray);
+        }
+
+        public string ReadInfiniteAmmoAndReload()
+        {
+            return ReadMemoryValue("InfiniteAmmoAndReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub, false, 4, DataType.UInt32);
         }
 
     }

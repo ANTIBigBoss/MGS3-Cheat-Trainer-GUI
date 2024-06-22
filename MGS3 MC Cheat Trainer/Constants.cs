@@ -75,6 +75,7 @@
         {
             PissFilterSub = 5525,
             BatteryDrainInstructionsSub = 7,
+            InfiniteAmmoAndReloadSub = 4,
         }
 
         public enum AnimationOffsets

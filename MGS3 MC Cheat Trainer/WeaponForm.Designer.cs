@@ -156,6 +156,7 @@
             button4 = new Button();
             button5 = new Button();
             button6 = new Button();
+            InfAmmoNoReloadCheckBox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox31).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox30).BeginInit();
@@ -1818,12 +1819,27 @@
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
+            // InfAmmoNoReloadCheckBox
+            // 
+            InfAmmoNoReloadCheckBox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            InfAmmoNoReloadCheckBox.FlatStyle = FlatStyle.Flat;
+            InfAmmoNoReloadCheckBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            InfAmmoNoReloadCheckBox.Image = (Image)resources.GetObject("InfAmmoNoReloadCheckBox.Image");
+            InfAmmoNoReloadCheckBox.Location = new Point(989, 587);
+            InfAmmoNoReloadCheckBox.Name = "InfAmmoNoReloadCheckBox";
+            InfAmmoNoReloadCheckBox.Size = new Size(154, 67);
+            InfAmmoNoReloadCheckBox.TabIndex = 737;
+            InfAmmoNoReloadCheckBox.Text = "Infinite Ammo/ No Reload";
+            InfAmmoNoReloadCheckBox.UseVisualStyleBackColor = true;
+            InfAmmoNoReloadCheckBox.CheckedChanged += InfAmmoNoReloadCheckBox_CheckedChanged;
+            // 
             // WeaponForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1161, 707);
+            Controls.Add(InfAmmoNoReloadCheckBox);
             Controls.Add(button2);
             Controls.Add(button3);
             Controls.Add(button4);
@@ -2118,5 +2134,6 @@
         private Button button4;
         private Button button5;
         private Button button6;
+        private CheckBox InfAmmoNoReloadCheckBox;
     }
 }

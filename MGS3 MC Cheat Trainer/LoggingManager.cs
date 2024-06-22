@@ -178,6 +178,7 @@ namespace MGS3_MC_Cheat_Trainer
                 { "Fake Death", () => DebugFunctionManager.Instance.GetFakeDeathValue() },
                 { "Alert Status", () => DebugFunctionManager.Instance.ReadAlertStatus() },
                 { "Battery Drain Instructions", () => DebugFunctionManager.Instance.ReadBatteryInstructions() },
+                { "Infinite Ammo and Reload Instructions", () => DebugFunctionManager.Instance.ReadInfiniteAmmoAndReload() },
             };
 
             foreach (var reading in LogMemoryAddresses)

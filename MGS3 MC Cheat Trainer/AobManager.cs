@@ -386,6 +386,16 @@
                 },
 
                 
+                {
+                    "InfAmmoNoReload", // 66 85 C0 7E 29 66 FF C8 66 89 41 28
+                    (new byte[] { 0x66, 0x85, 0xC0, 0x7E, 0x29, 0x66, 0xFF, 0xC8, 0x66, 0x89, 0x41, 0x28},
+                        "x x x x x x x x x x x x",
+                        new IntPtr(0x10000),
+                        new IntPtr(0x1900000)
+                    )
+                },
+
+                
                 #endregion
 
                 #region Boss AOBs

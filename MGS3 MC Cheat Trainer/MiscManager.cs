@@ -788,7 +788,8 @@ namespace MGS3_MC_Cheat_Trainer
                 $"Second Instruction Address: {address.ToInt64():X8}, Values: {BitConverter.ToString(values).Replace("-", " ")}";
         }
 
-     
+        #region BatteryDrain
+
         public bool IsBatteryDrainNOP()
         {
             Process process = MemoryManager.GetMGS3Process();
@@ -871,7 +872,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
             if (batteryAddress == IntPtr.Zero) return false;
 
-            IntPtr targetAddress = IntPtr.Add(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+            IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
             byte[] buffer = new byte[7];
             if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 7, out _))
             {
@@ -926,6 +927,145 @@ namespace MGS3_MC_Cheat_Trainer
                 if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
         }
+
+        #endregion
+
+        #region Infinite Ammo and Reload
+
+        public bool IsInfiniteAmmoEnabled()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return false;
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return false;
+
+            IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("BatteryDrain");
+            if (InfAmmoAddress == IntPtr.Zero) return false;
+
+            IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
+            byte[] buffer = new byte[4];
+            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 4, out _))
+            {
+                return buffer[0] == 0x90 && buffer[1] == 0x90 && buffer[2] == 0x90 && buffer[3] == 0x90;
+            }
+
+            return false;
+
+        }
+
+        public void EnableInfAmmoAndReload()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("InfAmmoNoReload");
+                if (InfAmmoAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Battery Drain AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+                byte[] nopBytes = new byte[] { 0x90, 0x90, 0x90, 0x90 };
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, nopBytes);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to enable Infinite Ammo and Infinite Reload.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Successfully enabled Infinite Ammo and Infinite Reload.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        public bool IsAmmoAndReloadFinite()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null) return false;
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero) return false;
+
+            IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("InfAmmoNoReload");
+            if (InfAmmoAddress == IntPtr.Zero) return false;
+
+            IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+            byte[] buffer = new byte[4];
+            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 4, out _))
+            {
+                return buffer[0] == 0x0F && buffer[1] == 0xB7 && buffer[2] == 0x41 && buffer[3] == 0x28;
+            }
+
+            return false;
+        }
+
+        public void DisableInfAmmoAndReload()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("InfAmmoNoReload");
+                if (InfAmmoAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Infinite Ammo and Infinite Reload AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+                byte[] restoreBytes = new byte[] { 0x0F, 0xB7, 0x41, 0x28 };
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, restoreBytes);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to restore Ammo and Reload settings.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("Successfully restored Ammo and Reload settings.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        #endregion
 
     }
 }

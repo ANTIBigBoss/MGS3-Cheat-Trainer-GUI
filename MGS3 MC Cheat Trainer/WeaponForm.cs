@@ -69,6 +69,8 @@ namespace MGS3_MC_Cheat_Trainer
             ClaymoreTextBox.Text = "999";
             MousetrapTextbox.Text = "999";
             AllTextbox.Text = "999";
+
+            CheckInfiniteAmmoStatus();
         }
 
         private const string CurrentAndMax = "Current/Max Ammo";
@@ -104,6 +106,7 @@ namespace MGS3_MC_Cheat_Trainer
         private string selectedMousetrapOption;
         private string selectedBookOption;
         private string selectedClaymoreOption;
+
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -1187,6 +1190,35 @@ namespace MGS3_MC_Cheat_Trainer
             form6.Show();
             this.Hide();
             LoggingManager.Instance.Log("Navigating to Boss Form from the Weapon Form");
+        }
+
+        private void InfAmmoNoReloadCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (InfAmmoNoReloadCheckBox.Checked)
+            {
+                MiscManager.Instance.EnableInfAmmoAndReload(); 
+            }
+
+            else
+            {
+                MiscManager.Instance.DisableInfAmmoAndReload();
+            }
+        }
+
+        public void CheckInfiniteAmmoStatus()
+        {
+            if (!MiscManager.Instance.IsAmmoAndReloadFinite())
+            {
+                
+                InfAmmoNoReloadCheckBox.Checked = true;
+            }
+
+            else
+            {
+                InfAmmoNoReloadCheckBox.Checked = false;
+            }
+
+
         }
     }
 }
