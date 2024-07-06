@@ -197,6 +197,21 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadMemoryValue("InfiniteAmmoAndReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub, false, 4, DataType.UInt32);
         }
 
+        public string GetPartialHudValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)MiscOffsets.NoHudPartialSub, false, 1, DataType.UInt8);
+        }
+
+        public string GetItemAndWeaponWindowValue()
+        {
+            return ReadMemoryValue("PissFilter", (int)MiscOffsets.ItemAndWeaponWindowAdd, true, 1, DataType.UInt8);
+        }
+
+        public string RealTimeWeaponItemSwapping()
+        {
+            return ReadMemoryValue("RealTimeItemSwap", (int)MiscOffsets.RealTimeWeaponItemSwappingAdd, true, 6, DataType.ByteArray);
+        }
+
     }
 }
 

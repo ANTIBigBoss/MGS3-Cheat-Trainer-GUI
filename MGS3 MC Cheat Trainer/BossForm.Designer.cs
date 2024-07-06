@@ -773,7 +773,7 @@
             DoubleBuffered = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "BossForm";
-            Text = "MGS3 Cheat Trainer - Bosses - ANTIBigBoss - Version 2.3";
+            Text = "MGS3 Cheat Trainer - Bosses - ANTIBigBoss - Version 2.4";
             Load += BossForm_Load;
             ((System.ComponentModel.ISupportInitialize)FearHealthSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)FearStaminaSlider).EndInit();

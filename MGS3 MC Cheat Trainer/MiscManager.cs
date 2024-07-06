@@ -1067,5 +1067,101 @@ namespace MGS3_MC_Cheat_Trainer
 
         #endregion
 
+        // Write HUD value to 01 to disable the HUD use this as a reference of where to write: return ReadMemoryValue("PissFilter", (int)MiscOffsets.NoHudPartialSub, false, 1, DataType.UInt8);
+
+        public void PartialDisableHUD()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr hudAddress = MemoryManager.Instance.FindAob("PissFilter");
+                if (hudAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find No HUD AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(hudAddress, (int)MiscOffsets.NoHudPartialSub);
+                byte hudValue = 0x01;
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, hudValue);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to disable the HUD.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("HUD disabled successfully.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Enable the HUD by writing the value back to 00
+
+        public void EnableHUD()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr hudAddress = MemoryManager.Instance.FindAob("PissFilter");
+                if (hudAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find No HUD AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Subtract(hudAddress, (int)MiscOffsets.NoHudPartialSub);
+                byte hudValue = 0x00;
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, hudValue);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to enable the HUD.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log("HUD enabled successfully.");
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+
+
     }
 }

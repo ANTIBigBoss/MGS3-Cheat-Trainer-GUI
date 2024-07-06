@@ -86,12 +86,66 @@ namespace MGS3_MC_Cheat_Trainer
 
             PissFilterCheckBox.Checked = MiscManager.Instance.IsPissFilterInstructionsNopped();
 
+            MinimalHudCheck();
+            RealTimeItemSwapCheckbox.Checked = TimerManager.RealTimeSwapping;
+
+
         }
 
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
+
+
+        private void MinimalHudcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (MinimalHudcheckbox.Checked)
+            {
+                TimerManager.hudAlwaysHidden = true;
+                TimerManager.ToggleMinimalHud(true);
+            }
+            else
+            {
+                TimerManager.hudAlwaysHidden = false;
+                TimerManager.ToggleMinimalHud(false);
+            }
+
+        }
+
+        private void RealTimeItemSwapCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (RealTimeItemSwapCheckbox.Checked)
+            {
+                TimerManager.RealTimeSwapping = true;
+                TimerManager.RealTimeWeaponItemSwapping();
+            }
+            else
+            {
+                TimerManager.RealTimeSwapping = false;
+                TimerManager.DisableRealTimeWeaponItemSwapping();
+            }
+        }
+
+
+        // Conditional check for the hud for when the form is loaded
+
+        public bool MinimalHudCheck()
+        {
+            if (TimerManager.hudAlwaysHidden)
+            {
+                MinimalHudcheckbox.Checked = true;
+                return true;
+            }
+            else
+            {
+                MinimalHudcheckbox.Checked = false;
+                return false;
+            }
+        }
+
+
 
         #region Camo  
 
@@ -494,7 +548,6 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log($"{results.Count} instances of R_Sna01 and LocationString found. Search results are as follows:\n{concatenatedResults}");
         }
 
-
         private void PissFilterCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (PissFilterCheckBox.Checked)
@@ -555,5 +608,6 @@ namespace MGS3_MC_Cheat_Trainer
             TextBoxSnakeY.Text = ReadTextBoxSnakeY.Text;
             TextBoxSnakeZ.Text = ReadTextBoxSnakeZ.Text;
         }
+
     }
 }

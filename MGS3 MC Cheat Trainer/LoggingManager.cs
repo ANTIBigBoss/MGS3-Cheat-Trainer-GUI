@@ -179,6 +179,9 @@ namespace MGS3_MC_Cheat_Trainer
                 { "Alert Status", () => DebugFunctionManager.Instance.ReadAlertStatus() },
                 { "Battery Drain Instructions", () => DebugFunctionManager.Instance.ReadBatteryInstructions() },
                 { "Infinite Ammo and Reload Instructions", () => DebugFunctionManager.Instance.ReadInfiniteAmmoAndReload() },
+                { "No HUD Partial", () => DebugFunctionManager.Instance.GetPartialHudValue() },
+                { "Item and Weapon Window", () => DebugFunctionManager.Instance.GetItemAndWeaponWindowValue() },
+                { "Real Time Item Swapping Instructions", () => DebugFunctionManager.Instance.RealTimeWeaponItemSwapping() },
             };
 
             foreach (var reading in LogMemoryAddresses)

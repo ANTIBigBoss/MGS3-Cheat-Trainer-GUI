@@ -1,9 +1,30 @@
-﻿using static MGS3_MC_Cheat_Trainer.Constants;
+﻿using System.Diagnostics;
+using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
 {
-    internal class TimerManager
+    public class TimerManager
     {
+        private static TimerManager instance;
+        private static readonly object lockObj = new object();
+
+        private TimerManager() { }
+
+        public static TimerManager Instance
+        {
+            get
+            {
+                lock (lockObj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new TimerManager();
+                    }
+                    return instance;
+                }
+            }
+        }
+
         public static int UserCamoIndex { get; set; } = 40;
 
         static TimerManager()
@@ -25,11 +46,20 @@ namespace MGS3_MC_Cheat_Trainer
 
             camoIndexTimer.Interval = 1000;
             camoIndexTimer.Tick += CamoIndexTimer_Tick;
+
+            HudTrackingTimer.Interval = 100;
+            HudTrackingTimer.Tick += HudTrackingTimer_Tick;
+
+            RealTimeSwapTrackingTimer.Interval = 100;
+            RealTimeSwapTrackingTimer.Tick += RealTimeSwapTrackingTimer_Tick;
         }
 
         #region Camo Index Timer
+
         private static System.Windows.Forms.Timer camoIndexTimer = new System.Windows.Forms.Timer();
+
         private static bool infiniteCamoIndexEnabled = false;
+
         public static bool IsInfiniteCamoIndexEnabled => infiniteCamoIndexEnabled;
 
         private static void CamoIndexTimer_Tick(object sender, EventArgs e)
@@ -44,25 +74,21 @@ namespace MGS3_MC_Cheat_Trainer
             if (enable)
             {
                 camoIndexTimer.Start();
-                // Optionally apply NOP immediately if needed here
                 LoggingManager.Instance.Log("Infinite Camo Index enabled.");
             }
             else
             {
                 camoIndexTimer.Stop();
-                // Optionally restore original state immediately if needed here
                 LoggingManager.Instance.Log("Infinite Camo Index disabled.");
             }
         }
 
-        // use in a form like enable/disable like this:
-        // ;
-        // TimerManager.ToggleInfiniteCamoIndex(false);
-
         #endregion
 
         #region Infinite Alert Status
+
         private static System.Windows.Forms.Timer AlertTimer = new System.Windows.Forms.Timer();
+
         public static bool IsInfiniteAlertEnabled => infiniteAlertEnabled;
         private static bool infiniteAlertEnabled = false;
 
@@ -76,9 +102,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
-                // Optionally, stop the timer if the region is not found
-                // AlertTimer.Stop();
-
                 ToggleInfiniteAlert(false); // Stop the infinite alert if the region is not found
             }
         }
@@ -227,5 +250,223 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("Location tracking started.");
         }
         #endregion
-    }
+
+        #region HUD Tracker
+
+        private static System.Windows.Forms.Timer HudTrackingTimer = new System.Windows.Forms.Timer();
+
+        public static bool hudAlwaysHidden = false;
+
+        public static void HudTrackingTimer_Tick(object sender, EventArgs e)
+        {
+
+            if (hudAlwaysHidden)
+            {
+                MiscManager.Instance.PartialDisableHUD();
+            }
+            else
+            {
+                MiscManager.Instance.EnableHUD();
+            }
+            
+        }
+
+        public static void ToggleMinimalHud(bool enable)
+        {
+            hudAlwaysHidden = enable;
+            if (enable)
+            {
+                TimerManager.HudTrackingTimer.Start();
+            }
+            else if (!enable)
+            {
+                TimerManager.HudTrackingTimer.Stop();
+                LoggingManager.Instance.Log("Minimal HUD disabled.\n");
+            }
+        }
+
+        #endregion
+
+
+        #region Real Time Weapon/Item Swap
+
+        private static System.Windows.Forms.Timer RealTimeSwapTrackingTimer = new System.Windows.Forms.Timer();
+
+        // Track if real-time swapping is enabled
+        public static bool RealTimeSwapping = false;
+
+        // Track if the player was previously in a menu
+        private static bool wasPlayerInMenu = false;
+
+        // Timer tick event handler
+        public static void RealTimeSwapTrackingTimer_Tick(object sender, EventArgs e)
+        {
+            if (RealTimeSwapping)
+            {
+                PutPlayerInBoxIfChangingWeapons();
+            }
+            else
+            {
+                if (wasPlayerInMenu)
+                {
+                    TakePlayerOutOfBox();
+                    wasPlayerInMenu = false;
+                }
+            }
+        }
+
+        // Method to check if the player is in a menu and put them in a box if they are
+        public static void PutPlayerInBoxIfChangingWeapons()
+        {
+            bool isInMenu = IsPlayerInMenu();
+
+            if (isInMenu)
+            {
+                if (!wasPlayerInMenu)
+                {
+                    PutPlayerInBox();
+                    wasPlayerInMenu = true;
+                }
+            }
+            else if (wasPlayerInMenu)
+            {
+                TakePlayerOutOfBox();
+                wasPlayerInMenu = false;
+            }
+        }
+
+        // Method to check if the player is in a menu
+        private static bool IsPlayerInMenu()
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return false;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return false;
+
+                IntPtr itemWindowAddress = MemoryManager.Instance.FindAob("PissFilter");
+                if (itemWindowAddress == IntPtr.Zero) return false;
+
+                IntPtr targetAddress = IntPtr.Add(itemWindowAddress, (int)MiscOffsets.ItemAndWeaponWindowAdd);
+                byte[] buffer = new byte[1];
+                if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 1, out _))
+                {
+                    return buffer[0] == 0x04;
+                }
+
+                return false;
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Methods to modify the player's box state
+        public static void PutPlayerInBox()
+        {
+            ModifyPlayerBoxState(0x21, "Player put in the box successfully.", "Failed to put the player in the box.");
+        }
+
+        public static void TakePlayerOutOfBox()
+        {
+            ModifyPlayerBoxState(0x00, "Player taken out of the box successfully.", "Failed to take the player out of the box.");
+        }
+
+        private static void ModifyPlayerBoxState(byte boxValue, string successMessage, string failureMessage)
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null) return;
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return;
+
+                IntPtr itemWindowAddress = MemoryManager.Instance.FindAob("PissFilter");
+                if (itemWindowAddress == IntPtr.Zero) return;
+
+                IntPtr targetAddress = IntPtr.Add(itemWindowAddress, (int)AnimationOffsets.BoxCrouchAdd);
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, boxValue);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log(failureMessage);
+                }
+                else
+                {
+                    LoggingManager.Instance.Log(successMessage);
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        // Methods to enable/disable real-time weapon/item swapping
+        public static void RealTimeWeaponItemSwapping()
+        {
+            ModifyRealTimeWeaponItemSwapping(new byte[] { 0x85, 0x05, 0xC0, 0x59, 0xA7, 0x01 }, "Real Time Weapon and Item Swapping enabled successfully.");
+            RealTimeSwapTrackingTimer.Start();
+        }
+
+        public static void DisableRealTimeWeaponItemSwapping()
+        {
+            ModifyRealTimeWeaponItemSwapping(new byte[] { 0x85, 0x05, 0x77, 0xF1, 0xC4, 0x01 }, "Real Time Weapon and Item Swapping disabled successfully.");
+            RealTimeSwapTrackingTimer.Stop();
+        }
+
+        private static void ModifyRealTimeWeaponItemSwapping(byte[] weaponSwapBytes, string successMessage)
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                Process process = MemoryManager.GetMGS3Process();
+                if (process == null)
+                {
+                    LoggingManager.Instance.Log("Failed to find game process.");
+                    return;
+                }
+
+                processHandle = MemoryManager.OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to open game process.");
+                    return;
+                }
+
+                IntPtr weaponSwapAddress = MemoryManager.Instance.FindAob("RealTimeItemSwap");
+                if (weaponSwapAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to find Real Time Weapon Swap AOB pattern.");
+                    return;
+                }
+
+                IntPtr targetAddress = IntPtr.Add(weaponSwapAddress, (int)MiscOffsets.RealTimeWeaponItemSwappingAdd);
+                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, weaponSwapBytes);
+                if (!success)
+                {
+                    LoggingManager.Instance.Log("Failed to modify Real Time Weapon and Item Swapping.");
+                }
+                else
+                {
+                    LoggingManager.Instance.Log(successMessage);
+                }
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+    
+
+    #endregion
+}
 }

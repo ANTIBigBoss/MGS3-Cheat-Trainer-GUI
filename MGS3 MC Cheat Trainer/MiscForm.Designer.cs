@@ -82,6 +82,8 @@
             label3 = new Label();
             PissFilterCheckBox = new CheckBox();
             CopySnakesLocationToTextboxes = new Button();
+            MinimalHudcheckbox = new CheckBox();
+            RealTimeItemSwapCheckbox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FovSlider).BeginInit();
@@ -493,14 +495,14 @@
             // 
             // TextBoxSnakeX
             // 
-            TextBoxSnakeX.Location = new Point(275, 465);
+            TextBoxSnakeX.Location = new Point(275, 455);
             TextBoxSnakeX.Name = "TextBoxSnakeX";
             TextBoxSnakeX.Size = new Size(119, 23);
             TextBoxSnakeX.TabIndex = 574;
             // 
             // TextBoxSnakeY
             // 
-            TextBoxSnakeY.Location = new Point(400, 465);
+            TextBoxSnakeY.Location = new Point(400, 455);
             TextBoxSnakeY.Name = "TextBoxSnakeY";
             TextBoxSnakeY.Size = new Size(119, 23);
             TextBoxSnakeY.TabIndex = 576;
@@ -522,7 +524,7 @@
             // 
             // TextBoxSnakeZ
             // 
-            TextBoxSnakeZ.Location = new Point(525, 465);
+            TextBoxSnakeZ.Location = new Point(525, 455);
             TextBoxSnakeZ.Name = "TextBoxSnakeZ";
             TextBoxSnakeZ.Size = new Size(125, 23);
             TextBoxSnakeZ.TabIndex = 578;
@@ -549,7 +551,7 @@
             ParseTextBoxesPositions.FlatStyle = FlatStyle.Flat;
             ParseTextBoxesPositions.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             ParseTextBoxesPositions.ImageAlign = ContentAlignment.TopCenter;
-            ParseTextBoxesPositions.Location = new Point(275, 489);
+            ParseTextBoxesPositions.Location = new Point(274, 479);
             ParseTextBoxesPositions.Name = "ParseTextBoxesPositions";
             ParseTextBoxesPositions.Size = new Size(376, 37);
             ParseTextBoxesPositions.TabIndex = 579;
@@ -563,7 +565,7 @@
             textBox7.BorderStyle = BorderStyle.None;
             textBox7.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             textBox7.ForeColor = SystemColors.ActiveCaptionText;
-            textBox7.Location = new Point(275, 429);
+            textBox7.Location = new Point(275, 419);
             textBox7.Multiline = true;
             textBox7.Name = "textBox7";
             textBox7.PlaceholderText = "Edit these to change Snake's location";
@@ -735,9 +737,9 @@
             PissFilterCheckBox.Image = (Image)resources.GetObject("PissFilterCheckBox.Image");
             PissFilterCheckBox.Location = new Point(904, 211);
             PissFilterCheckBox.Name = "PissFilterCheckBox";
-            PissFilterCheckBox.Size = new Size(256, 67);
+            PissFilterCheckBox.Size = new Size(256, 126);
             PissFilterCheckBox.TabIndex = 596;
-            PissFilterCheckBox.Text = "Disable/Enable the Piss Filter \r\nUnchecked = Enabled (Default)\r\nChecked = Disabled\r\n";
+            PissFilterCheckBox.Text = "Disable/Enable the Piss Filter \r\n\r\nUnchecked = Enabled (Default)\r\n\r\nChecked = Disabled\r\n";
             PissFilterCheckBox.UseVisualStyleBackColor = true;
             PissFilterCheckBox.CheckedChanged += PissFilterCheckBox_CheckedChanged;
             // 
@@ -748,7 +750,7 @@
             CopySnakesLocationToTextboxes.FlatStyle = FlatStyle.Flat;
             CopySnakesLocationToTextboxes.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             CopySnakesLocationToTextboxes.ImageAlign = ContentAlignment.TopCenter;
-            CopySnakesLocationToTextboxes.Location = new Point(275, 386);
+            CopySnakesLocationToTextboxes.Location = new Point(275, 379);
             CopySnakesLocationToTextboxes.Name = "CopySnakesLocationToTextboxes";
             CopySnakesLocationToTextboxes.Size = new Size(375, 37);
             CopySnakesLocationToTextboxes.TabIndex = 597;
@@ -756,12 +758,42 @@
             CopySnakesLocationToTextboxes.UseVisualStyleBackColor = true;
             CopySnakesLocationToTextboxes.Click += CopySnakesLocationToTextboxes_Click;
             // 
+            // MinimalHudcheckbox
+            // 
+            MinimalHudcheckbox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            MinimalHudcheckbox.FlatStyle = FlatStyle.Flat;
+            MinimalHudcheckbox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            MinimalHudcheckbox.Image = (Image)resources.GetObject("MinimalHudcheckbox.Image");
+            MinimalHudcheckbox.Location = new Point(904, 343);
+            MinimalHudcheckbox.Name = "MinimalHudcheckbox";
+            MinimalHudcheckbox.Size = new Size(256, 138);
+            MinimalHudcheckbox.TabIndex = 598;
+            MinimalHudcheckbox.Text = "Minimal HUD\r\n\r\nChecked = Weapons and Items Visible\r\n\r\nUnchecked = Normal HUD";
+            MinimalHudcheckbox.UseVisualStyleBackColor = true;
+            MinimalHudcheckbox.CheckedChanged += MinimalHudcheckbox_CheckedChanged;
+            // 
+            // RealTimeItemSwapCheckbox
+            // 
+            RealTimeItemSwapCheckbox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            RealTimeItemSwapCheckbox.FlatStyle = FlatStyle.Flat;
+            RealTimeItemSwapCheckbox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            RealTimeItemSwapCheckbox.Image = (Image)resources.GetObject("RealTimeItemSwapCheckbox.Image");
+            RealTimeItemSwapCheckbox.Location = new Point(275, 522);
+            RealTimeItemSwapCheckbox.Name = "RealTimeItemSwapCheckbox";
+            RealTimeItemSwapCheckbox.Size = new Size(376, 124);
+            RealTimeItemSwapCheckbox.TabIndex = 599;
+            RealTimeItemSwapCheckbox.Text = "Real Time Item/Weapon Swap\r\n\r\nChecked = Time doesn't stop when holding down L2/R2 weapon and item windows\r\n\r\nUnchecked = Time stops normally\r\n";
+            RealTimeItemSwapCheckbox.UseVisualStyleBackColor = true;
+            RealTimeItemSwapCheckbox.CheckedChanged += RealTimeItemSwapCheckbox_CheckedChanged;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(RealTimeItemSwapCheckbox);
+            Controls.Add(MinimalHudcheckbox);
             Controls.Add(CopySnakesLocationToTextboxes);
             Controls.Add(PissFilterCheckBox);
             Controls.Add(label3);
@@ -815,7 +847,7 @@
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.3";
+            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.4";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
@@ -878,5 +910,7 @@
         private CheckBox checkBox1;
         private CheckBox PissFilterCheckBox;
         private Button CopySnakesLocationToTextboxes;
+        private CheckBox MinimalHudcheckbox;
+        private CheckBox RealTimeItemSwapCheckbox;
     }
 }

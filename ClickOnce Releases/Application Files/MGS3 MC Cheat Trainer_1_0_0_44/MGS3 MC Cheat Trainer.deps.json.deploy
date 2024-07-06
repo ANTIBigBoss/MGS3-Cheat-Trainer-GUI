@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "MGS3 MC Cheat Trainer/1.0.0": {
+        "runtime": {
+          "MGS3 MC Cheat Trainer.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MGS3 MC Cheat Trainer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

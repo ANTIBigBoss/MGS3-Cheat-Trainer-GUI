@@ -15,7 +15,7 @@
   </compatibleFrameworks>
   <dependency>
     <dependentAssembly dependencyType="install" codebase="Application Files\MGS3 MC Cheat Trainer_1_0_0_43\MGS3 MC Cheat Trainer.dll.manifest" size="9150">
-      <assemblyIdentity name="MGS3 MC Cheat Trainer.exe" version="1.0.0.43" publicKeyToken="0bed7d90f5a4e2bf" language="en" processorArchitecture="msil" type="win32" />
+      <assemblyIdentity name="MGS3 MC Cheat Trainer.exe" version="1.0.0.44" publicKeyToken="0bed7d90f5a4e2bf" language="en" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />

@@ -1824,7 +1824,6 @@
             InfAmmoNoReloadCheckBox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
             InfAmmoNoReloadCheckBox.FlatStyle = FlatStyle.Flat;
             InfAmmoNoReloadCheckBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            InfAmmoNoReloadCheckBox.Image = (Image)resources.GetObject("InfAmmoNoReloadCheckBox.Image");
             InfAmmoNoReloadCheckBox.Location = new Point(989, 587);
             InfAmmoNoReloadCheckBox.Name = "InfAmmoNoReloadCheckBox";
             InfAmmoNoReloadCheckBox.Size = new Size(154, 67);
@@ -1969,7 +1968,7 @@
             Controls.Add(MK22TextBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "WeaponForm";
-            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss - Version 2.3";
+            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss - Version 2.4";
             Load += WeaponForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox31).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();

@@ -76,6 +76,9 @@
             PissFilterSub = 5525,
             BatteryDrainInstructionsSub = 7,
             InfiniteAmmoAndReloadSub = 4,
+            NoHudPartialSub = 19,
+            ItemAndWeaponWindowAdd = 136620,
+            RealTimeWeaponItemSwappingAdd = 1023,
         }
 
         public enum AnimationOffsets

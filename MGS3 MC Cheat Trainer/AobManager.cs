@@ -106,7 +106,7 @@
                     // Same as Items but we search in a further region that has the same byte pattern
                     (new byte[] { 0x00, 0x00, 0xDA, 0x5A, 0x2B, 0x00 },
                         "x x x x x x",
-                        new IntPtr(0x1D00000),
+                        new IntPtr(0x1C00000),
                         new IntPtr(0x1E00000)
                     )
                 },
@@ -394,6 +394,17 @@
                         new IntPtr(0x1900000)
                     )
                 },
+
+                
+                {
+                    "RealTimeItemSwap", // F7 D1 21 0D 74 F5 C4 01 C3 CC CC CC CC CC CC CC
+                    (new byte[] { 0xF7, 0xD1, 0x21, 0x0D, 0x74, 0xF5, 0xC4, 0x01, 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC },
+                        "x x x x x x x x x x x x x x x x ",
+                        new IntPtr(0xD0000),
+                        new IntPtr(0xFFFFF)
+                    )
+                },
+                
 
                 
                 #endregion

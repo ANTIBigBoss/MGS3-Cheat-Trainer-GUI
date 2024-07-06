@@ -1218,7 +1218,6 @@ namespace MGS3_MC_Cheat_Trainer
                 InfAmmoNoReloadCheckBox.Checked = false;
             }
 
-
         }
     }
 }
