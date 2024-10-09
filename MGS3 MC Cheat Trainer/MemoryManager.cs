@@ -78,6 +78,23 @@ namespace MGS3_MC_Cheat_Trainer
             return process;
         }
 
+        // Check if the game is running before starting the application if the game isn't running then close the application
+        public void TrainerLooksForGame(object sender, EventArgs e)
+        {
+            var process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Game process not found. Prompting user to start the game.\n");
+                CustomMessageBoxManager.CustomMessageBox("Game process not found. \nIf the game is running please reach out to us on Discord and open a ticket", "Error");
+                LoggingManager.Instance.Log("Closing application.\n");
+                Application.Exit();
+            }
+            else
+            {
+                LoggingManager.Instance.Log("Game process found. Starting logging for this session.\nApplication started successfully.\n");
+            }
+        }
+
         public static IntPtr OpenGameProcess(Process process)
         {
             try
@@ -366,8 +383,6 @@ namespace MGS3_MC_Cheat_Trainer
             return true;
         }
 
-
-
         public IntPtr FindDynamicAob(string key)
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
@@ -466,7 +481,7 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr resultAddress = ScanMemory(process.Handle, startAddress, size, aobData.Pattern, aobData.Mask);
 
             if (resultAddress == IntPtr.Zero)
-            {
+            {                
 
             }
 
@@ -529,6 +544,87 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             return foundAddresses;
+        }
+
+        // Store the last found AOB address in a static variable to reduce log spamming
+        private static IntPtr lastLoggedAobAddress = IntPtr.Zero;
+
+        public IntPtr FindLastAob(string key, string aobName)
+        {
+            if (!AobManager.AOBs.TryGetValue(key, out var aobData))
+            {
+                LoggingManager.Instance.Log($"{aobName} AOB not found in AOB Manager.");
+                return IntPtr.Zero;
+            }
+
+            var process = GetMGS3Process();
+            if (process == null || process.MainModule == null)
+            {
+                LoggingManager.Instance.Log($"{aobName}: Game process not found.");
+                return IntPtr.Zero;
+            }
+
+            IntPtr processHandle = OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log($"{aobName}: Failed to open game process.");
+                return IntPtr.Zero;
+            }
+
+            IntPtr baseAddress = process.MainModule.BaseAddress;
+            IntPtr startAddress = aobData.StartOffset.HasValue ? IntPtr.Add(baseAddress, (int)aobData.StartOffset.Value) : baseAddress;
+            IntPtr endAddress = aobData.EndOffset.HasValue ? IntPtr.Add(baseAddress, (int)aobData.EndOffset.Value) : IntPtr.Add(baseAddress, (int)process.MainModule.ModuleMemorySize);
+            long size = endAddress.ToInt64() - startAddress.ToInt64();
+
+            // Use ScanForAllInstances to get all occurrences
+            List<IntPtr> foundAddresses = ScanForAllInstances(processHandle, startAddress, size, aobData.Pattern, aobData.Mask);
+
+            NativeMethods.CloseHandle(processHandle);
+
+            if (foundAddresses.Count == 0)
+            {
+                LoggingManager.Instance.Log($"{aobName} AOB not found.");
+                return IntPtr.Zero;
+            }
+
+            // Get the last found address
+            IntPtr lastFoundAddress = foundAddresses[foundAddresses.Count - 1];
+
+            // Only log if the last found AOB address has changed
+            if (lastFoundAddress != lastLoggedAobAddress)
+            {
+                long lastRelativeOffset = lastFoundAddress.ToInt64() - baseAddress.ToInt64();
+                LoggingManager.Instance.Log($"Last instance of {aobName} AOB found at: {lastFoundAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{lastRelativeOffset:X})");
+
+                // Update the cached AOB address
+                lastLoggedAobAddress = lastFoundAddress;
+            }
+
+            return lastFoundAddress;
+        }
+
+
+        // This function is to access a pointer in the memory of MGS3
+        public IntPtr ReadIntPtr(IntPtr processHandle, IntPtr address)
+        {
+            byte[] buffer = new byte[IntPtr.Size]; // Allocate a buffer to hold the pointer (4 bytes for 32-bit, 8 bytes for 64-bit)
+            bool success = ReadProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out int bytesRead);
+
+            if (!success || bytesRead != buffer.Length)
+            {
+                LoggingManager.Instance.Log($"Failed to read pointer at address: {address.ToString("X")}");
+                return IntPtr.Zero;
+            }
+
+            // Convert the buffer to an IntPtr
+            if (IntPtr.Size == 4) // 32-bit system
+            {
+                return new IntPtr(BitConverter.ToInt32(buffer, 0));
+            }
+            else // 64-bit system
+            {
+                return new IntPtr(BitConverter.ToInt64(buffer, 0));
+            }
         }
 
         #endregion

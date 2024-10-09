@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms; // For MessageBox
 using static MGS3_MC_Cheat_Trainer.Constants;
+using static MGS3_MC_Cheat_Trainer.HelperFunctions;
 
 // Use MemoryManager
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
@@ -133,6 +134,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
+        #region Camo Index Functions
 
         public static bool NOPCamoIndex(IntPtr processHandle, IntPtr address)
         {
@@ -150,13 +152,7 @@ namespace MGS3_MC_Cheat_Trainer
                 (uint)restoreBytes.Length, out int bytesWritten) && bytesWritten == restoreBytes.Length;
         }
 
-        // These two are a sort of hacky way Trilon found in Cheat Engine to enable
-        // and disable the camo index It's not super ideal since it resets to 0%
-        // when a new area is loaded or if the game is paused which means players
-        // who alt + tab out of the game will lose their camo index everytime so
-        // ticket-devaizter brought this to my attention so my workaround for now
-        // is for the slider to just force update whatever the slider is when the
-        // instructions for Camo Index are NOP'd out
+
         public void EnableNOPCamoIndex()
         {
             Process process = MemoryManager.GetMGS3Process();
@@ -175,8 +171,7 @@ namespace MGS3_MC_Cheat_Trainer
             NativeMethods.CloseHandle(processHandle);
         }
 
-        // This just cancels out the NOP instructions for the camo index
-        // and restores the original instructions of the Camo Index
+
         public static void RestoreCamoIndex()
         {
             Process process = MemoryManager.GetMGS3Process();
@@ -217,7 +212,7 @@ namespace MGS3_MC_Cheat_Trainer
 
                 // Hardcoded address for the camo index for the time being
                 IntPtr baseAddress = process.MainModule.BaseAddress;
-                IntPtr offset = new IntPtr(0x1DE6964); // Example offset, replace with actual
+                IntPtr offset = new IntPtr(0x1E14C24); // Example offset, replace with actual
                 IntPtr targetAddress = IntPtr.Add(baseAddress, offset.ToInt32());
 
                 // Use the generic WriteMemory<T> method to write the integer value
@@ -265,7 +260,7 @@ namespace MGS3_MC_Cheat_Trainer
                 }
 
                 IntPtr baseAddress = process.MainModule.BaseAddress;
-                IntPtr offset = new IntPtr(0x1DE6964); // Adjust the offset as necessary
+                IntPtr offset = new IntPtr(0x1E14C24); // Adjust the offset as necessary
                 IntPtr targetAddress = IntPtr.Add(baseAddress, offset.ToInt32());
 
                 // Using ReadMemoryBytes to encapsulate reading process
@@ -290,9 +285,6 @@ namespace MGS3_MC_Cheat_Trainer
             return camoIndexValue;
         }
 
-
-        // Read instructions which are directly before IntPtr camoIndexAddress = MemoryManager.Instance.FindAob("CamoOperations"); and it's length is 4 bytes we want to check if the instructions are NOP'd out based on the other functions we have named NOPCamoIndex and RestoreCamoIndex
-
         public bool IsCamoIndexNopped()
         {
             Process process = MemoryManager.GetMGS3Process();
@@ -314,613 +306,128 @@ namespace MGS3_MC_Cheat_Trainer
             return false;
         }
 
+        #endregion
+
+        #region FOV Slider
+
         public void SetFovSlider(float newFovValue)
         {
-            IntPtr processHandle = IntPtr.Zero;
+            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to get game process for setting FOV.");
+                return;
+            }
 
             try
             {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null) return;
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero) return;
-
-                // Find the target address using the AOB pattern
-                IntPtr aobResult = MemoryManager.Instance.FindAob("FovSlider");
-                if (aobResult == IntPtr.Zero)
+                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "FovSlider", (int)MiscOffsets.FovOffsetSub);
+                if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log("Failed to find FOV AOB pattern.");
                     return;
                 }
 
-                IntPtr targetAddress =
-                    IntPtr.Subtract(aobResult, 4); // Assuming FOV value is 4 bytes before the AOB pattern
-
-                // Use the generic WriteMemory method to write the new FOV value
-                bool result = MemoryManager.WriteMemory<float>(processHandle, targetAddress, newFovValue);
-                if (!result)
-                {
-                    LoggingManager.Instance.Log("Failed to write the new FOV value.");
-                }
+                bool result = WriteMemory(processHandle, targetAddress, BitConverter.GetBytes(newFovValue));
+                LoggingManager.Instance.Log(result ? "FOV value set successfully." : "Failed to write the new FOV value.");
             }
             finally
             {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
         }
 
-
         public float ReadFovSlider()
         {
-            IntPtr processHandle = IntPtr.Zero;
-            float fovValue = 0.0f;
+            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to get game process for reading FOV.");
+                return 0.0f;
+            }
 
             try
             {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Process not found.");
-                    return fovValue;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return fovValue;
-                }
-
-                // Find the target address using the AOB pattern
-                IntPtr aobResult = MemoryManager.Instance.FindAob("FovSlider");
-                if (aobResult == IntPtr.Zero)
+                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "FovSlider", (int)MiscOffsets.FovOffsetSub);
+                if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log("Failed to find FOV AOB pattern.");
-                    return fovValue;
+                    return 0.0f;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 4); // Adjust offset as needed
-
-                // Reading the memory as float
                 byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, sizeof(float));
                 if (buffer == null || buffer.Length != sizeof(float))
                 {
                     LoggingManager.Instance.Log("Failed to read FOV value from memory.");
-                    return fovValue;
+                    return 0.0f;
                 }
 
-                // Interpreting the buffer correctly as float
-                fovValue = BitConverter.ToSingle(buffer, 0);
+                return BitConverter.ToSingle(buffer, 0);
             }
             finally
             {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-
-            return fovValue;
-        }
-
-
-        // Using the AOB name "PissFilter" we go back 1595/5525 Byte before this AOB is the filter value the default is either 42 or 00 in hex we want it to be 44 to disable the piss filter
-        public void DisablePissFilter()
-        {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
-                if (aobResult == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Piss Filter AOB pattern.");
-                    return;
-                }
-
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
-
-                // Write the new byte value to memory using WriteMemory<T> method
-                byte newFilterValue = 0x44; // Disabling the piss filter
-                bool writeSuccess = MemoryManager.WriteMemory(processHandle, targetAddress, newFilterValue);
-                if (!writeSuccess)
-                {
-                    LoggingManager.Instance.Log("Failed to disable the piss filter.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Piss filter disabled successfully.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
         }
 
-        public void EnablePissFilter()
-        {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
-                if (aobResult == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Piss Filter AOB pattern.");
-                    return;
-                }
-
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
-
-                // Write the default byte value to memory using WriteMemory<T> method
-                byte defaultFilterValue = 0x00; // Restoring the piss filter
-                bool writeSuccess = MemoryManager.WriteMemory(processHandle, targetAddress, defaultFilterValue);
-                if (!writeSuccess)
-                {
-                    LoggingManager.Instance.Log("Failed to restore the piss filter.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Piss filter restored successfully.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-        }
-
-        public byte ReadPissFilterValue()
-        {
-            IntPtr processHandle = IntPtr.Zero;
-            byte pissFilterValue = 0x00;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to get the MGS3 process.");
-                    return pissFilterValue;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open the MGS3 process.");
-                    return pissFilterValue;
-                }
-
-                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilter");
-                if (aobResult == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Piss Filter AOB pattern.");
-                    return pissFilterValue;
-                }
-
-                IntPtr targetAddress = IntPtr.Subtract(aobResult, 5525);
-                byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, 1);
-
-                if (buffer != null && buffer.Length > 0)
-                {
-                    pissFilterValue = buffer[0];
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Failed to read memory at the target address for Piss Filter.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-
-            return pissFilterValue;
-        }
-
-        /*
-               // The byte before this AOB is the instruction value for what changes the filter when a new area loads
-               // All wee do here is change 48 into 90 to disable the instruction
-               // ADD/2781 bytes after this is the instructions for it writing a value to the filter and checking if the
-               // correct value is there changing F3 0F 11 99 78 03 00 00 to 90 90 90 90 90 90 90 90 will allow a checkbox
-               // to permanently disable the piss filter or turn it back on
-               "PissFilterInstructions", // C7 81 74 03 00 00 00 00 7F 43
-               (new byte[] { 0xC7, 0x81, 0x74, 0x03, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x43 },
-                   "x x x x x x x x x x",
-                   new IntPtr(0x10000),
-                   new IntPtr(0xF0000)
-               )
-           },
-
-         */
-
-        public void DisablePissFilterInstructions()
-        {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
-                if (aobResult == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
-                    return;
-                }
-
-                // Disable the instruction at -1 offset
-                IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
-                byte nop1 = 0x90; // NOP instruction
-                bool success1 = MemoryManager.WriteMemory(processHandle, targetAddress1, nop1);
-                if (!success1)
-                {
-                    LoggingManager.Instance.Log("Failed to disable first part of the piss filter instructions.");
-                }
-
-                // Disable the second part at +2781 offset
-                IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-                byte[] disableBytes2 = new byte[]
-                    { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }; // NOP instructions
-                bool success2 = MemoryManager.WriteMemory(processHandle, targetAddress2, disableBytes2);
-                if (!success2)
-                {
-                    LoggingManager.Instance.Log("Failed to disable second part of the piss filter instructions.");
-                }
-
-
-                if (success1 && success2)
-                {
-                    LoggingManager.Instance.Log("Piss filter instructions disabled successfully.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-        }
-
-        public void EnablePissFilterInstructions()
-        {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
-                if (aobResult == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
-                    return;
-                }
-
-                // Restore the instruction at -1 offset
-                IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
-                byte originalByte1 = 0x48; // the original byte to restore
-                if (!MemoryManager.WriteMemory(processHandle, targetAddress1, originalByte1))
-                {
-                    LoggingManager.Instance.Log("Failed to restore the first part of the piss filter instructions.");
-                }
-
-                // Restore the second part at +2781 offset
-                IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-                byte[] restoreBytes2 = new byte[]
-                    { 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 }; // the original bytes to restore
-                if (!MemoryManager.WriteMemory(processHandle, targetAddress2, restoreBytes2))
-                {
-                    LoggingManager.Instance.Log("Failed to restore the second part of the piss filter instructions.");
-                }
-
-                LoggingManager.Instance.Log("Piss filter instructions restored successfully.");
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
-        }
-
-
-        public bool IsPissFilterInstructionsNopped()
-        {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return false;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero) return false;
-
-            IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
-            if (aobResult == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
-                return false;
-            }
-
-            // Check the first instruction at -1 offset
-            IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
-            byte[] buffer1 = new byte[1];
-            if (!MemoryManager.ReadProcessMemory(processHandle, targetAddress1, buffer1, 1, out _))
-            {
-                return false;
-            }
-
-            // Check the second instruction at +2781 offset
-            IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-            byte[] buffer2 = new byte[8];
-            if (!MemoryManager.ReadProcessMemory(processHandle, targetAddress2, buffer2, 8, out _))
-            {
-                return false;
-            }
-
-            return buffer1[0] == 0x90 && buffer2[0] == 0x90 && buffer2[1] == 0x90 && buffer2[2] == 0x90 &&
-                   buffer2[3] == 0x90 && buffer2[4] == 0x90 && buffer2[5] == 0x90 && buffer2[6] == 0x90 &&
-                   buffer2[7] == 0x90;
-        }
-
-        // Display the memory address and value of the first instruction of the piss filter
-
-        public (IntPtr, byte) GetPissFilterInstructionsAddress()
-        {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null)
-            {
-                LoggingManager.Instance.Log("Failed to get the MGS3 process.");
-                return (IntPtr.Zero, 0x00);
-            }
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to open the MGS3 process.");
-                return (IntPtr.Zero, 0x00);
-            }
-
-            IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
-            if (aobResult == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
-                return (IntPtr.Zero, 0x00);
-            }
-
-            // Check the first instruction at -1 offset
-            IntPtr targetAddress = IntPtr.Subtract(aobResult, 1);
-            byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, 1);
-            if (buffer == null || buffer.Length == 0)
-            {
-                LoggingManager.Instance.Log("Failed to read memory at the target address.");
-                return (targetAddress, 0x00);
-            }
-
-            return (targetAddress, buffer[0]);
-        }
-
-
-
-        // Display the memory address and value of the second instruction of the piss filter and read the entire 8 bytes
-        // i.e. is it's 0xF3, 0x0F, 0x11, 0x99, 0x78, 0x03, 0x00, 0x00 or 0x90 0x90 0x90 0x90 0x90 0x90 0x90 0x90
-        // // byte[] buffer = ReadMemoryBytes(processHandle, address, 8); to read the 8 bytes
-
-        public (IntPtr, byte[]) GetPissFilterInstructionsAddress2()
-        {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return (IntPtr.Zero, new byte[8]);
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero) return (IntPtr.Zero, new byte[8]);
-
-            IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
-            if (aobResult == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log("Failed to find Piss Filter Instructions AOB pattern.");
-                return (IntPtr.Zero, new byte[8]);
-            }
-
-            // Check the second instruction at +2781 offset
-            IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
-            byte[] buffer2 = MemoryManager.ReadMemoryBytes(processHandle, targetAddress2, 8);
-
-            return (targetAddress2, buffer2);
-        }
-
-        // Method to get the address and value for the first instruction
-        public string GetPissFilterInstructionsDetails()
-        {
-            var (address, value) = GetPissFilterInstructionsAddress();
-            return $"First Instruction Address: {address.ToInt64():X8}, Value: {value:X2}";
-        }
-
-        // Method to get the address and values for the second instruction
-        public string GetPissFilterInstructionsDetails2()
-        {
-            var (address, values) = GetPissFilterInstructionsAddress2();
-            return
-                $"Second Instruction Address: {address.ToInt64():X8}, Values: {BitConverter.ToString(values).Replace("-", " ")}";
-        }
+        #endregion
 
         #region BatteryDrain
 
         public bool IsBatteryDrainNOP()
         {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return false;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return false;
 
-            IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
-            if (batteryAddress == IntPtr.Zero) return false;
+            IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
+            if (targetAddress == IntPtr.Zero) return false;
 
-            IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
-            byte[] buffer = new byte[7];
-            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 7, out _))
-            {
-                return buffer[0] == 0x90 && buffer[1] == 0x90 && buffer[2] == 0x90 && buffer[3] == 0x90 &&
-                       buffer[4] == 0x90 && buffer[5] == 0x90 && buffer[6] == 0x90;
-            }
-
-            return false;
-
+            return HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
         }
-
-        // Write the NOP instructions to disable the battery drain
 
         public void DisableBatteryDrain()
         {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
-                if (batteryAddress == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Battery Drain AOB pattern.");
-                    return;
-                }
-
-                IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
-                byte[] nopBytes = new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
-                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, nopBytes);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log("Failed to disable the battery drain.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Battery drain disabled successfully.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
+            ModifyBatteryDrain(new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }, "disable");
         }
-
 
         public bool IsBatteryDrainNormal()
         {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return false;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return false;
 
-            IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
-            if (batteryAddress == IntPtr.Zero) return false;
+            IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
+            if (targetAddress == IntPtr.Zero) return false;
 
-            IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
-            byte[] buffer = new byte[7];
-            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 7, out _))
-            {
-                return buffer[0] == 0x66 && buffer[1] == 0x29 && buffer[2] == 0x88 && buffer[3] == 0x4E &&
-                       buffer[4] == 0x0A && buffer[5] == 0x00 && buffer[6] == 0x00;
-            }
-
-            return false;
+            return HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress, new byte[] { 0x66, 0x29, 0x88, 0x4E, 0x0A, 0x00, 0x00 });
         }
 
         public void EnableBatteryDrain()
         {
+            ModifyBatteryDrain(new byte[] { 0x66, 0x29, 0x88, 0x4E, 0x0A, 0x00, 0x00 }, "enable");
+        }
+
+        private void ModifyBatteryDrain(byte[] bytes, string action)
+        {
             IntPtr processHandle = IntPtr.Zero;
 
             try
             {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
+                processHandle = HelperFunctions.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
-                    LoggingManager.Instance.Log("Failed to open game process.");
+                    LoggingManager.Instance.Log($"Failed to {action} the battery drain. Game process not found.");
                     return;
                 }
 
-                IntPtr batteryAddress = MemoryManager.Instance.FindAob("BatteryDrain");
-                if (batteryAddress == IntPtr.Zero)
+                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
+                if (targetAddress == IntPtr.Zero)
                 {
-                    LoggingManager.Instance.Log("Failed to find Battery Drain AOB pattern.");
+                    LoggingManager.Instance.Log($"Failed to {action} the battery drain. AOB pattern not found.");
                     return;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(batteryAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
-                byte[] restoreBytes = new byte[] { 0x66, 0x29, 0x88, 0x4E, 0x0A, 0x00, 0x00 };
-                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, restoreBytes);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log("Failed to enable the battery drain.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Battery drain enabled successfully.");
-                }
+                bool success = WriteMemory(processHandle, targetAddress, bytes);
+                LoggingManager.Instance.Log(success ? $"Battery drain {action}d successfully." : $"Failed to {action} the battery drain.");
             }
             finally
             {
@@ -934,130 +441,57 @@ namespace MGS3_MC_Cheat_Trainer
 
         public bool IsInfiniteAmmoEnabled()
         {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return false;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero) return false;
-
-            IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("BatteryDrain");
-            if (InfAmmoAddress == IntPtr.Zero) return false;
-
-            IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.BatteryDrainInstructionsSub);
-            byte[] buffer = new byte[4];
-            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 4, out _))
-            {
-                return buffer[0] == 0x90 && buffer[1] == 0x90 && buffer[2] == 0x90 && buffer[3] == 0x90;
-            }
-
-            return false;
-
+            return CheckAmmoStatus(new byte[] { 0x90, 0x90, 0x90, 0x90 });
         }
 
         public void EnableInfAmmoAndReload()
         {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("InfAmmoNoReload");
-                if (InfAmmoAddress == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find Battery Drain AOB pattern.");
-                    return;
-                }
-
-                IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.InfiniteAmmoAndReloadSub);
-                byte[] nopBytes = new byte[] { 0x90, 0x90, 0x90, 0x90 };
-                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, nopBytes);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log("Failed to enable Infinite Ammo and Infinite Reload.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Successfully enabled Infinite Ammo and Infinite Reload.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
+            ModifyAmmoAndReload(new byte[] { 0x90, 0x90, 0x90, 0x90 }, "enable");
         }
 
         public bool IsAmmoAndReloadFinite()
         {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return false;
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            if (processHandle == IntPtr.Zero) return false;
-
-            IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("InfAmmoNoReload");
-            if (InfAmmoAddress == IntPtr.Zero) return false;
-
-            IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.InfiniteAmmoAndReloadSub);
-            byte[] buffer = new byte[4];
-            if (MemoryManager.ReadProcessMemory(processHandle, targetAddress, buffer, 4, out _))
-            {
-                return buffer[0] == 0x0F && buffer[1] == 0xB7 && buffer[2] == 0x41 && buffer[3] == 0x28;
-            }
-
-            return false;
+            return CheckAmmoStatus(new byte[] { 0x0F, 0xB7, 0x41, 0x28 });
         }
 
         public void DisableInfAmmoAndReload()
+        {
+            ModifyAmmoAndReload(new byte[] { 0x0F, 0xB7, 0x41, 0x28 }, "disable");
+        }
+
+        private bool CheckAmmoStatus(byte[] expectedBytes)
+        {
+            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            if (processHandle == IntPtr.Zero) return false;
+
+            IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "InfAmmoNoReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+            if (targetAddress == IntPtr.Zero) return false;
+
+            return HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress, expectedBytes);
+        }
+
+        private void ModifyAmmoAndReload(byte[] bytes, string action)
         {
             IntPtr processHandle = IntPtr.Zero;
 
             try
             {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
+                processHandle = HelperFunctions.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
-                    LoggingManager.Instance.Log("Failed to open game process.");
+                    LoggingManager.Instance.Log($"Failed to {action} Infinite Ammo and Reload. Game process not found.");
                     return;
                 }
 
-                IntPtr InfAmmoAddress = MemoryManager.Instance.FindAob("InfAmmoNoReload");
-                if (InfAmmoAddress == IntPtr.Zero)
+                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "InfAmmoNoReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+                if (targetAddress == IntPtr.Zero)
                 {
-                    LoggingManager.Instance.Log("Failed to find Infinite Ammo and Infinite Reload AOB pattern.");
+                    LoggingManager.Instance.Log($"Failed to {action} Infinite Ammo and Reload. AOB pattern not found.");
                     return;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(InfAmmoAddress, (int)MiscOffsets.InfiniteAmmoAndReloadSub);
-                byte[] restoreBytes = new byte[] { 0x0F, 0xB7, 0x41, 0x28 };
-                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, restoreBytes);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log("Failed to restore Ammo and Reload settings.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("Successfully restored Ammo and Reload settings.");
-                }
+                bool success = WriteMemory(processHandle, targetAddress, bytes);
+                LoggingManager.Instance.Log(success ? $"Successfully {action}d Infinite Ammo and Reload." : $"Failed to {action} Infinite Ammo and Reload.");
             }
             finally
             {
@@ -1067,93 +501,50 @@ namespace MGS3_MC_Cheat_Trainer
 
         #endregion
 
-        // Write HUD value to 01 to disable the HUD use this as a reference of where to write: return ReadMemoryValue("PissFilter", (int)MiscOffsets.NoHudPartialSub, false, 1, DataType.UInt8);
+        #region HUD Control
 
+        // Annoyingly these are backwards for partial and full hud disables
         public void PartialDisableHUD()
         {
-            IntPtr processHandle = IntPtr.Zero;
-
-            try
-            {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
-                if (processHandle == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to open game process.");
-                    return;
-                }
-
-                IntPtr hudAddress = MemoryManager.Instance.FindAob("PissFilter");
-                if (hudAddress == IntPtr.Zero)
-                {
-                    LoggingManager.Instance.Log("Failed to find No HUD AOB pattern.");
-                    return;
-                }
-
-                IntPtr targetAddress = IntPtr.Subtract(hudAddress, (int)MiscOffsets.NoHudPartialSub);
-                byte hudValue = 0x01;
-                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, hudValue);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log("Failed to disable the HUD.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("HUD disabled successfully.");
-                }
-            }
-            finally
-            {
-                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
-            }
+            ModifyHUD(0x01, "disable");
         }
-
-        // Enable the HUD by writing the value back to 00
 
         public void EnableHUD()
         {
+            ModifyHUD(0x00, "enable");
+        }
+
+        public void FullDisableHUD()
+        {
+            ModifyFullHUD(0x00, "disable");
+        }
+
+        public void EnableHUDBackFromFull()
+        {
+            ModifyFullHUD(0x01, "enable");
+        }
+
+        private void ModifyHUD(byte hudValue, string action)
+        {
             IntPtr processHandle = IntPtr.Zero;
 
             try
             {
-                Process process = MemoryManager.GetMGS3Process();
-                if (process == null)
-                {
-                    LoggingManager.Instance.Log("Failed to find game process.");
-                    return;
-                }
-
-                processHandle = MemoryManager.OpenGameProcess(process);
+                processHandle = HelperFunctions.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
-                    LoggingManager.Instance.Log("Failed to open game process.");
+                    LoggingManager.Instance.Log($"Failed to {action} the HUD. Game process not found.");
                     return;
                 }
 
-                IntPtr hudAddress = MemoryManager.Instance.FindAob("PissFilter");
-                if (hudAddress == IntPtr.Zero)
+                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", (int)MiscOffsets.NoHudPartialSub);
+                if (targetAddress == IntPtr.Zero)
                 {
-                    LoggingManager.Instance.Log("Failed to find No HUD AOB pattern.");
+                    LoggingManager.Instance.Log($"Failed to {action} the HUD. AOB pattern not found.");
                     return;
                 }
 
-                IntPtr targetAddress = IntPtr.Subtract(hudAddress, (int)MiscOffsets.NoHudPartialSub);
-                byte hudValue = 0x00;
-                bool success = MemoryManager.WriteMemory(processHandle, targetAddress, hudValue);
-                if (!success)
-                {
-                    LoggingManager.Instance.Log("Failed to enable the HUD.");
-                }
-                else
-                {
-                    LoggingManager.Instance.Log("HUD enabled successfully.");
-                }
+                bool success = WriteMemory(processHandle, targetAddress, new byte[] { hudValue });
             }
             finally
             {
@@ -1161,6 +552,35 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
+        private void ModifyFullHUD(byte hudValue, string action)
+        {
+            IntPtr processHandle = IntPtr.Zero;
+
+            try
+            {
+                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                if (processHandle == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log($"Failed to {action} the HUD. Game process not found.");
+                    return;
+                }
+
+                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", (int)MiscOffsets.NoHudFullSub);
+                if (targetAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log($"Failed to {action} the HUD. AOB pattern not found.");
+                    return;
+                }
+
+                bool success = WriteMemory(processHandle, targetAddress, new byte[] { hudValue });
+            }
+            finally
+            {
+                if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        #endregion
 
 
     }

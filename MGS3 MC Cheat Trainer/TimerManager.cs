@@ -50,6 +50,9 @@ namespace MGS3_MC_Cheat_Trainer
             HudTrackingTimer.Interval = 100;
             HudTrackingTimer.Tick += HudTrackingTimer_Tick;
 
+            FullHudTrackingTimer.Interval = 100;
+            FullHudTrackingTimer.Tick += FullHudTrackingTimer_Tick;
+
             RealTimeSwapTrackingTimer.Interval = 100;
             RealTimeSwapTrackingTimer.Tick += RealTimeSwapTrackingTimer_Tick;
         }
@@ -235,7 +238,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private static void LocationChangeTimer_Tick(object sender, EventArgs e)
         {
-            string currentLocationInfo = StringManager.Instance.FindLocationStringDirectlyInRange();
+            string currentLocationInfo = StringManager.Instance.GetCurrentLocation();
 
             if (currentLocationInfo != LastKnownLocation)
             {
@@ -249,10 +252,12 @@ namespace MGS3_MC_Cheat_Trainer
             LocationChangeTimer.Start();
             LoggingManager.Instance.Log("Location tracking started.");
         }
+
         #endregion
 
         #region HUD Tracker
 
+        // Partial HUD removal tracking
         private static System.Windows.Forms.Timer HudTrackingTimer = new System.Windows.Forms.Timer();
 
         public static bool hudAlwaysHidden = false;
@@ -281,7 +286,40 @@ namespace MGS3_MC_Cheat_Trainer
             else if (!enable)
             {
                 TimerManager.HudTrackingTimer.Stop();
-                LoggingManager.Instance.Log("Minimal HUD disabled.\n");
+                MiscManager.Instance.EnableHUD();
+            }
+        }
+
+        // Full HUD removal tracking
+        private static System.Windows.Forms.Timer FullHudTrackingTimer = new System.Windows.Forms.Timer();
+
+        public static bool fullHudAlwaysHidden = false;
+
+        public static void FullHudTrackingTimer_Tick(object sender, EventArgs e)
+        {
+
+            if (fullHudAlwaysHidden)
+            {
+                MiscManager.Instance.FullDisableHUD();
+            }
+            else
+            {
+                MiscManager.Instance.EnableHUDBackFromFull();
+            }
+
+        }
+
+        public static void ToggleFullHud(bool enable)
+        {
+            fullHudAlwaysHidden = enable;
+            if (enable)
+            {
+                TimerManager.FullHudTrackingTimer.Start();
+            }
+            else if (!enable)
+            {
+                TimerManager.FullHudTrackingTimer.Stop();
+                MiscManager.Instance.EnableHUDBackFromFull();
             }
         }
 

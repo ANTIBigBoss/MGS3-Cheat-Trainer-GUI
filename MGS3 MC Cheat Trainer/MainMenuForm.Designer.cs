@@ -157,7 +157,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "MGS3 Cheat Trainer - Main Menu - ANTIBigBoss - Version 2.4";
+            Text = "MGS3 Cheat Trainer - Main Menu - ANTIBigBoss - Version 2.5";
             Load += MainMenuForm_Load;
             ResumeLayout(false);
         }

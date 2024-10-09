@@ -23,8 +23,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, ocelotAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
-            {
-                LoggingManager.Instance.Log($"Failed to read memory at {ocelotAddress}");
+            {               
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -50,7 +49,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -80,7 +78,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -111,7 +108,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -141,7 +137,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -172,7 +167,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheFearAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheFearAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -199,7 +193,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -230,7 +223,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -259,7 +251,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheEnds063aAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheEnds063aAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -287,7 +278,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -318,7 +308,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -347,7 +336,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheEnds065aAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheEnds065aAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -374,7 +362,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -405,7 +392,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -436,7 +422,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheFuryAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -462,7 +447,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -493,7 +477,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -528,7 +511,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -559,7 +541,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -590,7 +571,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundShagohodAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundShagohodAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -616,7 +596,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -649,7 +628,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundVolginOnShagohodAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundVolginOnShagohodAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -675,7 +653,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -706,7 +683,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -737,7 +713,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, AobManager.Instance.FoundTheBossAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {AobManager.Instance.FoundTheBossAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -763,7 +738,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, healthAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {healthAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }
@@ -794,7 +768,6 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, staminaAddress, sizeof(short));
             if (buffer == null || buffer.Length != sizeof(short))
             {
-                LoggingManager.Instance.Log($"Failed to read memory at {staminaAddress}");
                 MemoryManager.NativeMethods.CloseHandle(processHandle);
                 return -1;
             }

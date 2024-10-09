@@ -31,11 +31,6 @@ namespace MGS3_MC_Cheat_Trainer
             ChangeModelNumber.Click += new EventHandler(ChangeModelNumber_Click);
             ModelSlider.Scroll += new EventHandler(ModelSlider_Scroll);
 
-            // Timer to check Snake's position once his AOB is found
-            SnakesPosition.Enabled = true;
-            SnakesPosition.Interval = 1000;
-            SnakesPosition.Tick += new EventHandler(SnakesPosition_Tick);
-
             // Timer and slider information for camo index
             System.Windows.Forms.Timer camoIndexTimer = new System.Windows.Forms.Timer();
             CamoIndexSlider.Minimum = -1000;
@@ -43,6 +38,12 @@ namespace MGS3_MC_Cheat_Trainer
             camoIndexTimer.Interval = 1000;
             camoIndexTimer.Tick += CamoIndexTimer_Tick;
             camoIndexTimer.Start();
+
+            // SnakesPosition Timer information for tick event and textbox constant update
+            System.Windows.Forms.Timer snakesPositionTimer = new System.Windows.Forms.Timer();
+            snakesPositionTimer.Interval = 100;
+            snakesPositionTimer.Tick += SnakesPosition_Tick;
+            snakesPositionTimer.Start();
 
             // Slider range mapping constants
 
@@ -84,19 +85,173 @@ namespace MGS3_MC_Cheat_Trainer
             // Set the FOV slider position
             FovSlider.Value = Math.Max(FovSlider.Minimum, Math.Min(sliderValue, FovSlider.Maximum));
 
-            PissFilterCheckBox.Checked = MiscManager.Instance.IsPissFilterInstructionsNopped();
+            PissFilterCheckBox.Checked = FilterManager.Instance.IsPissFilterInstructionsNopped();
 
             MinimalHudCheck();
+            FullHudCheck();           
             RealTimeItemSwapCheckbox.Checked = TimerManager.RealTimeSwapping;
 
 
         }
+
+        #region Xyz Manipulation
+
+        private void ParseTextBoxesPositions_Click(object sender, EventArgs e)
+        {
+            // Ensure all textboxes have valid float values
+            if (float.TryParse(TextBoxSnakeX.Text, out float x) &&
+                float.TryParse(TextBoxSnakeY.Text, out float y) &&
+                float.TryParse(TextBoxSnakeZ.Text, out float z))
+            {
+                float[][] coordinates = new float[][] { new float[] { x, y, z } };
+
+                IntPtr snakePointerAddress = XyzManager.Instance.FindPointerMemory(11810, 0x130);
+                if (snakePointerAddress == IntPtr.Zero)
+                {
+                    MessageBox.Show("Failed to find Snake's position.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+                if (processHandle != IntPtr.Zero)
+                {
+                    try
+                    {
+                        XyzManager.Instance.TeleportSnake(coordinates);
+                    }
+                    finally
+                    {
+                        MemoryManager.NativeMethods.CloseHandle(processHandle);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Failed to open game process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid position values. Please enter valid numbers.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void FetchAndDisplaySnakePosition()
+        {
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            if (processHandle != IntPtr.Zero)
+            {
+                try
+                {
+                    // Get the updated Snake position
+                    float[] position = XyzManager.Instance.ReadSnakePosition(processHandle);
+
+                    if (position != null)
+                    {
+                        // Always update the textboxes with the new position values
+                        Invoke(new Action(() =>
+                        {
+                            ReadTextBoxSnakeX.Text = position[0].ToString("F2");
+                            ReadTextBoxSnakeY.Text = position[1].ToString("F2");
+                            ReadTextBoxSnakeZ.Text = position[2].ToString("F2");
+                        }));
+                    }
+                    else
+                    {
+                        LoggingManager.Instance.Log("Failed to read Snake's position.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LoggingManager.Instance.Log($"Exception while reading Snake's position: {ex.Message}");
+                }
+                finally
+                {
+                    MemoryManager.NativeMethods.CloseHandle(processHandle);
+                }
+            }
+            else
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+            }
+        }
+
+
+        private void SnakesPosition_Tick(object sender, EventArgs e)
+        {
+            FetchAndDisplaySnakePosition();
+        }
+
+        private void TeleportGuardsToSnake_Click(object sender, EventArgs e)
+        {
+            XyzManager.Instance.MoveAllGuardsToSnake();
+        }
+
+        private void SnakeJump_Click(object sender, EventArgs e)
+        {
+            XyzManager.Instance.RaiseSnakeYBy4000();
+        }
+
+        // Pretty hacky but, it'll work if the player is moving backwards when not on the ladder.
+        // We'll change this to force an area load then find those coordinates in the future.
+        private async void LadderSkip_Click_1(object sender, EventArgs e)
+        {
+            // Define multiple sets of coordinates for successive teleportation
+            float[][] coordinates = new float[][]
+            {
+                // First set of coordinates
+                new float[] { -1273f, 901f, -30441f }, 
+                // Keep increasing the Y to test theory of how the ladder gcx works
+                new float[] { -1251f, 2000f, -30441f },
+                new float[] { -1251f, 154840f, -31441f },
+                new float[] { -1251f, 4000f, -30441f },
+                new float[] { -1251f, 154840f, -30430f },
+
+            };
+
+            foreach (var coordSet in coordinates)
+            {
+                // Execute the teleport to new position using the current set of coordinates
+                XyzManager.Instance.TeleportSnake(new float[][] { coordSet }); // Adjust the method if necessary
+
+                // Add a half-second delay between teleports
+                await Task.Delay(1000); // 500 milliseconds = 0.5 seconds
+            }
+        }
+        #endregion
 
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
 
+        // Conditional check for the hud for when the form is loaded
+        public bool MinimalHudCheck()
+        {
+            if (TimerManager.hudAlwaysHidden)
+            {
+                MinimalHudcheckbox.Checked = true;               
+                return true;
+            }
+            else
+            {
+                MinimalHudcheckbox.Checked = false;
+                return false;
+            }
+        }
+
+        public bool FullHudCheck()
+        {
+            if (TimerManager.fullHudAlwaysHidden)
+            {
+                noHudcheckbox.Checked = true;
+                return true;
+            }
+            else
+            {
+                noHudcheckbox.Checked = false;
+                return false;
+            }
+        }
 
         private void MinimalHudcheckbox_CheckedChanged(object sender, EventArgs e)
         {
@@ -105,11 +260,35 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 TimerManager.hudAlwaysHidden = true;
                 TimerManager.ToggleMinimalHud(true);
+                noHudcheckbox.Enabled = false;
+                LoggingManager.Instance.Log("Minimal HUD enabled");
             }
             else
             {
                 TimerManager.hudAlwaysHidden = false;
                 TimerManager.ToggleMinimalHud(false);
+                noHudcheckbox.Enabled = true;
+                LoggingManager.Instance.Log("Hud is now back to normal from Minimal HUD");
+            }
+
+        }
+
+        private void noHudcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (noHudcheckbox.Checked)
+            {
+                TimerManager.fullHudAlwaysHidden = true;
+                TimerManager.ToggleFullHud(true);
+                MinimalHudcheckbox.Enabled = false;
+                LoggingManager.Instance.Log("No HUD enabled");
+            }
+            else
+            {
+                TimerManager.fullHudAlwaysHidden = false;
+                TimerManager.ToggleFullHud(false);
+                MinimalHudcheckbox.Enabled = true;
+                LoggingManager.Instance.Log("Hud is now back to normal from No HUD");
             }
 
         }
@@ -128,34 +307,12 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-
-        // Conditional check for the hud for when the form is loaded
-
-        public bool MinimalHudCheck()
-        {
-            if (TimerManager.hudAlwaysHidden)
-            {
-                MinimalHudcheckbox.Checked = true;
-                return true;
-            }
-            else
-            {
-                MinimalHudcheckbox.Checked = false;
-                return false;
-            }
-        }
-
-
-
         #region Camo  
-
 
         private void CamoIndexSlider_Scroll(object sender, EventArgs e)
         {
-            // Store the user's camo index value when the slider is adjusted
-            TimerManager.UserCamoIndex = CamoIndexSlider.Value;
+            userCamoIndex = CamoIndexSlider.Value;
 
-            // Adjust the camo index value if necessary
             if (MiscManager.Instance.IsCamoIndexNopped())
             {
                 int newValue = CamoIndexSlider.Value;
@@ -169,53 +326,36 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void CamoIndexTimer_Tick(object sender, EventArgs e)
         {
-            // Optional: Update the UI or log only if needed, to reduce performance overhead
             int currentCamoIndex = MiscManager.Instance.ReadCamoIndex();
             float percentage = (float)currentCamoIndex / 10;
             CamoIndexTextbox.Text = $"Camo Index is at {percentage}%";
 
-            // The critical part: Adjust camo index continuously if NOP is applied
             if (MiscManager.Instance.IsCamoIndexNopped())
             {
-                TimerManager.UserCamoIndex = CamoIndexSlider.Value;
-                MiscManager.Instance.AdjustCamoIndex(TimerManager.UserCamoIndex);
+                userCamoIndex = CamoIndexSlider.Value;
+                MiscManager.Instance.AdjustCamoIndex(userCamoIndex);
             }
 
-            // Ensure the slider is enabled/disabled based on NOP status
             CamoIndexSlider.Enabled = MiscManager.Instance.IsCamoIndexNopped();
         }
 
-
         private void CamoIndexChanges_CheckedChanged(object sender, EventArgs e)
         {
+            if (CamoIndexChanges.Checked)
             {
-                // Check if the checkbox is checked
-                if (CamoIndexChanges.Checked)
-                {
-                    MiscManager.Instance.EnableNOPCamoIndex();
-                }
-                else
-                {
-                    MiscManager.RestoreCamoIndex();
-                }
+                MiscManager.Instance.EnableNOPCamoIndex();
+            }
+            else
+            {
+                MiscManager.RestoreCamoIndex();
             }
         }
 
         private bool CamoCheckBoxCheck()
         {
-            // if the camo index is nopped, return true and make sure the checkbox is checked
-            if (MiscManager.Instance.IsCamoIndexNopped())
-            {
-                CamoIndexChanges.Checked = true;
-                return true;
-            }
-
-            // if the camo index is not nopped, return false and make sure the checkbox is not checked
-            else
-            {
-                CamoIndexChanges.Checked = false;
-                return false;
-            }
+            bool isNopped = MiscManager.Instance.IsCamoIndexNopped();
+            CamoIndexChanges.Checked = isNopped;
+            return isNopped;
         }
 
         #endregion
@@ -374,232 +514,51 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
-        #region Xyz Manipulation
-        private void TeleportGuardsToSnake_Click(object sender, EventArgs e)
-        {
-            XyzManager.Instance.MoveAllGuardsToSnake();
-        }
-
-        private void SnakeJump_Click(object sender, EventArgs e)
-        {
-            XyzManager.Instance.RaiseSnakeYBy4000();
-        }
-
-        private void SnakesXYZaob_Click(object sender, EventArgs e)
-        {
-            AobManager.Instance.FindAndStoreSnakesPositionAOB();
-            if (AobManager.Instance.FoundSnakePositionAddress != IntPtr.Zero)
-            {
-                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-                if (processHandle != IntPtr.Zero)
-                {
-                    float[] snakePosition = XyzManager.Instance.ReadSnakePosition(processHandle);
-                    MessageBox.Show($"Snake's Position: \nX={snakePosition[0]}, \nY={snakePosition[1]}, \nZ={snakePosition[2]}", "Snake Position", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    NativeMethods.CloseHandle(processHandle);
-                }
-                else
-                {
-                    MessageBox.Show("Failed to open process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Snake position AOB not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // Pretty hacky but, it'll work if the player is moving backwards when not on the ladder.
-        private async void LadderSkip_Click_1(object sender, EventArgs e)
-        {
-            // Define multiple sets of coordinates for successive teleportation
-            float[][] coordinates = new float[][]
-            {
-                // First set of coordinates
-                new float[] { -1273f, 901f, -30441f }, 
-                // Keep increasing the Y to test theory of how the ladder gcx works
-                new float[] { -1251f, 2000f, -30441f },
-                new float[] { -1251f, 154840f, -31441f },
-                new float[] { -1251f, 4000f, -30441f },
-                new float[] { -1251f, 154840f, -30430f },
-
-            };
-
-            foreach (var coordSet in coordinates)
-            {
-                // Execute the teleport to new position using the current set of coordinates
-                XyzManager.Instance.TeleportSnake(new float[][] { coordSet }); // Adjust the method if necessary
-
-                // Add a half-second delay between teleports
-                await Task.Delay(1000); // 500 milliseconds = 0.5 seconds
-            }
-        }
-
-
-        private void ParseTextBoxesPositions_Click(object sender, EventArgs e)
-        {
-            // Ensure all textboxes have valid float values
-            if (float.TryParse(TextBoxSnakeX.Text, out float x) &&
-                float.TryParse(TextBoxSnakeY.Text, out float y) &&
-                float.TryParse(TextBoxSnakeZ.Text, out float z))
-            {
-                // Use a single set of coordinates array for the new position
-                float[][] coordinates = new float[][] { new float[] { x, y, z } };
-
-                if (AobManager.Instance.FoundSnakePositionAddress == IntPtr.Zero && !AobManager.Instance.FindAndStoreSnakesPositionAOB())
-                {
-                    MessageBox.Show("Failed to find or verify Snake's position AOB.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-                if (processHandle != IntPtr.Zero)
-                {
-                    try
-                    {
-                        // Execute the teleport to new position using the coordinates from textboxes
-                        XyzManager.Instance.TeleportSnake(coordinates);
-                    }
-                    finally
-                    {
-                        MemoryManager.NativeMethods.CloseHandle(processHandle);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Failed to open game process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Invalid position values. Please enter valid numbers.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void SnakesPosition_Tick(object sender, EventArgs e)
-        {
-            FetchAndDisplaySnakePosition();
-        }
-
-        private void FetchAndDisplaySnakePosition()
-        {
-            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-            if (processHandle != IntPtr.Zero)
-            {
-                try
-                {
-                    float[] position = XyzManager.Instance.ReadSnakePosition(processHandle);
-                    if (position != null)
-                    {
-                        // Assuming ReadTextBoxSnakeX, etc., are your TextBox controls
-                        Invoke(new Action(() =>
-                        {
-                            ReadTextBoxSnakeX.Text = position[0].ToString("F2");
-                            ReadTextBoxSnakeY.Text = position[1].ToString("F2");
-                            ReadTextBoxSnakeZ.Text = position[2].ToString("F2");
-                        }));
-                    }
-                    else
-                    {
-                        LoggingManager.Instance.Log("Failed to read Snake's position.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LoggingManager.Instance.Log($"Exception while reading Snake's position: {ex.Message}");
-                }
-                finally
-                {
-                    MemoryManager.NativeMethods.CloseHandle(processHandle);
-                }
-            }
-            else
-            {
-                LoggingManager.Instance.Log("Failed to open game process.");
-            }
-        }
-        #endregion
+        
 
         private void LogAOBs_Click(object sender, EventArgs e)
         {
+            LoggingManager.LogAllWeaponsAndItemsAddresses();
             LoggingManager.Instance.LogAOBAddresses();
             LoggingManager.Instance.LogAllMemoryAddressesandValues();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Call the method and store the result in a variable
-            string result = StringManager.Instance.FindLocationStringFollowingR_Sna01();
-
-            // Display the result in a MessageBox
-            MessageBox.Show(result, "Search Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XyzManager.Instance.LogAllGuardsPosition();
         }
+
 
         private void button4_Click(object sender, EventArgs e)
         {
-            // Call the new method and store the result in a variable
-            List<string> results = StringManager.Instance.FindAllR_Sna01AndLocationStringInstances();
+            // Set the randomization type to guards
+            RandomizerManager.Instance.RandomizationType = "guards";
 
-            // Concatenate all results into a single string for display
-            string concatenatedResults = string.Join(Environment.NewLine, results);
+            // Trigger the randomization process
+            RandomizerManager.Instance.SearchForRandomizerArea();
 
-            // Display the results in a MessageBox
-            MessageBox.Show(concatenatedResults, "Search Results", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoggingManager.Instance.Log($"{results.Count} instances of R_Sna01 and LocationString found. Search results are as follows:\n{concatenatedResults}");
+            LoggingManager.Instance.Log("Randomization for guards triggered.");
         }
 
         private void PissFilterCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (PissFilterCheckBox.Checked)
             {
+                DayChange.Enabled = false;
+                NightChange.Enabled = false;
                 // Disable the piss filter instructions and the filter itself
-                MiscManager.Instance.DisablePissFilterInstructions();
-                MiscManager.Instance.DisablePissFilter();
+                FilterManager.Instance.DisablePissFilterInstructions();
+                FilterManager.Instance.DisablePissFilter();
             }
 
             else
             {
+                DayChange.Enabled = true;
+                NightChange.Enabled = true;
                 // Enable the piss filter instructions and the filter itself
-                MiscManager.Instance.EnablePissFilterInstructions();
-                MiscManager.Instance.EnablePissFilter();
+                FilterManager.Instance.EnablePissFilterInstructions();
+                FilterManager.Instance.EnablePissFilter();
             }
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            {
-                try
-                {
-                    // Retrieve formatted strings from MiscManager
-                    string details1 = MiscManager.Instance.GetPissFilterInstructionsDetails();
-                    string details2 = MiscManager.Instance.GetPissFilterInstructionsDetails2();
-
-                    // Display the results in a MessageBox
-                    MessageBox.Show($"{details1}\n{details2}", "Memory Address Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    // Handle any exceptions, possibly logging them or displaying a different message
-                    MessageBox.Show("Failed to retrieve memory details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(MiscManager.Instance.ReadPissFilterValue().ToString("X"));
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            MiscManager.Instance.DisablePissFilterInstructions();
-            MiscManager.Instance.DisablePissFilter();
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            MiscManager.Instance.EnablePissFilterInstructions();
-            MiscManager.Instance.EnablePissFilter();
         }
 
         private void CopySnakesLocationToTextboxes_Click(object sender, EventArgs e)
@@ -609,5 +568,18 @@ namespace MGS3_MC_Cheat_Trainer
             TextBoxSnakeZ.Text = ReadTextBoxSnakeZ.Text;
         }
 
+        private void DayChange_Click(object sender, EventArgs e)
+        {
+            FilterManager.Instance.SetToDayMode();
+            LoggingManager.Instance.Log("Switched to Day Mode");
+        }
+
+        private void NightChange_Click(object sender, EventArgs e)
+        {
+            FilterManager.Instance.SetToNightMode();
+            LoggingManager.Instance.Log("Switched to Night Mode");
+        }
+
+        
     }
 }

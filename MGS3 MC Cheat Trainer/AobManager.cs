@@ -116,8 +116,8 @@
                     "Alphabet", // 30 00 00 31 00 00 32 00 00 33 - 10958/2ACE is the camo index
                     (new byte[] { 0x30, 0x00, 0x00, 0x31, 0x00, 0x00, 0x32, 0x00, 0x00, 0x33 },
                         "x x x x x x x x x x",
-                        new IntPtr(0x100000),
-                        new IntPtr(0x1F0000)
+                        new IntPtr(0x1D00000),
+                        new IntPtr(0x1F00000)
                     )
                 },
 
@@ -173,6 +173,15 @@
                         "x x x x x x x x x x",
                         new IntPtr(0x10000),
                         new IntPtr(0xF0000)
+                    )
+                },
+
+                { // TODO: Add notes on how many bytes before or after Bloom is for this
+                "BloomFilter", // 00 00 A0 49 00 00 00 00 FF FF FF 7F
+                (new byte[] { 0x00, 0x00, 0xA0, 0x49, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0x7F },
+                        "x x x x x x x x x x x x",
+                    new IntPtr(0x1C00000),
+                    new IntPtr(0x1F00000)
                     )
                 },
 
@@ -378,7 +387,7 @@
 
                 {
                 "BatteryDrain", // 48 8B 05 7E CA 75 00 66
-                (new byte[] { 0x48, 0x8B, 0x05, 0x7E, 0xCA, 0x75, 0x00, 0x66 }, 
+                (new byte[] { 0x48, 0x8B, 0x05, 0x8E, 0x47, 0x77, 0x00, 0x66 }, 
                     "x x x x x x x x",
                     new IntPtr(0x100000),
                     new IntPtr(0x900000)
@@ -514,7 +523,17 @@
                     )
                 },
                 #endregion
-                
+
+                /* Commented out until I feel like implementing into StringManager's FindLocation Function
+                {
+                    "PointerBytes", // 30 75 ?? ?? ?? ?? 00 00 2C 01 00 00 ??
+                    (new byte[] { 0x30, 0x75 },
+                        "x x x x",
+                        new IntPtr(0x1000),
+                        new IntPtr(0x1F0000000)
+                    )
+                }, */
+
             };
 
         public IntPtr FoundSnakePositionAddress { get; private set; } = IntPtr.Zero;

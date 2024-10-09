@@ -111,7 +111,6 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadMemoryValue("StunRollDamage", (int)DamageOffsets.StunRollSub, false, 6, DataType.ByteArray);
         }
 
-
         public string MostLethalWeaponsDamage()
         {
             return ReadMemoryValue("MostWeaponsDamage", (int)DamageOffsets.MostLethalSub, false, 2, DataType.UInt16);
@@ -145,6 +144,31 @@ namespace MGS3_MC_Cheat_Trainer
         public string GetPissFilterValueAsString()
         {
             return ReadMemoryValue("PissFilter", (int)MiscOffsets.PissFilterSub, false, 1, DataType.Int8);
+        }
+
+        /* ChangeLightNearSnakeAdd = 5571, // Night = 0x40 0x1C 0xC8 || Day = 0x24 0xF4 0xC7
+            ColourMapChangingAdd = 5580, // Night = 0x00 0x1B 0x0A 0x03 || Day = 0x00 0x5E 0x72 0x64
+            SkyColourChangingAdd = 5584, // Night = 0x00 0x1F 0x13 0x09 || Day = 0x00 0xFF 0xFF 0x44
+            SkyChangingAdd = 5588, // Night = x0F || Day = x05 
+        */
+        public string GetLightNearSnakeValueAsString()
+        {
+            return ReadMemoryValue("PissFilter", (int)TimeOfDayOffsets.ChangeLightNearSnakeSub, false, 3, DataType.ByteArray);
+        }
+
+        public string GetColourMapValueAsString()
+        {
+            return ReadMemoryValue("PissFilter", (int)TimeOfDayOffsets.ColourMapChangingSub, false, 4, DataType.ByteArray);
+        }
+
+        public string GetSkyColourValueAsString()
+        {
+            return ReadMemoryValue("PissFilter", (int)TimeOfDayOffsets.SkyColourChangingSub, false, 4, DataType.ByteArray);
+        }
+
+        public string GetSkyChangingByteValueAsString()
+        {
+            return ReadMemoryValue("PissFilter", (int)TimeOfDayOffsets.SkyChangingSub, false, 1, DataType.Int8);
         }
 
         public string GetSnakeLongSleepValue()

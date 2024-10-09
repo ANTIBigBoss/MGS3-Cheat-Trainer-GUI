@@ -51,7 +51,6 @@
             TeleportGuardsToSnake = new Button();
             textBox1 = new TextBox();
             SnakeJump = new Button();
-            SnakesXYZaob = new Button();
             LogAOBs = new Button();
             CamoIndexSlider = new TrackBar();
             textBox2 = new TextBox();
@@ -84,6 +83,9 @@
             CopySnakesLocationToTextboxes = new Button();
             MinimalHudcheckbox = new CheckBox();
             RealTimeItemSwapCheckbox = new CheckBox();
+            DayChange = new Button();
+            NightChange = new Button();
+            noHudcheckbox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FovSlider).BeginInit();
@@ -389,21 +391,6 @@
             SnakeJump.Text = "Make Snake Jump";
             SnakeJump.UseVisualStyleBackColor = true;
             SnakeJump.Click += SnakeJump_Click;
-            // 
-            // SnakesXYZaob
-            // 
-            SnakesXYZaob.BackgroundImage = (Image)resources.GetObject("SnakesXYZaob.BackgroundImage");
-            SnakesXYZaob.Cursor = Cursors.Hand;
-            SnakesXYZaob.FlatStyle = FlatStyle.Flat;
-            SnakesXYZaob.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            SnakesXYZaob.ImageAlign = ContentAlignment.TopCenter;
-            SnakesXYZaob.Location = new Point(28, 140);
-            SnakesXYZaob.Name = "SnakesXYZaob";
-            SnakesXYZaob.Size = new Size(241, 80);
-            SnakesXYZaob.TabIndex = 556;
-            SnakesXYZaob.Text = "Report Snake's Position (Run this if other buttons not working)";
-            SnakesXYZaob.UseVisualStyleBackColor = true;
-            SnakesXYZaob.Click += SnakesXYZaob_Click;
             // 
             // LogAOBs
             // 
@@ -764,11 +751,11 @@
             MinimalHudcheckbox.FlatStyle = FlatStyle.Flat;
             MinimalHudcheckbox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             MinimalHudcheckbox.Image = (Image)resources.GetObject("MinimalHudcheckbox.Image");
-            MinimalHudcheckbox.Location = new Point(904, 343);
+            MinimalHudcheckbox.Location = new Point(904, 461);
             MinimalHudcheckbox.Name = "MinimalHudcheckbox";
-            MinimalHudcheckbox.Size = new Size(256, 138);
+            MinimalHudcheckbox.Size = new Size(256, 40);
             MinimalHudcheckbox.TabIndex = 598;
-            MinimalHudcheckbox.Text = "Minimal HUD\r\n\r\nChecked = Weapons and Items Visible\r\n\r\nUnchecked = Normal HUD";
+            MinimalHudcheckbox.Text = "Minimal HUD";
             MinimalHudcheckbox.UseVisualStyleBackColor = true;
             MinimalHudcheckbox.CheckedChanged += MinimalHudcheckbox_CheckedChanged;
             // 
@@ -784,7 +771,52 @@
             RealTimeItemSwapCheckbox.TabIndex = 599;
             RealTimeItemSwapCheckbox.Text = "Real Time Item/Weapon Swap\r\n\r\nChecked = Time doesn't stop when holding down L2/R2 weapon and item windows\r\n\r\nUnchecked = Time stops normally\r\n";
             RealTimeItemSwapCheckbox.UseVisualStyleBackColor = true;
+            RealTimeItemSwapCheckbox.Visible = false;
             RealTimeItemSwapCheckbox.CheckedChanged += RealTimeItemSwapCheckbox_CheckedChanged;
+            // 
+            // DayChange
+            // 
+            DayChange.BackgroundImage = (Image)resources.GetObject("DayChange.BackgroundImage");
+            DayChange.Cursor = Cursors.Hand;
+            DayChange.FlatStyle = FlatStyle.Flat;
+            DayChange.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            DayChange.ImageAlign = ContentAlignment.TopCenter;
+            DayChange.Location = new Point(904, 357);
+            DayChange.Name = "DayChange";
+            DayChange.Size = new Size(256, 37);
+            DayChange.TabIndex = 600;
+            DayChange.Text = "Switch to Day Time";
+            DayChange.UseVisualStyleBackColor = true;
+            DayChange.Click += DayChange_Click;
+            // 
+            // NightChange
+            // 
+            NightChange.BackgroundImage = (Image)resources.GetObject("NightChange.BackgroundImage");
+            NightChange.Cursor = Cursors.Hand;
+            NightChange.FlatStyle = FlatStyle.Flat;
+            NightChange.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            NightChange.ImageAlign = ContentAlignment.TopCenter;
+            NightChange.Location = new Point(904, 407);
+            NightChange.Name = "NightChange";
+            NightChange.Size = new Size(256, 37);
+            NightChange.TabIndex = 601;
+            NightChange.Text = "Switch to Night Time";
+            NightChange.UseVisualStyleBackColor = true;
+            NightChange.Click += NightChange_Click;
+            // 
+            // noHudcheckbox
+            // 
+            noHudcheckbox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
+            noHudcheckbox.FlatStyle = FlatStyle.Flat;
+            noHudcheckbox.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            noHudcheckbox.Image = (Image)resources.GetObject("noHudcheckbox.Image");
+            noHudcheckbox.Location = new Point(904, 517);
+            noHudcheckbox.Name = "noHudcheckbox";
+            noHudcheckbox.Size = new Size(256, 40);
+            noHudcheckbox.TabIndex = 602;
+            noHudcheckbox.Text = "No HUD";
+            noHudcheckbox.UseVisualStyleBackColor = true;
+            noHudcheckbox.CheckedChanged += noHudcheckbox_CheckedChanged;
             // 
             // MiscForm
             // 
@@ -792,6 +824,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(noHudcheckbox);
+            Controls.Add(NightChange);
+            Controls.Add(DayChange);
             Controls.Add(RealTimeItemSwapCheckbox);
             Controls.Add(MinimalHudcheckbox);
             Controls.Add(CopySnakesLocationToTextboxes);
@@ -822,7 +857,6 @@
             Controls.Add(textBox2);
             Controls.Add(CamoIndexSlider);
             Controls.Add(LogAOBs);
-            Controls.Add(SnakesXYZaob);
             Controls.Add(SnakeJump);
             Controls.Add(textBox1);
             Controls.Add(TeleportGuardsToSnake);
@@ -847,7 +881,7 @@
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.4";
+            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.5";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
@@ -878,7 +912,6 @@
         private Button TeleportGuardsToSnake;
         private TextBox textBox1;
         private Button SnakeJump;
-        private Button SnakesXYZaob;
         private Button LogAOBs;
         private TrackBar CamoIndexSlider;
         private TextBox textBox2;
@@ -912,5 +945,8 @@
         private Button CopySnakesLocationToTextboxes;
         private CheckBox MinimalHudcheckbox;
         private CheckBox RealTimeItemSwapCheckbox;
+        private Button DayChange;
+        private Button NightChange;
+        private CheckBox noHudcheckbox;
     }
 }

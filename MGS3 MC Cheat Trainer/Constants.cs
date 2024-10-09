@@ -74,9 +74,13 @@
         public enum MiscOffsets
         {
             PissFilterSub = 5525,
+            FovOffsetSub = 4,
+            PissInstructionsOffset1 = 1,
+            PissInstructionsOffset2 = 2781,
             BatteryDrainInstructionsSub = 7,
             InfiniteAmmoAndReloadSub = 4,
             NoHudPartialSub = 19,
+            NoHudFullSub = 20,
             ItemAndWeaponWindowAdd = 136620,
             RealTimeWeaponItemSwappingAdd = 1023,
         }
@@ -84,6 +88,7 @@
         public enum AnimationOffsets
         {
             // Difference from Piss Filter AOB not sure if anything closer is stable or not but we can compare post update if this works
+            // It did not work they gone
             SnakeLongSleepSub = 134918,
             ForceDirectionAdd = 784173,
             SnakeShortSleepAdd = 784187,
@@ -91,7 +96,16 @@
             BoxCrouchAdd = 784198,
             BunnyHopAdd = 784200,
             FakeDeathAdd = 784202,
+            StopSnakeMovement = 784204,
 
+        }
+
+        public enum TimeOfDayOffsets
+        {
+            ChangeLightNearSnakeSub = 5571, // Night = 0x40 0x1C 0xC8 || Day = 0x24 0xF4 0xC7
+            ColourMapChangingSub = 5580, // Night = 0x00 0x1B 0x0A 0x03 || Day = 0x00 0x5E 0x72 0x64
+            SkyColourChangingSub = 5584, // Night = 0x00 0x1F 0x13 0x09 || Day = 0x00 0xFF 0xFF 0x44
+            SkyChangingSub = 5588, // Night = x0F || Day = x05 
         }
 
         public enum CameraOptions
@@ -135,7 +149,7 @@
 
         public const string PROCESS_NAME = "METAL GEAR SOLID3";
 
-        internal const int MainPointerRegionOffset = 0x00A9DA98;
+        internal const int MainPointerRegionOffset = 0x00ACBE18;
 
         public static class InjuryData
         {

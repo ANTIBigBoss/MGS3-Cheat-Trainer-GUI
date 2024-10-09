@@ -201,7 +201,7 @@
             Fear0HP.BackgroundImage = (Image)resources.GetObject("Fear0HP.BackgroundImage");
             Fear0HP.Cursor = Cursors.Hand;
             Fear0HP.FlatStyle = FlatStyle.Flat;
-            Fear0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Fear0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fear0HP.ImageAlign = ContentAlignment.TopCenter;
             Fear0HP.ImeMode = ImeMode.NoControl;
             Fear0HP.Location = new Point(192, 609);
@@ -226,7 +226,7 @@
             Fear0Stam.BackgroundImage = (Image)resources.GetObject("Fear0Stam.BackgroundImage");
             Fear0Stam.Cursor = Cursors.Hand;
             Fear0Stam.FlatStyle = FlatStyle.Flat;
-            Fear0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Fear0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fear0Stam.ImageAlign = ContentAlignment.TopCenter;
             Fear0Stam.ImeMode = ImeMode.NoControl;
             Fear0Stam.Location = new Point(192, 672);
@@ -246,7 +246,7 @@
             Pain0Stam.BackgroundImage = (Image)resources.GetObject("Pain0Stam.BackgroundImage");
             Pain0Stam.Cursor = Cursors.Hand;
             Pain0Stam.FlatStyle = FlatStyle.Flat;
-            Pain0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Pain0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Pain0Stam.ImageAlign = ContentAlignment.TopCenter;
             Pain0Stam.ImeMode = ImeMode.NoControl;
             Pain0Stam.Location = new Point(190, 458);
@@ -271,7 +271,7 @@
             Pain0HP.BackgroundImage = (Image)resources.GetObject("Pain0HP.BackgroundImage");
             Pain0HP.Cursor = Cursors.Hand;
             Pain0HP.FlatStyle = FlatStyle.Flat;
-            Pain0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Pain0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Pain0HP.ImageAlign = ContentAlignment.TopCenter;
             Pain0HP.ImeMode = ImeMode.NoControl;
             Pain0HP.Location = new Point(190, 395);
@@ -300,7 +300,7 @@
             Volgin0Stam.BackgroundImage = (Image)resources.GetObject("Volgin0Stam.BackgroundImage");
             Volgin0Stam.Cursor = Cursors.Hand;
             Volgin0Stam.FlatStyle = FlatStyle.Flat;
-            Volgin0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Volgin0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Volgin0Stam.ImageAlign = ContentAlignment.TopCenter;
             Volgin0Stam.ImeMode = ImeMode.NoControl;
             Volgin0Stam.Location = new Point(566, 672);
@@ -325,7 +325,7 @@
             Volgin0HP.BackgroundImage = (Image)resources.GetObject("Volgin0HP.BackgroundImage");
             Volgin0HP.Cursor = Cursors.Hand;
             Volgin0HP.FlatStyle = FlatStyle.Flat;
-            Volgin0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Volgin0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Volgin0HP.ImageAlign = ContentAlignment.TopCenter;
             Volgin0HP.ImeMode = ImeMode.NoControl;
             Volgin0HP.Location = new Point(566, 609);
@@ -354,7 +354,7 @@
             Fury0Stam.BackgroundImage = (Image)resources.GetObject("Fury0Stam.BackgroundImage");
             Fury0Stam.Cursor = Cursors.Hand;
             Fury0Stam.FlatStyle = FlatStyle.Flat;
-            Fury0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Fury0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fury0Stam.ImageAlign = ContentAlignment.TopCenter;
             Fury0Stam.ImeMode = ImeMode.NoControl;
             Fury0Stam.Location = new Point(564, 458);
@@ -379,7 +379,7 @@
             Fury0HP.BackgroundImage = (Image)resources.GetObject("Fury0HP.BackgroundImage");
             Fury0HP.Cursor = Cursors.Hand;
             Fury0HP.FlatStyle = FlatStyle.Flat;
-            Fury0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Fury0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Fury0HP.ImageAlign = ContentAlignment.TopCenter;
             Fury0HP.ImeMode = ImeMode.NoControl;
             Fury0HP.Location = new Point(564, 395);
@@ -412,7 +412,7 @@
             Ocelot0Stam.BackgroundImage = (Image)resources.GetObject("Ocelot0Stam.BackgroundImage");
             Ocelot0Stam.Cursor = Cursors.Hand;
             Ocelot0Stam.FlatStyle = FlatStyle.Flat;
-            Ocelot0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Ocelot0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Ocelot0Stam.ImageAlign = ContentAlignment.TopCenter;
             Ocelot0Stam.ImeMode = ImeMode.NoControl;
             Ocelot0Stam.Location = new Point(190, 207);
@@ -437,7 +437,7 @@
             Ocelot0HP.BackgroundImage = (Image)resources.GetObject("Ocelot0HP.BackgroundImage");
             Ocelot0HP.Cursor = Cursors.Hand;
             Ocelot0HP.FlatStyle = FlatStyle.Flat;
-            Ocelot0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Ocelot0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Ocelot0HP.ImageAlign = ContentAlignment.TopCenter;
             Ocelot0HP.ImeMode = ImeMode.NoControl;
             Ocelot0HP.Location = new Point(190, 144);
@@ -462,7 +462,7 @@
             End0Stam.BackgroundImage = (Image)resources.GetObject("End0Stam.BackgroundImage");
             End0Stam.Cursor = Cursors.Hand;
             End0Stam.FlatStyle = FlatStyle.Flat;
-            End0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            End0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             End0Stam.ImageAlign = ContentAlignment.TopCenter;
             End0Stam.ImeMode = ImeMode.NoControl;
             End0Stam.Location = new Point(564, 207);
@@ -487,7 +487,7 @@
             End0HP.BackgroundImage = (Image)resources.GetObject("End0HP.BackgroundImage");
             End0HP.Cursor = Cursors.Hand;
             End0HP.FlatStyle = FlatStyle.Flat;
-            End0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            End0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             End0HP.ImageAlign = ContentAlignment.TopCenter;
             End0HP.ImeMode = ImeMode.NoControl;
             End0HP.Location = new Point(564, 144);
@@ -520,7 +520,7 @@
             Boss0Stam.BackgroundImage = (Image)resources.GetObject("Boss0Stam.BackgroundImage");
             Boss0Stam.Cursor = Cursors.Hand;
             Boss0Stam.FlatStyle = FlatStyle.Flat;
-            Boss0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Boss0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Boss0Stam.ImageAlign = ContentAlignment.TopCenter;
             Boss0Stam.ImeMode = ImeMode.NoControl;
             Boss0Stam.Location = new Point(994, 672);
@@ -545,7 +545,7 @@
             Boss0HP.BackgroundImage = (Image)resources.GetObject("Boss0HP.BackgroundImage");
             Boss0HP.Cursor = Cursors.Hand;
             Boss0HP.FlatStyle = FlatStyle.Flat;
-            Boss0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Boss0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Boss0HP.ImageAlign = ContentAlignment.TopCenter;
             Boss0HP.ImeMode = ImeMode.NoControl;
             Boss0HP.Location = new Point(994, 609);
@@ -574,7 +574,7 @@
             VolginOnShagohog0Stam.BackgroundImage = (Image)resources.GetObject("VolginOnShagohog0Stam.BackgroundImage");
             VolginOnShagohog0Stam.Cursor = Cursors.Hand;
             VolginOnShagohog0Stam.FlatStyle = FlatStyle.Flat;
-            VolginOnShagohog0Stam.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            VolginOnShagohog0Stam.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             VolginOnShagohog0Stam.ImageAlign = ContentAlignment.TopCenter;
             VolginOnShagohog0Stam.ImeMode = ImeMode.NoControl;
             VolginOnShagohog0Stam.Location = new Point(992, 458);
@@ -599,7 +599,7 @@
             VolginOnShagohog0HP.BackgroundImage = (Image)resources.GetObject("VolginOnShagohog0HP.BackgroundImage");
             VolginOnShagohog0HP.Cursor = Cursors.Hand;
             VolginOnShagohog0HP.FlatStyle = FlatStyle.Flat;
-            VolginOnShagohog0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            VolginOnShagohog0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             VolginOnShagohog0HP.ImageAlign = ContentAlignment.TopCenter;
             VolginOnShagohog0HP.ImeMode = ImeMode.NoControl;
             VolginOnShagohog0HP.Location = new Point(992, 395);
@@ -641,7 +641,7 @@
             Shagohod0HP.BackgroundImage = (Image)resources.GetObject("Shagohod0HP.BackgroundImage");
             Shagohod0HP.Cursor = Cursors.Hand;
             Shagohod0HP.FlatStyle = FlatStyle.Flat;
-            Shagohod0HP.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            Shagohod0HP.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point);
             Shagohod0HP.ImageAlign = ContentAlignment.TopCenter;
             Shagohod0HP.ImeMode = ImeMode.NoControl;
             Shagohod0HP.Location = new Point(992, 138);
@@ -773,7 +773,7 @@
             DoubleBuffered = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "BossForm";
-            Text = "MGS3 Cheat Trainer - Bosses - ANTIBigBoss - Version 2.4";
+            Text = "MGS3 Cheat Trainer - Bosses - ANTIBigBoss - Version 2.5";
             Load += BossForm_Load;
             ((System.ComponentModel.ISupportInitialize)FearHealthSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)FearStaminaSlider).EndInit();

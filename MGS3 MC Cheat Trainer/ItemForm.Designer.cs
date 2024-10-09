@@ -2309,7 +2309,7 @@
             Controls.Add(pictureBox7);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ItemForm";
-            Text = "MGS3 Cheat Trainer - Items - ANTIBigBoss - Version 2.4";
+            Text = "MGS3 Cheat Trainer - Items - ANTIBigBoss - Version 2.5";
             Load += Form2_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

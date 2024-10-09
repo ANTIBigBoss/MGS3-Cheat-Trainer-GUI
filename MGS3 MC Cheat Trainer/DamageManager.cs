@@ -64,7 +64,7 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("KnifeForkDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("KnifeForkDamage"), 6), 6)).Replace("-", " "));
             LoggingManager.Instance.Log("MostWeaponsDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("MostWeaponsDamage"), 2), 2)).Replace("-", " "));
             LoggingManager.Instance.Log("ExplosionDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("ExplosionDamage"), 24), 2)).Replace("-", " "));
-            LoggingManager.Instance.Log("ThroatSlitDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("ThroatSlitDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4)).Replace("-", " "));*/
 
             // Sleep Damage
 
@@ -76,7 +76,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             LoggingManager.Instance.Log("SleepStatus1: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("SleepControl"), (int)DamageOffsets.SleepStatus1Sub), 6)).Replace("-", " "));
 
-            LoggingManager.Instance.Log("ZzzWeaponsDamage1: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("ZzzWeaponsDamage1: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4)).Replace("-", " "));*/
 
             LoggingManager.Instance.Log("All damage values read successfully.");
 
@@ -84,21 +84,21 @@ namespace MGS3_MC_Cheat_Trainer
 
             LoggingManager.Instance.Log("Reading all stun damage values...");
 
-            LoggingManager.Instance.Log("CQCSlamNormal1: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam1Add), 4)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("CQCSlamNormal1: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam1Add), 4)).Replace("-", " "));*/
           
-            LoggingManager.Instance.Log("CQCSlamNormal2: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam2Add), 4)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("CQCSlamNormal2: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("CQCSlamNormal"), (int)DamageOffsets.CQCSlam2Add), 4)).Replace("-", " "));*/
 
             LoggingManager.Instance.Log("StunNadeDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunNadeDamage"), (int)DamageOffsets.StunNadeSub), 6)).Replace("-", " "));
 
-            LoggingManager.Instance.Log("StunPunchDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.TriplePunchSub), 1)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("StunPunchDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.TriplePunchSub), 1)).Replace("-", " "));*/
 
             LoggingManager.Instance.Log("StunRollDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunRollDamage"), (int)DamageOffsets.StunRollSub), 6)).Replace("-", " "));
 
-            LoggingManager.Instance.Log("StunPunchInstructions: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.StunPunchInstructionsAdd), 6)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("StunPunchInstructions: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.StunPunchInstructionsAdd), 6)).Replace("-", " "));*/
 
-            LoggingManager.Instance.Log("SinglePunchDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.SinglePunchSub), 1)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("SinglePunchDamage: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.SinglePunchSub), 1)).Replace("-", " "));*/
 
-            LoggingManager.Instance.Log("PunchKnockOverThreshold: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.PunchKnockOverAdd), 1)).Replace("-", " "));
+            /*LoggingManager.Instance.Log("PunchKnockOverThreshold: " + BitConverter.ToString(MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("StunPunchDamage"), (int)DamageOffsets.PunchKnockOverAdd), 1)).Replace("-", " "));*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -123,7 +123,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
             WriteValues(processHandle, "MostWeaponsDamage", 2, false, 0);
             WriteValues(processHandle, "ExplosionDamage", 24, true, 0);
-            WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0xE8, 0x03, 0x00, 0x00 });
+            //WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0xE8, 0x03, 0x00, 0x00 });
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -165,9 +165,9 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr.Add(MemoryManager.Instance.FindAob("ExplosionDamage"), 24), 2);
             areInvincible &= BitConverter.ToInt16(explosionDamage, 0) == 0;
 
-            byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle,
+            /*byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle,
                 IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4);
-            areInvincible &= throatSlitDamage.SequenceEqual(new byte[] { 0xE8, 0x03, 0x00, 0x00 });
+            areInvincible &= throatSlitDamage.SequenceEqual(new byte[] { 0xE8, 0x03, 0x00, 0x00 });*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areInvincible;
@@ -194,7 +194,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
             WriteValues(processHandle, "MostWeaponsDamage", 2, false, 100);
             WriteValues(processHandle, "ExplosionDamage", 24, true, 100);
-            WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            //WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
 
@@ -242,9 +242,9 @@ namespace MGS3_MC_Cheat_Trainer
             areVeryStrong &= BitConverter.ToInt16(explosionDamage, 0) == 100;
 
             // Read and compare ThroatSlitDamage
-            byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle,
+            /*byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle,
                 IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4);
-            areVeryStrong &= throatSlitDamage.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            areVeryStrong &= throatSlitDamage.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areVeryStrong;
@@ -270,7 +270,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x29, 0x86, 0x38, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "MostWeaponsDamage", 2, false, 1000);
             WriteValues(processHandle, "ExplosionDamage", 24, true, 1000);
-            WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            //WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -312,9 +312,9 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr.Add(MemoryManager.Instance.FindAob("ExplosionDamage"), 24), 2);
             areDefault &= BitConverter.ToUInt16(explosionDamageBytes, 0) == 1000;
 
-            byte[] throatSlitDamageBytes = MemoryManager.ReadMemoryBytes(processHandle,
+            /*byte[] throatSlitDamageBytes = MemoryManager.ReadMemoryBytes(processHandle,
                 IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4);
-            areDefault &= throatSlitDamageBytes.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            areDefault &= throatSlitDamageBytes.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areDefault;
@@ -340,7 +340,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x29, 0x86, 0x38, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "MostWeaponsDamage", 2, false, 2500);
             WriteValues(processHandle, "ExplosionDamage", 24, true, 2500);
-            WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            //WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -382,9 +382,9 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr.Add(MemoryManager.Instance.FindAob("ExplosionDamage"), 24), 2);
             areVeryWeak &= BitConverter.ToInt16(explosionDamage, 0) == 2500;
 
-            byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle,
+            /*byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle,
                 IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4);
-            areVeryWeak &= throatSlitDamage.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            areVeryWeak &= throatSlitDamage.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areVeryWeak;
@@ -410,7 +410,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x29, 0x86, 0x38, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "MostWeaponsDamage", 2, false, 30000);
             WriteValues(processHandle, "ExplosionDamage", 24, true, 30000);
-            WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            //WriteValues(processHandle, "ThroatSlitDamage", 26, false, new byte[] { 0x00, 0x00, 0x00, 0x00 });
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -446,8 +446,8 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] explosionDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Add(MemoryManager.Instance.FindAob("ExplosionDamage"), 24), 2);
             areOneshot &= BitConverter.ToInt16(explosionDamage, 0) == 30000;
 
-            byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4);
-            areOneshot &= throatSlitDamage.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });
+            /*byte[] throatSlitDamage = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ThroatSlitDamage"), 26), 4);
+            areOneshot &= throatSlitDamage.SequenceEqual(new byte[] { 0x00, 0x00, 0x00, 0x00 });*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areOneshot;
@@ -459,8 +459,10 @@ namespace MGS3_MC_Cheat_Trainer
 
         #region Stun Damage
 
+        // Stun is commented out until we find those addresses again
         #region Invinible Stun Read/Write
 
+        /*
         public void WriteAllStunInvincibleValues()
         {
             IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
@@ -488,6 +490,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public bool AreStunValuesInvincible()
         {
+            
             Process process = MemoryManager.GetMGS3Process();
             IntPtr processHandle = MemoryManager.OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
@@ -785,6 +788,7 @@ namespace MGS3_MC_Cheat_Trainer
             return areNormal;
         }
 
+        */
         #endregion
 
         #endregion
@@ -830,8 +834,8 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] sleepStatus1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("SleepControl"), (int)DamageOffsets.SleepStatus1Sub), 6);
             areInvincible &= sleepStatus1.SequenceEqual(new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
 
-            byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
-            areInvincible &= BitConverter.ToInt32(zzzWeapons1, 0) == 0;
+            /*byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
+            areInvincible &= BitConverter.ToInt32(zzzWeapons1, 0) == 0;*/
             
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
@@ -852,7 +856,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "SleepControl2", (int)DamageOffsets.ZzzDrainSub, false, new byte[] { 0x89, 0x87, 0x48, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 1000);
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
-            WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 1000);
+            //WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 1000);
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -878,8 +882,8 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] sleepStatus1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("SleepControl"), (int)DamageOffsets.SleepStatus1Sub), 6);
             areVeryStrong &= sleepStatus1.SequenceEqual(new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
 
-            byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
-            areVeryStrong &= BitConverter.ToInt32(zzzWeapons1, 0) == 1000;
+            /*byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
+            areVeryStrong &= BitConverter.ToInt32(zzzWeapons1, 0) == 1000;*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areVeryStrong;
@@ -899,7 +903,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "SleepControl2", (int)DamageOffsets.ZzzDrainSub, false, new byte[] { 0x89, 0x87, 0x48, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 4000);
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
-            WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 4000);
+            //WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 4000);
             
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -932,9 +936,9 @@ namespace MGS3_MC_Cheat_Trainer
             areNormal &= sleepStatus1.SequenceEqual(new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
 
             // Check if ZzzWeapons1Sub is at default value (4000)
-            byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle,
+            /*byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle,
                 IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
-            areNormal &= BitConverter.ToInt32(zzzWeapons1, 0) == 4000;
+            areNormal &= BitConverter.ToInt32(zzzWeapons1, 0) == 4000;*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areNormal;
@@ -955,7 +959,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "SleepControl2", (int)DamageOffsets.ZzzDrainSub, false, new byte[] { 0x89, 0x87, 0x48, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 8000);
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
-            WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 8000);
+            //WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 8000);
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -981,8 +985,8 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] sleepStatus1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("SleepControl"), (int)DamageOffsets.SleepStatus1Sub), 6);
             areVeryWeak &= sleepStatus1.SequenceEqual(new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
 
-            byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
-            areVeryWeak &= BitConverter.ToInt32(zzzWeapons1, 0) == 8000;
+            /*byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
+            areVeryWeak &= BitConverter.ToInt32(zzzWeapons1, 0) == 8000;*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areVeryWeak;
@@ -1002,7 +1006,7 @@ namespace MGS3_MC_Cheat_Trainer
             WriteValues(processHandle, "SleepControl2", (int)DamageOffsets.ZzzDrainSub, false, new byte[] { 0x89, 0x87, 0x48, 0x01, 0x00, 0x00 });
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus2Sub, false, 30000);
             WriteValues(processHandle, "SleepControl", (int)DamageOffsets.SleepStatus1Sub, false, new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
-            WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 30000);
+            //WriteValues(processHandle, "ZZZWeaponsDamage", (int)DamageOffsets.ZzzWeapons1Sub, false, 30000);
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -1028,8 +1032,8 @@ namespace MGS3_MC_Cheat_Trainer
             byte[] sleepStatus1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("SleepControl"), (int)DamageOffsets.SleepStatus1Sub), 6);
             areOneShot &= sleepStatus1.SequenceEqual(new byte[] { 0x89, 0x86, 0x48, 0x01, 0x00, 0x00 });
 
-            byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
-            areOneShot &= BitConverter.ToInt32(zzzWeapons1, 0) == 30000;
+            /*byte[] zzzWeapons1 = MemoryManager.ReadMemoryBytes(processHandle, IntPtr.Subtract(MemoryManager.Instance.FindAob("ZZZWeaponsDamage"), (int)DamageOffsets.ZzzWeapons1Sub), 4);
+            areOneShot &= BitConverter.ToInt32(zzzWeapons1, 0) == 30000;*/
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
             return areOneShot;

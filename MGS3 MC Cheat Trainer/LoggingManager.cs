@@ -182,6 +182,10 @@ namespace MGS3_MC_Cheat_Trainer
                 { "No HUD Partial", () => DebugFunctionManager.Instance.GetPartialHudValue() },
                 { "Item and Weapon Window", () => DebugFunctionManager.Instance.GetItemAndWeaponWindowValue() },
                 { "Real Time Item Swapping Instructions", () => DebugFunctionManager.Instance.RealTimeWeaponItemSwapping() },
+                { "Light Near Snake", () => DebugFunctionManager.Instance.GetLightNearSnakeValueAsString() },
+                { "Map Colour", () => DebugFunctionManager.Instance.GetColourMapValueAsString() },
+                { "Sky Colour", () => DebugFunctionManager.Instance.GetSkyColourValueAsString() },
+                { "Sky Value", () => DebugFunctionManager.Instance.GetSkyChangingByteValueAsString() },
             };
 
             foreach (var reading in LogMemoryAddresses)
@@ -191,8 +195,98 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
+        public static void LogAllWeaponsAndItemsAddresses()
+        {
+            LoggingManager.Instance.Log("Logging all weapons and items' addresses...");
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            // Get the base address of the game module
+            Process process = MemoryManager.GetMGS3Process();
+            IntPtr baseAddress = process.MainModule.BaseAddress;
+
+            // Log Weapons
+            LoggingManager.Instance.Log("Weapons:");
+            var weapons = typeof(MGS3UsableObjects).GetFields()
+                .Where(field => field.FieldType == typeof(Weapon))
+                .Select(field => field.GetValue(null) as Weapon)
+                .ToList();
+
+            foreach (var weapon in weapons)
+            {
+                IntPtr weaponAddress = WeaponAddresses.GetAddress(weapon.Index, MemoryManager.Instance);
+                if (weaponAddress == IntPtr.Zero) continue;
+
+                // Calculate the offset relative to the base address
+                long relativeOffset = weaponAddress.ToInt64() - baseAddress.ToInt64();
+                LoggingManager.Instance.Log($"{weapon.Name} - Address: {weaponAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+
+                if (weapon.MaxAmmoOffset != IntPtr.Zero)
+                {
+                    IntPtr maxAmmoAddress = WeaponAddresses.GetMaxAmmoAddress(weaponAddress);
+                    relativeOffset = maxAmmoAddress.ToInt64() - baseAddress.ToInt64();
+                    LoggingManager.Instance.Log($"Max Ammo Address: {maxAmmoAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+                }
+
+                if (weapon.ClipOffset != IntPtr.Zero)
+                {
+                    IntPtr clipAddress = WeaponAddresses.GetClipAddress(weaponAddress);
+                    relativeOffset = clipAddress.ToInt64() - baseAddress.ToInt64();
+                    LoggingManager.Instance.Log($"Clip Address: {clipAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+                }
+
+                if (weapon.MaxClipOffset != IntPtr.Zero)
+                {
+                    IntPtr maxClipAddress = WeaponAddresses.GetMaxClipAddress(weaponAddress);
+                    relativeOffset = maxClipAddress.ToInt64() - baseAddress.ToInt64();
+                    LoggingManager.Instance.Log($"Max Clip Address: {maxClipAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+                }
+
+                if (weapon.SuppressorToggleOffset != IntPtr.Zero)
+                {
+                    IntPtr suppressorToggleAddress = WeaponAddresses.GetSuppressorToggleAddress(weaponAddress);
+                    relativeOffset = suppressorToggleAddress.ToInt64() - baseAddress.ToInt64();
+                    LoggingManager.Instance.Log($"Suppressor Toggle Address: {suppressorToggleAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+                }
+            }
+
+            // Log Items
+            LoggingManager.Instance.Log("Items:");
+            var items = typeof(MGS3UsableObjects).GetFields()
+                .Where(field => field.FieldType == typeof(Item))
+                .Select(field => field.GetValue(null) as Item)
+                .ToList();
+
+            foreach (var item in items)
+            {
+                IntPtr itemAddress = ItemAddresses.GetAddress(item.Index, MemoryManager.Instance);
+                if (itemAddress == IntPtr.Zero) continue;
+
+                // Calculate the offset relative to the base address
+                long relativeOffset = itemAddress.ToInt64() - baseAddress.ToInt64();
+                LoggingManager.Instance.Log($"{item.Name} - Address: {itemAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+
+                if (item.MaxCapacityOffset != IntPtr.Zero)
+                {
+                    IntPtr maxCapacityAddress = ItemAddresses.GetMaxAddress(itemAddress);
+                    relativeOffset = maxCapacityAddress.ToInt64() - baseAddress.ToInt64();
+                    LoggingManager.Instance.Log($"Max Capacity Address: {maxCapacityAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
+                }
+            }
+
+            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            LoggingManager.Instance.Log("Finished logging weapons and items' addresses.");
+        }
+
     }
+
 }
+
 
 
 /* Button to implement later to locate the log file/folder

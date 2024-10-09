@@ -61,7 +61,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             SetLethalRadio();
             SetSleepRadio();
-            SetStunRadio();
+            //SetStunRadio();
 
             // Battery Drain Checkbox
             CheckBatteryDrain();
@@ -158,7 +158,7 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
 
-
+        /*
         public void SetStunRadio()
         {
             bool isNeckSnap = DamageManager.Instance.AreStunValuesInvincible();
@@ -202,6 +202,7 @@ namespace MGS3_MC_Cheat_Trainer
                 LoggingManager.Instance.Log("STUN DAMAGE settings are custom or unrecognized.");
             }
         }
+        */
 
         // Lethal Radio Buttons
         private void NeckSnapLethalRadio_CheckedChanged(object sender, EventArgs e)
@@ -258,27 +259,27 @@ namespace MGS3_MC_Cheat_Trainer
         // Stun Radio Buttons
         private void NeckSnapStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-            DamageManager.Instance.WriteAllStunInvincibleValues();
+            //DamageManager.Instance.WriteAllStunInvincibleValues();
         }
 
         private void VeryStrongStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-            DamageManager.Instance.WriteAllStunVeryStrongValues();
+            //DamageManager.Instance.WriteAllStunVeryStrongValues();
         }
 
         private void NormalStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-            DamageManager.Instance.WriteAllStunDefaultValues();
+            //DamageManager.Instance.WriteAllStunDefaultValues();
         }
 
         private void VeryWeakStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-            DamageManager.Instance.WriteAllStunVeryWeakValues();
+            //DamageManager.Instance.WriteAllStunVeryWeakValues();
         }
 
         private void OneShotStunStunRadio_CheckedChanged(object sender, EventArgs e)
         {
-            DamageManager.Instance.WriteAllStunOneShotValues();
+            //DamageManager.Instance.WriteAllStunOneShotValues();
         }
 
         private void StatsAndAlertForm_FormClosing(object sender, FormClosingEventArgs e)

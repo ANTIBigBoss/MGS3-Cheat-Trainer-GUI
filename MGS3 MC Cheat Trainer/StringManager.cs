@@ -8,6 +8,8 @@ namespace MGS3_MC_Cheat_Trainer
     {
         private static StringManager instance;
         private static readonly object lockObj = new object();
+        private IntPtr processHandle = IntPtr.Zero; // Keep this handle open for the process
+
 
         private StringManager()
         {
@@ -81,12 +83,17 @@ namespace MGS3_MC_Cheat_Trainer
             s061a, // Svyatogornyj West
             s062a, // Svyatogornyj East - M63 Area with the house
             s063a, // Sokrovenno South - The End Fight
+            s063b, // Sokrovenno South - Ocelot Unit Fight 
             s064a, // Sokrovenno West - The End fight area with the river
+            s064b, // Sokrovenno West - Ocelot Unit fight area with the river
             s065a, // Sokrovenno North - Area where The End dies and you head to the ladder area
+            s065b, // Sokrovenno North - Final area of Sokrovenno next area is the ladder in Krasnogorje Tunnel
             s066a, // Krasnogorje Tunnel - What a thrill...
-            s071a, // Krasnogorje Mountain Base - Start of the mountain area
-            s072b, // Krasnogorje Mountainside - s072a might be hovercrafts instead of Hind-D?
+            s071a, // Krasnogorje Mountain Base - Start of the mountain area regardless of before/after Eva mountain cutscene
+            s072a, // Krasnogorje Mountainside - a is hovercrafts 
+            s072b, // Krasnogorje Mountainside - b is hind and for after Eva cutscene
             s073a, // Krasnogorje Mountaintop - Before cutscene with Eva
+            s073b, // Krasnogorje Mountaintop - After cutscene with Eva
             s074a, // Krasnogorje Mountaintop Ruins - Eva Cutscene
             s075a, // Krasnogorje Mountaintop: Behind Ruins
             s081a, // Groznyj Grad Underground Tunnel - Before/During/After the fight with The Fury
@@ -108,6 +115,7 @@ namespace MGS3_MC_Cheat_Trainer
             s112a, // Groznyj Grad Torture Room always this regardless of before, during, or after torture
             s111a, // Groznyj Grad Weapon's Lab: West Wing Corridor - Before you trigger Sokolov cutscene
             s121a, // Groznyj Grad Weapon's Lab: Main Wing
+            s121b, // Groznyj Grad Weapon's Lab: Main Wing - C3 Mission
             s122a, // Groznyj Grad Weapon's Lab: Main Wing B1 - Volgin Fight both parts
             s141a, // Unsure on name of this area - Sorrow Boss Fight
             s151a, // Tikhogornyj - After Sorrow Fight regardless of if Ocelot Unit is there or not
@@ -173,13 +181,18 @@ namespace MGS3_MC_Cheat_Trainer
                 { LocationString.s045a, "Svyatogornyj South" },
                 { LocationString.s061a, "Svyatogornyj West" },
                 { LocationString.s062a, "Svyatogornyj East" },
-                { LocationString.s063a, "Sokrovenno South" },
-                { LocationString.s064a, "Sokrovenno West" },
-                { LocationString.s065a, "Sokrovenno North" },
+                { LocationString.s063a, "Sokrovenno South - The End Scenario A" },
+                { LocationString.s063b, "Sokrovenno South - Ocelot Unit Scenario B" },
+                { LocationString.s064a, "Sokrovenno West - The End Scenario A" },
+                { LocationString.s064b, "Sokrovenno West - Ocelot Unit Scenario B" },
+                { LocationString.s065a, "Sokrovenno North - The End Scenario A" },
+                { LocationString.s065b, "Sokrovenno North - Ocelot Unit Scenario B" },
                 { LocationString.s066a, "Krasnogorje Tunnel" },
                 { LocationString.s071a, "Krasnogorje Mountain Base" },
-                { LocationString.s072b, "Krasnogorje Mountainside" },
-                { LocationString.s073a, "Krasnogorje Mountaintop" },
+                { LocationString.s072a, "Krasnogorje Mountainside - Hovercraft Scenario" },
+                { LocationString.s072b, "Krasnogorje Mountainside - Hind D Scenario" },
+                { LocationString.s073a, "Krasnogorje Mountaintop - Before Meeting Eva" },
+                { LocationString.s073b, "Krasnogorje Mountaintop - After Meeting Eva" },
                 { LocationString.s074a, "Krasnogorje Mountaintop Ruins" },
                 { LocationString.s075a, "Krasnogorje Mountaintop: Behind Ruins" },
                 { LocationString.s081a, "Groznyj Grad Underground Tunnel" },
@@ -201,6 +214,7 @@ namespace MGS3_MC_Cheat_Trainer
                 { LocationString.s112a, "Groznyj Grad Torture Room" },
                 { LocationString.s111a, "Groznyj Grad Weapon's Lab: West Wing Corridor" },
                 { LocationString.s121a, "Groznyj Grad Weapon's Lab: Main Wing" },
+                { LocationString.s121b, "Groznyj Grad Weapon's Lab: Main Wing - C3 Mission" },
                 { LocationString.s122a, "Groznyj Grad Weapon's Lab: Main Wing B1" },
                 { LocationString.s141a, "Sorrow Boss Fight" },
                 { LocationString.s151a, "Tikhogornyj" },
@@ -232,8 +246,8 @@ namespace MGS3_MC_Cheat_Trainer
 
             IntPtr processHandle = OpenGameProcess(process);
             IntPtr baseAddress = process.MainModule.BaseAddress;
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1C00000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1D00000);
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1E00000);
             long size = endAddress.ToInt64() - startAddress.ToInt64();
 
             foreach (StringManager.LocationString location in Enum.GetValues(typeof(StringManager.LocationString)))
@@ -302,136 +316,150 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             return "Unknown";
-        }
+        }      
 
-        public string FindLocationStringFollowingR_Sna01()
+        private static IntPtr cachedPointerAddress = IntPtr.Zero;
+        private static string currentMapLocation = "";
+        public static bool isInCutscene = false;
+        private static string lastLoggedLocation = ""; // To store the last logged map location
+        private static bool lastLoggedCutsceneStatus = false; // To store the last logged cutscene status
+
+        public string GetCurrentLocation()
         {
-            Process process = GetMGS3Process();
-            if (process == null) return "Game process not found.";
-
-            IntPtr processHandle = OpenGameProcess(process);
-            IntPtr baseAddress = process.MainModule.BaseAddress;
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1B00000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            byte[] r_sna01PatternAscii = Encoding.ASCII.GetBytes("r_sna01");
-            byte[] r_sna01PatternUtf16 = Encoding.Unicode.GetBytes("r_sna01");
-            string r_sna01MaskAscii = new string('x', r_sna01PatternAscii.Length);
-            string r_sna01MaskUtf16 = new string('x', r_sna01PatternUtf16.Length / 2);
-
-            IntPtr r_sna01Address = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size,
-                r_sna01PatternAscii, r_sna01MaskAscii);
-            if (r_sna01Address == IntPtr.Zero)
+            // Check if the process handle is already open, otherwise open it
+            if (processHandle == IntPtr.Zero)
             {
-                r_sna01Address = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size,
-                    r_sna01PatternUtf16, r_sna01MaskUtf16);
+                Process process = GetMGS3Process();
+                if (process == null) return "Game process not found.";
+
+                processHandle = OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return "Failed to open game process.";
             }
 
-            if (r_sna01Address == IntPtr.Zero)
+            // If we cannot find the location string after a transition, reset the pointer search
+            if (cachedPointerAddress == IntPtr.Zero || currentMapLocation == "Map string not found.")
             {
-                NativeMethods.CloseHandle(processHandle);
-                return "r_sna01 not found in specified range.";
+                Process processMain = Process.GetProcessesByName(Constants.PROCESS_NAME).FirstOrDefault();
+                IntPtr baseAddress = processMain.MainModule.BaseAddress;
+                IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
+                IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
+                long searchRangeSize = endAddress.ToInt64() - startAddress.ToInt64();
+
+                // Updated byte pattern for 30 75 ?? ?? ?? ?? 00 00 2C 01 00 00 ??
+                byte[] pointerPattern = { 0x30, 0x75, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00 };
+                string pointerMask = "xx????xxxxxx?";
+
+                cachedPointerAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, searchRangeSize, pointerPattern, pointerMask);
+
+                if (cachedPointerAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Pointer pattern not found in the specified range.");
+                    return "Pattern not found in the specified range.";
+                }
+
+                LoggingManager.Instance.Log($"Pointer pattern found at address: {cachedPointerAddress.ToString("X")}");
             }
 
-            // Start searching for LocationString within a reasonable distance after finding r_sna01
-            IntPtr searchStartAddress = r_sna01Address;
-            long searchSize = 100; // Increased search size for flexibility
+            // Now that the pointer has been cached, search for the map string
+            long backwardSearchSize = 2700;
+            long forwardSearchSize = 1000;
+            IntPtr searchStart = IntPtr.Subtract(cachedPointerAddress, (int)backwardSearchSize);
+            long totalSearchSize = backwardSearchSize + forwardSearchSize;
 
-            foreach (var location in Enum.GetValues(typeof(LocationString)))
+            // Initialize variables to hold the found location information
+            string foundLocationString = null;
+            bool foundCutscene = false;
+            IntPtr foundAddress = IntPtr.Zero;
+            string areaName = "Unknown Area";
+
+            // Search for map strings within the defined range
+            foreach (LocationString location in Enum.GetValues(typeof(LocationString)))
             {
-                var locationString = location.ToString();
+                string locationString = location.ToString();
                 byte[] locationPatternAscii = Encoding.ASCII.GetBytes(locationString);
-                byte[] locationPatternUtf16 = Encoding.Unicode.GetBytes(locationString);
                 string locationMaskAscii = new string('x', locationPatternAscii.Length);
-                string locationMaskUtf16 = new string('x', locationPatternUtf16.Length / 2);
 
-                IntPtr foundAddress = MemoryManager.Instance.ScanMemory(processHandle, searchStartAddress, searchSize,
-                    locationPatternAscii, locationMaskAscii);
-                if (foundAddress == IntPtr.Zero)
+                // First, check for the base location string
+                IntPtr baseFoundAddress = MemoryManager.Instance.ScanMemory(processHandle, searchStart, totalSearchSize, locationPatternAscii, locationMaskAscii);
+
+                if (baseFoundAddress != IntPtr.Zero)
                 {
-                    foundAddress = MemoryManager.Instance.ScanMemory(processHandle, searchStartAddress, searchSize,
-                        locationPatternUtf16, locationMaskUtf16);
-                }
-
-                if (foundAddress != IntPtr.Zero)
-                {
-                    long offsetForR_Sna01 = r_sna01Address.ToInt64() - baseAddress.ToInt64();
-                    long offsetForFoundLocation = foundAddress.ToInt64() - baseAddress.ToInt64();
-                    string areaName = LocationAreaNames.TryGetValue((LocationString)location, out var name)
-                        ? name
-                        : "Unknown Area";
-
-                    NativeMethods.CloseHandle(processHandle);
-                    return
-                        $"Location String: {locationString} ({areaName}) found at: {foundAddress.ToString("X")} \nMETAL GEAR SOLID3.exe+{offsetForFoundLocation:X}";
-                }
-            }
-
-            NativeMethods.CloseHandle(processHandle);
-            return "r_sna01 found, but no Location String found within the search range.";
-        }
-
-        public List<string> FindAllR_Sna01AndLocationStringInstances()
-        {
-            Process process = MemoryManager.GetMGS3Process();
-            if (process == null) return new List<string> { "Game process not found." };
-
-            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-            IntPtr baseAddress = process.MainModule.BaseAddress;
-            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1B00000);
-            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
-            long size = endAddress.ToInt64() - startAddress.ToInt64();
-
-            List<string> results = new List<string>();
-
-            byte[] r_sna01Pattern = Encoding.ASCII.GetBytes("r_sna01");
-            string r_sna01Mask = "xxxxxx";
-
-            while (startAddress.ToInt64() < endAddress.ToInt64() && size > 0)
-            {
-                IntPtr r_sna01Address = MemoryManager.Instance.ScanForStringMemory(processHandle, startAddress, size, r_sna01Pattern);
-                // Rest of the function remains unchanged.
-
-                if (r_sna01Address == IntPtr.Zero) break;
-
-                bool locationFound = false;
-                foreach (LocationString location in Enum.GetValues(typeof(LocationString)))
-                {
-                    string locationString = location.ToString();
-                    byte[] locationPattern = Encoding.ASCII.GetBytes(locationString);
-                    string locationMask = new string('x', locationPattern.Length);
-
-                    IntPtr locationAddress = MemoryManager.Instance.ScanForStringMemory(processHandle, startAddress, size, r_sna01Pattern);
-                    // Rest of the function remains unchanged.
-                    // Search within 100 bytes range
-                    if (locationAddress != IntPtr.Zero)
+                    // Check for cutscene variants
+                    foreach (var suffix in new[] { "_0", "_1" })
                     {
-                        string result =
-                            $"r_sna01 found at {r_sna01Address.ToString("X")}, followed by {locationString} at {locationAddress.ToString("X")}";
-                        results.Add(result);
-                        locationFound = true;
-                        break; // Assuming only one LocationString is relevant per r_sna01 instance.
+                        string cutsceneLocationString = locationString + suffix;
+                        byte[] cutscenePatternAscii = Encoding.ASCII.GetBytes(cutsceneLocationString);
+                        string cutsceneMaskAscii = new string('x', cutscenePatternAscii.Length);
+
+                        IntPtr cutsceneFoundAddress = MemoryManager.Instance.ScanMemory(processHandle, searchStart, totalSearchSize, cutscenePatternAscii, cutsceneMaskAscii);
+
+                        if (cutsceneFoundAddress != IntPtr.Zero)
+                        {
+                            // Cutscene location string found
+                            foundLocationString = cutsceneLocationString;
+                            foundCutscene = true;
+                            foundAddress = cutsceneFoundAddress;
+                            areaName = LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+                            break;
+                        }
                     }
-                }
 
-                if (!locationFound)
-                {
-                    string result =
-                        $"r_sna01 found at {r_sna01Address.ToString("X")}, but no LocationString found nearby.";
-                    results.Add(result);
-                }
+                    if (!foundCutscene)
+                    {
+                        // Base location string found without cutscene
+                        foundLocationString = locationString;
+                        foundAddress = baseFoundAddress;
+                        areaName = LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+                    }
 
-                // Prepare for next iteration
-                startAddress = IntPtr.Add(r_sna01Address, 1);
-                size = endAddress.ToInt64() - startAddress.ToInt64();
+                    // Exit the loop as we've found the location
+                    break;
+                }
             }
 
-            MemoryManager.NativeMethods.CloseHandle(processHandle);
+            if (foundLocationString != null)
+            {
+                // Update the cutscene status and current map location
+                isInCutscene = foundCutscene;
+                currentMapLocation = foundLocationString;
 
-            return results.Count > 0
-                ? results
-                : new List<string> { "No r_sna01 and LocationString combinations found within the range." };
+                // Log the location change only if it has actually changed
+                if (currentMapLocation != lastLoggedLocation || isInCutscene != lastLoggedCutsceneStatus)
+                {
+                    string cutsceneText = isInCutscene ? " (Cutscene)" : "";
+                    LoggingManager.Instance.Log($"Location changed: {currentMapLocation} ({areaName}){cutsceneText}");
+
+                    // Update the last logged values
+                    lastLoggedLocation = currentMapLocation;
+                    lastLoggedCutsceneStatus = isInCutscene;
+                }
+
+                return $"Pointer Pattern Address: {cachedPointerAddress.ToString("X")} \n" +
+                       $"Location String: {foundLocationString} \n" +
+                       $"Area Name: {areaName} \n" + 
+                       $"Cutscene Playing: {foundCutscene} \n" +
+                       $"Location Address: {foundAddress.ToString("X")}";
+            }
+            else
+            {
+                // Reset the pointer search if map string is not found
+                LoggingManager.Instance.Log("Map string not found. Resetting pointer search.");
+                cachedPointerAddress = IntPtr.Zero; // Reset to force a pointer search in the next tick
+                return "Map string not found.";
+            }
         }
+
+
+        public string GetCurrentMapLocation()
+        {
+            return currentMapLocation;
+        }
+
+        public bool IsInCutscene()
+        {
+            return isInCutscene;
+        }
+
+
     }
 }

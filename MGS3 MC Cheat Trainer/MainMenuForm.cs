@@ -97,11 +97,14 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MainMenuForm_Load(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("Start of logging for this session.\nApplication started successfully.\n");
+            // Check if the game is running before starting the application if the game isn't running then close the application
+            MemoryManager.Instance.TrainerLooksForGame(sender, e);
+            
             TimerManager.StartLocationTracking();
             LoggingManager.Instance.Log("Now Tracking the player's map location.\n");
         }
 
+        
 
     }
 }

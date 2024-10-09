@@ -191,10 +191,10 @@
             // 
             // AllTextbox
             // 
-            AllTextbox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AllTextbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AllTextbox.Location = new Point(989, 556);
             AllTextbox.Name = "AllTextbox";
-            AllTextbox.Size = new Size(154, 23);
+            AllTextbox.Size = new Size(154, 22);
             AllTextbox.TabIndex = 731;
             // 
             // ChangeAllChecked
@@ -202,7 +202,7 @@
             ChangeAllChecked.BackgroundImage = (Image)resources.GetObject("ChangeAllChecked.BackgroundImage");
             ChangeAllChecked.Cursor = Cursors.Hand;
             ChangeAllChecked.FlatStyle = FlatStyle.Flat;
-            ChangeAllChecked.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeAllChecked.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeAllChecked.ImeMode = ImeMode.NoControl;
             ChangeAllChecked.Location = new Point(989, 501);
             ChangeAllChecked.Name = "ChangeAllChecked";
@@ -226,7 +226,7 @@
             ChangeHandkerchief.BackgroundImage = (Image)resources.GetObject("ChangeHandkerchief.BackgroundImage");
             ChangeHandkerchief.Cursor = Cursors.Hand;
             ChangeHandkerchief.FlatStyle = FlatStyle.Flat;
-            ChangeHandkerchief.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeHandkerchief.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeHandkerchief.ImeMode = ImeMode.NoControl;
             ChangeHandkerchief.Location = new Point(593, 519);
             ChangeHandkerchief.Name = "ChangeHandkerchief";
@@ -241,12 +241,12 @@
             HandkerchiefDropdown.BackColor = SystemColors.Control;
             HandkerchiefDropdown.Cursor = Cursors.Hand;
             HandkerchiefDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            HandkerchiefDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            HandkerchiefDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             HandkerchiefDropdown.FormattingEnabled = true;
             HandkerchiefDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             HandkerchiefDropdown.Location = new Point(594, 568);
             HandkerchiefDropdown.Name = "HandkerchiefDropdown";
-            HandkerchiefDropdown.Size = new Size(163, 23);
+            HandkerchiefDropdown.Size = new Size(163, 24);
             HandkerchiefDropdown.TabIndex = 727;
             HandkerchiefDropdown.SelectedIndexChanged += HandkerchiefDropdown_SelectedIndexChanged_1;
             // 
@@ -255,7 +255,7 @@
             ChangeCigSpray.BackgroundImage = (Image)resources.GetObject("ChangeCigSpray.BackgroundImage");
             ChangeCigSpray.Cursor = Cursors.Hand;
             ChangeCigSpray.FlatStyle = FlatStyle.Flat;
-            ChangeCigSpray.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeCigSpray.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeCigSpray.ImeMode = ImeMode.NoControl;
             ChangeCigSpray.Location = new Point(593, 598);
             ChangeCigSpray.Name = "ChangeCigSpray";
@@ -270,12 +270,12 @@
             CigSprayDropdown.BackColor = SystemColors.Control;
             CigSprayDropdown.Cursor = Cursors.Hand;
             CigSprayDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            CigSprayDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            CigSprayDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             CigSprayDropdown.FormattingEnabled = true;
             CigSprayDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             CigSprayDropdown.Location = new Point(594, 646);
             CigSprayDropdown.Name = "CigSprayDropdown";
-            CigSprayDropdown.Size = new Size(163, 23);
+            CigSprayDropdown.Size = new Size(163, 24);
             CigSprayDropdown.TabIndex = 725;
             CigSprayDropdown.SelectedIndexChanged += CigSprayDropdown_SelectedIndexChanged_1;
             // 
@@ -284,7 +284,7 @@
             ChangeMousetrap.BackgroundImage = (Image)resources.GetObject("ChangeMousetrap.BackgroundImage");
             ChangeMousetrap.Cursor = Cursors.Hand;
             ChangeMousetrap.FlatStyle = FlatStyle.Flat;
-            ChangeMousetrap.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeMousetrap.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeMousetrap.ImeMode = ImeMode.NoControl;
             ChangeMousetrap.Location = new Point(832, 362);
             ChangeMousetrap.Name = "ChangeMousetrap";
@@ -299,12 +299,12 @@
             MousetrapDropdown.BackColor = SystemColors.Control;
             MousetrapDropdown.Cursor = Cursors.Hand;
             MousetrapDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            MousetrapDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MousetrapDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MousetrapDropdown.FormattingEnabled = true;
             MousetrapDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             MousetrapDropdown.Location = new Point(833, 410);
             MousetrapDropdown.Name = "MousetrapDropdown";
-            MousetrapDropdown.Size = new Size(143, 23);
+            MousetrapDropdown.Size = new Size(143, 24);
             MousetrapDropdown.TabIndex = 723;
             MousetrapDropdown.SelectedIndexChanged += MousetrapDropdown_SelectedIndexChanged_1;
             // 
@@ -313,7 +313,7 @@
             ChangeTNT.BackgroundImage = (Image)resources.GetObject("ChangeTNT.BackgroundImage");
             ChangeTNT.Cursor = Cursors.Hand;
             ChangeTNT.FlatStyle = FlatStyle.Flat;
-            ChangeTNT.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeTNT.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeTNT.ImeMode = ImeMode.NoControl;
             ChangeTNT.Location = new Point(829, 137);
             ChangeTNT.Name = "ChangeTNT";
@@ -328,12 +328,12 @@
             TNTDropdown.BackColor = SystemColors.Control;
             TNTDropdown.Cursor = Cursors.Hand;
             TNTDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            TNTDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TNTDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             TNTDropdown.FormattingEnabled = true;
             TNTDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             TNTDropdown.Location = new Point(830, 183);
             TNTDropdown.Name = "TNTDropdown";
-            TNTDropdown.Size = new Size(145, 23);
+            TNTDropdown.Size = new Size(145, 24);
             TNTDropdown.TabIndex = 721;
             TNTDropdown.SelectedIndexChanged += TNTDropdown_SelectedIndexChanged_1;
             // 
@@ -342,7 +342,7 @@
             ChangeClaymore.BackgroundImage = (Image)resources.GetObject("ChangeClaymore.BackgroundImage");
             ChangeClaymore.Cursor = Cursors.Hand;
             ChangeClaymore.FlatStyle = FlatStyle.Flat;
-            ChangeClaymore.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeClaymore.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeClaymore.ImeMode = ImeMode.NoControl;
             ChangeClaymore.Location = new Point(830, 288);
             ChangeClaymore.Name = "ChangeClaymore";
@@ -357,12 +357,12 @@
             ClaymoreDropdown.BackColor = SystemColors.Control;
             ClaymoreDropdown.Cursor = Cursors.Hand;
             ClaymoreDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            ClaymoreDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ClaymoreDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ClaymoreDropdown.FormattingEnabled = true;
             ClaymoreDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             ClaymoreDropdown.Location = new Point(831, 335);
             ClaymoreDropdown.Name = "ClaymoreDropdown";
-            ClaymoreDropdown.Size = new Size(143, 23);
+            ClaymoreDropdown.Size = new Size(143, 24);
             ClaymoreDropdown.TabIndex = 719;
             ClaymoreDropdown.SelectedIndexChanged += ClaymoreDropdown_SelectedIndexChanged_1;
             // 
@@ -371,7 +371,7 @@
             ChangeBook.BackgroundImage = (Image)resources.GetObject("ChangeBook.BackgroundImage");
             ChangeBook.Cursor = Cursors.Hand;
             ChangeBook.FlatStyle = FlatStyle.Flat;
-            ChangeBook.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeBook.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeBook.ImeMode = ImeMode.NoControl;
             ChangeBook.Location = new Point(827, 209);
             ChangeBook.Name = "ChangeBook";
@@ -386,12 +386,12 @@
             BookDropdown.BackColor = SystemColors.Control;
             BookDropdown.Cursor = Cursors.Hand;
             BookDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            BookDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            BookDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             BookDropdown.FormattingEnabled = true;
             BookDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             BookDropdown.Location = new Point(828, 257);
             BookDropdown.Name = "BookDropdown";
-            BookDropdown.Size = new Size(146, 23);
+            BookDropdown.Size = new Size(146, 24);
             BookDropdown.TabIndex = 717;
             BookDropdown.SelectedIndexChanged += BookDropdown_SelectedIndexChanged_1;
             // 
@@ -400,7 +400,7 @@
             ChangeC3.BackgroundImage = (Image)resources.GetObject("ChangeC3.BackgroundImage");
             ChangeC3.Cursor = Cursors.Hand;
             ChangeC3.FlatStyle = FlatStyle.Flat;
-            ChangeC3.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeC3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeC3.ImeMode = ImeMode.NoControl;
             ChangeC3.Location = new Point(827, 58);
             ChangeC3.Name = "ChangeC3";
@@ -415,12 +415,12 @@
             C3Dropdown.BackColor = SystemColors.Control;
             C3Dropdown.Cursor = Cursors.Hand;
             C3Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            C3Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            C3Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             C3Dropdown.FormattingEnabled = true;
             C3Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             C3Dropdown.Location = new Point(828, 106);
             C3Dropdown.Name = "C3Dropdown";
-            C3Dropdown.Size = new Size(148, 23);
+            C3Dropdown.Size = new Size(148, 24);
             C3Dropdown.TabIndex = 715;
             C3Dropdown.SelectedIndexChanged += C3Dropdown_SelectedIndexChanged_1;
             // 
@@ -429,7 +429,7 @@
             ChangeMagazine.BackgroundImage = (Image)resources.GetObject("ChangeMagazine.BackgroundImage");
             ChangeMagazine.Cursor = Cursors.Hand;
             ChangeMagazine.FlatStyle = FlatStyle.Flat;
-            ChangeMagazine.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeMagazine.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeMagazine.ImeMode = ImeMode.NoControl;
             ChangeMagazine.Location = new Point(590, 439);
             ChangeMagazine.Name = "ChangeMagazine";
@@ -444,12 +444,12 @@
             MagazineDropdown.BackColor = SystemColors.Control;
             MagazineDropdown.Cursor = Cursors.Hand;
             MagazineDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            MagazineDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MagazineDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MagazineDropdown.FormattingEnabled = true;
             MagazineDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             MagazineDropdown.Location = new Point(590, 487);
             MagazineDropdown.Name = "MagazineDropdown";
-            MagazineDropdown.Size = new Size(165, 23);
+            MagazineDropdown.Size = new Size(165, 24);
             MagazineDropdown.TabIndex = 713;
             MagazineDropdown.SelectedIndexChanged += MagazineDropdown_SelectedIndexChanged_1;
             // 
@@ -458,7 +458,7 @@
             ChangeChaff.BackgroundImage = (Image)resources.GetObject("ChangeChaff.BackgroundImage");
             ChangeChaff.Cursor = Cursors.Hand;
             ChangeChaff.FlatStyle = FlatStyle.Flat;
-            ChangeChaff.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeChaff.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeChaff.ImeMode = ImeMode.NoControl;
             ChangeChaff.Location = new Point(591, 364);
             ChangeChaff.Name = "ChangeChaff";
@@ -473,12 +473,12 @@
             ChaffGrenadeDropdown.BackColor = SystemColors.Control;
             ChaffGrenadeDropdown.Cursor = Cursors.Hand;
             ChaffGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            ChaffGrenadeDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChaffGrenadeDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChaffGrenadeDropdown.FormattingEnabled = true;
             ChaffGrenadeDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             ChaffGrenadeDropdown.Location = new Point(592, 410);
             ChaffGrenadeDropdown.Name = "ChaffGrenadeDropdown";
-            ChaffGrenadeDropdown.Size = new Size(165, 23);
+            ChaffGrenadeDropdown.Size = new Size(165, 24);
             ChaffGrenadeDropdown.TabIndex = 711;
             ChaffGrenadeDropdown.SelectedIndexChanged += ChaffGrenadeDropdown_SelectedIndexChanged_1;
             // 
@@ -487,7 +487,7 @@
             ChangeSmoke.BackgroundImage = (Image)resources.GetObject("ChangeSmoke.BackgroundImage");
             ChangeSmoke.Cursor = Cursors.Hand;
             ChangeSmoke.FlatStyle = FlatStyle.Flat;
-            ChangeSmoke.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeSmoke.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeSmoke.ImeMode = ImeMode.NoControl;
             ChangeSmoke.Location = new Point(589, 209);
             ChangeSmoke.Name = "ChangeSmoke";
@@ -502,12 +502,12 @@
             SmokeGrenadeDropdown.BackColor = SystemColors.Control;
             SmokeGrenadeDropdown.Cursor = Cursors.Hand;
             SmokeGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            SmokeGrenadeDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            SmokeGrenadeDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             SmokeGrenadeDropdown.FormattingEnabled = true;
             SmokeGrenadeDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             SmokeGrenadeDropdown.Location = new Point(590, 257);
             SmokeGrenadeDropdown.Name = "SmokeGrenadeDropdown";
-            SmokeGrenadeDropdown.Size = new Size(165, 23);
+            SmokeGrenadeDropdown.Size = new Size(165, 24);
             SmokeGrenadeDropdown.TabIndex = 709;
             SmokeGrenadeDropdown.SelectedIndexChanged += SmokeGrenadeDropdown_SelectedIndexChanged_1;
             // 
@@ -516,7 +516,7 @@
             ChangeStun.BackgroundImage = (Image)resources.GetObject("ChangeStun.BackgroundImage");
             ChangeStun.Cursor = Cursors.Hand;
             ChangeStun.FlatStyle = FlatStyle.Flat;
-            ChangeStun.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeStun.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeStun.ImeMode = ImeMode.NoControl;
             ChangeStun.Location = new Point(589, 285);
             ChangeStun.Name = "ChangeStun";
@@ -531,12 +531,12 @@
             StunGrenadeDropdown.BackColor = SystemColors.Control;
             StunGrenadeDropdown.Cursor = Cursors.Hand;
             StunGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            StunGrenadeDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            StunGrenadeDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             StunGrenadeDropdown.FormattingEnabled = true;
             StunGrenadeDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             StunGrenadeDropdown.Location = new Point(590, 333);
             StunGrenadeDropdown.Name = "StunGrenadeDropdown";
-            StunGrenadeDropdown.Size = new Size(165, 23);
+            StunGrenadeDropdown.Size = new Size(165, 24);
             StunGrenadeDropdown.TabIndex = 707;
             StunGrenadeDropdown.SelectedIndexChanged += StunGrenadeDropdown_SelectedIndexChanged_1;
             // 
@@ -545,7 +545,7 @@
             ChangeWp.BackgroundImage = (Image)resources.GetObject("ChangeWp.BackgroundImage");
             ChangeWp.Cursor = Cursors.Hand;
             ChangeWp.FlatStyle = FlatStyle.Flat;
-            ChangeWp.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeWp.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeWp.ImeMode = ImeMode.NoControl;
             ChangeWp.Location = new Point(592, 135);
             ChangeWp.Name = "ChangeWp";
@@ -560,12 +560,12 @@
             WpGrenadeDropdown.BackColor = SystemColors.Control;
             WpGrenadeDropdown.Cursor = Cursors.Hand;
             WpGrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            WpGrenadeDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            WpGrenadeDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             WpGrenadeDropdown.FormattingEnabled = true;
             WpGrenadeDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             WpGrenadeDropdown.Location = new Point(593, 183);
             WpGrenadeDropdown.Name = "WpGrenadeDropdown";
-            WpGrenadeDropdown.Size = new Size(162, 23);
+            WpGrenadeDropdown.Size = new Size(162, 24);
             WpGrenadeDropdown.TabIndex = 705;
             WpGrenadeDropdown.SelectedIndexChanged += WpGrenadeDropdown_SelectedIndexChanged_1;
             // 
@@ -574,7 +574,7 @@
             ChangeGrenade.BackgroundImage = (Image)resources.GetObject("ChangeGrenade.BackgroundImage");
             ChangeGrenade.Cursor = Cursors.Hand;
             ChangeGrenade.FlatStyle = FlatStyle.Flat;
-            ChangeGrenade.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeGrenade.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeGrenade.ImeMode = ImeMode.NoControl;
             ChangeGrenade.Location = new Point(590, 55);
             ChangeGrenade.Name = "ChangeGrenade";
@@ -589,12 +589,12 @@
             GrenadeDropdown.BackColor = SystemColors.Control;
             GrenadeDropdown.Cursor = Cursors.Hand;
             GrenadeDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            GrenadeDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            GrenadeDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             GrenadeDropdown.FormattingEnabled = true;
             GrenadeDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo" });
             GrenadeDropdown.Location = new Point(591, 103);
             GrenadeDropdown.Name = "GrenadeDropdown";
-            GrenadeDropdown.Size = new Size(165, 23);
+            GrenadeDropdown.Size = new Size(165, 24);
             GrenadeDropdown.TabIndex = 703;
             GrenadeDropdown.SelectedIndexChanged += GrenadeDropdown_SelectedIndexChanged_1;
             // 
@@ -603,7 +603,7 @@
             ChangeSVD.BackgroundImage = (Image)resources.GetObject("ChangeSVD.BackgroundImage");
             ChangeSVD.Cursor = Cursors.Hand;
             ChangeSVD.FlatStyle = FlatStyle.Flat;
-            ChangeSVD.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeSVD.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeSVD.ImeMode = ImeMode.NoControl;
             ChangeSVD.Location = new Point(104, 363);
             ChangeSVD.Name = "ChangeSVD";
@@ -618,12 +618,12 @@
             SVDDropdown.BackColor = SystemColors.Control;
             SVDDropdown.Cursor = Cursors.Hand;
             SVDDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            SVDDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            SVDDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             SVDDropdown.FormattingEnabled = true;
             SVDDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             SVDDropdown.Location = new Point(105, 411);
             SVDDropdown.Name = "SVDDropdown";
-            SVDDropdown.Size = new Size(150, 23);
+            SVDDropdown.Size = new Size(150, 24);
             SVDDropdown.TabIndex = 701;
             SVDDropdown.SelectedIndexChanged += SVDDropdown_SelectedIndexChanged;
             // 
@@ -632,7 +632,7 @@
             ChangeM37.BackgroundImage = (Image)resources.GetObject("ChangeM37.BackgroundImage");
             ChangeM37.Cursor = Cursors.Hand;
             ChangeM37.FlatStyle = FlatStyle.Flat;
-            ChangeM37.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeM37.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeM37.ImeMode = ImeMode.NoControl;
             ChangeM37.Location = new Point(101, 287);
             ChangeM37.Name = "ChangeM37";
@@ -647,12 +647,12 @@
             M37Dropdown.BackColor = SystemColors.Control;
             M37Dropdown.Cursor = Cursors.Hand;
             M37Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            M37Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            M37Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             M37Dropdown.FormattingEnabled = true;
             M37Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             M37Dropdown.Location = new Point(102, 334);
             M37Dropdown.Name = "M37Dropdown";
-            M37Dropdown.Size = new Size(154, 23);
+            M37Dropdown.Size = new Size(154, 24);
             M37Dropdown.TabIndex = 699;
             M37Dropdown.SelectedIndexChanged += M37Dropdown_SelectedIndexChanged_1;
             // 
@@ -661,7 +661,7 @@
             ChangeMosin.BackgroundImage = (Image)resources.GetObject("ChangeMosin.BackgroundImage");
             ChangeMosin.Cursor = Cursors.Hand;
             ChangeMosin.FlatStyle = FlatStyle.Flat;
-            ChangeMosin.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeMosin.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeMosin.ImeMode = ImeMode.NoControl;
             ChangeMosin.Location = new Point(104, 435);
             ChangeMosin.Name = "ChangeMosin";
@@ -676,12 +676,12 @@
             MosinDropdown.BackColor = SystemColors.Control;
             MosinDropdown.Cursor = Cursors.Hand;
             MosinDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            MosinDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MosinDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MosinDropdown.FormattingEnabled = true;
             MosinDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             MosinDropdown.Location = new Point(105, 483);
             MosinDropdown.Name = "MosinDropdown";
-            MosinDropdown.Size = new Size(150, 23);
+            MosinDropdown.Size = new Size(150, 24);
             MosinDropdown.TabIndex = 697;
             MosinDropdown.SelectedIndexChanged += MosinDropdown_SelectedIndexChanged_1;
             // 
@@ -690,7 +690,7 @@
             ChangeRPG.BackgroundImage = (Image)resources.GetObject("ChangeRPG.BackgroundImage");
             ChangeRPG.Cursor = Cursors.Hand;
             ChangeRPG.FlatStyle = FlatStyle.Flat;
-            ChangeRPG.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeRPG.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeRPG.ImeMode = ImeMode.NoControl;
             ChangeRPG.Location = new Point(103, 509);
             ChangeRPG.Name = "ChangeRPG";
@@ -705,12 +705,12 @@
             RPG7Dropdown.BackColor = SystemColors.Control;
             RPG7Dropdown.Cursor = Cursors.Hand;
             RPG7Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            RPG7Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RPG7Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RPG7Dropdown.FormattingEnabled = true;
             RPG7Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             RPG7Dropdown.Location = new Point(104, 556);
             RPG7Dropdown.Name = "RPG7Dropdown";
-            RPG7Dropdown.Size = new Size(150, 23);
+            RPG7Dropdown.Size = new Size(150, 24);
             RPG7Dropdown.TabIndex = 695;
             RPG7Dropdown.SelectedIndexChanged += RPG7Dropdown_SelectedIndexChanged_1;
             // 
@@ -719,7 +719,7 @@
             ChangeM63.BackgroundImage = (Image)resources.GetObject("ChangeM63.BackgroundImage");
             ChangeM63.Cursor = Cursors.Hand;
             ChangeM63.FlatStyle = FlatStyle.Flat;
-            ChangeM63.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeM63.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeM63.ImeMode = ImeMode.NoControl;
             ChangeM63.Location = new Point(360, 134);
             ChangeM63.Name = "ChangeM63";
@@ -734,12 +734,12 @@
             M63Dropdown.BackColor = SystemColors.Control;
             M63Dropdown.Cursor = Cursors.Hand;
             M63Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            M63Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            M63Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             M63Dropdown.FormattingEnabled = true;
             M63Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             M63Dropdown.Location = new Point(361, 181);
             M63Dropdown.Name = "M63Dropdown";
-            M63Dropdown.Size = new Size(162, 23);
+            M63Dropdown.Size = new Size(162, 24);
             M63Dropdown.TabIndex = 693;
             M63Dropdown.SelectedIndexChanged += M63Dropdown_SelectedIndexChanged_1;
             // 
@@ -748,7 +748,7 @@
             ChangeAK47.BackgroundImage = (Image)resources.GetObject("ChangeAK47.BackgroundImage");
             ChangeAK47.Cursor = Cursors.Hand;
             ChangeAK47.FlatStyle = FlatStyle.Flat;
-            ChangeAK47.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeAK47.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeAK47.ImeMode = ImeMode.NoControl;
             ChangeAK47.Location = new Point(359, 56);
             ChangeAK47.Name = "ChangeAK47";
@@ -763,12 +763,12 @@
             AK47Dropdown.BackColor = SystemColors.Control;
             AK47Dropdown.Cursor = Cursors.Hand;
             AK47Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            AK47Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AK47Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AK47Dropdown.FormattingEnabled = true;
             AK47Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             AK47Dropdown.Location = new Point(360, 104);
             AK47Dropdown.Name = "AK47Dropdown";
-            AK47Dropdown.Size = new Size(162, 23);
+            AK47Dropdown.Size = new Size(162, 24);
             AK47Dropdown.TabIndex = 691;
             AK47Dropdown.SelectedIndexChanged += AK47Dropdown_SelectedIndexChanged_1;
             // 
@@ -777,7 +777,7 @@
             ChangeScorpion.BackgroundImage = (Image)resources.GetObject("ChangeScorpion.BackgroundImage");
             ChangeScorpion.Cursor = Cursors.Hand;
             ChangeScorpion.FlatStyle = FlatStyle.Flat;
-            ChangeScorpion.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeScorpion.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeScorpion.ImeMode = ImeMode.NoControl;
             ChangeScorpion.Location = new Point(360, 207);
             ChangeScorpion.Name = "ChangeScorpion";
@@ -792,22 +792,22 @@
             ScorpionDropdown.BackColor = SystemColors.Control;
             ScorpionDropdown.Cursor = Cursors.Hand;
             ScorpionDropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            ScorpionDropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ScorpionDropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ScorpionDropdown.FormattingEnabled = true;
             ScorpionDropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             ScorpionDropdown.Location = new Point(361, 255);
             ScorpionDropdown.Name = "ScorpionDropdown";
-            ScorpionDropdown.Size = new Size(162, 23);
+            ScorpionDropdown.Size = new Size(162, 24);
             ScorpionDropdown.TabIndex = 689;
             ScorpionDropdown.SelectedIndexChanged += ScorpionDropdown_SelectedIndexChanged_1;
             // 
             // SAATextBox
             // 
             SAATextBox.Cursor = Cursors.IBeam;
-            SAATextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            SAATextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             SAATextBox.Location = new Point(105, 232);
             SAATextBox.Name = "SAATextBox";
-            SAATextBox.Size = new Size(151, 23);
+            SAATextBox.Size = new Size(151, 22);
             SAATextBox.TabIndex = 688;
             // 
             // ChangeSAA
@@ -815,7 +815,7 @@
             ChangeSAA.BackgroundImage = (Image)resources.GetObject("ChangeSAA.BackgroundImage");
             ChangeSAA.Cursor = Cursors.Hand;
             ChangeSAA.FlatStyle = FlatStyle.Flat;
-            ChangeSAA.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeSAA.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeSAA.ImeMode = ImeMode.NoControl;
             ChangeSAA.Location = new Point(103, 208);
             ChangeSAA.Name = "ChangeSAA";
@@ -830,12 +830,12 @@
             SAADropdown.BackColor = SystemColors.Control;
             SAADropdown.Cursor = Cursors.Hand;
             SAADropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            SAADropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            SAADropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             SAADropdown.FormattingEnabled = true;
             SAADropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size" });
             SAADropdown.Location = new Point(105, 255);
             SAADropdown.Name = "SAADropdown";
-            SAADropdown.Size = new Size(151, 23);
+            SAADropdown.Size = new Size(151, 24);
             SAADropdown.TabIndex = 686;
             SAADropdown.SelectedIndexChanged += SAADropdown_SelectedIndexChanged_1;
             // 
@@ -844,7 +844,7 @@
             ChangeXM16E1.BackgroundImage = (Image)resources.GetObject("ChangeXM16E1.BackgroundImage");
             ChangeXM16E1.Cursor = Cursors.Hand;
             ChangeXM16E1.FlatStyle = FlatStyle.Flat;
-            ChangeXM16E1.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeXM16E1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeXM16E1.ImeMode = ImeMode.NoControl;
             ChangeXM16E1.Location = new Point(102, 585);
             ChangeXM16E1.Name = "ChangeXM16E1";
@@ -859,22 +859,22 @@
             XM16E1Dropdown.BackColor = SystemColors.Control;
             XM16E1Dropdown.Cursor = Cursors.Hand;
             XM16E1Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            XM16E1Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            XM16E1Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             XM16E1Dropdown.FormattingEnabled = true;
             XM16E1Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size", "Suppressor Count" });
             XM16E1Dropdown.Location = new Point(103, 631);
             XM16E1Dropdown.Name = "XM16E1Dropdown";
-            XM16E1Dropdown.Size = new Size(150, 23);
+            XM16E1Dropdown.Size = new Size(150, 24);
             XM16E1Dropdown.TabIndex = 684;
             XM16E1Dropdown.SelectedIndexChanged += XM16E1Dropdown_SelectedIndexChanged_1;
             // 
             // XM16E1TextBox
             // 
             XM16E1TextBox.Cursor = Cursors.IBeam;
-            XM16E1TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            XM16E1TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             XM16E1TextBox.Location = new Point(103, 608);
             XM16E1TextBox.Name = "XM16E1TextBox";
-            XM16E1TextBox.Size = new Size(150, 23);
+            XM16E1TextBox.Size = new Size(150, 22);
             XM16E1TextBox.TabIndex = 683;
             // 
             // ChangeMK22
@@ -882,7 +882,7 @@
             ChangeMK22.BackgroundImage = (Image)resources.GetObject("ChangeMK22.BackgroundImage");
             ChangeMK22.Cursor = Cursors.Hand;
             ChangeMK22.FlatStyle = FlatStyle.Flat;
-            ChangeMK22.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeMK22.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeMK22.ImeMode = ImeMode.NoControl;
             ChangeMK22.Location = new Point(102, 134);
             ChangeMK22.Name = "ChangeMK22";
@@ -897,12 +897,12 @@
             MK22Dropdown.BackColor = SystemColors.Control;
             MK22Dropdown.Cursor = Cursors.Hand;
             MK22Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            MK22Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MK22Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MK22Dropdown.FormattingEnabled = true;
             MK22Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size", "Suppressor Count" });
             MK22Dropdown.Location = new Point(103, 179);
             MK22Dropdown.Name = "MK22Dropdown";
-            MK22Dropdown.Size = new Size(153, 23);
+            MK22Dropdown.Size = new Size(153, 24);
             MK22Dropdown.TabIndex = 681;
             MK22Dropdown.SelectedIndexChanged += MK22Dropdown_SelectedIndexChanged_1;
             // 
@@ -911,7 +911,7 @@
             ChangeM1911A1.BackgroundImage = (Image)resources.GetObject("ChangeM1911A1.BackgroundImage");
             ChangeM1911A1.Cursor = Cursors.Hand;
             ChangeM1911A1.FlatStyle = FlatStyle.Flat;
-            ChangeM1911A1.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeM1911A1.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChangeM1911A1.ImeMode = ImeMode.NoControl;
             ChangeM1911A1.Location = new Point(103, 58);
             ChangeM1911A1.Name = "ChangeM1911A1";
@@ -938,12 +938,12 @@
             M1911A1Dropdown.BackColor = SystemColors.Control;
             M1911A1Dropdown.Cursor = Cursors.Hand;
             M1911A1Dropdown.DropDownStyle = ComboBoxStyle.DropDownList;
-            M1911A1Dropdown.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            M1911A1Dropdown.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             M1911A1Dropdown.FormattingEnabled = true;
             M1911A1Dropdown.Items.AddRange(new object[] { "Current/Max Ammo", "Current Ammo", "Max Ammo", "Current/Max Clip", "Clip Size", "Max Clip Size", "Suppressor Count" });
             M1911A1Dropdown.Location = new Point(104, 103);
             M1911A1Dropdown.Name = "M1911A1Dropdown";
-            M1911A1Dropdown.Size = new Size(151, 23);
+            M1911A1Dropdown.Size = new Size(151, 24);
             M1911A1Dropdown.TabIndex = 678;
             M1911A1Dropdown.SelectedIndexChanged += M1911A1Dropdown_SelectedIndexChanged_1;
             // 
@@ -1027,7 +1027,7 @@
             RemoveTorch.BackgroundImage = (Image)resources.GetObject("RemoveTorch.BackgroundImage");
             RemoveTorch.Cursor = Cursors.Hand;
             RemoveTorch.FlatStyle = FlatStyle.Flat;
-            RemoveTorch.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RemoveTorch.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveTorch.ImageAlign = ContentAlignment.TopCenter;
             RemoveTorch.ImeMode = ImeMode.NoControl;
             RemoveTorch.Location = new Point(360, 671);
@@ -1043,7 +1043,7 @@
             AddTorch.BackgroundImage = (Image)resources.GetObject("AddTorch.BackgroundImage");
             AddTorch.Cursor = Cursors.Hand;
             AddTorch.FlatStyle = FlatStyle.Flat;
-            AddTorch.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AddTorch.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AddTorch.ImageAlign = ContentAlignment.TopCenter;
             AddTorch.ImeMode = ImeMode.NoControl;
             AddTorch.Location = new Point(360, 642);
@@ -1071,7 +1071,7 @@
             RemoveDMic.BackgroundImage = (Image)resources.GetObject("RemoveDMic.BackgroundImage");
             RemoveDMic.Cursor = Cursors.Hand;
             RemoveDMic.FlatStyle = FlatStyle.Flat;
-            RemoveDMic.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RemoveDMic.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveDMic.ImageAlign = ContentAlignment.TopCenter;
             RemoveDMic.ImeMode = ImeMode.NoControl;
             RemoveDMic.Location = new Point(359, 601);
@@ -1087,7 +1087,7 @@
             AddDMic.BackgroundImage = (Image)resources.GetObject("AddDMic.BackgroundImage");
             AddDMic.Cursor = Cursors.Hand;
             AddDMic.FlatStyle = FlatStyle.Flat;
-            AddDMic.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AddDMic.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AddDMic.ImageAlign = ContentAlignment.TopCenter;
             AddDMic.ImeMode = ImeMode.NoControl;
             AddDMic.Location = new Point(359, 572);
@@ -1124,10 +1124,10 @@
             // 
             // MousetrapTextbox
             // 
-            MousetrapTextbox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MousetrapTextbox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MousetrapTextbox.Location = new Point(833, 385);
             MousetrapTextbox.Name = "MousetrapTextbox";
-            MousetrapTextbox.Size = new Size(143, 23);
+            MousetrapTextbox.Size = new Size(143, 22);
             MousetrapTextbox.TabIndex = 665;
             // 
             // RemoveFork
@@ -1135,7 +1135,7 @@
             RemoveFork.BackgroundImage = (Image)resources.GetObject("RemoveFork.BackgroundImage");
             RemoveFork.Cursor = Cursors.Hand;
             RemoveFork.FlatStyle = FlatStyle.Flat;
-            RemoveFork.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RemoveFork.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveFork.ImageAlign = ContentAlignment.TopCenter;
             RemoveFork.ImeMode = ImeMode.NoControl;
             RemoveFork.Location = new Point(361, 524);
@@ -1151,7 +1151,7 @@
             AddFork.BackgroundImage = (Image)resources.GetObject("AddFork.BackgroundImage");
             AddFork.Cursor = Cursors.Hand;
             AddFork.FlatStyle = FlatStyle.Flat;
-            AddFork.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AddFork.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AddFork.ImageAlign = ContentAlignment.TopCenter;
             AddFork.ImeMode = ImeMode.NoControl;
             AddFork.Location = new Point(361, 496);
@@ -1179,7 +1179,7 @@
             RemoveKnife.BackgroundImage = (Image)resources.GetObject("RemoveKnife.BackgroundImage");
             RemoveKnife.Cursor = Cursors.Hand;
             RemoveKnife.FlatStyle = FlatStyle.Flat;
-            RemoveKnife.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RemoveKnife.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveKnife.ImageAlign = ContentAlignment.TopCenter;
             RemoveKnife.ImeMode = ImeMode.NoControl;
             RemoveKnife.Location = new Point(360, 450);
@@ -1195,7 +1195,7 @@
             AddKnife.BackgroundImage = (Image)resources.GetObject("AddKnife.BackgroundImage");
             AddKnife.Cursor = Cursors.Hand;
             AddKnife.FlatStyle = FlatStyle.Flat;
-            AddKnife.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AddKnife.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AddKnife.ImageAlign = ContentAlignment.TopCenter;
             AddKnife.ImeMode = ImeMode.NoControl;
             AddKnife.Location = new Point(360, 421);
@@ -1232,10 +1232,10 @@
             // 
             // HandkerchiefTextBox
             // 
-            HandkerchiefTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            HandkerchiefTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             HandkerchiefTextBox.Location = new Point(594, 544);
             HandkerchiefTextBox.Name = "HandkerchiefTextBox";
-            HandkerchiefTextBox.Size = new Size(163, 23);
+            HandkerchiefTextBox.Size = new Size(163, 22);
             HandkerchiefTextBox.TabIndex = 657;
             // 
             // pictureBox20
@@ -1252,10 +1252,10 @@
             // 
             // ChaffGrenadeTextBox
             // 
-            ChaffGrenadeTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ChaffGrenadeTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ChaffGrenadeTextBox.Location = new Point(592, 387);
             ChaffGrenadeTextBox.Name = "ChaffGrenadeTextBox";
-            ChaffGrenadeTextBox.Size = new Size(165, 23);
+            ChaffGrenadeTextBox.Size = new Size(165, 22);
             ChaffGrenadeTextBox.TabIndex = 655;
             // 
             // pictureBox21
@@ -1272,10 +1272,10 @@
             // 
             // MagazineTextBox
             // 
-            MagazineTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MagazineTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MagazineTextBox.Location = new Point(590, 463);
             MagazineTextBox.Name = "MagazineTextBox";
-            MagazineTextBox.Size = new Size(165, 23);
+            MagazineTextBox.Size = new Size(165, 22);
             MagazineTextBox.TabIndex = 653;
             // 
             // pictureBox13
@@ -1292,10 +1292,10 @@
             // 
             // SmokeGrenadeTextBox
             // 
-            SmokeGrenadeTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            SmokeGrenadeTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             SmokeGrenadeTextBox.Location = new Point(590, 233);
             SmokeGrenadeTextBox.Name = "SmokeGrenadeTextBox";
-            SmokeGrenadeTextBox.Size = new Size(165, 23);
+            SmokeGrenadeTextBox.Size = new Size(165, 22);
             SmokeGrenadeTextBox.TabIndex = 651;
             // 
             // pictureBox17
@@ -1312,10 +1312,10 @@
             // 
             // WpGrenadeTextBox
             // 
-            WpGrenadeTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            WpGrenadeTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             WpGrenadeTextBox.Location = new Point(593, 159);
             WpGrenadeTextBox.Name = "WpGrenadeTextBox";
-            WpGrenadeTextBox.Size = new Size(162, 23);
+            WpGrenadeTextBox.Size = new Size(162, 22);
             WpGrenadeTextBox.TabIndex = 649;
             // 
             // pictureBox2
@@ -1332,10 +1332,10 @@
             // 
             // StunGrenadeTextBox
             // 
-            StunGrenadeTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            StunGrenadeTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             StunGrenadeTextBox.Location = new Point(590, 309);
             StunGrenadeTextBox.Name = "StunGrenadeTextBox";
-            StunGrenadeTextBox.Size = new Size(165, 23);
+            StunGrenadeTextBox.Size = new Size(165, 22);
             StunGrenadeTextBox.TabIndex = 647;
             // 
             // pictureBox22
@@ -1352,10 +1352,10 @@
             // 
             // ClaymoreTextBox
             // 
-            ClaymoreTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ClaymoreTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ClaymoreTextBox.Location = new Point(831, 311);
             ClaymoreTextBox.Name = "ClaymoreTextBox";
-            ClaymoreTextBox.Size = new Size(143, 23);
+            ClaymoreTextBox.Size = new Size(143, 22);
             ClaymoreTextBox.TabIndex = 645;
             // 
             // pictureBox23
@@ -1372,10 +1372,10 @@
             // 
             // C3TextBox
             // 
-            C3TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            C3TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             C3TextBox.Location = new Point(828, 82);
             C3TextBox.Name = "C3TextBox";
-            C3TextBox.Size = new Size(148, 23);
+            C3TextBox.Size = new Size(148, 22);
             C3TextBox.TabIndex = 643;
             // 
             // pictureBox25
@@ -1404,18 +1404,18 @@
             // 
             // TNTTextBox
             // 
-            TNTTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            TNTTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             TNTTextBox.Location = new Point(830, 160);
             TNTTextBox.Name = "TNTTextBox";
-            TNTTextBox.Size = new Size(145, 23);
+            TNTTextBox.Size = new Size(145, 22);
             TNTTextBox.TabIndex = 640;
             // 
             // BookTextBox
             // 
-            BookTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            BookTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             BookTextBox.Location = new Point(828, 233);
             BookTextBox.Name = "BookTextBox";
-            BookTextBox.Size = new Size(146, 23);
+            BookTextBox.Size = new Size(146, 22);
             BookTextBox.TabIndex = 639;
             // 
             // pictureBox7
@@ -1432,10 +1432,10 @@
             // 
             // GrenadeTextBox
             // 
-            GrenadeTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            GrenadeTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             GrenadeTextBox.Location = new Point(591, 79);
             GrenadeTextBox.Name = "GrenadeTextBox";
-            GrenadeTextBox.Size = new Size(165, 23);
+            GrenadeTextBox.Size = new Size(165, 22);
             GrenadeTextBox.TabIndex = 637;
             // 
             // RemovePatriot
@@ -1443,7 +1443,7 @@
             RemovePatriot.BackgroundImage = (Image)resources.GetObject("RemovePatriot.BackgroundImage");
             RemovePatriot.Cursor = Cursors.Hand;
             RemovePatriot.FlatStyle = FlatStyle.Flat;
-            RemovePatriot.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RemovePatriot.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RemovePatriot.ImageAlign = ContentAlignment.TopCenter;
             RemovePatriot.ImeMode = ImeMode.NoControl;
             RemovePatriot.Location = new Point(358, 313);
@@ -1459,7 +1459,7 @@
             AddPatriot.BackgroundImage = (Image)resources.GetObject("AddPatriot.BackgroundImage");
             AddPatriot.Cursor = Cursors.Hand;
             AddPatriot.FlatStyle = FlatStyle.Flat;
-            AddPatriot.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AddPatriot.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AddPatriot.ImageAlign = ContentAlignment.TopCenter;
             AddPatriot.ImeMode = ImeMode.NoControl;
             AddPatriot.Location = new Point(358, 284);
@@ -1496,10 +1496,10 @@
             // 
             // CigSprayTextBox
             // 
-            CigSprayTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            CigSprayTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             CigSprayTextBox.Location = new Point(594, 621);
             CigSprayTextBox.Name = "CigSprayTextBox";
-            CigSprayTextBox.Size = new Size(163, 23);
+            CigSprayTextBox.Size = new Size(163, 22);
             CigSprayTextBox.TabIndex = 632;
             // 
             // pictureBox16
@@ -1516,10 +1516,10 @@
             // 
             // MosinTextBox
             // 
-            MosinTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MosinTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MosinTextBox.Location = new Point(105, 460);
             MosinTextBox.Name = "MosinTextBox";
-            MosinTextBox.Size = new Size(150, 23);
+            MosinTextBox.Size = new Size(150, 22);
             MosinTextBox.TabIndex = 630;
             // 
             // pictureBox14
@@ -1548,10 +1548,10 @@
             // 
             // ScorpionTextBox
             // 
-            ScorpionTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            ScorpionTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             ScorpionTextBox.Location = new Point(361, 231);
             ScorpionTextBox.Name = "ScorpionTextBox";
-            ScorpionTextBox.Size = new Size(162, 23);
+            ScorpionTextBox.Size = new Size(162, 22);
             ScorpionTextBox.TabIndex = 627;
             // 
             // pictureBox5
@@ -1592,10 +1592,10 @@
             // 
             // AK47TextBox
             // 
-            AK47TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AK47TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AK47TextBox.Location = new Point(360, 80);
             AK47TextBox.Name = "AK47TextBox";
-            AK47TextBox.Size = new Size(162, 23);
+            AK47TextBox.Size = new Size(162, 22);
             AK47TextBox.TabIndex = 623;
             // 
             // pictureBox3
@@ -1651,7 +1651,7 @@
             RemoveEz.BackgroundImage = (Image)resources.GetObject("RemoveEz.BackgroundImage");
             RemoveEz.Cursor = Cursors.Hand;
             RemoveEz.FlatStyle = FlatStyle.Flat;
-            RemoveEz.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RemoveEz.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RemoveEz.ImageAlign = ContentAlignment.TopCenter;
             RemoveEz.ImeMode = ImeMode.NoControl;
             RemoveEz.Location = new Point(359, 385);
@@ -1667,7 +1667,7 @@
             AddEz.BackgroundImage = (Image)resources.GetObject("AddEz.BackgroundImage");
             AddEz.Cursor = Cursors.Hand;
             AddEz.FlatStyle = FlatStyle.Flat;
-            AddEz.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            AddEz.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             AddEz.ImageAlign = ContentAlignment.TopCenter;
             AddEz.ImeMode = ImeMode.NoControl;
             AddEz.Location = new Point(359, 356);
@@ -1692,51 +1692,51 @@
             // 
             // M63TextBox
             // 
-            M63TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            M63TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             M63TextBox.Location = new Point(361, 158);
             M63TextBox.Name = "M63TextBox";
-            M63TextBox.Size = new Size(162, 23);
+            M63TextBox.Size = new Size(162, 22);
             M63TextBox.TabIndex = 615;
             // 
             // SVDTextBox
             // 
-            SVDTextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            SVDTextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             SVDTextBox.Location = new Point(105, 387);
             SVDTextBox.Name = "SVDTextBox";
-            SVDTextBox.Size = new Size(150, 23);
+            SVDTextBox.Size = new Size(150, 22);
             SVDTextBox.TabIndex = 614;
             // 
             // RPG7TextBox
             // 
-            RPG7TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            RPG7TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             RPG7TextBox.Location = new Point(104, 533);
             RPG7TextBox.Name = "RPG7TextBox";
-            RPG7TextBox.Size = new Size(150, 23);
+            RPG7TextBox.Size = new Size(150, 22);
             RPG7TextBox.TabIndex = 613;
             // 
             // M37TextBox
             // 
-            M37TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            M37TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             M37TextBox.Location = new Point(102, 311);
             M37TextBox.Name = "M37TextBox";
-            M37TextBox.Size = new Size(154, 23);
+            M37TextBox.Size = new Size(154, 22);
             M37TextBox.TabIndex = 612;
             // 
             // M1911A1TextBox
             // 
             M1911A1TextBox.Cursor = Cursors.IBeam;
-            M1911A1TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            M1911A1TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             M1911A1TextBox.Location = new Point(104, 80);
             M1911A1TextBox.Name = "M1911A1TextBox";
-            M1911A1TextBox.Size = new Size(151, 23);
+            M1911A1TextBox.Size = new Size(151, 22);
             M1911A1TextBox.TabIndex = 611;
             // 
             // MK22TextBox
             // 
-            MK22TextBox.Font = new Font("Roboto Condensed", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            MK22TextBox.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             MK22TextBox.Location = new Point(101, 156);
             MK22TextBox.Name = "MK22TextBox";
-            MK22TextBox.Size = new Size(155, 23);
+            MK22TextBox.Size = new Size(155, 22);
             MK22TextBox.TabIndex = 610;
             // 
             // button2
@@ -1968,7 +1968,7 @@
             Controls.Add(MK22TextBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "WeaponForm";
-            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss - Version 2.4";
+            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss - Version 2.5";
             Load += WeaponForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox31).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();

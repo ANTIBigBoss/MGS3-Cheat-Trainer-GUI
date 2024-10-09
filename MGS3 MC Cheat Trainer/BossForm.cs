@@ -72,7 +72,6 @@ namespace MGS3_MC_Cheat_Trainer
             BossStaminaSlider.Minimum = 1;
             TheBossTextbox.Enabled = false;
 
-
         }
 
         #endregion
@@ -81,8 +80,8 @@ namespace MGS3_MC_Cheat_Trainer
         // Hold the switch case in a function instead to make it accessible outside of the form load
         private void SearchForBossAOB()
         {
-            string result = StringManager.Instance.FindLocationStringDirectlyInRange();
-            string locationString = StringManager.Instance.ExtractLocationStringFromResult(result);
+            string locationString = StringManager.Instance.GetCurrentMapLocation();
+            bool isCutscene = StringManager.Instance.IsInCutscene();
 
             // Make a switch statement for the result string
             switch (locationString)
@@ -347,17 +346,16 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ConsistencyCheckTimer_Tick(object sender, EventArgs e)
         {
-            string newLocation = StringManager.Instance.ExtractLocationStringFromResult(StringManager.Instance.FindLocationStringDirectlyInRange());
+            string newLocation = StringManager.Instance.GetCurrentMapLocation();
+            bool isNewCutscene = StringManager.Instance.IsInCutscene();
 
-            // Check if the area has changed
-            if (newLocation != currentLocation)
+            if (newLocation != currentLocation || isNewCutscene != isInCutscene)
             {
                 DisableAllBossControls();
-                LoggingManager.Instance.Log("Disabling all boss control while checking for a new Boss AOB. This is mostly incase the user is fighting The End or a boss cutscene played like it does for Pain and Volgin");
-                // Perform the load event logic specific to the new area
-                currentLocation = newLocation; // Update currentLocation with the new area
-                SearchForBossAOB(); // Re-initialize for the new area
-
+                LoggingManager.Instance.Log("Disabling all boss controls while checking for a new Boss AOB.");
+                currentLocation = newLocation;
+                isInCutscene = isNewCutscene;
+                SearchForBossAOB(); // This will handle enabling/disabling based on cutscene status
                 LoggingManager.Instance.Log($"Area changed to {currentLocation}. Re-initializing for new area.");
             }
             else if (IsBossDefeated() && IsNotBossLocation(currentLocation))
@@ -366,6 +364,8 @@ namespace MGS3_MC_Cheat_Trainer
                 consistencyCheckNeeded = false;
             }
         }
+
+
 
         private bool IsBossDefeated()
         {
