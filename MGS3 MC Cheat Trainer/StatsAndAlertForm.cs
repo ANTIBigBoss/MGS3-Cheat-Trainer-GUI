@@ -676,7 +676,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        
+
         public void CheckBatteryDrain()
         {
             if (MiscManager.Instance.IsBatteryDrainNOP())
@@ -688,9 +688,73 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 BatteryDrainCheckBox.Checked = false;
             }
-            
+
 
         }
 
+        private void SwapToWeaponsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Weapon form from the Stats and Alerts form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
+            WeaponForm form1 = new();
+            form1.Show();
+            this.Hide();
+        }
+
+        private void SwapToItemsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Item form from the Stats and Alerts form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
+            ItemForm form2 = new();
+            form2.Show();
+            this.Hide();
+        }
+
+        private void SwapToCamoForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Camo form from the Stats and Alerts form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
+            CamoForm form3 = new();
+            form3.Show();
+            this.Hide();
+
+        }
+
+        private void SwapToMiscForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Misc form from the Stats and Alerts form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
+            MiscForm form4 = new();
+            form4.Show();
+            this.Hide();
+
+        }
+
+
+        private void SwapToBossForm_Click_1(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Boss form from the Stats and Alerts form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+        }
+
+        private void SwapToGameStatsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Stats and Alerts form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "GameStatsForm");
+            GameStatsForm form7 = new();
+            form7.Show();
+            this.Hide();
+        }
+
+        
     }
 }

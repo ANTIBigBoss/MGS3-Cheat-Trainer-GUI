@@ -33,7 +33,6 @@
             AddLifeMed = new Button();
             LifeMedtextBox = new TextBox();
             pictureBox7 = new PictureBox();
-            WeaponFormSwap = new Button();
             textBox1 = new TextBox();
             AddBugJuice = new Button();
             BugJuicetextBox = new TextBox();
@@ -119,7 +118,6 @@
             textBox28 = new TextBox();
             pictureBox25 = new PictureBox();
             textBox29 = new TextBox();
-            ItemFormSwap = new Button();
             RemoveMonkey = new Button();
             AddMonkey = new Button();
             textBox7 = new TextBox();
@@ -172,9 +170,12 @@
             AddSutureKit = new Button();
             SutureKittextBox = new TextBox();
             pictureBox35 = new PictureBox();
-            MiscFormSwap = new Button();
-            HealthFormSwap = new Button();
-            BossFormSwap = new Button();
+            SwapToBossForm = new Button();
+            SwapToMiscForm = new Button();
+            SwapToGameStatsForm = new Button();
+            SwapToHealthAndAlertsForm = new Button();
+            SwapToCamoForm = new Button();
+            SwapToWeaponsForm = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
@@ -256,22 +257,6 @@
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox7.TabIndex = 111;
             pictureBox7.TabStop = false;
-            // 
-            // WeaponFormSwap
-            // 
-            WeaponFormSwap.BackgroundImage = (Image)resources.GetObject("WeaponFormSwap.BackgroundImage");
-            WeaponFormSwap.Cursor = Cursors.Hand;
-            WeaponFormSwap.FlatStyle = FlatStyle.Flat;
-            WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(33, 8);
-            WeaponFormSwap.Name = "WeaponFormSwap";
-            WeaponFormSwap.Size = new Size(203, 32);
-            WeaponFormSwap.TabIndex = 312;
-            WeaponFormSwap.Text = "Weapons";
-            WeaponFormSwap.UseVisualStyleBackColor = true;
-            WeaponFormSwap.Click += WeaponFormSwap_Click;
             // 
             // textBox1
             // 
@@ -1467,22 +1452,6 @@
             textBox29.TabIndex = 400;
             textBox29.TextAlign = HorizontalAlignment.Center;
             // 
-            // ItemFormSwap
-            // 
-            ItemFormSwap.BackgroundImage = (Image)resources.GetObject("ItemFormSwap.BackgroundImage");
-            ItemFormSwap.Cursor = Cursors.Hand;
-            ItemFormSwap.FlatStyle = FlatStyle.Flat;
-            ItemFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            ItemFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            ItemFormSwap.ImeMode = ImeMode.NoControl;
-            ItemFormSwap.Location = new Point(262, 8);
-            ItemFormSwap.Name = "ItemFormSwap";
-            ItemFormSwap.Size = new Size(203, 32);
-            ItemFormSwap.TabIndex = 401;
-            ItemFormSwap.Text = "Camo";
-            ItemFormSwap.UseVisualStyleBackColor = true;
-            ItemFormSwap.Click += ItemFormSwap_Click;
-            // 
             // RemoveMonkey
             // 
             RemoveMonkey.BackgroundImage = (Image)resources.GetObject("RemoveMonkey.BackgroundImage");
@@ -2107,53 +2076,101 @@
             pictureBox35.TabIndex = 463;
             pictureBox35.TabStop = false;
             // 
-            // MiscFormSwap
+            // SwapToBossForm
             // 
-            MiscFormSwap.BackgroundImage = (Image)resources.GetObject("MiscFormSwap.BackgroundImage");
-            MiscFormSwap.Cursor = Cursors.Hand;
-            MiscFormSwap.FlatStyle = FlatStyle.Flat;
-            MiscFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            MiscFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            MiscFormSwap.ImeMode = ImeMode.NoControl;
-            MiscFormSwap.Location = new Point(490, 8);
-            MiscFormSwap.Name = "MiscFormSwap";
-            MiscFormSwap.Size = new Size(203, 32);
-            MiscFormSwap.TabIndex = 478;
-            MiscFormSwap.Text = "Misc";
-            MiscFormSwap.UseVisualStyleBackColor = true;
-            MiscFormSwap.Click += MiscFormSwap_Click;
+            SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
+            SwapToBossForm.Cursor = Cursors.Hand;
+            SwapToBossForm.FlatStyle = FlatStyle.Flat;
+            SwapToBossForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToBossForm.ImeMode = ImeMode.NoControl;
+            SwapToBossForm.Location = new Point(716, 12);
+            SwapToBossForm.Name = "SwapToBossForm";
+            SwapToBossForm.Size = new Size(130, 31);
+            SwapToBossForm.TabIndex = 650;
+            SwapToBossForm.Text = "Bosses";
+            SwapToBossForm.UseVisualStyleBackColor = true;
+            SwapToBossForm.Click += SwapToBossForm_Click;
             // 
-            // HealthFormSwap
+            // SwapToMiscForm
             // 
-            HealthFormSwap.BackgroundImage = (Image)resources.GetObject("HealthFormSwap.BackgroundImage");
-            HealthFormSwap.Cursor = Cursors.Hand;
-            HealthFormSwap.FlatStyle = FlatStyle.Flat;
-            HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            HealthFormSwap.ImeMode = ImeMode.NoControl;
-            HealthFormSwap.Location = new Point(720, 8);
-            HealthFormSwap.Name = "HealthFormSwap";
-            HealthFormSwap.Size = new Size(203, 32);
-            HealthFormSwap.TabIndex = 479;
-            HealthFormSwap.Text = "Health/Alerts";
-            HealthFormSwap.UseVisualStyleBackColor = true;
-            HealthFormSwap.Click += HealthFormSwap_Click;
+            SwapToMiscForm.BackgroundImage = (Image)resources.GetObject("SwapToMiscForm.BackgroundImage");
+            SwapToMiscForm.Cursor = Cursors.Hand;
+            SwapToMiscForm.FlatStyle = FlatStyle.Flat;
+            SwapToMiscForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToMiscForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToMiscForm.ImeMode = ImeMode.NoControl;
+            SwapToMiscForm.Location = new Point(444, 12);
+            SwapToMiscForm.Name = "SwapToMiscForm";
+            SwapToMiscForm.Size = new Size(130, 31);
+            SwapToMiscForm.TabIndex = 649;
+            SwapToMiscForm.Text = "Misc";
+            SwapToMiscForm.UseVisualStyleBackColor = true;
+            SwapToMiscForm.Click += SwapToMiscForm_Click;
             // 
-            // BossFormSwap
+            // SwapToGameStatsForm
             // 
-            BossFormSwap.BackgroundImage = (Image)resources.GetObject("BossFormSwap.BackgroundImage");
-            BossFormSwap.Cursor = Cursors.Hand;
-            BossFormSwap.FlatStyle = FlatStyle.Flat;
-            BossFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            BossFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            BossFormSwap.ImeMode = ImeMode.NoControl;
-            BossFormSwap.Location = new Point(943, 8);
-            BossFormSwap.Name = "BossFormSwap";
-            BossFormSwap.Size = new Size(203, 32);
-            BossFormSwap.TabIndex = 480;
-            BossFormSwap.Text = "Bosses";
-            BossFormSwap.UseVisualStyleBackColor = true;
-            BossFormSwap.Click += BossFormSwap_Click;
+            SwapToGameStatsForm.BackgroundImage = (Image)resources.GetObject("SwapToGameStatsForm.BackgroundImage");
+            SwapToGameStatsForm.Cursor = Cursors.Hand;
+            SwapToGameStatsForm.FlatStyle = FlatStyle.Flat;
+            SwapToGameStatsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToGameStatsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToGameStatsForm.ImeMode = ImeMode.NoControl;
+            SwapToGameStatsForm.Location = new Point(852, 12);
+            SwapToGameStatsForm.Name = "SwapToGameStatsForm";
+            SwapToGameStatsForm.Size = new Size(130, 31);
+            SwapToGameStatsForm.TabIndex = 648;
+            SwapToGameStatsForm.Text = "Game Stats";
+            SwapToGameStatsForm.UseVisualStyleBackColor = true;
+            SwapToGameStatsForm.Click += SwapToGameStatsForm_Click;
+            // 
+            // SwapToHealthAndAlertsForm
+            // 
+            SwapToHealthAndAlertsForm.BackgroundImage = (Image)resources.GetObject("SwapToHealthAndAlertsForm.BackgroundImage");
+            SwapToHealthAndAlertsForm.Cursor = Cursors.Hand;
+            SwapToHealthAndAlertsForm.FlatStyle = FlatStyle.Flat;
+            SwapToHealthAndAlertsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToHealthAndAlertsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToHealthAndAlertsForm.ImeMode = ImeMode.NoControl;
+            SwapToHealthAndAlertsForm.Location = new Point(580, 12);
+            SwapToHealthAndAlertsForm.Name = "SwapToHealthAndAlertsForm";
+            SwapToHealthAndAlertsForm.Size = new Size(130, 31);
+            SwapToHealthAndAlertsForm.TabIndex = 647;
+            SwapToHealthAndAlertsForm.Text = "Health/Alerts";
+            SwapToHealthAndAlertsForm.UseVisualStyleBackColor = true;
+            SwapToHealthAndAlertsForm.Click += SwapToHealthAndAlertsForm_Click;
+            // 
+            // SwapToCamoForm
+            // 
+            SwapToCamoForm.BackgroundImage = (Image)resources.GetObject("SwapToCamoForm.BackgroundImage");
+            SwapToCamoForm.Cursor = Cursors.Hand;
+            SwapToCamoForm.FlatStyle = FlatStyle.Flat;
+            SwapToCamoForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToCamoForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToCamoForm.ImeMode = ImeMode.NoControl;
+            SwapToCamoForm.Location = new Point(308, 12);
+            SwapToCamoForm.Name = "SwapToCamoForm";
+            SwapToCamoForm.Size = new Size(130, 31);
+            SwapToCamoForm.TabIndex = 646;
+            SwapToCamoForm.Text = "Camo";
+            SwapToCamoForm.UseVisualStyleBackColor = true;
+            SwapToCamoForm.Click += SwapToCamoForm_Click;
+            // 
+            // SwapToWeaponsForm
+            // 
+            SwapToWeaponsForm.BackgroundImage = (Image)resources.GetObject("SwapToWeaponsForm.BackgroundImage");
+            SwapToWeaponsForm.Cursor = Cursors.Hand;
+            SwapToWeaponsForm.FlatStyle = FlatStyle.Flat;
+            SwapToWeaponsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToWeaponsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToWeaponsForm.ImeMode = ImeMode.NoControl;
+            SwapToWeaponsForm.Location = new Point(172, 12);
+            SwapToWeaponsForm.Name = "SwapToWeaponsForm";
+            SwapToWeaponsForm.Size = new Size(130, 31);
+            SwapToWeaponsForm.TabIndex = 644;
+            SwapToWeaponsForm.Text = "Weapons";
+            SwapToWeaponsForm.UseVisualStyleBackColor = true;
+            SwapToWeaponsForm.Click += SwapToWeaponsForm_Click;
             // 
             // ItemForm
             // 
@@ -2161,9 +2178,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
-            Controls.Add(BossFormSwap);
-            Controls.Add(HealthFormSwap);
-            Controls.Add(MiscFormSwap);
+            Controls.Add(SwapToBossForm);
+            Controls.Add(SwapToMiscForm);
+            Controls.Add(SwapToGameStatsForm);
+            Controls.Add(SwapToHealthAndAlertsForm);
+            Controls.Add(SwapToCamoForm);
+            Controls.Add(SwapToWeaponsForm);
             Controls.Add(textBox49);
             Controls.Add(AddSutureKit);
             Controls.Add(SutureKittextBox);
@@ -2216,7 +2236,6 @@
             Controls.Add(AddBandana);
             Controls.Add(textBox30);
             Controls.Add(pictureBox26);
-            Controls.Add(ItemFormSwap);
             Controls.Add(textBox29);
             Controls.Add(RemoveKeyC);
             Controls.Add(AddKeyC);
@@ -2302,14 +2321,13 @@
             Controls.Add(AddBugJuice);
             Controls.Add(BugJuicetextBox);
             Controls.Add(pictureBox3);
-            Controls.Add(WeaponFormSwap);
             Controls.Add(textBox5);
             Controls.Add(AddLifeMed);
             Controls.Add(LifeMedtextBox);
             Controls.Add(pictureBox7);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ItemForm";
-            Text = "MGS3 Cheat Trainer - Items - ANTIBigBoss - Version 2.5";
+            Text = "MGS3 Cheat Trainer - Items - ANTIBigBoss - Version 2.7";
             Load += Form2_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -2355,7 +2373,6 @@
         private Button AddLifeMed;
         private TextBox LifeMedtextBox;
         private PictureBox pictureBox7;
-        private Button WeaponFormSwap;
         private TextBox textBox1;
         private Button AddBugJuice;
         private TextBox BugJuicetextBox;
@@ -2441,7 +2458,6 @@
         private TextBox textBox28;
         private PictureBox pictureBox25;
         private TextBox textBox29;
-        private Button ItemFormSwap;
         private Button RemoveMonkey;
         private Button AddMonkey;
         private TextBox textBox7;
@@ -2494,8 +2510,11 @@
         private Button AddSutureKit;
         private TextBox SutureKittextBox;
         private PictureBox pictureBox35;
-        private Button MiscFormSwap;
-        private Button HealthFormSwap;
-        private Button BossFormSwap;
+        private Button SwapToBossForm;
+        private Button SwapToMiscForm;
+        private Button SwapToGameStatsForm;
+        private Button SwapToHealthAndAlertsForm;
+        private Button SwapToCamoForm;
+        private Button SwapToWeaponsForm;
     }
 }

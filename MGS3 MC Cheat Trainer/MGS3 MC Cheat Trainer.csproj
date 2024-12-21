@@ -11,6 +11,7 @@
     <SignAssembly>False</SignAssembly>
     <IncludeSymbols>False</IncludeSymbols>
     <ApplicationIcon>LadderMitch(3)-min.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

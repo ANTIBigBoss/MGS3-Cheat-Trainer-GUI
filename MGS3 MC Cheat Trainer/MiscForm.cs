@@ -16,22 +16,18 @@ namespace MGS3_MC_Cheat_Trainer
         public MiscForm()
         {
             InitializeComponent();
-            // Check if the camo index is nopped and set the checkbox accordingly
             CamoCheckBoxCheck();
             this.Activated += MiscForm_Activated;
             this.Deactivate += MiscForm_Deactivate;
-            // Add event handlers
             this.FormClosing += new FormClosingEventHandler(Form4_FormClosing);
             CamoIndexChanges.CheckedChanged += new EventHandler(CamoIndexChanges_CheckedChanged);
 
-            // All UI information for Model Distortion/Manipulation
             ModelSlider.Minimum = 0;
             ModelSlider.Maximum = 255;
             ModelSlider.Value = 40; // Default byte value and where the slider should start at
             ChangeModelNumber.Click += new EventHandler(ChangeModelNumber_Click);
             ModelSlider.Scroll += new EventHandler(ModelSlider_Scroll);
 
-            // Timer and slider information for camo index
             System.Windows.Forms.Timer camoIndexTimer = new System.Windows.Forms.Timer();
             CamoIndexSlider.Minimum = -1000;
             CamoIndexSlider.Maximum = 1000;
@@ -39,17 +35,13 @@ namespace MGS3_MC_Cheat_Trainer
             camoIndexTimer.Tick += CamoIndexTimer_Tick;
             camoIndexTimer.Start();
 
-            // SnakesPosition Timer information for tick event and textbox constant update
             System.Windows.Forms.Timer snakesPositionTimer = new System.Windows.Forms.Timer();
             snakesPositionTimer.Interval = 100;
             snakesPositionTimer.Tick += SnakesPosition_Tick;
             snakesPositionTimer.Start();
 
-            // Slider range mapping constants
-
             const int SliderMin = 0;
             const int SliderMax = 15;
-            // Initialize slider range
             FovSlider.Minimum = SliderMin;
             FovSlider.Maximum = SliderMax;
 
@@ -67,31 +59,33 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void Form4_Load(object sender, EventArgs e)
         {
-            // Detach event handler while loading the form
             CamoIndexChanges.CheckedChanged -= CamoIndexChanges_CheckedChanged;
 
-            // Set form location
             this.Location = MemoryManager.GetLastFormLocation();
 
-            // Reattach event handler after loading the form
             CamoIndexChanges.CheckedChanged += CamoIndexChanges_CheckedChanged;
 
-            // Read the current FOV value from game memory
             float currentFovValue = MiscManager.Instance.ReadFovSlider();
 
-            // Map the FOV value to the slider range
             int sliderValue = (int)((currentFovValue - MinFov) / (MaxFov - MinFov) * (SliderMax - SliderMin));
 
-            // Set the FOV slider position
             FovSlider.Value = Math.Max(FovSlider.Minimum, Math.Min(sliderValue, FovSlider.Maximum));
 
             PissFilterCheckBox.Checked = FilterManager.Instance.IsPissFilterInstructionsNopped();
 
             MinimalHudCheck();
-            FullHudCheck();           
+            FullHudCheck();
             RealTimeItemSwapCheckbox.Checked = TimerManager.RealTimeSwapping;
 
+            bool isMultiplierActive = MiscManager.IsDamageMultiplierActive();
 
+            ChangeDamageMultiNumberButton.Enabled = isMultiplierActive;
+            Plus1MultiValue.Enabled = isMultiplierActive;
+            Minus1MultiValue.Enabled = isMultiplierActive;
+            DamageToSnakeMultiTextbox.Enabled = isMultiplierActive;
+
+
+            ActivateDamageMulti.Text = isMultiplierActive ? "Disable Damage Multiplier" : "Enable Damage Multiplier";
         }
 
         #region Xyz Manipulation
@@ -229,7 +223,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (TimerManager.hudAlwaysHidden)
             {
-                MinimalHudcheckbox.Checked = true;               
+                MinimalHudcheckbox.Checked = true;
                 return true;
             }
             else
@@ -362,64 +356,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         #endregion
 
-        #region Form Swaps
-        private void WeaponFormSwap_Click(object sender, EventArgs e) // Weapon Form Swap
-        {
-            LoggingManager.Instance.Log("Navigating to Weapon Form from the Item Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "WeaponForm");
-            WeaponForm f1 = new WeaponForm();
-            f1.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Swapping to Weapon Form from the Misc Form");
-        }
-
-        private void button2_Click(object sender, EventArgs e) // Item Form Swap
-        {
-            LoggingManager.Instance.Log("Navigating to Item Form from the Misc Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "ItemForm");
-            ItemForm f2 = new ItemForm();
-            f2.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Swapping to Item Form from the Misc Form");
-        }
-
-
-        private void button1_Click(object sender, EventArgs e) // Camo Form Swap
-        {
-            LoggingManager.Instance.Log("Navigating to Camo Form from the Misc Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "CamoForm");
-            CamoForm f3 = new CamoForm();
-            f3.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Swapping to Camo Form from the Misc Form");
-        }
-
-        private void HealthFormSwap_Click(object sender, EventArgs e)
-        {
-            LoggingManager.Instance.Log("Navigating to Health Form from the Misc Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "HealthForm");
-            StatsAndAlertForm form5 = new();
-            form5.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Swapping to Stats and Alert Form from the Misc Form");
-        }
-
-        private void SwapToBossForm_Click(object sender, EventArgs e)
-        {
-            LoggingManager.Instance.Log("Navigating to Boss Form from the Misc Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "BossForm");
-            BossForm bossForm = new BossForm();
-            bossForm.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Swapping to Boss Form from the Misc Form");
-        }
-        #endregion
-
         #region HUD and Camera
 
         private void NormalCam_Click(object sender, EventArgs e)
@@ -514,32 +450,6 @@ namespace MGS3_MC_Cheat_Trainer
         }
         #endregion
 
-        
-
-        private void LogAOBs_Click(object sender, EventArgs e)
-        {
-            LoggingManager.LogAllWeaponsAndItemsAddresses();
-            LoggingManager.Instance.LogAOBAddresses();
-            LoggingManager.Instance.LogAllMemoryAddressesandValues();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            XyzManager.Instance.LogAllGuardsPosition();
-        }
-
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            // Set the randomization type to guards
-            RandomizerManager.Instance.RandomizationType = "guards";
-
-            // Trigger the randomization process
-            RandomizerManager.Instance.SearchForRandomizerArea();
-
-            LoggingManager.Instance.Log("Randomization for guards triggered.");
-        }
-
         private void PissFilterCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (PissFilterCheckBox.Checked)
@@ -580,6 +490,150 @@ namespace MGS3_MC_Cheat_Trainer
             LoggingManager.Instance.Log("Switched to Night Mode");
         }
 
-        
+        private void SwapToWeaponsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Weapon form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
+            WeaponForm form1 = new();
+            form1.Show();
+            this.Hide();
+        }
+
+        private void SwapToItemsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Item form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
+            ItemForm form2 = new();
+            form2.Show();
+            this.Hide();
+        }
+
+        private void SwapToCamoForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Camo form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
+            CamoForm form3 = new();
+            form3.Show();
+            this.Hide();
+        }
+
+        private void SwapToHealthAndAlertsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
+            StatsAndAlertForm form5 = new();
+            form5.Show();
+            this.Hide();
+        }
+
+        private void SwapToBossForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Boss form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+        }
+
+        private void SwapToGameStatsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "GameStatsForm");
+            GameStatsForm form7 = new();
+            form7.Show();
+            this.Hide();
+        }
+
+        #region Damage Multiplier Controls
+
+        private void UpdateDamageMultiplierTextBox()
+        {
+            if (int.TryParse(DamageToSnakeMultiTextbox.Text, out int multiplierValue))
+            {
+                if (multiplierValue < 1 || multiplierValue > 100)
+                {
+                    MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    LoggingManager.Instance.Log($"Invalid multiplier value entered: {multiplierValue}");
+                    return;
+                }
+
+                MiscManager.AdjustDamageMultiplier((byte)multiplierValue);
+                LoggingManager.Instance.Log($"Damage Multiplier updated to {multiplierValue}.");
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LoggingManager.Instance.Log("The user entered an invalid damage multiplier value.");
+            }
+        }
+
+        private void Minus1MultiValue_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(DamageToSnakeMultiTextbox.Text, out int multiplierValue) && multiplierValue > 1)
+            {
+                multiplierValue--;
+                MiscManager.AdjustDamageMultiplier((byte)multiplierValue);
+                DamageToSnakeMultiTextbox.Text = multiplierValue.ToString();
+                LoggingManager.Instance.Log("Damage Multiplier decreased by 1.");
+            }
+        }
+
+        private void Plus1MultiValue_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(DamageToSnakeMultiTextbox.Text, out int multiplierValue) && multiplierValue < 100)
+            {
+                multiplierValue++;
+                MiscManager.AdjustDamageMultiplier((byte)multiplierValue);
+                DamageToSnakeMultiTextbox.Text = multiplierValue.ToString();
+                LoggingManager.Instance.Log("Damage Multiplier increased by 1.");
+            }
+        }
+
+        private void ActivateDamageMulti_Click(object sender, EventArgs e)
+        {
+            MiscManager.EnableDamageMultiplier();
+
+            ChangeDamageMultiNumberButton.Enabled = true;
+            Plus1MultiValue.Enabled = true;
+            Minus1MultiValue.Enabled = true;
+            DamageToSnakeMultiTextbox.Enabled = true;
+
+            LoggingManager.Instance.Log("Damage Multiplier Enabled.");
+        }
+
+        private void DisableDamageMulti_Click(object sender, EventArgs e)
+        {
+            MiscManager.DisableDamageMultiplier();
+
+            ChangeDamageMultiNumberButton.Enabled = false;
+            Plus1MultiValue.Enabled = false;
+            Minus1MultiValue.Enabled = false;
+            DamageToSnakeMultiTextbox.Enabled = false;
+
+            LoggingManager.Instance.Log("Damage Multiplier Disabled.");
+        }
+
+        private void ChangeDamageMultiNumberButton_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(DamageToSnakeMultiTextbox.Text, out int multiplierValue) && multiplierValue >= 1 && multiplierValue <= 100)
+            {
+                MiscManager.AdjustDamageMultiplier((byte)multiplierValue);
+                LoggingManager.Instance.Log($"Damage Multiplier set to {multiplierValue}.");
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                LoggingManager.Instance.Log("Invalid Damage Multiplier value entered.");
+            }
+        }
+
+        #endregion
+
     }
 }

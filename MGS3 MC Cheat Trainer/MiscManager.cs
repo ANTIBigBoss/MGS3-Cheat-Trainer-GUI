@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms; // For MessageBox
 using static MGS3_MC_Cheat_Trainer.Constants;
-using static MGS3_MC_Cheat_Trainer.HelperFunctions;
+using static MGS3_MC_Cheat_Trainer.HelperMethods;
 
 // Use MemoryManager
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
@@ -312,7 +312,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public void SetFovSlider(float newFovValue)
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero)
             {
                 LoggingManager.Instance.Log("Failed to get game process for setting FOV.");
@@ -321,7 +321,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "FovSlider", (int)MiscOffsets.FovOffsetSub);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "FovSlider", (int)MiscOffsets.FovOffsetSub);
                 if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log("Failed to find FOV AOB pattern.");
@@ -339,7 +339,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public float ReadFovSlider()
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero)
             {
                 LoggingManager.Instance.Log("Failed to get game process for reading FOV.");
@@ -348,7 +348,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "FovSlider", (int)MiscOffsets.FovOffsetSub);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "FovSlider", (int)MiscOffsets.FovOffsetSub);
                 if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log("Failed to find FOV AOB pattern.");
@@ -376,13 +376,13 @@ namespace MGS3_MC_Cheat_Trainer
 
         public bool IsBatteryDrainNOP()
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return false;
 
-            IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
+            IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
             if (targetAddress == IntPtr.Zero) return false;
 
-            return HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
+            return HelperMethods.Instance.VerifyMemory(processHandle, targetAddress, new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 });
         }
 
         public void DisableBatteryDrain()
@@ -392,13 +392,13 @@ namespace MGS3_MC_Cheat_Trainer
 
         public bool IsBatteryDrainNormal()
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return false;
 
-            IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
+            IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
             if (targetAddress == IntPtr.Zero) return false;
 
-            return HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress, new byte[] { 0x66, 0x29, 0x88, 0x4E, 0x0A, 0x00, 0x00 });
+            return HelperMethods.Instance.VerifyMemory(processHandle, targetAddress, new byte[] { 0x66, 0x29, 0x88, 0x4E, 0x0A, 0x00, 0x00 });
         }
 
         public void EnableBatteryDrain()
@@ -412,14 +412,14 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} the battery drain. Game process not found.");
                     return;
                 }
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "BatteryDrain", (int)MiscOffsets.BatteryDrainInstructionsSub);
                 if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} the battery drain. AOB pattern not found.");
@@ -461,13 +461,13 @@ namespace MGS3_MC_Cheat_Trainer
 
         private bool CheckAmmoStatus(byte[] expectedBytes)
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return false;
 
-            IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "InfAmmoNoReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+            IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "InfAmmoNoReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub);
             if (targetAddress == IntPtr.Zero) return false;
 
-            return HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress, expectedBytes);
+            return HelperMethods.Instance.VerifyMemory(processHandle, targetAddress, expectedBytes);
         }
 
         private void ModifyAmmoAndReload(byte[] bytes, string action)
@@ -476,14 +476,14 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} Infinite Ammo and Reload. Game process not found.");
                     return;
                 }
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "InfAmmoNoReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "InfAmmoNoReload", (int)MiscOffsets.InfiniteAmmoAndReloadSub);
                 if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} Infinite Ammo and Reload. AOB pattern not found.");
@@ -530,14 +530,14 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} the HUD. Game process not found.");
                     return;
                 }
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", (int)MiscOffsets.NoHudPartialSub);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "PissFilter", (int)MiscOffsets.NoHudPartialSub);
                 if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} the HUD. AOB pattern not found.");
@@ -558,14 +558,14 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} the HUD. Game process not found.");
                     return;
                 }
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", (int)MiscOffsets.NoHudFullSub);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "PissFilter", (int)MiscOffsets.NoHudFullSub);
                 if (targetAddress == IntPtr.Zero)
                 {
                     LoggingManager.Instance.Log($"Failed to {action} the HUD. AOB pattern not found.");
@@ -582,6 +582,285 @@ namespace MGS3_MC_Cheat_Trainer
 
         #endregion
 
+        #region Damage Multiplier Functions
+
+        
+        /// <summary>
+        /// Enables Snake's Damage Multiplier.
+        /// </summary>
+        public static void EnableDamageMultiplier()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Failed to find the game process.");
+                return;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            try
+            {
+                // Locate CamoOperations
+                IntPtr camoOperationsAddress = MemoryManager.Instance.FindAob("CamoOperations");
+                if (camoOperationsAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to locate CamoOperations AOB pattern.");
+                    return;
+                }
+
+                // Instruction Address
+                IntPtr instructionAddress = IntPtr.Subtract(camoOperationsAddress, 138786);
+                IntPtr shortValueAddress = IntPtr.Add(instructionAddress, 2);
+
+                // Enable Instruction
+                byte[] enableBytes = new byte[] { 0x66, 0xBD, 0x0A, 0x00, 0x66, 0x0F, 0xAF, 0xCD, 0x90 };
+                bool success = MemoryManager.WriteMemory(processHandle, instructionAddress, enableBytes);
+
+                // Validate Short Value
+                byte[] currentShortBytes = MemoryManager.ReadMemoryBytes(processHandle, shortValueAddress, 2);
+                ushort shortValue = BitConverter.ToUInt16(currentShortBytes, 0);
+
+                if (shortValue > 100 || shortValue == 0)
+                {
+                    LoggingManager.Instance.Log($"Invalid short value ({shortValue}), resetting to 10.");
+                    MemoryManager.WriteMemory(processHandle, shortValueAddress, new byte[] { 0x0A, 0x00 }); // Default to 10
+                }
+
+                LoggingManager.Instance.Log(success
+                    ? "Damage Multiplier successfully enabled."
+                    : "Failed to enable Damage Multiplier.");
+            }
+            finally
+            {
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        /// <summary>
+        /// Disables Snake's Damage Multiplier.
+        /// </summary>
+        public static void DisableDamageMultiplier()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Failed to find the game process.");
+                return;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            try
+            {
+                // Locate CamoOperations
+                IntPtr camoOperationsAddress = MemoryManager.Instance.FindAob("CamoOperations");
+                if (camoOperationsAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to locate CamoOperations AOB pattern.");
+                    return;
+                }
+
+                // Instruction Address
+                IntPtr instructionAddress = IntPtr.Subtract(camoOperationsAddress, 138786);
+
+                // Disable Instruction
+                byte[] disableBytes = new byte[] { 0xF6, 0x05, 0x08, 0xF1, 0xAD, 0x01, 0x03, 0x75, 0x57 };
+                bool success = MemoryManager.WriteMemory(processHandle, instructionAddress, disableBytes);
+
+                LoggingManager.Instance.Log(success
+                    ? "Damage Multiplier successfully disabled."
+                    : "Failed to disable Damage Multiplier.");
+            }
+            finally
+            {
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        /// <summary>
+        /// Adjusts Snake's Damage Multiplier short value.
+        /// </summary>
+        public static void AdjustDamageMultiplier(byte multiplierValue)
+        {
+            if (multiplierValue < 1 || multiplierValue > 100)
+            {
+                LoggingManager.Instance.Log("Invalid multiplier value. Must be between 1 and 100.");
+                return;
+            }
+
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Failed to find the game process.");
+                return;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return;
+            }
+
+            try
+            {
+                // Locate CamoOperations
+                IntPtr camoOperationsAddress = MemoryManager.Instance.FindAob("CamoOperations");
+                if (camoOperationsAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to locate CamoOperations AOB pattern.");
+                    return;
+                }
+
+                // Address of the short multiplier
+                IntPtr shortValueAddress = IntPtr.Subtract(camoOperationsAddress, 138784);
+
+                byte[] multiplierBytes = BitConverter.GetBytes((ushort)multiplierValue);
+                bool success = MemoryManager.WriteMemory(processHandle, shortValueAddress, multiplierBytes);
+
+                LoggingManager.Instance.Log(success
+                    ? $"Damage Multiplier value set to {multiplierValue}."
+                    : "Failed to set Damage Multiplier value.");
+            }
+            finally
+            {
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        /// <summary>
+        /// Reads the current Snake Damage Multiplier.
+        /// </summary>
+        public static ushort ReadDamageMultiplier()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Failed to find the game process.");
+                return 0;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return 0;
+            }
+
+            try
+            {
+                IntPtr camoOperationsAddress = MemoryManager.Instance.FindAob("CamoOperations");
+                if (camoOperationsAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to locate CamoOperations AOB pattern.");
+                    return 0;
+                }
+
+                IntPtr shortValueAddress = IntPtr.Subtract(camoOperationsAddress, 138784);
+
+                byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, shortValueAddress, 2);
+                return buffer != null ? BitConverter.ToUInt16(buffer, 0) : (ushort)0;
+            }
+            finally
+            {
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+        /// <summary>
+        /// Checks if Snake's Damage Multiplier is active.
+        /// </summary>
+        public static bool IsDamageMultiplierActive()
+        {
+            Process process = MemoryManager.GetMGS3Process();
+            if (process == null)
+            {
+                LoggingManager.Instance.Log("Failed to find the game process.");
+                return false;
+            }
+
+            IntPtr processHandle = MemoryManager.OpenGameProcess(process);
+            if (processHandle == IntPtr.Zero)
+            {
+                LoggingManager.Instance.Log("Failed to open game process.");
+                return false;
+            }
+
+            try
+            {
+                // Find CamoOperations AOB
+                IntPtr camoOperationsAddress = MemoryManager.Instance.FindAob("CamoOperations");
+                if (camoOperationsAddress == IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log("Failed to locate CamoOperations AOB pattern.");
+                    return false;
+                }
+
+                // Address of the full instruction
+                IntPtr instructionAddress = IntPtr.Subtract(camoOperationsAddress, 138786);
+                // Address of the embedded short multiplier
+                IntPtr shortValueAddress = IntPtr.Add(instructionAddress, 2);
+
+                // Read the full instruction (8 bytes)
+                byte[] instructionBuffer = MemoryManager.ReadMemoryBytes(processHandle, instructionAddress, 8);
+                if (instructionBuffer == null || instructionBuffer.Length != 8)
+                {
+                    LoggingManager.Instance.Log("Failed to read Damage Multiplier instruction bytes.");
+                    return false;
+                }
+
+                // Check if the static parts of the instruction match
+                bool instructionMatches =
+                    instructionBuffer[0] == 0x66 &&
+                    instructionBuffer[1] == 0xBD &&
+                    instructionBuffer[4] == 0x66 &&
+                    instructionBuffer[5] == 0x0F &&
+                    instructionBuffer[6] == 0xAF &&
+                    instructionBuffer[7] == 0xCD;
+
+                if (!instructionMatches)
+                {
+                    LoggingManager.Instance.Log("Instruction pattern does not match the active Damage Multiplier.");
+                    return false;
+                }
+
+                // Validate the short value (XX XX)
+                byte[] shortValueBuffer = MemoryManager.ReadMemoryBytes(processHandle, shortValueAddress, 2);
+                if (shortValueBuffer == null || shortValueBuffer.Length != 2)
+                {
+                    LoggingManager.Instance.Log("Failed to read Damage Multiplier short value.");
+                    return false;
+                }
+
+                ushort shortValue = BitConverter.ToUInt16(shortValueBuffer, 0);
+                if (shortValue > 100 || shortValue == 0)
+                {
+                    LoggingManager.Instance.Log($"Invalid Damage Multiplier short value detected: {shortValue} (Expected 1-100).");
+                    return false;
+                }
+
+                LoggingManager.Instance.Log($"Damage Multiplier is active with a valid short value: {shortValue}");
+                return true;
+            }
+            finally
+            {
+                MemoryManager.NativeMethods.CloseHandle(processHandle);
+            }
+        }
+
+
+        #endregion
 
     }
 }

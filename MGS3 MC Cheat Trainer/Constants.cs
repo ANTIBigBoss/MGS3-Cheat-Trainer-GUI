@@ -89,16 +89,123 @@
         {
             // Difference from Piss Filter AOB not sure if anything closer is stable or not but we can compare post update if this works
             // It did not work they gone
-            SnakeLongSleepSub = 134918,
-            ForceDirectionAdd = 784173,
-            SnakeShortSleepAdd = 784187,
-            VomitFireAdd = 784188,
-            BoxCrouchAdd = 784198,
-            BunnyHopAdd = 784200,
-            FakeDeathAdd = 784202,
-            StopSnakeMovement = 784204,
+            SnakeLongSleepSub = 0, // Refind this broke during MGS3's 2.0.0 update
+            ForceDirectionSub = 11749,
+            SnakeShortSleepSub = 11735,
+            VomitFireSub = 11734,
+            BoxCrouchSub = 11724,
+            BunnyHopSub = 11722,
+            FakeDeathSub = 11720,
+            RealDeathSub = 11718, 
+            StopSnakeMovementSub = 11718,
+            StopSnakeMovementFpvSub = 11731,
+            StopSnakeMovementNoDamageAdd = 32715
 
         }
+
+        // Sub and Add determine to use IntPtr.Add or IntPtr.Subtract
+        public enum MainPointerAddresses
+        {
+            StartOfPointerSub = 2636, // Byte: will probably only use as a reference point
+            // Game Stats, some patterns here don't make sense so might need to confirm with Swiss:
+            DifficultySub = 2630, // Byte: 10 = V.Easy, 20 = Easy, 30 = Normal, 40 = Hard, 50 = Extreme, 60 = European Extreme
+            ContinuesSub = 2584, // Short
+            SavesSub = 2582, // Short
+            AlertsTriggeredSub = 2580, // Short
+            HumansKilledSub = 2578, // Short
+            SpecialItemsUsedSub = 2575, // Stealth = 1, Infinity FP = 2, Ez Gun = 4. Adding the totals tells what you used. 
+            PlantsAndAnimalsCapturedSub = 2573, // Swiss had 2 bytes but a max of 48 would imply it's probably a byte
+            SeriousInjuriesSub = 2572, // Short
+            TotalDamageTakenSub = 2570, // Might be 4 bytes/Int32
+            TotalDamageTakenSubTest = 2568,
+            MealsEatenSub = 2566,
+            PlayTimeSub = 2560, // Probably 4 bytes/Int32, MGS1 had 4 bytes for playtime
+            LifeMedsUsedSub = 1188, // Short: Weird this one is so far away, but confirmed it worked.
+            
+            KerotansShotSub = 0, // Need to figure out where this is wasn't in the CT Swiss sent me
+
+            // Misc Snake's Stats:
+            SnakesId_r_sna01Sub = 2616, // String: Not sure if will use in the trainer but good to have
+            MapStringSub = 2600, // String: This is the address that we are using for the map string
+            SnakesEquippedWeaponSub = 1144, // Byte: Careful not to equip something out of Snake's backpack or it will crash
+            SnakesEquippedItemSub = 1142, // Byte: Seems more relaxed on not crashing the game if out of Snake's backpack
+            SnakesEquippedCamoSub = 974, // Byte: Don't exceed max count or equip something not acquired yet
+            SnakesEquippedFacepaintSub = 973, // Byte: Don't exceed max count or equip something not acquired yet
+            SnakesCurrentHealthSub = 968, // Short: Can go to max of a short but I wouldn't advise going over 400
+            SnakesMaxHealthSub = 966, // Short: Same as above but healing an injury when over 400 will bring it back down to 400
+            SnakesCurrentStaminaSub = 2, // Short: Can go to max of a short but doesn't do much I'd advise the max being 30000
+
+            // Serious Injuries (Each of these is 14 bytes after the other) based on the old logic I had 68 slots:
+            SeriousInjury1Sub = 964, // Each array is 14 bytes long
+            SeriousInjury2Sub = 950,
+            SeriousInjury3Sub = 936,
+            SeriousInjury4Sub = 922,
+            SeriousInjury5Sub = 908,
+            SeriousInjury6Sub = 894,
+            SeriousInjury7Sub = 880,
+            SeriousInjury8Sub = 866,
+            SeriousInjury9Sub = 852,
+            SeriousInjury10Sub = 838,
+            SeriousInjury11Sub = 824,
+            SeriousInjury12Sub = 810,
+            SeriousInjury13Sub = 796,
+            SeriousInjury14Sub = 782,
+            SeriousInjury15Sub = 768,
+            SeriousInjury16Sub = 754,
+            SeriousInjury17Sub = 740,
+            SeriousInjury18Sub = 726,
+            SeriousInjury19Sub = 712,
+            SeriousInjury20Sub = 698,
+            SeriousInjury21Sub = 684,
+            SeriousInjury22Sub = 670,
+            SeriousInjury23Sub = 656,
+            SeriousInjury24Sub = 642,
+            SeriousInjury25Sub = 628,
+            SeriousInjury26Sub = 614,
+            SeriousInjury27Sub = 600,
+            SeriousInjury28Sub = 586,
+            SeriousInjury29Sub = 572,
+            SeriousInjury30Sub = 558,
+            SeriousInjury31Sub = 544,
+            SeriousInjury32Sub = 530,
+            SeriousInjury33Sub = 516,
+            SeriousInjury34Sub = 502,
+            SeriousInjury35Sub = 488,
+            SeriousInjury36Sub = 474,
+            SeriousInjury37Sub = 460,
+            SeriousInjury38Sub = 446,
+            SeriousInjury39Sub = 432,
+            SeriousInjury40Sub = 418,
+            SeriousInjury41Sub = 404,
+            SeriousInjury42Sub = 390,
+            SeriousInjury43Sub = 376,
+            SeriousInjury44Sub = 362,
+            SeriousInjury45Sub = 348,
+            SeriousInjury46Sub = 334,
+            SeriousInjury47Sub = 320,
+            SeriousInjury48Sub = 306,
+            SeriousInjury49Sub = 292,
+            SeriousInjury50Sub = 278,
+            SeriousInjury51Sub = 264,
+            SeriousInjury52Sub = 250,
+            SeriousInjury53Sub = 236,
+            SeriousInjury54Sub = 222,
+            SeriousInjury55Sub = 208,
+            SeriousInjury56Sub = 194,
+            SeriousInjury57Sub = 180,
+            SeriousInjury58Sub = 166,
+            SeriousInjury59Sub = 152,
+            SeriousInjury60Sub = 138,
+            SeriousInjury61Sub = 124,
+            SeriousInjury62Sub = 110,
+            SeriousInjury63Sub = 96,
+            SeriousInjury64Sub = 82,
+            SeriousInjury65Sub = 68,
+            SeriousInjury66Sub = 54,
+            SeriousInjury67Sub = 40,
+            SeriousInjury68Sub = 26,
+        }
+
 
         public enum TimeOfDayOffsets
         {

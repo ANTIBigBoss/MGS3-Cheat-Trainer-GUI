@@ -6,51 +6,35 @@ namespace MGS3_MC_Cheat_Trainer
 {
     public partial class ItemForm : Form
     {
-
-        //Navigation and closing logic functions
+        
         public ItemForm()
         {
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(Form2_FormClosing);
-        }
 
-        private void WeaponFormSwap_Click(object sender, EventArgs e) // Switch to weapons form
-        {
-            LoggingManager.Instance.Log("Navigating to Weapon Form from the Item Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "WeaponForm");
-            WeaponForm form1 = new();
-            form1.Show();
-            this.Hide();
-        }
-
-        private void MiscFormSwap_Click(object sender, EventArgs e) // Load Misc form
-        {
-            LoggingManager.Instance.Log("Navigating to Misc Form from the Item Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "MiscForm");
-            MiscForm form4 = new();
-            form4.Show();
-            this.Hide();
-        }
-
-        private void HealthFormSwap_Click(object sender, EventArgs e) // Load Health and Alert form
-        {
-            LoggingManager.Instance.Log("Navigating to Health and Alert Form from the Item Form");
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "HealthForm");
-            StatsAndAlertForm form5 = new();
-            form5.Show();
-            this.Hide();
+            // Setting all to 999 saves the user time if they just want to cheat everything in
+            LifeMedtextBox.Text = "999";
+            BugJuicetextBox.Text = "999";
+            FDPtextBox.Text = "999";
+            PentazemintextBox.Text = "999";
+            AntidotetextBox.Text = "999";
+            CMedtextBox.Text = "999";
+            DMedtextBox.Text = "999";
+            SerumtextBox.Text = "999";
+            BandagetextBox.Text = "999";
+            DisinfectanttextBox.Text = "999";
+            OintmenttextBox.Text = "999";
+            SplinttextBox.Text = "999";
+            StyptictextBox.Text = "999";
+            SutureKittextBox.Text = "999";
         }
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit(); // Closes the application(form1) if this form is closed
+            Application.Exit();
         }
-        // End of navigation and closing logic functions
 
-        private void Form2_Load(object sender, EventArgs e) // Accidently added this lmao
+        private void Form2_Load(object sender, EventArgs e)
         {
             this.Location = MemoryManager.GetLastFormLocation();
         }
@@ -336,23 +320,66 @@ namespace MGS3_MC_Cheat_Trainer
             ItemWeaponManager.ToggleItemState(MGS3UsableObjects.MonkeyMask, false);
         }
 
-        private void ItemFormSwap_Click(object sender, EventArgs e)
+        private void SwapToWeaponsForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("Navigating to Camo Form from the Item Form");
+            LoggingManager.Instance.Log("User is changing to the Weapon form from the Item form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "WeaponForm");
+            WeaponForm form1 = new();
+            form1.Show();
+            this.Hide();
+        }
+
+        private void SwapToCamoForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Camo form from the Item form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "CamoForm");
             CamoForm form3 = new();
             form3.Show();
             this.Hide();
+
         }
 
-        private void BossFormSwap_Click(object sender, EventArgs e)
+        private void SwapToMiscForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("Navigating to Boss Form from the Item Form");
+            LoggingManager.Instance.Log("User is changing to the Misc form from the Item form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
+            MiscForm form4 = new();
+            form4.Show();
+            this.Hide();
+
+        }
+
+        private void SwapToHealthAndAlertsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Item form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
+            StatsAndAlertForm form5 = new();
+            form5.Show();
+            this.Hide();
+        }
+
+        private void SwapToBossForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Boss form from the Item form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "BossForm");
             BossForm form6 = new();
             form6.Show();
+            this.Hide();
+
+        }
+
+        private void SwapToGameStatsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "GameStatsForm");
+            GameStatsForm form7 = new();
+            form7.Show();
             this.Hide();
         }
     }

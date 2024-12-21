@@ -41,10 +41,10 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero) return;
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", 5525);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "PissFilter", 5525);
                 if (targetAddress == IntPtr.Zero) return;
 
                 byte[] newFilterValue = { 0x44 };
@@ -69,10 +69,10 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero) return;
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", 5525);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "PissFilter", 5525);
                 if (targetAddress == IntPtr.Zero) return;
 
                 byte[] defaultFilterValue = { 0x00 };
@@ -98,10 +98,10 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero) return pissFilterValue;
 
-                IntPtr targetAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, "PissFilter", 5525);
+                IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, "PissFilter", 5525);
                 if (targetAddress == IntPtr.Zero) return pissFilterValue;
 
                 byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, 1);
@@ -128,7 +128,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero) return;
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
@@ -163,7 +163,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                processHandle = HelperFunctions.Instance.GetProcessHandle();
+                processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero) return;
 
                 IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
@@ -194,7 +194,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public bool IsPissFilterInstructionsNopped()
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return false;
 
             IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
@@ -202,11 +202,11 @@ namespace MGS3_MC_Cheat_Trainer
 
             IntPtr targetAddress1 = IntPtr.Subtract(aobResult, 1);
             byte[] expectedBytes1 = { 0x90 };
-            bool isFirstNopped = HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress1, expectedBytes1);
+            bool isFirstNopped = HelperMethods.Instance.VerifyMemory(processHandle, targetAddress1, expectedBytes1);
 
             IntPtr targetAddress2 = IntPtr.Add(aobResult, 2781);
             byte[] expectedBytes2 = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
-            bool isSecondNopped = HelperFunctions.Instance.VerifyMemory(processHandle, targetAddress2, expectedBytes2);
+            bool isSecondNopped = HelperMethods.Instance.VerifyMemory(processHandle, targetAddress2, expectedBytes2);
 
             MemoryManager.NativeMethods.CloseHandle(processHandle);
 
@@ -215,7 +215,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public (IntPtr, byte) GetPissFilterInstructionsAddress()
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return (IntPtr.Zero, 0x00);
 
             IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
@@ -232,7 +232,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public (IntPtr, byte[]) GetPissFilterInstructionsAddress2()
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return (IntPtr.Zero, new byte[8]);
 
             IntPtr aobResult = MemoryManager.Instance.FindAob("PissFilterInstructions");
@@ -282,7 +282,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SetTimeOfDayValues(byte[] lightNearSnake, byte[] colourMap, byte[] skyColour, byte skyByte)
         {
-            IntPtr processHandle = HelperFunctions.Instance.GetProcessHandle();
+            IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
             if (processHandle == IntPtr.Zero) return;
 
             try
@@ -301,7 +301,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void WriteTimeOfDayMemory(IntPtr processHandle, string patternName, int offset, byte[] bytes)
         {
-            IntPtr baseAddress = HelperFunctions.Instance.GetTargetAddress(processHandle, patternName, 0);
+            IntPtr baseAddress = HelperMethods.Instance.GetTargetAddress(processHandle, patternName, 0);
             IntPtr targetAddress = IntPtr.Subtract(baseAddress, offset);
 
             if (targetAddress == IntPtr.Zero)
@@ -312,7 +312,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             LoggingManager.Instance.Log($"Attempting to write to {patternName} at address: {targetAddress.ToString("X")}, Offset: {offset}, Data: {BitConverter.ToString(bytes)}");
 
-            if (HelperFunctions.Instance.WriteMemory(processHandle, targetAddress, bytes))
+            if (HelperMethods.Instance.WriteMemory(processHandle, targetAddress, bytes))
             {
                 LoggingManager.Instance.Log($"Successfully wrote memory for {patternName} at address: {targetAddress.ToString("X")} with data: {BitConverter.ToString(bytes)}");
             }

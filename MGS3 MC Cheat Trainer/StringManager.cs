@@ -235,7 +235,8 @@ namespace MGS3_MC_Cheat_Trainer
                 { LocationString.ending, "Credits" }
             };
 
-        // Similar to an AOB scan but using the strings above instead
+        /* ChatGPT insists using an outdated method makes the most sense not sure
+         I get why since it doesn't dynamically find the address */
         public string FindLocationStringDirectlyInRange()
         {
             Process process = GetMGS3Process();
@@ -316,17 +317,59 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             return "Unknown";
-        }      
+        }
 
-        private static IntPtr cachedPointerAddress = IntPtr.Zero;
-        private static string currentMapLocation = "";
+        public static string currentMapLocation = "";
+        public static IntPtr cachedPointerAddress = IntPtr.Zero;
+        public static IntPtr currentMemoryAddress = IntPtr.Zero;
+        public static IntPtr cachedAlphabetAddress = IntPtr.Zero;
+
         public static bool isInCutscene = false;
-        private static string lastLoggedLocation = ""; // To store the last logged map location
-        private static bool lastLoggedCutsceneStatus = false; // To store the last logged cutscene status
+        public static bool isSnakeDead = false;
+        public static bool isSnakeFakeDead = false;
+        public static bool isAreaTransitioning = false;
+        public static string lastLoggedLocation = "";
+        public static bool lastLoggedCutscene = false;
+
+        public bool IsAreaTransitioning()
+        {
+            if (processHandle == IntPtr.Zero)
+            {
+                Process process = GetMGS3Process();
+                if (process == null) return false;
+                processHandle = OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return false;
+            }
+
+            if (cachedAlphabetAddress == IntPtr.Zero)
+            {
+                cachedAlphabetAddress = MemoryManager.Instance.FindLastAob("Alphabet", "Death State/Area Transition");
+                if (cachedAlphabetAddress == IntPtr.Zero)
+                {
+                    return false;
+                }
+            }
+
+            IntPtr deathStateAddress = IntPtr.Subtract(cachedAlphabetAddress, (int)Constants.AnimationOffsets.RealDeathSub);
+            byte[] deathStateBytes = MemoryManager.ReadMemoryBytes(processHandle, deathStateAddress, 1);
+
+            if (deathStateBytes != null && deathStateBytes.Length > 0)
+            {
+                int currentState = deathStateBytes[0];
+                isAreaTransitioning = (currentState == 192);
+            }
+            else
+            {
+                LoggingManager.Instance.Log($"Failed to read death state from address: {deathStateAddress.ToString("X")}");
+                return false;
+            }
+
+            return isAreaTransitioning;
+        }
 
         public string GetCurrentLocation()
         {
-            // Check if the process handle is already open, otherwise open it
+            // Ensure process handle
             if (processHandle == IntPtr.Zero)
             {
                 Process process = GetMGS3Process();
@@ -336,130 +379,464 @@ namespace MGS3_MC_Cheat_Trainer
                 if (processHandle == IntPtr.Zero) return "Failed to open game process.";
             }
 
-            // If we cannot find the location string after a transition, reset the pointer search
+            // If pointer not found, try once
             if (cachedPointerAddress == IntPtr.Zero || currentMapLocation == "Map string not found.")
             {
-                Process processMain = Process.GetProcessesByName(Constants.PROCESS_NAME).FirstOrDefault();
-                IntPtr baseAddress = processMain.MainModule.BaseAddress;
-                IntPtr startAddress = IntPtr.Add(baseAddress, 0x1D00000);
-                IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
-                long searchRangeSize = endAddress.ToInt64() - startAddress.ToInt64();
+                if (!AttemptPointerScan())
+                    return "Pattern not found in the specified range.";
+            }
 
-                // Updated byte pattern for 30 75 ?? ?? ?? ?? 00 00 2C 01 00 00 ??
-                byte[] pointerPattern = { 0x30, 0x75, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00 };
-                string pointerMask = "xx????xxxxxx?";
+            string locationInfo = ScanCurrentLocation(out bool cutsceneLocal);
 
-                cachedPointerAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, searchRangeSize, pointerPattern, pointerMask);
+            bool cutsceneStatusChanged = (cutsceneLocal != lastLoggedCutscene);
+            bool locationChanged = (locationInfo != currentMapLocation);
+            bool suffixChanged = DetectSuffixChange(lastLoggedLocation, locationInfo);
 
-                if (cachedPointerAddress == IntPtr.Zero)
+            // Update globals
+            currentMapLocation = locationInfo;
+            isInCutscene = cutsceneLocal;
+
+            // If cutscene started or ended, or suffix changed indicating a new area scenario
+            if (suffixChanged)
+            {
+                LoggingManager.Instance.Log("Cutscene suffix or scenario changed. Treating as new area. Rescanning pointer.");
+
+                cachedPointerAddress = IntPtr.Zero;
+                if (!AttemptPointerScan())
                 {
-                    LoggingManager.Instance.Log("Pointer pattern not found in the specified range.");
+                    LoggingManager.Instance.Log("Pointer pattern not found after suffix change.");
                     return "Pattern not found in the specified range.";
                 }
 
-                LoggingManager.Instance.Log($"Pointer pattern found at address: {cachedPointerAddress.ToString("X")}");
+                // Re-scan after pointer refresh
+                locationInfo = ScanCurrentLocation(out cutsceneLocal);
+                currentMapLocation = locationInfo;
+                isInCutscene = cutsceneLocal;
+
+                // Log final result after re-scan
+                if (locationInfo != "Location string not found." && locationInfo != "Map string not found.")
+                {
+                    string cutsceneText = isInCutscene ? " (Cutscene)" : "";
+                    LoggingManager.Instance.Log($"Location changed (due to suffix change): {locationInfo} (Memory Address: {currentMemoryAddress.ToString("X")}){cutsceneText}");
+                    lastLoggedLocation = locationInfo;
+                    lastLoggedCutscene = isInCutscene;
+
+                    TimerManager.AttemptBossAobRefind();
+                }
+
+                return $"Pointer Pattern Address: {cachedPointerAddress.ToString("X")} \n" +
+                       $"Location String: {locationInfo} \n" +
+                       $"Memory Address: {currentMemoryAddress.ToString("X")} \n" +
+                       $"Cutscene Playing: {isInCutscene}";
+            }
+            else if ((locationChanged || cutsceneStatusChanged) &&
+                     locationInfo != "Location string not found." && locationInfo != "Map string not found.")
+            {
+                string cutsceneText = isInCutscene ? " (Cutscene)" : "";
+                LoggingManager.Instance.Log($"Location changed: {locationInfo} (Memory Address: {currentMemoryAddress.ToString("X")}){cutsceneText}");
+                lastLoggedLocation = locationInfo;
+                lastLoggedCutscene = isInCutscene;
+
+                TimerManager.AttemptBossAobRefind();
+
+                return $"Pointer Pattern Address: {cachedPointerAddress.ToString("X")} \n" +
+                       $"Location String: {locationInfo} \n" +
+                       $"Memory Address: {currentMemoryAddress.ToString("X")} \n" +
+                       $"Cutscene Playing: {isInCutscene}";
             }
 
-            // Now that the pointer has been cached, search for the map string
-            long backwardSearchSize = 2700;
+            return "Location unchanged.";
+        }
+
+        private bool AttemptPointerScan()
+        {
+            int maxRetries = 1;
+            int retryDelayMs = 1000;
+
+            for (int attempt = 1; attempt <= maxRetries; attempt++)
+            {
+                cachedPointerAddress = ScanForPointerPattern();
+                if (cachedPointerAddress != IntPtr.Zero)
+                {
+                    LoggingManager.Instance.Log($"Pointer pattern found at address: {cachedPointerAddress.ToString("X")} on attempt {attempt}.");
+                    return true;
+                }
+                else
+                {
+                    cachedPointerAddress = ScanForBackupPointerPattern();
+                    if (cachedPointerAddress != IntPtr.Zero)
+                    {
+                        LoggingManager.Instance.Log($"Pointer pattern found at address: {cachedPointerAddress.ToString("X")} on attempt {attempt}.");
+                        return true;
+                    }
+                }
+
+                System.Threading.Thread.Sleep(retryDelayMs);
+            }
+
+            LoggingManager.Instance.Log("Pointer pattern not found after all retries.");
+            return false;
+        }
+
+        private string ScanCurrentLocation(out bool cutsceneLocal)
+        {
+            cutsceneLocal = false;
+            string locationInfo = ScanForLocationStrings(cachedPointerAddress, out IntPtr foundAddress);
+            if (locationInfo != "Location string not found." && locationInfo != "Map string not found.")
+                currentMemoryAddress = foundAddress;
+            cutsceneLocal = isInCutscene;
+            return locationInfo;
+        }
+
+        private bool DetectSuffixChange(string oldLocation, string newLocation)
+        {
+            bool oldSuffix = oldLocation.Contains("_0") || oldLocation.Contains("_1");
+            bool newSuffix = newLocation.Contains("_0") || newLocation.Contains("_1");
+            return oldSuffix != newSuffix;
+        }
+
+        public string GetCurrentMapLocation() => currentMapLocation;
+
+        public string GetCurrentMapString()
+        {
+            if (string.IsNullOrEmpty(currentMapLocation) || !currentMapLocation.Contains("-"))
+                return "Unknown";
+            return currentMapLocation.Split('-')[0].Trim();
+        }
+
+        public bool IsInCutscene() => isInCutscene;
+        public string GetCurrentMemoryAddress() => currentMemoryAddress.ToString("X");
+
+        public string GetCurrentBossMapString()
+        {
+            if (string.IsNullOrEmpty(currentMapLocation))
+            {
+                return "Unknown";
+            }
+            return currentMapLocation.Split('-')[0].Trim();
+        }
+
+        public string GetCurrentPointerAddress() => cachedPointerAddress.ToString("X");
+
+        /* Constants.cs
+         public enum MainPointerAddresses
+           {
+               StartOfPointerSub = 2636, // Byte: will probably only use as a reference point
+               // Game Stats, some patterns here don't make sense so might need to confirm with Swiss:
+               DifficultySub = 2630, // Byte: 10 = V.Easy, 20 = Easy, 30 = Normal, 40 = Hard, 50 = Extreme, 60 = European Extreme
+               ContinuesSub = 2584, // Short
+               SavesSub = 2582, // Short
+               AlertsTriggeredSub = 2580, // Short
+               HumansKilledSub = 2578, // Short
+               SpecialItemsUsedSub = 2575, // Could be a byte or short I'll confirm with Swiss but: 0 = No, 1 = Yes
+               PlantsAndAnimalsCapturedSub = 2573, // Swiss had 2 bytes but a max of 48 would imply it's probably a byte
+               SeriousInjuriesSub = 2572, // Short
+               TotalDamageTakenSub = 2570, // Might be 4 bytes/Int32
+               PlayTimeSub = 2559, // Probably 4 bytes/Int32, MGS1 had 4 bytes for playtime
+               LifeMedsUsedSub = 1188, // Short: Weird this one is so far away, but confirmed it worked.
+               MealsEatenSub = 0, // Need to figure out where this is wasn't in the CT Swiss sent me
+               KerotansShotSub = 0, // Need to figure out where this is wasn't in the CT Swiss sent me
+           
+               // Misc Snake's Stats:
+               SnakesId_r_sna01Sub = 2616, // String: Not sure if will use in the trainer but good to have
+               MapStringSub = 2600, // String: This is the address that we are using for the map string
+               SnakesEquippedWeaponSub = 1144, // Byte: Careful not to equip something out of Snake's backpack or it will crash
+               SnakesEquippedItemSub = 1142, // Byte: Seems more relaxed on not crashing the game if out of Snake's backpack
+               SnakesEquippedFacepaintSub = 974, // Byte: Don't exceed max count or equip something not acquired yet
+               SnakesEquippedCamoSub = 973, // Byte: Don't exceed max count or equip something not acquired yet
+               SnakesCurrentHealthSub = 968, // Short: Can go to max of a short but I wouldn't advise going over 400
+               SnakesMaxHealthSub = 966, // Short: Same as above but healing an injury when over 400 will bring it back down to 400
+               SnakesCurrentStaminaSub = 2, // Short: Can go to max of a short but doesn't do much I'd advise the max being 30000
+           
+               // Serious Injuries (Each of these is 14 bytes after the other) based on the old logic I had 68 slots:
+               SeriousInjury1Sub = 964,
+               SeriousInjury2Sub = 950,
+               SeriousInjury3Sub = 936,
+               SeriousInjury4Sub = 922,
+               SeriousInjury5Sub = 908,
+               SeriousInjury6Sub = 894,
+               SeriousInjury7Sub = 880,
+               SeriousInjury8Sub = 866,
+               SeriousInjury9Sub = 852,
+               SeriousInjury10Sub = 838,
+               SeriousInjury11Sub = 824,
+               SeriousInjury12Sub = 810,
+               SeriousInjury13Sub = 796,
+               SeriousInjury14Sub = 782,
+               SeriousInjury15Sub = 768,
+               SeriousInjury16Sub = 754,
+               SeriousInjury17Sub = 740,
+               SeriousInjury18Sub = 726,
+               SeriousInjury19Sub = 712,
+               SeriousInjury20Sub = 698,
+               SeriousInjury21Sub = 684,
+               SeriousInjury22Sub = 670,
+               SeriousInjury23Sub = 656,
+               SeriousInjury24Sub = 642,
+               SeriousInjury25Sub = 628,
+               SeriousInjury26Sub = 614,
+               SeriousInjury27Sub = 600,
+               SeriousInjury28Sub = 586,
+               SeriousInjury29Sub = 572,
+               SeriousInjury30Sub = 558,
+               SeriousInjury31Sub = 544,
+               SeriousInjury32Sub = 530,
+               SeriousInjury33Sub = 516,
+               SeriousInjury34Sub = 502,
+               SeriousInjury35Sub = 488,
+               SeriousInjury36Sub = 474,
+               SeriousInjury37Sub = 460,
+               SeriousInjury38Sub = 446,
+               SeriousInjury39Sub = 432,
+               SeriousInjury40Sub = 418,
+               SeriousInjury41Sub = 404,
+               SeriousInjury42Sub = 390,
+               SeriousInjury43Sub = 376,
+               SeriousInjury44Sub = 362,
+               SeriousInjury45Sub = 348,
+               SeriousInjury46Sub = 334,
+               SeriousInjury47Sub = 320,
+               SeriousInjury48Sub = 306,
+               SeriousInjury49Sub = 292,
+               SeriousInjury50Sub = 278,
+               SeriousInjury51Sub = 264,
+               SeriousInjury52Sub = 250,
+               SeriousInjury53Sub = 236,
+               SeriousInjury54Sub = 222,
+               SeriousInjury55Sub = 208,
+               SeriousInjury56Sub = 194,
+               SeriousInjury57Sub = 180,
+               SeriousInjury58Sub = 166,
+               SeriousInjury59Sub = 152,
+               SeriousInjury60Sub = 138,
+               SeriousInjury61Sub = 124,
+               SeriousInjury62Sub = 110,
+               SeriousInjury63Sub = 96,
+               SeriousInjury64Sub = 82,
+               SeriousInjury65Sub = 68,
+               SeriousInjury66Sub = 54,
+               SeriousInjury67Sub = 40,
+               SeriousInjury68Sub = 26,
+           }
+        */
+        public string DisplayEntirePointer()
+        {
+            // Get the cached pointer address
+            IntPtr pointerAddress = cachedPointerAddress;
+
+            if (pointerAddress != IntPtr.Zero)
+            {
+                StringBuilder result = new StringBuilder();
+
+                foreach (Constants.MainPointerAddresses address in Enum.GetValues(typeof(Constants.MainPointerAddresses)))
+                {
+                    IntPtr addressToRead = IntPtr.Subtract(pointerAddress, (int)address);
+
+                    // Use the existing method to read the value
+                    string value = MemoryManager.ReadMemoryValueAsString(
+                        processHandle: MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process()),
+                        address: addressToRead,
+                        bytesToRead: 4, // 4 bytes for Int32
+                        dataType: Constants.DataType.Int32
+                    );
+
+                    result.AppendLine($"{address}: {value}\n");
+                }
+
+                return result.ToString();
+            }
+
+            return string.Empty;
+        }
+
+
+        private string ScanForLocationStrings(IntPtr pointerAddress, out IntPtr foundMemoryAddress)
+        {
+            foundMemoryAddress = IntPtr.Zero;
+            long backwardSearchSize = 2600;
             long forwardSearchSize = 1000;
-            IntPtr searchStart = IntPtr.Subtract(cachedPointerAddress, (int)backwardSearchSize);
+            IntPtr searchStart = IntPtr.Subtract(pointerAddress, (int)backwardSearchSize);
             long totalSearchSize = backwardSearchSize + forwardSearchSize;
 
-            // Initialize variables to hold the found location information
-            string foundLocationString = null;
-            bool foundCutscene = false;
-            IntPtr foundAddress = IntPtr.Zero;
-            string areaName = "Unknown Area";
+            bool foundCutsceneLocal = false;
+            string foundLocationString = "Location string not found.";
 
-            // Search for map strings within the defined range
             foreach (LocationString location in Enum.GetValues(typeof(LocationString)))
             {
                 string locationString = location.ToString();
-                byte[] locationPatternAscii = Encoding.ASCII.GetBytes(locationString);
-                string locationMaskAscii = new string('x', locationPatternAscii.Length);
+                byte[] locationPattern = Encoding.ASCII.GetBytes(locationString);
+                string locationMask = new string('x', locationPattern.Length);
 
-                // First, check for the base location string
-                IntPtr baseFoundAddress = MemoryManager.Instance.ScanMemory(processHandle, searchStart, totalSearchSize, locationPatternAscii, locationMaskAscii);
+                IntPtr baseFoundAddress = MemoryManager.Instance.ScanMemory(
+                    processHandle, searchStart, totalSearchSize, locationPattern, locationMask);
 
                 if (baseFoundAddress != IntPtr.Zero)
                 {
-                    // Check for cutscene variants
+                    foundMemoryAddress = baseFoundAddress;
+
+                    LocationAreaNames.TryGetValue(location, out var areaName);
+                    if (areaName == null) areaName = "Unknown Area";
+
+                    bool suffixFound = false;
                     foreach (var suffix in new[] { "_0", "_1" })
                     {
-                        string cutsceneLocationString = locationString + suffix;
-                        byte[] cutscenePatternAscii = Encoding.ASCII.GetBytes(cutsceneLocationString);
-                        string cutsceneMaskAscii = new string('x', cutscenePatternAscii.Length);
+                        byte[] cutscenePattern = Encoding.ASCII.GetBytes(locationString + suffix);
+                        IntPtr cutsceneAddress = MemoryManager.Instance.ScanMemory(
+                            processHandle, searchStart, totalSearchSize, cutscenePattern, locationMask + "xx");
 
-                        IntPtr cutsceneFoundAddress = MemoryManager.Instance.ScanMemory(processHandle, searchStart, totalSearchSize, cutscenePatternAscii, cutsceneMaskAscii);
-
-                        if (cutsceneFoundAddress != IntPtr.Zero)
+                        if (cutsceneAddress != IntPtr.Zero)
                         {
-                            // Cutscene location string found
-                            foundLocationString = cutsceneLocationString;
-                            foundCutscene = true;
-                            foundAddress = cutsceneFoundAddress;
-                            areaName = LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+                            foundMemoryAddress = cutsceneAddress;
+                            foundCutsceneLocal = true;
+                            foundLocationString = $"{locationString}{suffix} (Cutscene) - {areaName}";
+                            suffixFound = true;
                             break;
                         }
                     }
 
-                    if (!foundCutscene)
+                    if (!suffixFound)
                     {
-                        // Base location string found without cutscene
-                        foundLocationString = locationString;
-                        foundAddress = baseFoundAddress;
-                        areaName = LocationAreaNames.TryGetValue(location, out var name) ? name : "Unknown Area";
+                        foundLocationString = $"{locationString} - {areaName}";
                     }
 
-                    // Exit the loop as we've found the location
-                    break;
+                    break; // Found a location
                 }
             }
 
-            if (foundLocationString != null)
-            {
-                // Update the cutscene status and current map location
-                isInCutscene = foundCutscene;
-                currentMapLocation = foundLocationString;
+            isInCutscene = foundCutsceneLocal;
+            return foundLocationString;
+        }
 
-                // Log the location change only if it has actually changed
-                if (currentMapLocation != lastLoggedLocation || isInCutscene != lastLoggedCutsceneStatus)
+        private IntPtr ScanForPointerPattern()
+        {
+            Process processMain = GetMGS3Process();
+            if (processMain == null || processMain.MainModule == null) return IntPtr.Zero;
+
+            IntPtr baseAddress = processMain.MainModule.BaseAddress;
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1DFFFFF);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
+            long rangeSize = endAddress.ToInt64() - startAddress.ToInt64();
+
+            byte[] pattern = { 0x30, 0x75, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00 };
+            string mask = "xx????xxxxxx?";
+            
+
+            return MemoryManager.Instance.ScanMemory(processHandle, startAddress, rangeSize, pattern, mask);
+        }
+
+        // This one is if a save game hasn't been loaded yet. Aob is in the same location but with a different pattern.
+        private IntPtr ScanForBackupPointerPattern()
+        {
+            Process processMain = GetMGS3Process();
+            if (processMain == null || processMain.MainModule == null) return IntPtr.Zero;
+
+            IntPtr baseAddress = processMain.MainModule.BaseAddress;
+            IntPtr startAddress = IntPtr.Add(baseAddress, 0x1DFFFFF);
+            IntPtr endAddress = IntPtr.Add(baseAddress, 0x1F00000);
+            long rangeSize = endAddress.ToInt64() - startAddress.ToInt64();
+
+            byte[] pattern = { 0x00, 0x00, 0x2C, 0x01, 0x2C, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+            string mask = "??xxxxxxxxxxx";
+
+            return MemoryManager.Instance.ScanMemory(processHandle, startAddress, rangeSize, pattern, mask);
+        }
+
+        public bool IsSnakeDead()
+        {
+            if (processHandle == IntPtr.Zero)
+            {
+                Process process = GetMGS3Process();
+                if (process == null) return false;
+
+                processHandle = OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return false;
+            }
+
+            if (cachedAlphabetAddress == IntPtr.Zero)
+            {
+                cachedAlphabetAddress = MemoryManager.Instance.FindLastAob("Alphabet", "Death State Address");
+                if (cachedAlphabetAddress == IntPtr.Zero)
                 {
-                    string cutsceneText = isInCutscene ? " (Cutscene)" : "";
-                    LoggingManager.Instance.Log($"Location changed: {currentMapLocation} ({areaName}){cutsceneText}");
-
-                    // Update the last logged values
-                    lastLoggedLocation = currentMapLocation;
-                    lastLoggedCutsceneStatus = isInCutscene;
+                    return false;
                 }
-
-                return $"Pointer Pattern Address: {cachedPointerAddress.ToString("X")} \n" +
-                       $"Location String: {foundLocationString} \n" +
-                       $"Area Name: {areaName} \n" + 
-                       $"Cutscene Playing: {foundCutscene} \n" +
-                       $"Location Address: {foundAddress.ToString("X")}";
             }
-            else
+
+            IntPtr deathStateAddress =
+                IntPtr.Subtract(cachedAlphabetAddress, (int)Constants.AnimationOffsets.RealDeathSub);
+            byte[] deathStateBytes = MemoryManager.ReadMemoryBytes(processHandle, deathStateAddress, 1);
+
+            if (deathStateBytes != null && deathStateBytes.Length > 0)
             {
-                // Reset the pointer search if map string is not found
-                LoggingManager.Instance.Log("Map string not found. Resetting pointer search.");
-                cachedPointerAddress = IntPtr.Zero; // Reset to force a pointer search in the next tick
-                return "Map string not found.";
+                int currentState = deathStateBytes[0];
+                isSnakeDead = (currentState == 16 || currentState == 208); // Modify the condition to check for both values
             }
+
+            return isSnakeDead;
         }
 
-
-        public string GetCurrentMapLocation()
+        public bool IsSnakeFakeDead()
         {
-            return currentMapLocation;
+            if (processHandle == IntPtr.Zero)
+            {
+                Process process = GetMGS3Process();
+                if (process == null) return false;
+
+                processHandle = OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return false;
+            }
+
+            if (cachedAlphabetAddress == IntPtr.Zero)
+            {
+                cachedAlphabetAddress = MemoryManager.Instance.FindLastAob("Alphabet", "Death State Address");
+                if (cachedAlphabetAddress == IntPtr.Zero)
+                {
+                    return false;
+                }
+            }
+
+            IntPtr deathStateAddress =
+                IntPtr.Subtract(cachedAlphabetAddress, (int)Constants.AnimationOffsets.FakeDeathSub);
+            byte[] deathStateBytes = MemoryManager.ReadMemoryBytes(processHandle, deathStateAddress, 1);
+
+            if (deathStateBytes != null && deathStateBytes.Length > 0)
+            {
+                int currentState = deathStateBytes[0];
+                isSnakeFakeDead = (currentState == 32);
+            }
+
+            return isSnakeFakeDead;
         }
 
-        public bool IsInCutscene()
+        public int GetRawFakeDeathStateByte()
         {
-            return isInCutscene;
+            if (processHandle == IntPtr.Zero)
+            {
+                Process process = GetMGS3Process();
+                if (process == null) return 0;
+
+                processHandle = OpenGameProcess(process);
+                if (processHandle == IntPtr.Zero) return 0;
+            }
+
+            if (cachedAlphabetAddress == IntPtr.Zero)
+            {
+                cachedAlphabetAddress = MemoryManager.Instance.FindLastAob("Alphabet", "Death State Address");
+                if (cachedAlphabetAddress == IntPtr.Zero)
+                {
+                    return 0;
+                }
+            }
+
+            IntPtr deathStateAddress =
+                IntPtr.Subtract(cachedAlphabetAddress, (int)Constants.AnimationOffsets.FakeDeathSub);
+            byte[] deathStateBytes = MemoryManager.ReadMemoryBytes(processHandle, deathStateAddress, 1);
+
+            if (deathStateBytes != null && deathStateBytes.Length > 0)
+            {
+                return deathStateBytes[0];
+            }
+
+            return 0;
         }
-
-
     }
 }

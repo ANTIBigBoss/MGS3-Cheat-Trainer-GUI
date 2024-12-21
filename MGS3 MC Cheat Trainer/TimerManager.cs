@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using static MGS3_MC_Cheat_Trainer.Constants;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -17,15 +21,29 @@ namespace MGS3_MC_Cheat_Trainer
                 lock (lockObj)
                 {
                     if (instance == null)
-                    {
                         instance = new TimerManager();
-                    }
                     return instance;
                 }
             }
         }
 
         public static int UserCamoIndex { get; set; } = 40;
+
+        private static Dictionary<string, int> aobRetryCounts = new Dictionary<string, int>();
+        private const int MaxRetries = 5;
+        private static bool maxRetriesLogged = false;
+
+        private static System.Windows.Forms.Timer LocationChangeTimer = new System.Windows.Forms.Timer();
+
+        private static string LastKnownLocation = "";
+        private static bool lastIsSnakeDead = false;
+        private static bool lastIsSnakeFakeDead = false;
+
+        // Fake death state tracking
+        private static int lastFakeDeathValue = 0;
+        private static bool saw64DuringFakeCycle = false;
+        private static bool wasFakeDead = false;
+        private static bool after16State = false;
 
         static TimerManager()
         {
@@ -41,7 +59,7 @@ namespace MGS3_MC_Cheat_Trainer
             CautionTimer.Interval = 1000;
             CautionTimer.Tick += CautionTimer_Tick;
 
-            LocationChangeTimer.Interval = 2000;
+            LocationChangeTimer.Interval = 100;
             LocationChangeTimer.Tick += LocationChangeTimer_Tick;
 
             camoIndexTimer.Interval = 1000;
@@ -57,6 +75,156 @@ namespace MGS3_MC_Cheat_Trainer
             RealTimeSwapTrackingTimer.Tick += RealTimeSwapTrackingTimer_Tick;
         }
 
+        public static void StartLocationTracking()
+        {
+            LocationChangeTimer.Start();
+            LoggingManager.Instance.Log("Location tracking started.");
+        }
+
+        private static void LocationChangeTimer_Tick(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    // Read current location
+                    string currentLocationInfo = StringManager.Instance.GetCurrentLocation();
+
+                    // Check if location changed
+                    if (currentLocationInfo != LastKnownLocation)
+                    {
+                        LastKnownLocation = currentLocationInfo;
+                        LoggingManager.Instance.Log($"Location changed detected: {currentLocationInfo}");
+
+                        // On map string changes, force pointer rescan and attempt AOB refind
+                        // Wait 2 seconds before rescan
+                        Task.Delay(2000).Wait();
+                        ForcePointerRescan();
+                        AttemptBossAobRefind();
+                    }
+
+                    // Check death states
+                    bool currentIsSnakeDead = StringManager.Instance.IsSnakeDead();       // Dead=16, normal=0
+                    bool currentIsSnakeFakeDead = StringManager.Instance.IsSnakeFakeDead(); // Fake dead=32, normal=0/64 cycle
+
+                    // Real death scenario: if was dead (16) and now 0 => new area loaded
+                    if (lastIsSnakeDead && !currentIsSnakeDead)
+                    {
+                        LoggingManager.Instance.Log("Real death ended (16->0), forcing pointer rescan.");
+
+                        ForcePointerRescan();
+                        Task.Delay(1000).Wait();
+                        AttemptBossAobRefind();
+                    }
+
+                    // Handle fake death state machine by reading raw byte
+                    int currentFakeDeathValue = StringManager.Instance.GetRawFakeDeathStateByte();
+                    if (lastFakeDeathValue != currentFakeDeathValue)
+                    {
+                        // Transition detected
+                        if (currentFakeDeathValue == 32)
+                        {
+                            // Snake just became fake dead
+                            wasFakeDead = true;
+                            saw64DuringFakeCycle = false;
+                            after16State = false;
+                        }
+                        else if (wasFakeDead)
+                        {
+                            if (currentFakeDeathValue == 16)
+                            {
+                                // From 32->16 means menu chosen (continue or revive)
+                                after16State = true;
+                            }
+                            else if (currentFakeDeathValue == 64 && after16State)
+                            {
+                                // Seeing 64 after 16 means revive scenario
+                                saw64DuringFakeCycle = true;
+                            }
+                            else if (currentFakeDeathValue == 0)
+                            {
+                                // Returning to 0 normal state
+                                if (after16State)
+                                {
+                                    // Check if we saw 64
+                                    if (!saw64DuringFakeCycle)
+                                    {
+                                        // 32->16->0 no 64 means continue scenario
+                                        LoggingManager.Instance.Log("Fake death ended (32->16->0) continue scenario, forcing pointer rescan.");
+                                        Task.Delay(1000).Wait();
+                                        ForcePointerRescan();
+                                        AttemptBossAobRefind();
+                                    }
+                                    else
+                                    {
+                                        // 32->16->64->0 means revive scenario, same area no rescan
+                                        LoggingManager.Instance.Log("Fake death ended (32->16->64->0) revive scenario, no rescan needed.");
+                                    }
+                                }
+
+                                // Reset cycle
+                                wasFakeDead = false;
+                                after16State = false;
+                                saw64DuringFakeCycle = false;
+                            }
+                        }
+
+                        lastFakeDeathValue = currentFakeDeathValue;
+                    }
+
+                    // Update last states
+                    lastIsSnakeDead = currentIsSnakeDead;
+                    lastIsSnakeFakeDead = currentIsSnakeFakeDead;
+                }
+                catch (Exception ex)
+                {
+                    LoggingManager.Instance.Log($"Error in LocationChangeTimer_Tick: {ex.Message}");
+                }
+            });
+        }
+
+        private static void ForcePointerRescan()
+        {
+            // Set pointer to zero and call GetCurrentLocation() again to force a new pointer scan
+            StringManager.cachedPointerAddress = IntPtr.Zero;
+            string result = StringManager.Instance.GetCurrentLocation();
+            LoggingManager.Instance.Log($"Pointer rescan done. Result: {result}");
+        }
+
+        public static void AttemptBossAobRefind()
+        {
+            if (maxRetriesLogged) return;
+
+            string mapString = StringManager.Instance.GetCurrentBossMapString();
+            if (!(mapString == "s023a" || mapString == "s032b" || mapString == "s051b" ||
+                  mapString == "s063a" || mapString == "s064a" || mapString == "s065a" ||
+                  mapString == "s081a" || mapString == "s122a" || mapString == "s171b" || mapString == "s201a"))
+            {
+                return;
+            }
+
+            if (!aobRetryCounts.ContainsKey(mapString))
+            {
+                aobRetryCounts[mapString] = 0;
+            }
+
+            if (aobRetryCounts[mapString] < MaxRetries)
+            {
+                aobRetryCounts[mapString]++;
+                LoggingManager.Instance.Log($"Attempting AOB re-find for {mapString}, try {aobRetryCounts[mapString]}/{MaxRetries}.");
+
+                if (BossForm.Instance != null)
+                {
+                    BossForm.Instance.AttemptReFindAOB(mapString);
+                }
+            }
+            else
+            {
+                LoggingManager.Instance.Log($"Max retries reached for {mapString}, giving up on AOB re-find.");
+                maxRetriesLogged = true;
+            }
+        }
+
         #region Camo Index Timer
 
         private static System.Windows.Forms.Timer camoIndexTimer = new System.Windows.Forms.Timer();
@@ -67,9 +235,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private static void CamoIndexTimer_Tick(object sender, EventArgs e)
         {
-            
-        }
 
+        }
 
         public static void ToggleInfiniteCamoIndex(bool enable)
         {
@@ -176,7 +343,7 @@ namespace MGS3_MC_Cheat_Trainer
             short evasionTimerValue = AlertManager.ReadEvasionTimerValue(alertMemoryRegion);
 
             // Initiate evasion sequence if conditions are right and make sure it's not already in progress
-            if (alertTimerValue <= 0 && evasionTimerValue <= 0 && EvasionStep == 0) 
+            if (alertTimerValue <= 0 && evasionTimerValue <= 0 && EvasionStep == 0)
             {
                 StartEvasionSequence();
             }
@@ -232,28 +399,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         #endregion
 
-        #region Map String Tracking
-        private static System.Windows.Forms.Timer LocationChangeTimer = new System.Windows.Forms.Timer();
-        private static string LastKnownLocation = "";
 
-        private static void LocationChangeTimer_Tick(object sender, EventArgs e)
-        {
-            string currentLocationInfo = StringManager.Instance.GetCurrentLocation();
-
-            if (currentLocationInfo != LastKnownLocation)
-            {
-                LastKnownLocation = currentLocationInfo;
-                LoggingManager.Instance.Log($"Location changed: {currentLocationInfo}\n");
-            }
-        }
-
-        public static void StartLocationTracking()
-        {
-            LocationChangeTimer.Start();
-            LoggingManager.Instance.Log("Location tracking started.");
-        }
-
-        #endregion
 
         #region HUD Tracker
 
@@ -273,7 +419,7 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 MiscManager.Instance.EnableHUD();
             }
-            
+
         }
 
         public static void ToggleMinimalHud(bool enable)
@@ -407,7 +553,7 @@ namespace MGS3_MC_Cheat_Trainer
         // Methods to modify the player's box state
         public static void PutPlayerInBox()
         {
-            ModifyPlayerBoxState(0x21, "Player put in the box successfully.", "Failed to put the player in the box.");
+            ModifyPlayerBoxState(0x00, "Player put in the box successfully.", "Failed to put the player in the box.");
         }
 
         public static void TakePlayerOutOfBox()
@@ -427,10 +573,10 @@ namespace MGS3_MC_Cheat_Trainer
                 processHandle = MemoryManager.OpenGameProcess(process);
                 if (processHandle == IntPtr.Zero) return;
 
-                IntPtr itemWindowAddress = MemoryManager.Instance.FindAob("PissFilter");
+                IntPtr itemWindowAddress = MemoryManager.Instance.FindLastAob("Alphabet", "Alphabet");
                 if (itemWindowAddress == IntPtr.Zero) return;
 
-                IntPtr targetAddress = IntPtr.Add(itemWindowAddress, (int)AnimationOffsets.BoxCrouchAdd);
+                IntPtr targetAddress = IntPtr.Subtract(itemWindowAddress, (int)AnimationOffsets.StopSnakeMovementFpvSub);
                 bool success = MemoryManager.WriteMemory(processHandle, targetAddress, boxValue);
                 if (!success)
                 {
@@ -450,13 +596,13 @@ namespace MGS3_MC_Cheat_Trainer
         // Methods to enable/disable real-time weapon/item swapping
         public static void RealTimeWeaponItemSwapping()
         {
-            ModifyRealTimeWeaponItemSwapping(new byte[] { 0x85, 0x05, 0xC0, 0x59, 0xA7, 0x01 }, "Real Time Weapon and Item Swapping enabled successfully.");
+            ModifyRealTimeWeaponItemSwapping(new byte[] { 0x85, 0x05, 0x30, 0xF9, 0xA8, 0x01 }, "Real Time Weapon and Item Swapping enabled successfully.");
             RealTimeSwapTrackingTimer.Start();
         }
 
         public static void DisableRealTimeWeaponItemSwapping()
         {
-            ModifyRealTimeWeaponItemSwapping(new byte[] { 0x85, 0x05, 0x77, 0xF1, 0xC4, 0x01 }, "Real Time Weapon and Item Swapping disabled successfully.");
+            ModifyRealTimeWeaponItemSwapping(new byte[] { 0x85, 0x05, 0xE7, 0x90, 0xC6, 0x01 }, "Real Time Weapon and Item Swapping disabled successfully.");
             RealTimeSwapTrackingTimer.Stop();
         }
 
@@ -503,8 +649,8 @@ namespace MGS3_MC_Cheat_Trainer
                 if (processHandle != IntPtr.Zero) MemoryManager.NativeMethods.CloseHandle(processHandle);
             }
         }
-    
 
-    #endregion
-}
+
+        #endregion
+    }
 }

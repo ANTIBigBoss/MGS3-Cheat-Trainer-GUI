@@ -44,21 +44,25 @@ namespace MGS3_MC_Cheat_Trainer
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
-            // and with bytes
+            // Declare WriteProcessMemory with bytes
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
 
-            // Declare ReadProcessMemory
+            // Declare ReadProcessMemory for short
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, out short lpBuffer, uint size, out int lpNumberOfBytesRead);
-            // and with bytes
-            [DllImport("kernel32.dll")]
+
+            // Declare ReadProcessMemory with bytes
+            [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out int lpNumberOfBytesRead);
 
             // Declare CloseHandle
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool CloseHandle(IntPtr hObject);
 
+            // Add VirtualAllocEx here
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
         }
 
         #endregion
@@ -114,9 +118,11 @@ namespace MGS3_MC_Cheat_Trainer
             }
             catch (Exception ex)
             {
+                LoggingManager.Instance.Log($"OpenGameProcess Exception: {ex.Message}");
                 return IntPtr.Zero;
             }
-        }
+        }       
+
 
         public static bool ReadProcessMemory(IntPtr processHandle, IntPtr address, byte[] buffer, uint size, out int bytesRead)
         {
@@ -155,7 +161,7 @@ namespace MGS3_MC_Cheat_Trainer
             return FormatMemoryRead(buffer, bytesToRead, addressHex, moduleOffset, dataType);
         }
 
-        private static string FormatMemoryRead(byte[] buffer, int bytesToRead, string addressHex, string moduleOffset, DataType dataType)
+        public static string FormatMemoryRead(byte[] buffer, int bytesToRead, string addressHex, string moduleOffset, DataType dataType)
         {
             StringBuilder result = new StringBuilder();
             result.Append($"Address Offset: {moduleOffset}\n");
@@ -225,6 +231,14 @@ namespace MGS3_MC_Cheat_Trainer
 
         #region Memory Writing
 
+        /// <summary>
+        /// Writes a value of type T to the specified address in the target process.
+        /// </summary>
+        /// <typeparam name="T">Type of the value to write.</typeparam>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="address">Address in the target process to write to.</param>
+        /// <param name="value">Value to write.</param>
+        /// <returns>True if the write operation was successful; otherwise, false.</returns>
         public static bool WriteMemory<T>(IntPtr processHandle, IntPtr address, T value)
         {
             byte[] buffer;
@@ -250,26 +264,16 @@ namespace MGS3_MC_Cheat_Trainer
             }
 
             return NativeMethods.WriteProcessMemory(processHandle, address, buffer, (uint)buffer.Length, out _);
-        }
+        }       
 
-        // This function utilizes the WriteMemory but helps with writing to a specific address you navigate to with an AOB
-        // Example (From DamageManager) with Hex and Decimal formats depending on what you're trying to write:
-        // WriteValue(processHandle, "M63Damage", 2, false, 1000);  // Using direct decimal for ushort
-        // WriteValue(processHandle, "KnifeForkDamage", 6, false, new byte[] { 0x29, 0x86, 0x38, 0x01, 0x00, 0x00 }); 
-        public void WriteValue<T>(IntPtr processHandle, string aobKey, int offset, bool forward, T value)
-        {
-            IntPtr aobResult = MemoryManager.Instance.FindAob(aobKey);
-            if (aobResult == IntPtr.Zero)
-            {
-                LoggingManager.Instance.Log($"Error: AOB pattern not found for {aobKey}.");
-                return;
-            }
-
-            IntPtr targetAddress = forward ? IntPtr.Add(aobResult, offset) : IntPtr.Subtract(aobResult, offset);
-            bool writeResult = MemoryManager.WriteMemory(processHandle, targetAddress, value);
-            LoggingManager.Instance.Log(writeResult ? $"{aobKey} written successfully." : $"Failed to write {aobKey}.");
-        }
-
+        /// <summary>
+        /// Sets specific bits in a short value.
+        /// </summary>
+        /// <param name="currentValue">Current short value.</param>
+        /// <param name="startBit">Starting bit position.</param>
+        /// <param name="endBit">Ending bit position.</param>
+        /// <param name="valueToSet">Value to set in the specified bits.</param>
+        /// <returns>Modified short value with specific bits set.</returns>
         public static short SetSpecificBits(short currentValue, int startBit, int endBit, int valueToSet)
         {
             int maskLength = endBit - startBit + 1;
@@ -281,6 +285,15 @@ namespace MGS3_MC_Cheat_Trainer
 
         #region Aob Scanning and Helpers
 
+        /// <summary>
+        /// Scans memory for a specific byte pattern with an associated mask.
+        /// </summary>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="startAddress">Starting address for the scan.</param>
+        /// <param name="size">Size of the memory region to scan.</param>
+        /// <param name="pattern">Byte pattern to search for.</param>
+        /// <param name="mask">Mask indicating wildcards (e.g., "x ? x ?").</param>
+        /// <returns>Address where the pattern is found; otherwise, IntPtr.Zero.</returns>
         public IntPtr ScanMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
             // 64 KB buffer
@@ -310,12 +323,19 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
-        // Only use this if you're searching through Dynamic memory it's sort of a last resort for AOBs
+        /// <summary>
+        /// Scans a wider memory region for a specific byte pattern with an associated mask.
+        /// </summary>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="startAddress">Starting address for the scan.</param>
+        /// <param name="size">Size of the memory region to scan.</param>
+        /// <param name="pattern">Byte pattern to search for.</param>
+        /// <param name="mask">Mask indicating wildcards (e.g., "x ? x ?").</param>
+        /// <returns>Address where the pattern is found; otherwise, IntPtr.Zero.</returns>
         public IntPtr ScanWideMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
-            // 2000 KB buffer (I think this increases the speed of the scan) probably need a better
-            // way to optimize for boss AOBs since the range is so large to find them
-            int bufferSize = 10000000;
+            // 10 MB buffer for wider scans
+            int bufferSize = 10_000_000;
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -341,6 +361,14 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
+        /// <summary>
+        /// Scans memory for a specific string pattern.
+        /// </summary>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="startAddress">Starting address for the scan.</param>
+        /// <param name="size">Size of the memory region to scan.</param>
+        /// <param name="pattern">Byte pattern representing the string.</param>
+        /// <returns>Address where the string is found; otherwise, IntPtr.Zero.</returns>
         public IntPtr ScanForStringMemory(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern)
         {
             int bufferSize = 65536; // 64 KB
@@ -351,7 +379,7 @@ namespace MGS3_MC_Cheat_Trainer
             for (long address = startAddress.ToInt64(); address < endAddress; address += bufferSize)
             {
                 int effectiveSize = (int)Math.Min(bufferSize, endAddress - address);
-                bool success = MemoryManager.ReadProcessMemory(processHandle, new IntPtr(address), buffer, (uint)effectiveSize, out bytesRead);
+                bool success = ReadProcessMemory(processHandle, new IntPtr(address), buffer, (uint)effectiveSize, out bytesRead);
                 if (!success || bytesRead == 0)
                 {
                     continue;
@@ -369,6 +397,14 @@ namespace MGS3_MC_Cheat_Trainer
             return IntPtr.Zero;
         }
 
+        /// <summary>
+        /// Checks for a direct byte match without wildcards.
+        /// </summary>
+        /// <param name="buffer">Buffer containing the memory bytes.</param>
+        /// <param name="position">Current position in the buffer.</param>
+        /// <param name="pattern">Byte pattern to match.</param>
+        /// <param name="bytesRead">Total bytes read into the buffer.</param>
+        /// <returns>True if the pattern matches at the current position; otherwise, false.</returns>
         public bool IsDirectMatch(byte[] buffer, int position, byte[] pattern, int bytesRead)
         {
             if (position + pattern.Length > bytesRead) return false;
@@ -383,6 +419,11 @@ namespace MGS3_MC_Cheat_Trainer
             return true;
         }
 
+        /// <summary>
+        /// Finds a dynamic AOB pattern in the target process.
+        /// </summary>
+        /// <param name="key">Key identifying the AOB pattern.</param>
+        /// <returns>Address where the AOB pattern is found; otherwise, IntPtr.Zero.</returns>
         public IntPtr FindDynamicAob(string key)
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
@@ -393,21 +434,18 @@ namespace MGS3_MC_Cheat_Trainer
             var process = GetMGS3Process();
             if (process == null || process.MainModule == null)
             {
-
                 return IntPtr.Zero;
             }
 
             IntPtr processHandle = OpenGameProcess(process);
             if (processHandle == IntPtr.Zero)
             {
-
                 return IntPtr.Zero;
             }
 
             // If start and end addresses are defined, use them to calculate size. Otherwise, signal an error or default to full range scan.
             if (!aobData.StartOffset.HasValue || !aobData.EndOffset.HasValue)
             {
-
                 NativeMethods.CloseHandle(processHandle);
                 return IntPtr.Zero;
             }
@@ -420,23 +458,26 @@ namespace MGS3_MC_Cheat_Trainer
 
             NativeMethods.CloseHandle(processHandle);
 
-            if (foundAddress == IntPtr.Zero)
-            {
-
-            }
-
             return foundAddress;
         }
 
-
-        // Mask should be in the format "x x x x x x x" for no wildcards
-        // or "x ? x ? ? ? x ? x" for wildcards with ? being the wildcard byte
+        /// <summary>
+        /// Checks if a byte pattern matches at a specific position within a buffer, considering a mask.
+        /// </summary>
+        /// <param name="buffer">Buffer containing the memory bytes.</param>
+        /// <param name="position">Current position in the buffer.</param>
+        /// <param name="pattern">Byte pattern to match.</param>
+        /// <param name="mask">Mask indicating wildcards ('x' for exact match, '?' for wildcard).</param>
+        /// <returns>True if the pattern matches at the current position; otherwise, false.</returns>
         public bool IsMatch(byte[] buffer, int position, byte[] pattern, string mask)
         {
             for (int i = 0; i < pattern.Length; i++)
             {
+                // Remove spaces from mask if present
+                char maskChar = mask[i] == ' ' ? 'x' : mask[i];
+
                 // If the mask at this position is a wildcard ('?'), or the bytes match, continue checking
-                if (mask[i] == '?' || buffer[position + i] == pattern[i])
+                if (maskChar == '?' || buffer[position + i] == pattern[i])
                 {
                     continue;
                 }
@@ -447,23 +488,21 @@ namespace MGS3_MC_Cheat_Trainer
             return true;
         }
 
-        
-
-
-        // string key is the key for the AOB in AobManager.cs
-        // i.e. "ModelDistortion", "NotUpsideDownCamera", "WeaponsTable", "CamoOperations", etc. 
+        /// <summary>
+        /// Finds the first occurrence of an AOB pattern by key.
+        /// </summary>
+        /// <param name="key">Key identifying the AOB pattern.</param>
+        /// <returns>Address where the AOB pattern is found; otherwise, IntPtr.Zero.</returns>
         public IntPtr FindAob(string key)
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
             {
-
                 return IntPtr.Zero;
             }
 
             var process = GetMGS3Process();
             if (process == null || process.MainModule == null)
             {
-
                 return IntPtr.Zero;
             }
 
@@ -480,14 +519,18 @@ namespace MGS3_MC_Cheat_Trainer
 
             IntPtr resultAddress = ScanMemory(process.Handle, startAddress, size, aobData.Pattern, aobData.Mask);
 
-            if (resultAddress == IntPtr.Zero)
-            {                
-
-            }
-
             return resultAddress;
         }
 
+        /// <summary>
+        /// Scans memory for all instances of a specific byte pattern with an associated mask.
+        /// </summary>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="baseAddress">Base address to start scanning.</param>
+        /// <param name="moduleSize">Size of the memory region to scan.</param>
+        /// <param name="pattern">Byte pattern to search for.</param>
+        /// <param name="mask">Mask indicating wildcards (e.g., "x ? x ?").</param>
+        /// <returns>List of addresses where the pattern is found.</returns>
         public List<IntPtr> ScanForAllAobInstances(IntPtr processHandle, IntPtr baseAddress, long moduleSize, byte[] pattern, string mask)
         {
             List<IntPtr> foundAddresses = new List<IntPtr>();
@@ -519,10 +562,19 @@ namespace MGS3_MC_Cheat_Trainer
             return foundAddresses;
         }
 
+        /// <summary>
+        /// Scans memory for all instances of a specific byte pattern with an associated mask.
+        /// </summary>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="startAddress">Starting address for the scan.</param>
+        /// <param name="size">Size of the memory region to scan.</param>
+        /// <param name="pattern">Byte pattern to search for.</param>
+        /// <param name="mask">Mask indicating wildcards (e.g., "x ? x ?").</param>
+        /// <returns>List of addresses where the pattern is found.</returns>
         public List<IntPtr> ScanForAllInstances(IntPtr processHandle, IntPtr startAddress, long size, byte[] pattern, string mask)
         {
             List<IntPtr> foundAddresses = new List<IntPtr>();
-            int bufferSize = 10000000;
+            int bufferSize = 10_000_000; // 10 MB buffer
             byte[] buffer = new byte[bufferSize];
             int bytesRead;
 
@@ -549,6 +601,12 @@ namespace MGS3_MC_Cheat_Trainer
         // Store the last found AOB address in a static variable to reduce log spamming
         private static IntPtr lastLoggedAobAddress = IntPtr.Zero;
 
+        /// <summary>
+        /// Finds and logs the last occurrence of an AOB pattern by key.
+        /// </summary>
+        /// <param name="key">Key identifying the AOB pattern.</param>
+        /// <param name="aobName">Name of the AOB pattern for logging.</param>
+        /// <returns>Address of the last found AOB pattern; otherwise, IntPtr.Zero.</returns>
         public IntPtr FindLastAob(string key, string aobName)
         {
             if (!AobManager.AOBs.TryGetValue(key, out var aobData))
@@ -560,7 +618,7 @@ namespace MGS3_MC_Cheat_Trainer
             var process = GetMGS3Process();
             if (process == null || process.MainModule == null)
             {
-                LoggingManager.Instance.Log($"{aobName}: Game process not found.");
+                //LoggingManager.Instance.Log($"{aobName}: Game process not found.");
                 return IntPtr.Zero;
             }
 
@@ -583,12 +641,12 @@ namespace MGS3_MC_Cheat_Trainer
 
             if (foundAddresses.Count == 0)
             {
-                LoggingManager.Instance.Log($"{aobName} AOB not found.");
+                //LoggingManager.Instance.Log($"{aobName} AOB not found.");
                 return IntPtr.Zero;
             }
 
             // Get the last found address
-            IntPtr lastFoundAddress = foundAddresses[foundAddresses.Count - 1];
+            IntPtr lastFoundAddress = foundAddresses[^1]; // Using C# 8.0 index from end
 
             // Only log if the last found AOB address has changed
             if (lastFoundAddress != lastLoggedAobAddress)
@@ -603,8 +661,12 @@ namespace MGS3_MC_Cheat_Trainer
             return lastFoundAddress;
         }
 
-
-        // This function is to access a pointer in the memory of MGS3
+        /// <summary>
+        /// Reads a pointer from the target process's memory.
+        /// </summary>
+        /// <param name="processHandle">Handle to the target process.</param>
+        /// <param name="address">Address to read the pointer from.</param>
+        /// <returns>The pointer read from memory; otherwise, IntPtr.Zero.</returns>
         public IntPtr ReadIntPtr(IntPtr processHandle, IntPtr address)
         {
             byte[] buffer = new byte[IntPtr.Size]; // Allocate a buffer to hold the pointer (4 bytes for 32-bit, 8 bytes for 64-bit)
@@ -628,5 +690,6 @@ namespace MGS3_MC_Cheat_Trainer
         }
 
         #endregion
+
     }
 }

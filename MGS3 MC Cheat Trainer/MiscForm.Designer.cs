@@ -30,10 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiscForm));
-            button1 = new Button();
             textBox29 = new TextBox();
-            button2 = new Button();
-            WeaponFormSwap = new Button();
             textBox4 = new TextBox();
             NormalCam = new Button();
             UpsideDownCam = new Button();
@@ -46,15 +43,11 @@
             Plus1ModelValue = new Button();
             ModelCurrentValue = new TextBox();
             textBox8 = new TextBox();
-            HealthFormSwap = new Button();
-            SwapToBossForm = new Button();
             TeleportGuardsToSnake = new Button();
             textBox1 = new TextBox();
             SnakeJump = new Button();
-            LogAOBs = new Button();
             CamoIndexSlider = new TrackBar();
             textBox2 = new TextBox();
-            textBox3 = new TextBox();
             LadderSkip = new Button();
             textBox6 = new TextBox();
             SnakesPosition = new System.Windows.Forms.Timer(components);
@@ -72,8 +65,6 @@
             CamoIndexTimer = new System.Windows.Forms.Timer(components);
             CamoIndexChanges = new CheckBox();
             CamoIndexTextbox = new TextBox();
-            button3 = new Button();
-            button4 = new Button();
             FovSlider = new TrackBar();
             textBox10 = new TextBox();
             label1 = new Label();
@@ -86,26 +77,23 @@
             DayChange = new Button();
             NightChange = new Button();
             noHudcheckbox = new CheckBox();
+            SwapToBossForm = new Button();
+            SwapToGameStatsForm = new Button();
+            SwapToHealthAndAlertsForm = new Button();
+            SwapToCamoForm = new Button();
+            SwapToItemsForm = new Button();
+            SwapToWeaponsForm = new Button();
+            Plus1MultiValue = new Button();
+            Minus1MultiValue = new Button();
+            ChangeDamageMultiNumberButton = new Button();
+            DamageToSnakeMultiTextbox = new TextBox();
+            ActivateDamageMulti = new Button();
+            textBox15 = new TextBox();
+            DisableDamageMulti = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FovSlider).BeginInit();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
-            button1.Cursor = Cursors.Hand;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.ImageAlign = ContentAlignment.TopCenter;
-            button1.ImeMode = ImeMode.NoControl;
-            button1.Location = new Point(487, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(203, 32);
-            button1.TabIndex = 481;
-            button1.Text = "Switch to Camo";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // textBox29
             // 
@@ -113,46 +101,14 @@
             textBox29.BorderStyle = BorderStyle.None;
             textBox29.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
             textBox29.ForeColor = SystemColors.ActiveCaptionText;
-            textBox29.Location = new Point(20, 64);
+            textBox29.Location = new Point(28, 50);
             textBox29.Multiline = true;
             textBox29.Name = "textBox29";
-            textBox29.PlaceholderText = "Random things for fun (Warning may crash game)    ";
+            textBox29.PlaceholderText = "Things that didn't fit into their own category are here";
             textBox29.ReadOnly = true;
-            textBox29.Size = new Size(514, 30);
+            textBox29.Size = new Size(1111, 30);
             textBox29.TabIndex = 480;
             textBox29.TextAlign = HorizontalAlignment.Center;
-            // 
-            // button2
-            // 
-            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
-            button2.Cursor = Cursors.Hand;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.ImageAlign = ContentAlignment.TopCenter;
-            button2.ImeMode = ImeMode.NoControl;
-            button2.Location = new Point(255, 12);
-            button2.Name = "button2";
-            button2.Size = new Size(203, 32);
-            button2.TabIndex = 479;
-            button2.Text = "Switch to Items";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
-            // WeaponFormSwap
-            // 
-            WeaponFormSwap.BackgroundImage = (Image)resources.GetObject("WeaponFormSwap.BackgroundImage");
-            WeaponFormSwap.Cursor = Cursors.Hand;
-            WeaponFormSwap.FlatStyle = FlatStyle.Flat;
-            WeaponFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            WeaponFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            WeaponFormSwap.ImeMode = ImeMode.NoControl;
-            WeaponFormSwap.Location = new Point(28, 12);
-            WeaponFormSwap.Name = "WeaponFormSwap";
-            WeaponFormSwap.Size = new Size(203, 32);
-            WeaponFormSwap.TabIndex = 478;
-            WeaponFormSwap.Text = "Switch to Weapons";
-            WeaponFormSwap.UseVisualStyleBackColor = true;
-            WeaponFormSwap.Click += WeaponFormSwap_Click;
             // 
             // textBox4
             // 
@@ -315,38 +271,6 @@
             textBox8.TabIndex = 512;
             textBox8.TextAlign = HorizontalAlignment.Center;
             // 
-            // HealthFormSwap
-            // 
-            HealthFormSwap.BackgroundImage = (Image)resources.GetObject("HealthFormSwap.BackgroundImage");
-            HealthFormSwap.Cursor = Cursors.Hand;
-            HealthFormSwap.FlatStyle = FlatStyle.Flat;
-            HealthFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            HealthFormSwap.ImageAlign = ContentAlignment.TopCenter;
-            HealthFormSwap.ImeMode = ImeMode.NoControl;
-            HealthFormSwap.Location = new Point(717, 12);
-            HealthFormSwap.Name = "HealthFormSwap";
-            HealthFormSwap.Size = new Size(203, 32);
-            HealthFormSwap.TabIndex = 513;
-            HealthFormSwap.Text = "Switch Health/Alerts";
-            HealthFormSwap.UseVisualStyleBackColor = true;
-            HealthFormSwap.Click += HealthFormSwap_Click;
-            // 
-            // SwapToBossForm
-            // 
-            SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
-            SwapToBossForm.Cursor = Cursors.Hand;
-            SwapToBossForm.FlatStyle = FlatStyle.Flat;
-            SwapToBossForm.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
-            SwapToBossForm.ImeMode = ImeMode.NoControl;
-            SwapToBossForm.Location = new Point(936, 12);
-            SwapToBossForm.Name = "SwapToBossForm";
-            SwapToBossForm.Size = new Size(203, 32);
-            SwapToBossForm.TabIndex = 552;
-            SwapToBossForm.Text = "Bosses";
-            SwapToBossForm.UseVisualStyleBackColor = true;
-            SwapToBossForm.Click += SwapToBossForm_Click;
-            // 
             // TeleportGuardsToSnake
             // 
             TeleportGuardsToSnake.BackgroundImage = (Image)resources.GetObject("TeleportGuardsToSnake.BackgroundImage");
@@ -354,11 +278,11 @@
             TeleportGuardsToSnake.FlatStyle = FlatStyle.Flat;
             TeleportGuardsToSnake.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             TeleportGuardsToSnake.ImageAlign = ContentAlignment.TopCenter;
-            TeleportGuardsToSnake.Location = new Point(28, 273);
+            TeleportGuardsToSnake.Location = new Point(28, 187);
             TeleportGuardsToSnake.Name = "TeleportGuardsToSnake";
             TeleportGuardsToSnake.Size = new Size(241, 64);
             TeleportGuardsToSnake.TabIndex = 553;
-            TeleportGuardsToSnake.Text = "Teleport Guards to Snake (Takes like 20ish Seconds)";
+            TeleportGuardsToSnake.Text = "Teleport Guards to Snake";
             TeleportGuardsToSnake.UseVisualStyleBackColor = true;
             TeleportGuardsToSnake.Click += TeleportGuardsToSnake_Click;
             // 
@@ -384,28 +308,13 @@
             SnakeJump.FlatStyle = FlatStyle.Flat;
             SnakeJump.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SnakeJump.ImageAlign = ContentAlignment.TopCenter;
-            SnakeJump.Location = new Point(28, 226);
+            SnakeJump.Location = new Point(28, 140);
             SnakeJump.Name = "SnakeJump";
             SnakeJump.Size = new Size(241, 41);
             SnakeJump.TabIndex = 555;
             SnakeJump.Text = "Make Snake Jump";
             SnakeJump.UseVisualStyleBackColor = true;
             SnakeJump.Click += SnakeJump_Click;
-            // 
-            // LogAOBs
-            // 
-            LogAOBs.BackgroundImage = (Image)resources.GetObject("LogAOBs.BackgroundImage");
-            LogAOBs.Cursor = Cursors.Hand;
-            LogAOBs.FlatStyle = FlatStyle.Flat;
-            LogAOBs.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            LogAOBs.ImageAlign = ContentAlignment.TopCenter;
-            LogAOBs.Location = new Point(904, 65);
-            LogAOBs.Name = "LogAOBs";
-            LogAOBs.Size = new Size(256, 29);
-            LogAOBs.TabIndex = 560;
-            LogAOBs.Text = "Log Data for Debug";
-            LogAOBs.UseVisualStyleBackColor = true;
-            LogAOBs.Click += LogAOBs_Click;
             // 
             // CamoIndexSlider
             // 
@@ -431,21 +340,6 @@
             textBox2.TabIndex = 564;
             textBox2.TextAlign = HorizontalAlignment.Center;
             // 
-            // textBox3
-            // 
-            textBox3.BackColor = SystemColors.ActiveCaptionText;
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point);
-            textBox3.ForeColor = SystemColors.ActiveCaptionText;
-            textBox3.Location = new Point(522, 64);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.PlaceholderText = "Click here to generate information for a log ->";
-            textBox3.ReadOnly = true;
-            textBox3.Size = new Size(380, 30);
-            textBox3.TabIndex = 565;
-            textBox3.TextAlign = HorizontalAlignment.Center;
-            // 
             // LadderSkip
             // 
             LadderSkip.BackgroundImage = (Image)resources.GetObject("LadderSkip.BackgroundImage");
@@ -453,7 +347,7 @@
             LadderSkip.FlatStyle = FlatStyle.Flat;
             LadderSkip.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             LadderSkip.ImageAlign = ContentAlignment.TopCenter;
-            LadderSkip.Location = new Point(28, 343);
+            LadderSkip.Location = new Point(28, 257);
             LadderSkip.Name = "LadderSkip";
             LadderSkip.Size = new Size(241, 179);
             LadderSkip.TabIndex = 567;
@@ -626,40 +520,10 @@
             CamoIndexTextbox.Size = new Size(289, 23);
             CamoIndexTextbox.TabIndex = 588;
             // 
-            // button3
-            // 
-            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
-            button3.Cursor = Cursors.Hand;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.Location = new Point(28, 528);
-            button3.Name = "button3";
-            button3.Size = new Size(241, 29);
-            button3.TabIndex = 589;
-            button3.Text = "r_sna01 + Map";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // button4
-            // 
-            button4.BackgroundImage = (Image)resources.GetObject("button4.BackgroundImage");
-            button4.Cursor = Cursors.Hand;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.ImageAlign = ContentAlignment.TopCenter;
-            button4.Location = new Point(28, 566);
-            button4.Name = "button4";
-            button4.Size = new Size(241, 29);
-            button4.TabIndex = 590;
-            button4.Text = "r_sna01 + Map All Instances";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
             // FovSlider
             // 
             FovSlider.BackColor = Color.FromArgb(36, 44, 36);
-            FovSlider.Location = new Point(861, 655);
+            FovSlider.Location = new Point(861, 615);
             FovSlider.Name = "FovSlider";
             FovSlider.Size = new Size(299, 45);
             FovSlider.TabIndex = 591;
@@ -671,7 +535,7 @@
             textBox10.BorderStyle = BorderStyle.None;
             textBox10.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             textBox10.ForeColor = SystemColors.ActiveCaptionText;
-            textBox10.Location = new Point(861, 613);
+            textBox10.Location = new Point(861, 573);
             textBox10.Multiline = true;
             textBox10.Name = "textBox10";
             textBox10.PlaceholderText = "FOV Slider";
@@ -686,7 +550,7 @@
             label1.BackColor = Color.FromArgb(36, 44, 36);
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(860, 683);
+            label1.Location = new Point(860, 643);
             label1.Name = "label1";
             label1.Size = new Size(31, 20);
             label1.TabIndex = 593;
@@ -698,7 +562,7 @@
             label2.BackColor = Color.FromArgb(36, 44, 36);
             label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.ButtonHighlight;
-            label2.Location = new Point(1132, 683);
+            label2.Location = new Point(1132, 643);
             label2.Name = "label2";
             label2.Size = new Size(31, 20);
             label2.TabIndex = 594;
@@ -710,7 +574,7 @@
             label3.BackColor = Color.FromArgb(36, 44, 36);
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             label3.ForeColor = SystemColors.ButtonHighlight;
-            label3.Location = new Point(987, 683);
+            label3.Location = new Point(987, 643);
             label3.Name = "label3";
             label3.Size = new Size(31, 20);
             label3.TabIndex = 595;
@@ -818,12 +682,219 @@
             noHudcheckbox.UseVisualStyleBackColor = true;
             noHudcheckbox.CheckedChanged += noHudcheckbox_CheckedChanged;
             // 
+            // SwapToBossForm
+            // 
+            SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
+            SwapToBossForm.Cursor = Cursors.Hand;
+            SwapToBossForm.FlatStyle = FlatStyle.Flat;
+            SwapToBossForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToBossForm.ImeMode = ImeMode.NoControl;
+            SwapToBossForm.Location = new Point(740, 12);
+            SwapToBossForm.Name = "SwapToBossForm";
+            SwapToBossForm.Size = new Size(130, 31);
+            SwapToBossForm.TabIndex = 650;
+            SwapToBossForm.Text = "Bosses";
+            SwapToBossForm.UseVisualStyleBackColor = true;
+            SwapToBossForm.Click += SwapToBossForm_Click;
+            // 
+            // SwapToGameStatsForm
+            // 
+            SwapToGameStatsForm.BackgroundImage = (Image)resources.GetObject("SwapToGameStatsForm.BackgroundImage");
+            SwapToGameStatsForm.Cursor = Cursors.Hand;
+            SwapToGameStatsForm.FlatStyle = FlatStyle.Flat;
+            SwapToGameStatsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToGameStatsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToGameStatsForm.ImeMode = ImeMode.NoControl;
+            SwapToGameStatsForm.Location = new Point(876, 12);
+            SwapToGameStatsForm.Name = "SwapToGameStatsForm";
+            SwapToGameStatsForm.Size = new Size(130, 31);
+            SwapToGameStatsForm.TabIndex = 648;
+            SwapToGameStatsForm.Text = "Game Stats";
+            SwapToGameStatsForm.UseVisualStyleBackColor = true;
+            SwapToGameStatsForm.Click += SwapToGameStatsForm_Click;
+            // 
+            // SwapToHealthAndAlertsForm
+            // 
+            SwapToHealthAndAlertsForm.BackgroundImage = (Image)resources.GetObject("SwapToHealthAndAlertsForm.BackgroundImage");
+            SwapToHealthAndAlertsForm.Cursor = Cursors.Hand;
+            SwapToHealthAndAlertsForm.FlatStyle = FlatStyle.Flat;
+            SwapToHealthAndAlertsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToHealthAndAlertsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToHealthAndAlertsForm.ImeMode = ImeMode.NoControl;
+            SwapToHealthAndAlertsForm.Location = new Point(604, 12);
+            SwapToHealthAndAlertsForm.Name = "SwapToHealthAndAlertsForm";
+            SwapToHealthAndAlertsForm.Size = new Size(130, 31);
+            SwapToHealthAndAlertsForm.TabIndex = 647;
+            SwapToHealthAndAlertsForm.Text = "Health/Alerts";
+            SwapToHealthAndAlertsForm.UseVisualStyleBackColor = true;
+            SwapToHealthAndAlertsForm.Click += SwapToHealthAndAlertsForm_Click;
+            // 
+            // SwapToCamoForm
+            // 
+            SwapToCamoForm.BackgroundImage = (Image)resources.GetObject("SwapToCamoForm.BackgroundImage");
+            SwapToCamoForm.Cursor = Cursors.Hand;
+            SwapToCamoForm.FlatStyle = FlatStyle.Flat;
+            SwapToCamoForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToCamoForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToCamoForm.ImeMode = ImeMode.NoControl;
+            SwapToCamoForm.Location = new Point(468, 12);
+            SwapToCamoForm.Name = "SwapToCamoForm";
+            SwapToCamoForm.Size = new Size(130, 31);
+            SwapToCamoForm.TabIndex = 646;
+            SwapToCamoForm.Text = "Camo";
+            SwapToCamoForm.UseVisualStyleBackColor = true;
+            SwapToCamoForm.Click += SwapToCamoForm_Click;
+            // 
+            // SwapToItemsForm
+            // 
+            SwapToItemsForm.BackgroundImage = (Image)resources.GetObject("SwapToItemsForm.BackgroundImage");
+            SwapToItemsForm.Cursor = Cursors.Hand;
+            SwapToItemsForm.FlatStyle = FlatStyle.Flat;
+            SwapToItemsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToItemsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToItemsForm.ImeMode = ImeMode.NoControl;
+            SwapToItemsForm.Location = new Point(332, 12);
+            SwapToItemsForm.Name = "SwapToItemsForm";
+            SwapToItemsForm.Size = new Size(130, 31);
+            SwapToItemsForm.TabIndex = 645;
+            SwapToItemsForm.Text = "Items";
+            SwapToItemsForm.UseVisualStyleBackColor = true;
+            SwapToItemsForm.Click += SwapToItemsForm_Click;
+            // 
+            // SwapToWeaponsForm
+            // 
+            SwapToWeaponsForm.BackgroundImage = (Image)resources.GetObject("SwapToWeaponsForm.BackgroundImage");
+            SwapToWeaponsForm.Cursor = Cursors.Hand;
+            SwapToWeaponsForm.FlatStyle = FlatStyle.Flat;
+            SwapToWeaponsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToWeaponsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToWeaponsForm.ImeMode = ImeMode.NoControl;
+            SwapToWeaponsForm.Location = new Point(196, 12);
+            SwapToWeaponsForm.Name = "SwapToWeaponsForm";
+            SwapToWeaponsForm.Size = new Size(130, 31);
+            SwapToWeaponsForm.TabIndex = 644;
+            SwapToWeaponsForm.Text = "Weapons";
+            SwapToWeaponsForm.UseVisualStyleBackColor = true;
+            SwapToWeaponsForm.Click += SwapToWeaponsForm_Click;
+            // 
+            // Plus1MultiValue
+            // 
+            Plus1MultiValue.BackgroundImage = (Image)resources.GetObject("Plus1MultiValue.BackgroundImage");
+            Plus1MultiValue.Cursor = Cursors.Hand;
+            Plus1MultiValue.FlatStyle = FlatStyle.Flat;
+            Plus1MultiValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Plus1MultiValue.ImageAlign = ContentAlignment.TopCenter;
+            Plus1MultiValue.Location = new Point(143, 615);
+            Plus1MultiValue.Name = "Plus1MultiValue";
+            Plus1MultiValue.Size = new Size(126, 32);
+            Plus1MultiValue.TabIndex = 657;
+            Plus1MultiValue.Text = "+ 1";
+            Plus1MultiValue.UseVisualStyleBackColor = true;
+            Plus1MultiValue.Click += Plus1MultiValue_Click;
+            // 
+            // Minus1MultiValue
+            // 
+            Minus1MultiValue.BackgroundImage = (Image)resources.GetObject("Minus1MultiValue.BackgroundImage");
+            Minus1MultiValue.Cursor = Cursors.Hand;
+            Minus1MultiValue.FlatStyle = FlatStyle.Flat;
+            Minus1MultiValue.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Minus1MultiValue.ImageAlign = ContentAlignment.TopCenter;
+            Minus1MultiValue.Location = new Point(9, 615);
+            Minus1MultiValue.Name = "Minus1MultiValue";
+            Minus1MultiValue.Size = new Size(112, 32);
+            Minus1MultiValue.TabIndex = 656;
+            Minus1MultiValue.Text = "- 1";
+            Minus1MultiValue.UseVisualStyleBackColor = true;
+            Minus1MultiValue.Click += Minus1MultiValue_Click;
+            // 
+            // ChangeDamageMultiNumberButton
+            // 
+            ChangeDamageMultiNumberButton.BackgroundImage = (Image)resources.GetObject("ChangeDamageMultiNumberButton.BackgroundImage");
+            ChangeDamageMultiNumberButton.Cursor = Cursors.Hand;
+            ChangeDamageMultiNumberButton.FlatStyle = FlatStyle.Flat;
+            ChangeDamageMultiNumberButton.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            ChangeDamageMultiNumberButton.ImageAlign = ContentAlignment.TopCenter;
+            ChangeDamageMultiNumberButton.Location = new Point(49, 516);
+            ChangeDamageMultiNumberButton.Name = "ChangeDamageMultiNumberButton";
+            ChangeDamageMultiNumberButton.Size = new Size(219, 29);
+            ChangeDamageMultiNumberButton.TabIndex = 655;
+            ChangeDamageMultiNumberButton.Text = "Change to this number";
+            ChangeDamageMultiNumberButton.UseVisualStyleBackColor = true;
+            ChangeDamageMultiNumberButton.Click += ChangeDamageMultiNumberButton_Click;
+            // 
+            // DamageToSnakeMultiTextbox
+            // 
+            DamageToSnakeMultiTextbox.Cursor = Cursors.IBeam;
+            DamageToSnakeMultiTextbox.Location = new Point(9, 520);
+            DamageToSnakeMultiTextbox.Name = "DamageToSnakeMultiTextbox";
+            DamageToSnakeMultiTextbox.Size = new Size(32, 23);
+            DamageToSnakeMultiTextbox.TabIndex = 654;
+            // 
+            // ActivateDamageMulti
+            // 
+            ActivateDamageMulti.BackgroundImage = (Image)resources.GetObject("ActivateDamageMulti.BackgroundImage");
+            ActivateDamageMulti.Cursor = Cursors.Hand;
+            ActivateDamageMulti.FlatStyle = FlatStyle.Flat;
+            ActivateDamageMulti.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            ActivateDamageMulti.ImageAlign = ContentAlignment.TopCenter;
+            ActivateDamageMulti.Location = new Point(8, 547);
+            ActivateDamageMulti.Name = "ActivateDamageMulti";
+            ActivateDamageMulti.Size = new Size(260, 29);
+            ActivateDamageMulti.TabIndex = 653;
+            ActivateDamageMulti.Text = "Enable Damage Multi to Snake";
+            ActivateDamageMulti.UseVisualStyleBackColor = true;
+            ActivateDamageMulti.Click += ActivateDamageMulti_Click;
+            // 
+            // textBox15
+            // 
+            textBox15.BackColor = Color.Black;
+            textBox15.BorderStyle = BorderStyle.None;
+            textBox15.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            textBox15.ForeColor = SystemColors.ButtonHighlight;
+            textBox15.Location = new Point(8, 477);
+            textBox15.Multiline = true;
+            textBox15.Name = "textBox15";
+            textBox15.PlaceholderText = "Damage to Snake Multiplier";
+            textBox15.ReadOnly = true;
+            textBox15.Size = new Size(260, 34);
+            textBox15.TabIndex = 652;
+            textBox15.TextAlign = HorizontalAlignment.Center;
+            // 
+            // DisableDamageMulti
+            // 
+            DisableDamageMulti.BackgroundImage = (Image)resources.GetObject("DisableDamageMulti.BackgroundImage");
+            DisableDamageMulti.Cursor = Cursors.Hand;
+            DisableDamageMulti.FlatStyle = FlatStyle.Flat;
+            DisableDamageMulti.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            DisableDamageMulti.ImageAlign = ContentAlignment.TopCenter;
+            DisableDamageMulti.Location = new Point(7, 580);
+            DisableDamageMulti.Name = "DisableDamageMulti";
+            DisableDamageMulti.Size = new Size(260, 29);
+            DisableDamageMulti.TabIndex = 660;
+            DisableDamageMulti.Text = "Disable Damage Multi to Snake";
+            DisableDamageMulti.UseVisualStyleBackColor = true;
+            DisableDamageMulti.Click += DisableDamageMulti_Click;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(DisableDamageMulti);
+            Controls.Add(Plus1MultiValue);
+            Controls.Add(Minus1MultiValue);
+            Controls.Add(ChangeDamageMultiNumberButton);
+            Controls.Add(DamageToSnakeMultiTextbox);
+            Controls.Add(ActivateDamageMulti);
+            Controls.Add(textBox15);
+            Controls.Add(SwapToBossForm);
+            Controls.Add(SwapToGameStatsForm);
+            Controls.Add(SwapToHealthAndAlertsForm);
+            Controls.Add(SwapToCamoForm);
+            Controls.Add(SwapToItemsForm);
+            Controls.Add(SwapToWeaponsForm);
             Controls.Add(noHudcheckbox);
             Controls.Add(NightChange);
             Controls.Add(DayChange);
@@ -836,8 +907,6 @@
             Controls.Add(label1);
             Controls.Add(textBox10);
             Controls.Add(FovSlider);
-            Controls.Add(button4);
-            Controls.Add(button3);
             Controls.Add(CamoIndexTextbox);
             Controls.Add(CamoIndexChanges);
             Controls.Add(textBox14);
@@ -853,15 +922,11 @@
             Controls.Add(TextBoxSnakeX);
             Controls.Add(textBox6);
             Controls.Add(LadderSkip);
-            Controls.Add(textBox3);
             Controls.Add(textBox2);
             Controls.Add(CamoIndexSlider);
-            Controls.Add(LogAOBs);
             Controls.Add(SnakeJump);
             Controls.Add(textBox1);
             Controls.Add(TeleportGuardsToSnake);
-            Controls.Add(SwapToBossForm);
-            Controls.Add(HealthFormSwap);
             Controls.Add(textBox8);
             Controls.Add(ModelCurrentValue);
             Controls.Add(Plus1ModelValue);
@@ -874,14 +939,11 @@
             Controls.Add(UpsideDownCam);
             Controls.Add(NormalCam);
             Controls.Add(textBox4);
-            Controls.Add(button1);
             Controls.Add(textBox29);
-            Controls.Add(button2);
-            Controls.Add(WeaponFormSwap);
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.5";
+            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.7";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
@@ -891,10 +953,7 @@
         }
 
         #endregion
-        private Button button1;
         private TextBox textBox29;
-        private Button button2;
-        private Button WeaponFormSwap;
         private TextBox textBox4;
         private Button NormalCam;
         private Button UpsideDownCam;
@@ -907,15 +966,11 @@
         private Button Plus1ModelValue;
         private TextBox ModelCurrentValue;
         private TextBox textBox8;
-        private Button HealthFormSwap;
-        private Button SwapToBossForm;
         private Button TeleportGuardsToSnake;
         private TextBox textBox1;
         private Button SnakeJump;
-        private Button LogAOBs;
         private TrackBar CamoIndexSlider;
         private TextBox textBox2;
-        private TextBox textBox3;
         private Button LadderSkip;
         private TextBox textBox6;
         private System.Windows.Forms.Timer SnakesPosition;
@@ -933,8 +988,6 @@
         private System.Windows.Forms.Timer CamoIndexTimer;
         private CheckBox CamoIndexChanges;
         private TextBox CamoIndexTextbox;
-        private Button button3;
-        private Button button4;
         private TrackBar FovSlider;
         private TextBox textBox10;
         private Label label1;
@@ -948,5 +1001,18 @@
         private Button DayChange;
         private Button NightChange;
         private CheckBox noHudcheckbox;
+        private Button SwapToBossForm;
+        private Button SwapToGameStatsForm;
+        private Button SwapToHealthAndAlertsForm;
+        private Button SwapToCamoForm;
+        private Button SwapToItemsForm;
+        private Button SwapToWeaponsForm;
+        private Button Plus1MultiValue;
+        private Button Minus1MultiValue;
+        private Button ChangeDamageMultiNumberButton;
+        private TextBox DamageToSnakeMultiTextbox;
+        private Button ActivateDamageMulti;
+        private TextBox textBox15;
+        private Button DisableDamageMulti;
     }
 }

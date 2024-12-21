@@ -19,6 +19,7 @@ namespace MGS3_MC_Cheat_Trainer
                 AllWeaponsChecklist.SetItemChecked(i, true);
             }
 
+            // 0 Defaults the user to the first option in the dropdown which is "Current/Max Ammo"
             M1911A1Dropdown.SelectedIndex = 0;
             MK22Dropdown.SelectedIndex = 0;
             XM16E1Dropdown.SelectedIndex = 0;
@@ -44,6 +45,7 @@ namespace MGS3_MC_Cheat_Trainer
             ClaymoreDropdown.SelectedIndex = 0;
             MousetrapDropdown.SelectedIndex = 0;
 
+            // Setting all to 999 saves the user time if they just want to cheat everything in
             M1911A1TextBox.Text = "999";
             MK22TextBox.Text = "999";
             XM16E1TextBox.Text = "999";
@@ -81,7 +83,6 @@ namespace MGS3_MC_Cheat_Trainer
         private const string MaxClipSize = "Max Clip Size";
         private const string SuppressorCount = "Suppressor Count";
 
-        // Variables to store the selected option from dropdown menu and associate it to the button
         private string selectedM1911A1Option;
         private string selectedMK22Option;
         private string selectedXM16E1Option;
@@ -110,7 +111,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit(); // Closes the application(form1) if this form is closed
+            Application.Exit();
         }
 
         #region Weapon Toggles
@@ -234,7 +235,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // Assuming you have a ComboBox named MK22Dropdown and a TextBox named MK22TextBox in your form
         private void MK22Dropdown_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             ComboBox comboBox = (ComboBox)sender;
@@ -243,7 +243,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeMK22_Click(object sender, EventArgs e)
         {
-            string textBoxValue = MK22TextBox.Text; // Get the value from the MK.22 TextBox
+            string textBoxValue = MK22TextBox.Text;
 
             switch (selectedMK22Option)
             {
@@ -290,7 +290,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeXM16E1_Click(object sender, EventArgs e)
         {
-            string textBoxValue = XM16E1TextBox.Text; // Assuming you have a TextBox for XM16E1 user input
+            string textBoxValue = XM16E1TextBox.Text;
 
             switch (selectedXM16E1Option)
             {
@@ -319,7 +319,6 @@ namespace MGS3_MC_Cheat_Trainer
                     LoggingManager.Instance.Log("Changed XM16E1 Max Clip Size to: " + textBoxValue);
                     break;
                 case SuppressorCount:
-                    // Assuming there is a suppressor item for the XM16E1
                     ItemWeaponManager.ModifyItemCapacity(MGS3UsableObjects.XM16E1Surpressor, textBoxValue);
                     LoggingManager.Instance.Log("Changed XM16E1 Suppressor Count to: " + textBoxValue);
                     break;
@@ -338,7 +337,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeSAA_Click(object sender, EventArgs e)
         {
-            string textBoxValue = SAATextBox.Text; // Assuming you have a TextBox for SAA user input
+            string textBoxValue = SAATextBox.Text;
 
             switch (selectedSAAOption)
             {
@@ -381,7 +380,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeM37_Click(object sender, EventArgs e)
         {
-            string textBoxValue = M37TextBox.Text; // Assuming you have a TextBox for M37 user input
+            string textBoxValue = M37TextBox.Text;
 
             switch (selectedM37Option)
             {
@@ -424,7 +423,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeSVD_Click(object sender, EventArgs e)
         {
-            string textBoxValue = SVDTextBox.Text; // Assuming you have a TextBox for SVD user input
+            string textBoxValue = SVDTextBox.Text;
 
             switch (selectedSVDOption)
             {
@@ -467,7 +466,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeMosin_Click(object sender, EventArgs e)
         {
-            string textBoxValue = MosinTextBox.Text; // Assuming you have a TextBox for Mosin-Nagant user input
+            string textBoxValue = MosinTextBox.Text;
 
             switch (selectedMosinOption)
             {
@@ -510,7 +509,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeRPG_Click(object sender, EventArgs e)
         {
-            string textBoxValue = RPG7TextBox.Text; // Assuming you have a TextBox for RPG-7 user input
+            string textBoxValue = RPG7TextBox.Text;
 
             switch (selectedRPG7Option)
             {
@@ -553,7 +552,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeAK47_Click(object sender, EventArgs e)
         {
-            string textBoxValue = AK47TextBox.Text; // Assuming you have a TextBox for AK-47 user input
+            string textBoxValue = AK47TextBox.Text;
 
             switch (selectedAK47Option)
             {
@@ -1085,14 +1084,12 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeAllChecked_Click(object sender, EventArgs e)
         {
-            // Ensure the ammo value is valid
             if (!short.TryParse(AllTextbox.Text, out short ammoValue))
             {
                 MessageBox.Show("Invalid ammo value.");
                 return;
             }
 
-            // Iterate over each checked item in the checklist
             foreach (var itemChecked in AllWeaponsChecklist.CheckedItems)
             {
                 var weaponName = itemChecked.ToString();
@@ -1100,7 +1097,6 @@ namespace MGS3_MC_Cheat_Trainer
 
                 if (weapon != null)
                 {
-                    // Apply ammo and max ammo changes to the selected weapon
                     ItemWeaponManager.ModifyAmmo(weapon, ammoValue.ToString());
                     LoggingManager.Instance.Log("Changed " + weaponName + " Current Ammo to: " + ammoValue);
                     ItemWeaponManager.ModifyMaxAmmo(weapon, ammoValue.ToString());
@@ -1111,7 +1107,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         private Weapon GetWeaponByName(string name)
         {
-            // Example implementation mapping string names to Weapon objects
             switch (name)
             {
                 case "M1911A1": return MGS3UsableObjects.M1911A1;
@@ -1142,61 +1137,11 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            ItemForm form2 = new ItemForm();
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "ItemForm");
-            form2.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Item Form from the Weapon Form");
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            CamoForm form3 = new CamoForm();
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "CamoForm");
-            form3.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Camo Form from the Weapon Form");
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            MiscForm form4 = new MiscForm();
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "MiscForm");
-            form4.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Misc Form from the Weapon Form");
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            StatsAndAlertForm form5 = new();
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
-            form5.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Stats and Alert Form from the Weapon Form");
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            BossForm form6 = new();
-            MemoryManager.UpdateLastFormLocation(this.Location);
-            MemoryManager.LogFormLocation(this, "BossForm");
-            form6.Show();
-            this.Hide();
-            LoggingManager.Instance.Log("Navigating to Boss Form from the Weapon Form");
-        }
-
         private void InfAmmoNoReloadCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (InfAmmoNoReloadCheckBox.Checked)
             {
-                MiscManager.Instance.EnableInfAmmoAndReload(); 
+                MiscManager.Instance.EnableInfAmmoAndReload();
             }
 
             else
@@ -1209,7 +1154,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
             if (!MiscManager.Instance.IsAmmoAndReloadFinite())
             {
-                
+
                 InfAmmoNoReloadCheckBox.Checked = true;
             }
 
@@ -1218,6 +1163,69 @@ namespace MGS3_MC_Cheat_Trainer
                 InfAmmoNoReloadCheckBox.Checked = false;
             }
 
+        }
+
+        private void SwapToItemsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Item form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "ItemForm");
+            ItemForm form2 = new();
+            form2.Show();
+            this.Hide();
+        }
+
+        private void SwapToCamoForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Camo form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "CamoForm");
+            CamoForm form3 = new();
+            form3.Show();
+            this.Hide();
+
+        }
+
+        private void SwapToMiscForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Misc form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "MiscForm");
+            MiscForm form4 = new();
+            form4.Show();
+            this.Hide();
+
+        }
+
+        private void SwapToHealthAndAlertsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
+            StatsAndAlertForm form5 = new();
+            form5.Show();
+            this.Hide();
+        }
+
+        private void SwapToBossForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Boss form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "BossForm");
+            BossForm form6 = new();
+            form6.Show();
+            this.Hide();
+
+        }
+
+        private void SwapToGameStatsForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Weapon form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "GameStatsForm");
+            GameStatsForm form7 = new();
+            form7.Show();
+            this.Hide();
         }
     }
 }

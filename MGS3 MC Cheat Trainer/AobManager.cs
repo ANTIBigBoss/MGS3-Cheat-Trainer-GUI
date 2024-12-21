@@ -404,13 +404,13 @@
                     )
                 },
 
-                
-                {
-                    "RealTimeItemSwap", // F7 D1 21 0D 74 F5 C4 01 C3 CC CC CC CC CC CC CC
-                    (new byte[] { 0xF7, 0xD1, 0x21, 0x0D, 0x74, 0xF5, 0xC4, 0x01, 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC },
+
+                {   // 1.5.1 had this AOB: F7 D1 21 0D 74 F5 C4 01 C3 CC CC CC CC CC CC CC
+                    "RealTimeItemSwap", // 2.0.0 is now: F7 D1 21 0D E4 94 C6 01 C3 CC CC CC CC CC CC CC 
+                    (new byte[] { 0xF7, 0xD1, 0x21, 0x0D, 0xE4, 0x94, 0xC6, 0x01, 0xC3, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC },
                         "x x x x x x x x x x x x x x x x ",
-                        new IntPtr(0xD0000),
-                        new IntPtr(0xFFFFF)
+                        new IntPtr(0x10000),
+                        new IntPtr(0x1900000)
                     )
                 },
                 
@@ -524,15 +524,15 @@
                 },
                 #endregion
 
-                /* Commented out until I feel like implementing into StringManager's FindLocation Function
+                
                 {
                     "PointerBytes", // 30 75 ?? ?? ?? ?? 00 00 2C 01 00 00 ??
-                    (new byte[] { 0x30, 0x75 },
-                        "x x x x",
-                        new IntPtr(0x1000),
-                        new IntPtr(0x1F0000000)
+                    (new byte[] { 0x30, 0x75, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x01, 0x00, 0x00, 0x00 },
+                        "xx????xxxxxx?",
+                        new IntPtr(0x1DFFFFF),
+                        new IntPtr(0x1F00000)
                     )
-                }, */
+                },
 
             };
 
@@ -657,193 +657,3 @@
 
     }
 }
-
-/* Not as Dynamic as I hoped but the logic in theory is still good if a consistent AOB is found
-  
-    public bool FindAndStoreOcelotAOB()
-   {
-       if (OcelotHealthAddress != IntPtr.Zero)
-       {
-           return true; // If already calculated, immediately return true.
-       }
-   
-       if (StoredOcelotAddress == IntPtr.Zero && TryFindOcelotDynamicAddress(out IntPtr dynamicAddress))
-       {
-           StoredOcelotAddress = dynamicAddress;
-       }
-   
-       if (StoredOcelotAddress != IntPtr.Zero)
-       {
-           CalculateOcelotAddress(StoredOcelotAddress, 916, "Health");
-           CalculateOcelotAddress(StoredOcelotAddress, 908, "Stamina");
-       }
-   
-       // If not found, try the backup method
-       if (OcelotHealthAddress == IntPtr.Zero)
-       {
-           DynamicBackupToFindAndStoreOcelotAOB();
-       }
-   
-       return OcelotHealthAddress != IntPtr.Zero;
-   }
-   
-    // This essentially looks for an AOB near a pointer address and then calculates the distance
-    // between the AOB and the pointer address and then the function after accesses the pointer
-    // this saves the program taking forever to find the AOB within 30 million potential addresses
-    
-   private bool TryFindOcelotDynamicAddress(out IntPtr dynamicAddress)
-   {
-       LoggingManager.Instance.Log("Attempting to access the Dynamic Address.");
-       dynamicAddress = IntPtr.Zero;
-       var process = MemoryManager.GetMGS3Process();
-       if (process == null)
-       {
-           LoggingManager.Instance.Log("MGS3 process not found.");
-           return false;
-       }
-   
-       IntPtr baseAddress = IntPtr.Zero;
-       foreach (ProcessModule module in process.Modules)
-       {
-           if (module.ModuleName.Equals("METAL GEAR SOLID3.exe", StringComparison.OrdinalIgnoreCase))
-           {
-               baseAddress = module.BaseAddress;
-               LoggingManager.Instance.Log($"METAL GEAR SOLID3.exe module found at: 0x{baseAddress.ToString("X")}");
-               break;
-           }
-       }
-   
-       if (baseAddress == IntPtr.Zero)
-       {
-           LoggingManager.Instance.Log("METAL GEAR SOLID3.exe module not found.");
-           LoggingManager.Instance.Log("Failed to find base address for scanning.");
-           return false;
-       }
-   
-       IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-       if (processHandle == IntPtr.Zero)
-       {
-           LoggingManager.Instance.Log("Failed to open process for scanning.");
-           return false;
-       }
-   
-       // Unique AOB pattern near the pointer address the address isn't always the same
-       // so we use wildcards (?) for the bytes that change this way it can determine
-       // what is actually 0x00 and what is a wildcard
-       byte[] pattern = new byte[] { 0xC0, 0x37, 0x00, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x20, 0x11, 0x00, 0x00, 0x00, 0x7F };
-       
-       string mask = "xx???xxxxx???x";
-       IntPtr startAddress = IntPtr.Add(baseAddress, 0x1000000);
-       long size = 0x3000000 - 0x1000000;
-       IntPtr foundAddress = MemoryManager.Instance.ScanMemory(processHandle, startAddress, size, pattern, mask);
-   
-       if (foundAddress != IntPtr.Zero)
-       {
-           dynamicAddress = IntPtr.Subtract(foundAddress, 848);
-           LoggingManager.Instance.Log($"Dynamic AOB address for Ocelot is: 0x{dynamicAddress.ToString("X")}");
-           NativeMethods.CloseHandle(processHandle);
-           return true;
-       }
-       else
-       {
-           LoggingManager.Instance.Log("AOB not found within specified range.");
-           LoggingManager.Instance.Log($"First address searched: 0x{startAddress.ToString("X")}, Last address searched: 0x{size.ToString("X")}");
-           NativeMethods.CloseHandle(processHandle);
-           return false;
-       }
-   }
-   
-   private void CalculateOcelotAddress(IntPtr dynamicAddress, int offset, string addressType)
-   {
-       var process = MemoryManager.GetMGS3Process();
-       if (process == null)
-       {
-           LoggingManager.Instance.Log("MGS3 process not found.");
-           return;
-       }
-   
-       if (dynamicAddress == IntPtr.Zero)
-       {
-           LoggingManager.Instance.Log("Dynamic address not set. Run AOB scan first.");
-           return;
-       }
-   
-       IntPtr processHandle = MemoryManager.OpenGameProcess(process);
-       if (processHandle == IntPtr.Zero)
-       {
-           LoggingManager.Instance.Log("Failed to open process for scanning.");
-           return;
-       }
-   
-       IntPtr pointerAddress = MemoryManager.Instance.ReadIntPtr(processHandle, dynamicAddress);
-       if (pointerAddress == IntPtr.Zero)
-       {
-           LoggingManager.Instance.Log("Failed to read pointer from dynamic address.");
-           NativeMethods.CloseHandle(processHandle);
-           return;
-       }
-       // This is the offset the pointer in Cheat Engine is using at the address
-       IntPtr targetAddress = IntPtr.Add(pointerAddress, 0x5DC);
-       LoggingManager.Instance.Log($"Target address is: 0x{targetAddress.ToString("X")}");
-   
-       IntPtr calculatedAddress = IntPtr.Subtract(targetAddress, offset);
-       LoggingManager.Instance.Log($"{addressType} Address calculated and set: 0x{calculatedAddress.ToString("X")}");
-   
-       short value = ReadShortFromMemory(processHandle, calculatedAddress);
-   
-       if (value != -1)
-       {
-           LoggingManager.Instance.Log($"Short value at adjusted address (0x{calculatedAddress.ToString("X")}) is: {value}");
-       }
-       else
-       {
-           LoggingManager.Instance.Log($"Failed to read short value from adjusted address for {addressType}.");
-       }
-   
-       NativeMethods.CloseHandle(processHandle);
-   
-       if (addressType == "Health")
-       {
-           OcelotHealthAddress = calculatedAddress;
-       }
-       else if (addressType == "Stamina")
-       {
-           OcelotStaminaAddress = calculatedAddress;
-       }
-   }
-   
-   // Backup way to find the AOB incase the user isn't on the latest version of the game
-   public bool DynamicBackupToFindAndStoreOcelotAOB()
-   {
-       var process = GetMGS3Process();
-       if (process == null)
-       {
-   
-           return false;
-       }
-   
-       IntPtr processHandle = OpenGameProcess(process);
-       if (processHandle == IntPtr.Zero)
-       {
-   
-           return false;
-       }
-   
-       var (pattern, mask) = Constants.AOBs["Ocelot"];
-       IntPtr startAddress = new IntPtr(0x10FFFFFFFFF); // Example start range
-       IntPtr endAddress = new IntPtr(0x30000000000); // Example end range
-       long size = endAddress.ToInt64() - startAddress.ToInt64();
-   
-       IntPtr foundAddress = MemoryManager.Instance.ScanWideMemory(processHandle, startAddress, size, pattern, mask);
-       NativeMethods.CloseHandle(processHandle);
-   
-       if (foundAddress != IntPtr.Zero)
-       {
-           FoundOcelotAddress = foundAddress; // Store found address
-           return true;
-       }
-   
-       return false;
-   }
-   
-   */

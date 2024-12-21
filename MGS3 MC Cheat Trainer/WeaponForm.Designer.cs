@@ -151,12 +151,13 @@
             M37TextBox = new TextBox();
             M1911A1TextBox = new TextBox();
             MK22TextBox = new TextBox();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
             InfAmmoNoReloadCheckBox = new CheckBox();
+            SwapToBossForm = new Button();
+            SwapToMiscForm = new Button();
+            SwapToGameStatsForm = new Button();
+            SwapToHealthAndAlertsForm = new Button();
+            SwapToCamoForm = new Button();
+            SwapToItemsForm = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox31).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox30).BeginInit();
@@ -1739,86 +1740,6 @@
             MK22TextBox.Size = new Size(155, 22);
             MK22TextBox.TabIndex = 610;
             // 
-            // button2
-            // 
-            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
-            button2.Cursor = Cursors.Hand;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.ImageAlign = ContentAlignment.TopCenter;
-            button2.ImeMode = ImeMode.NoControl;
-            button2.Location = new Point(903, 10);
-            button2.Name = "button2";
-            button2.Size = new Size(203, 36);
-            button2.TabIndex = 736;
-            button2.Text = "Bosses";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
-            // button3
-            // 
-            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
-            button3.Cursor = Cursors.Hand;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.ImageAlign = ContentAlignment.TopCenter;
-            button3.ImeMode = ImeMode.NoControl;
-            button3.Location = new Point(682, 10);
-            button3.Name = "button3";
-            button3.Size = new Size(203, 36);
-            button3.TabIndex = 735;
-            button3.Text = "Health/Alerts";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // button4
-            // 
-            button4.BackgroundImage = (Image)resources.GetObject("button4.BackgroundImage");
-            button4.Cursor = Cursors.Hand;
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button4.ImageAlign = ContentAlignment.TopCenter;
-            button4.ImeMode = ImeMode.NoControl;
-            button4.Location = new Point(464, 10);
-            button4.Name = "button4";
-            button4.Size = new Size(203, 36);
-            button4.TabIndex = 734;
-            button4.Text = "Misc";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // button5
-            // 
-            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
-            button5.Cursor = Cursors.Hand;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button5.ImageAlign = ContentAlignment.TopCenter;
-            button5.ImeMode = ImeMode.NoControl;
-            button5.Location = new Point(242, 12);
-            button5.Name = "button5";
-            button5.Size = new Size(203, 33);
-            button5.TabIndex = 733;
-            button5.Text = "Camo";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
-            // button6
-            // 
-            button6.BackgroundImage = (Image)resources.GetObject("button6.BackgroundImage");
-            button6.Cursor = Cursors.Hand;
-            button6.FlatStyle = FlatStyle.Flat;
-            button6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button6.ImageAlign = ContentAlignment.TopCenter;
-            button6.ImeMode = ImeMode.NoControl;
-            button6.Location = new Point(19, 12);
-            button6.Name = "button6";
-            button6.Size = new Size(203, 33);
-            button6.TabIndex = 732;
-            button6.Text = "Items";
-            button6.UseVisualStyleBackColor = true;
-            button6.Click += button6_Click;
-            // 
             // InfAmmoNoReloadCheckBox
             // 
             InfAmmoNoReloadCheckBox.BackgroundImage = Properties.Resources.Selected_MGS3_Menu_without_button;
@@ -1832,18 +1753,115 @@
             InfAmmoNoReloadCheckBox.UseVisualStyleBackColor = true;
             InfAmmoNoReloadCheckBox.CheckedChanged += InfAmmoNoReloadCheckBox_CheckedChanged;
             // 
+            // SwapToBossForm
+            // 
+            SwapToBossForm.BackgroundImage = (Image)resources.GetObject("SwapToBossForm.BackgroundImage");
+            SwapToBossForm.Cursor = Cursors.Hand;
+            SwapToBossForm.FlatStyle = FlatStyle.Flat;
+            SwapToBossForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToBossForm.ImeMode = ImeMode.NoControl;
+            SwapToBossForm.Location = new Point(742, 12);
+            SwapToBossForm.Name = "SwapToBossForm";
+            SwapToBossForm.Size = new Size(130, 31);
+            SwapToBossForm.TabIndex = 744;
+            SwapToBossForm.Text = "Bosses";
+            SwapToBossForm.UseVisualStyleBackColor = true;
+            SwapToBossForm.Click += SwapToBossForm_Click;
+            // 
+            // SwapToMiscForm
+            // 
+            SwapToMiscForm.BackgroundImage = (Image)resources.GetObject("SwapToMiscForm.BackgroundImage");
+            SwapToMiscForm.Cursor = Cursors.Hand;
+            SwapToMiscForm.FlatStyle = FlatStyle.Flat;
+            SwapToMiscForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToMiscForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToMiscForm.ImeMode = ImeMode.NoControl;
+            SwapToMiscForm.Location = new Point(470, 12);
+            SwapToMiscForm.Name = "SwapToMiscForm";
+            SwapToMiscForm.Size = new Size(130, 31);
+            SwapToMiscForm.TabIndex = 743;
+            SwapToMiscForm.Text = "Misc";
+            SwapToMiscForm.UseVisualStyleBackColor = true;
+            SwapToMiscForm.Click += SwapToMiscForm_Click;
+            // 
+            // SwapToGameStatsForm
+            // 
+            SwapToGameStatsForm.BackgroundImage = (Image)resources.GetObject("SwapToGameStatsForm.BackgroundImage");
+            SwapToGameStatsForm.Cursor = Cursors.Hand;
+            SwapToGameStatsForm.FlatStyle = FlatStyle.Flat;
+            SwapToGameStatsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToGameStatsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToGameStatsForm.ImeMode = ImeMode.NoControl;
+            SwapToGameStatsForm.Location = new Point(878, 12);
+            SwapToGameStatsForm.Name = "SwapToGameStatsForm";
+            SwapToGameStatsForm.Size = new Size(130, 31);
+            SwapToGameStatsForm.TabIndex = 742;
+            SwapToGameStatsForm.Text = "Game Stats";
+            SwapToGameStatsForm.UseVisualStyleBackColor = true;
+            SwapToGameStatsForm.Click += SwapToGameStatsForm_Click;
+            // 
+            // SwapToHealthAndAlertsForm
+            // 
+            SwapToHealthAndAlertsForm.BackgroundImage = (Image)resources.GetObject("SwapToHealthAndAlertsForm.BackgroundImage");
+            SwapToHealthAndAlertsForm.Cursor = Cursors.Hand;
+            SwapToHealthAndAlertsForm.FlatStyle = FlatStyle.Flat;
+            SwapToHealthAndAlertsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToHealthAndAlertsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToHealthAndAlertsForm.ImeMode = ImeMode.NoControl;
+            SwapToHealthAndAlertsForm.Location = new Point(606, 12);
+            SwapToHealthAndAlertsForm.Name = "SwapToHealthAndAlertsForm";
+            SwapToHealthAndAlertsForm.Size = new Size(130, 31);
+            SwapToHealthAndAlertsForm.TabIndex = 741;
+            SwapToHealthAndAlertsForm.Text = "Health/Alerts";
+            SwapToHealthAndAlertsForm.UseVisualStyleBackColor = true;
+            SwapToHealthAndAlertsForm.Click += SwapToHealthAndAlertsForm_Click;
+            // 
+            // SwapToCamoForm
+            // 
+            SwapToCamoForm.BackgroundImage = (Image)resources.GetObject("SwapToCamoForm.BackgroundImage");
+            SwapToCamoForm.Cursor = Cursors.Hand;
+            SwapToCamoForm.FlatStyle = FlatStyle.Flat;
+            SwapToCamoForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToCamoForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToCamoForm.ImeMode = ImeMode.NoControl;
+            SwapToCamoForm.Location = new Point(334, 12);
+            SwapToCamoForm.Name = "SwapToCamoForm";
+            SwapToCamoForm.Size = new Size(130, 31);
+            SwapToCamoForm.TabIndex = 740;
+            SwapToCamoForm.Text = "Camo";
+            SwapToCamoForm.UseVisualStyleBackColor = true;
+            SwapToCamoForm.Click += SwapToCamoForm_Click;
+            // 
+            // SwapToItemsForm
+            // 
+            SwapToItemsForm.BackgroundImage = (Image)resources.GetObject("SwapToItemsForm.BackgroundImage");
+            SwapToItemsForm.Cursor = Cursors.Hand;
+            SwapToItemsForm.FlatStyle = FlatStyle.Flat;
+            SwapToItemsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToItemsForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToItemsForm.ImeMode = ImeMode.NoControl;
+            SwapToItemsForm.Location = new Point(198, 12);
+            SwapToItemsForm.Name = "SwapToItemsForm";
+            SwapToItemsForm.Size = new Size(130, 31);
+            SwapToItemsForm.TabIndex = 739;
+            SwapToItemsForm.Text = "Items";
+            SwapToItemsForm.UseVisualStyleBackColor = true;
+            SwapToItemsForm.Click += SwapToItemsForm_Click;
+            // 
             // WeaponForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1161, 707);
+            Controls.Add(SwapToBossForm);
+            Controls.Add(SwapToMiscForm);
+            Controls.Add(SwapToGameStatsForm);
+            Controls.Add(SwapToHealthAndAlertsForm);
+            Controls.Add(SwapToCamoForm);
+            Controls.Add(SwapToItemsForm);
             Controls.Add(InfAmmoNoReloadCheckBox);
-            Controls.Add(button2);
-            Controls.Add(button3);
-            Controls.Add(button4);
-            Controls.Add(button5);
-            Controls.Add(button6);
             Controls.Add(AllTextbox);
             Controls.Add(ChangeAllChecked);
             Controls.Add(AllWeaponsChecklist);
@@ -1968,7 +1986,7 @@
             Controls.Add(MK22TextBox);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "WeaponForm";
-            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss - Version 2.5";
+            Text = "MGS3 Cheat Trainer - Weapons - ANTIBigBoss - Version 2.7";
             Load += WeaponForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox31).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();
@@ -2128,11 +2146,12 @@
         private TextBox M37TextBox;
         private TextBox M1911A1TextBox;
         private TextBox MK22TextBox;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
         private CheckBox InfAmmoNoReloadCheckBox;
+        private Button SwapToBossForm;
+        private Button SwapToMiscForm;
+        private Button SwapToGameStatsForm;
+        private Button SwapToHealthAndAlertsForm;
+        private Button SwapToCamoForm;
+        private Button SwapToItemsForm;
     }
 }
