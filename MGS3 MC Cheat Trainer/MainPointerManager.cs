@@ -24,36 +24,25 @@ namespace MGS3_MC_Cheat_Trainer
 
         public string ReadDifficulty()
         {
-            // Read the raw difficulty value as a string
             string difficultyValue = HelperMethods.Instance.ReadMemoryValueOnlyAsString("PointerBytes", (int)MainPointerAddresses.DifficultySub, 1, DataType.UInt8);
 
-            // Convert to integer and map it to the corresponding description
             if (int.TryParse(difficultyValue, out int difficultyKey) && DifficultyMappings.TryGetValue(difficultyKey, out string description))
             {
                 return description;
             }
-
-            // Default case if the value is unrecognized
             return "Unknown Difficulty";
         }
 
         public string ReadPlayTime()
         {
-            // Read the raw playtime (frames) as a string
             string playTimeValue = HelperMethods.Instance.ReadMemoryValueOnlyAsString("PointerBytes", (int)MainPointerAddresses.PlayTimeSub, 4, DataType.UInt32);
 
             if (uint.TryParse(playTimeValue, out uint totalFrames))
             {
-                // Convert frames to real seconds (60 frames = 1 second)
                 uint totalSeconds = totalFrames / 60;
-
-                // Convert total seconds to a TimeSpan
                 TimeSpan timeSpan = TimeSpan.FromSeconds(totalSeconds);
-
-                // Format strictly as HH:MM:SS, even if hours > 24
                 int hours = (int)timeSpan.TotalHours;
                 string formattedTime = $"{hours:D2}:{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}";
-
                 LoggingManager.Instance.Log($"Formatted PlayTime: {formattedTime}");
 
                 return formattedTime;
@@ -88,7 +77,6 @@ namespace MGS3_MC_Cheat_Trainer
             return HelperMethods.Instance.ReadMemoryValueOnlyAsString("PointerBytes", (int)MainPointerAddresses.SeriousInjuriesSub, 2, DataType.UInt16);
         }
 
-        // Test without dividing by 400
         public string ReadTotalDamageTaken()
         {
             return HelperMethods.Instance.ReadMemoryValueOnlyAsString("PointerBytes", (int)MainPointerAddresses.TotalDamageTakenSubTest, 2, DataType.UInt16);
@@ -162,10 +150,8 @@ namespace MGS3_MC_Cheat_Trainer
             return success;
         }
 
-        // Difficulty is stored as a UInt8 (0x0A for Very Easy, 0x14 for Easy, etc.)
         public bool WriteDifficulty(byte value) => WriteStat("PointerBytes", (int)MainPointerAddresses.DifficultySub, value);
 
-        // PlayTime is stored as a UInt32 (frames count), we write the raw frame count.
         public bool WritePlayTime(uint framesValue) => WriteStat("PointerBytes", (int)MainPointerAddresses.PlayTimeSub, framesValue);
 
         public bool WriteAlertsTriggered(ushort value) => WriteStat("PointerBytes", (int)MainPointerAddresses.AlertsTriggeredSub, value);
@@ -182,7 +168,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         public string ProjectedRank(string difficulty)
         {
-            // Step 1: Gather all stats
             int alerts = SafeParse(ReadAlertsTriggered());
             int kills = SafeParse(ReadHumansKilled());
             int lifeMedsUsed = SafeParse(ReadLifeMedsUsed());
@@ -193,14 +178,10 @@ namespace MGS3_MC_Cheat_Trainer
             int injuries = SafeParse(ReadTimesSeriouslyInjured());
             int damageBars = SafeParse(ReadTotalDamageTaken());
             string specialItemsUsed = ReadSpecialItemsUsed();
-
-            // IMPORTANT: Read the formatted playtime once and parse it
             string formattedPlayTime = ReadPlayTime();
             TimeSpan playTime = SafeParseTime(formattedPlayTime);
             LoggingManager.Instance.Log($"Play Time for Rank Projection: {playTime}");
 
-
-            // Step 2: Rank conditions with proper numeric values
             var rankConditions = new List<RankCondition>
     {
     // Top Performance Ranks
@@ -288,7 +269,6 @@ namespace MGS3_MC_Cheat_Trainer
     new RankCondition("Alligator", "Any", minContinues: 51, minKills: 101, minAlerts: 51)
 };
 
-            // Step 3: Match rank conditions
             foreach (var rank in rankConditions)
             {
 
@@ -321,11 +301,9 @@ namespace MGS3_MC_Cheat_Trainer
             public int? MaxDamageBars { get; }
             public int? MinDamageBars { get; }
             public int? MaxInjuries { get; }
-            public int? MinInjuries { get; } // New property
+            public int? MinInjuries { get; }
             public int? MinPlantsCaptured { get; }
-            public int? MinMeals { get; } // Added this property
-
-
+            public int? MinMeals { get; }
 
             public RankCondition(string name, string difficulty = null,
                 int? maxPlayTimeMinutes = null, int? minPlayTimeMinutes = null,
@@ -365,7 +343,6 @@ namespace MGS3_MC_Cheat_Trainer
             public bool Matches(string difficulty, int alerts, int kills, int lifeMeds, int continues, int saves,
                     int meals, int injuries, int damageBars, int plantsCaptured, TimeSpan playTime, string specialItems)
             {
-                // Normalize difficulty
                 if (Difficulty != null && Difficulty != "Any")
                 {
                     var possibleDifficulties = Difficulty.Split('/');
@@ -374,17 +351,14 @@ namespace MGS3_MC_Cheat_Trainer
                     if (!possibleDifficulties.Contains(normalizedDifficulty)) return false;
                 }
 
-                // Time-Based Checks
                 if (MaxPlayTimeMinutes.HasValue && playTime.TotalMinutes > MaxPlayTimeMinutes.Value) return false;
                 if (MinPlayTimeMinutes.HasValue && playTime.TotalMinutes <= MinPlayTimeMinutes.Value) return false;
 
-                // Saves and Continues
                 if (MaxSaves.HasValue && saves > MaxSaves.Value) return false;
                 if (MinSaves.HasValue && saves <= MinSaves.Value) return false;
                 if (MaxContinues.HasValue && continues > MaxContinues.Value) return false;
                 if (MinContinues.HasValue && continues <= MinContinues.Value) return false;
 
-                // Stats-Based Checks
                 if (MaxKills.HasValue && kills > MaxKills.Value) return false;
                 if (MinKills.HasValue && kills < MinKills.Value) return false;
 
@@ -403,23 +377,17 @@ namespace MGS3_MC_Cheat_Trainer
                 if (MinPlantsCaptured.HasValue && plantsCaptured < MinPlantsCaptured.Value) return false;
                 if (MinMeals.HasValue && meals < MinMeals.Value) return false;
 
-                // Special Items
                 if (SpecialItems != null)
                 {
-                    // If rank condition says "Allowed", we do not restrict special items at all
                     if (SpecialItems == "Allowed")
                     {
-                        // No checks needed for special items
                     }
                     else if (SpecialItems == "Not Used")
                     {
-                        // If "Not Used" is required, ensure the player used no special items
                         if (specialItems != "Not Used") return false;
                     }
                     else
                     {
-                        // For any other specific requirement (e.g., "Stealth Camo Used"),
-                        // we require an exact match
                         if (specialItems != SpecialItems) return false;
                     }
                 }
@@ -451,19 +419,15 @@ namespace MGS3_MC_Cheat_Trainer
             return int.TryParse(value, out int result) ? result : 0;
         }
 
-        // Helper method to safely parse playtime into TimeSpan
         private TimeSpan SafeParseTime(string value)
         {
             LoggingManager.Instance.Log($"Parsing PlayTime value: '{value}'");
-            // "HH:MM:SS" format is guaranteed by ReadPlayTime()
             var parts = value.Split(':');
             if (parts.Length == 3
                 && int.TryParse(parts[0], out int hours)
                 && int.TryParse(parts[1], out int minutes)
                 && int.TryParse(parts[2], out int seconds))
             {
-                // Construct a TimeSpan directly
-                // This allows hours > 24 without any ambiguity.
                 return new TimeSpan(hours, minutes, seconds);
             }
             LoggingManager.Instance.Log("Manual TimeSpan parse failed, returning zero.");
@@ -503,13 +467,13 @@ namespace MGS3_MC_Cheat_Trainer
                     byte[] currentInjuryData = ReadMemoryBytes(processHandle, injurySlotAddress, Constants.Offsets.InjurySlots.SlotSize);
                     if (currentInjuryData == null || !currentInjuryData.SequenceEqual(new byte[Constants.Offsets.InjurySlots.SlotSize]))
                     {
-                        continue; // Slot is not empty, skip it
+                        continue;
                     }
 
                     if (NativeMethods.WriteProcessMemory(processHandle, injurySlotAddress, injuryBytes, (uint)injuryBytes.Length, out _))
                     {
                         injuryApplied = true;
-                        break; // Exit the loop as injury is applied
+                        break;
                     }
                 }
 
@@ -544,7 +508,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             IntPtr baseInjurySlotAddress = (IntPtr.Size == 8) ? (IntPtr)BitConverter.ToInt64(buffer, 0) : (IntPtr)BitConverter.ToInt32(buffer, 0);
 
-            byte[] emptyInjuryData = new byte[Constants.Offsets.InjurySlots.SlotSize]; // Array of zeros
+            byte[] emptyInjuryData = new byte[Constants.Offsets.InjurySlots.SlotSize];
 
 
             bool allCleared = true;
@@ -552,12 +516,11 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 IntPtr injurySlotAddress = IntPtr.Add(baseInjurySlotAddress, Constants.Offsets.InjurySlots.CalculateOffset(slot));
 
-                // Write the empty pattern to the slot
                 bool writeSuccess = NativeMethods.WriteProcessMemory(processHandle, injurySlotAddress, emptyInjuryData, (uint)emptyInjuryData.Length, out _);
                 if (!writeSuccess)
                 {
                     allCleared = false;
-                    break; // Stop the process if unable to write to memory
+                    break;
                 }
             }
 
@@ -591,7 +554,6 @@ namespace MGS3_MC_Cheat_Trainer
             IntPtr valuePointer = (IntPtr.Size == 8) ? (IntPtr)BitConverter.ToInt64(pointerBuffer, 0) : (IntPtr)BitConverter.ToInt32(pointerBuffer, 0);
 
             int valueOffset;
-            // Adjust the valueOffset based on the healthType
             switch (healthType)
             {
                 case Constants.HealthType.MaxHealth:

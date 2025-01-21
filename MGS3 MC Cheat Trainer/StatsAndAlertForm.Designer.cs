@@ -99,6 +99,7 @@
             SwapToCamoForm = new Button();
             SwapToItemsForm = new Button();
             SwapToWeaponsForm = new Button();
+            SwapToDebugForm = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -953,7 +954,7 @@
             SwapToBossForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToBossForm.ImeMode = ImeMode.NoControl;
-            SwapToBossForm.Location = new Point(737, 12);
+            SwapToBossForm.Location = new Point(667, 12);
             SwapToBossForm.Name = "SwapToBossForm";
             SwapToBossForm.Size = new Size(130, 31);
             SwapToBossForm.TabIndex = 650;
@@ -969,7 +970,7 @@
             SwapToMiscForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToMiscForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToMiscForm.ImeMode = ImeMode.NoControl;
-            SwapToMiscForm.Location = new Point(601, 12);
+            SwapToMiscForm.Location = new Point(531, 12);
             SwapToMiscForm.Name = "SwapToMiscForm";
             SwapToMiscForm.Size = new Size(130, 31);
             SwapToMiscForm.TabIndex = 649;
@@ -985,7 +986,7 @@
             SwapToGameStatsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToGameStatsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToGameStatsForm.ImeMode = ImeMode.NoControl;
-            SwapToGameStatsForm.Location = new Point(873, 12);
+            SwapToGameStatsForm.Location = new Point(803, 12);
             SwapToGameStatsForm.Name = "SwapToGameStatsForm";
             SwapToGameStatsForm.Size = new Size(130, 31);
             SwapToGameStatsForm.TabIndex = 648;
@@ -1001,7 +1002,7 @@
             SwapToCamoForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToCamoForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToCamoForm.ImeMode = ImeMode.NoControl;
-            SwapToCamoForm.Location = new Point(465, 12);
+            SwapToCamoForm.Location = new Point(395, 12);
             SwapToCamoForm.Name = "SwapToCamoForm";
             SwapToCamoForm.Size = new Size(130, 31);
             SwapToCamoForm.TabIndex = 646;
@@ -1017,7 +1018,7 @@
             SwapToItemsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToItemsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToItemsForm.ImeMode = ImeMode.NoControl;
-            SwapToItemsForm.Location = new Point(329, 12);
+            SwapToItemsForm.Location = new Point(259, 12);
             SwapToItemsForm.Name = "SwapToItemsForm";
             SwapToItemsForm.Size = new Size(130, 31);
             SwapToItemsForm.TabIndex = 645;
@@ -1033,7 +1034,7 @@
             SwapToWeaponsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToWeaponsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToWeaponsForm.ImeMode = ImeMode.NoControl;
-            SwapToWeaponsForm.Location = new Point(193, 12);
+            SwapToWeaponsForm.Location = new Point(123, 12);
             SwapToWeaponsForm.Name = "SwapToWeaponsForm";
             SwapToWeaponsForm.Size = new Size(130, 31);
             SwapToWeaponsForm.TabIndex = 644;
@@ -1041,12 +1042,29 @@
             SwapToWeaponsForm.UseVisualStyleBackColor = true;
             SwapToWeaponsForm.Click += SwapToWeaponsForm_Click;
             // 
+            // SwapToDebugForm
+            // 
+            SwapToDebugForm.BackgroundImage = (Image)resources.GetObject("SwapToDebugForm.BackgroundImage");
+            SwapToDebugForm.Cursor = Cursors.Hand;
+            SwapToDebugForm.FlatStyle = FlatStyle.Flat;
+            SwapToDebugForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToDebugForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToDebugForm.ImeMode = ImeMode.NoControl;
+            SwapToDebugForm.Location = new Point(939, 12);
+            SwapToDebugForm.Name = "SwapToDebugForm";
+            SwapToDebugForm.Size = new Size(130, 31);
+            SwapToDebugForm.TabIndex = 651;
+            SwapToDebugForm.Text = "Debug";
+            SwapToDebugForm.UseVisualStyleBackColor = true;
+            SwapToDebugForm.Click += SwapToDebugForm_Click;
+            // 
             // StatsAndAlertForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(SwapToDebugForm);
             Controls.Add(SwapToBossForm);
             Controls.Add(SwapToMiscForm);
             Controls.Add(SwapToGameStatsForm);
@@ -1100,7 +1118,7 @@
             Controls.Add(Plus100HpValue);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsAndAlertForm";
-            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.7";
+            Text = "MGS3 Cheat Trainer - Stats and Alert - ANTIBigBoss - Version 2.8";
             Load += StatsAndAlertForm_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -1182,5 +1200,6 @@
         private Button SwapToCamoForm;
         private Button SwapToItemsForm;
         private Button SwapToWeaponsForm;
+        private Button SwapToDebugForm;
     }
 }

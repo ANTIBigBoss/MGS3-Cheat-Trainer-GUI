@@ -6,7 +6,7 @@ namespace MGS3_MC_Cheat_Trainer
 {
     public partial class ItemForm : Form
     {
-        
+
         public ItemForm()
         {
             InitializeComponent();
@@ -375,12 +375,23 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToGameStatsForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Weapon form.\n");
+            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Item form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "GameStatsForm");
             GameStatsForm form7 = new();
             form7.Show();
             this.Hide();
+        }
+
+        private void SwapToDebugForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Debug form from the Item form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "DebugForm");
+            DebugForm form8 = new();
+            form8.Show();
+            this.Hide();
+
         }
     }
 }

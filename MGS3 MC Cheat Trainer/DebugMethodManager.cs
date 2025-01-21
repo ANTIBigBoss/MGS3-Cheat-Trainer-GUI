@@ -189,7 +189,6 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadMemoryValue("PissFilter", (int)AnimationOffsets.SnakeLongSleepSub, false, 1, DataType.Int8);
         }
 
-        //TODO: Fix to work with LastAob Method
         public string GetForceDirectionValue()
         {
             return ReadMemoryValue("Alphabet", (int)AnimationOffsets.ForceDirectionSub, false, 1, DataType.UInt8);
@@ -700,36 +699,3 @@ namespace MGS3_MC_Cheat_Trainer
 
     }
 }
-
-/* Should implement this in here at some point:
-
-private void button5_Click(object sender, EventArgs e)
-   {
-       var guardsAddresses = XyzManager.Instance.FindAllGuardsPositionAOBs();
-       if (guardsAddresses.Count > 0)
-       {
-           IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
-           if (processHandle != IntPtr.Zero)
-           {
-               var guardsPositions = XyzManager.Instance.ReadGuardsPositions(processHandle, guardsAddresses);
-               StringBuilder sb = new StringBuilder();
-               foreach (var position in guardsPositions)
-               {
-                   sb.AppendLine($"Guard Position: \nX={position[0]}, \nY={position[1]}, \nZ={position[2]}\n");
-               }
-               MessageBox.Show(sb.ToString(), "Guards Positions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-   
-               NativeMethods.CloseHandle(processHandle);
-           }
-           else
-           {
-               MessageBox.Show("Failed to open process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-           }
-       }
-       else
-       {
-           MessageBox.Show("No guards found.", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
-       }
-   }
-
-*/

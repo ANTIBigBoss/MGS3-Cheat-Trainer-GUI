@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Xml.Linq;
+﻿using System.Diagnostics;
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -15,12 +11,10 @@ namespace MGS3_MC_Cheat_Trainer
         private static string logFileName = "MGS3_MC_Cheat_Trainer_Log.txt";
         private static string logPath;
 
-        // Static constructor to initialize logFolderPath and logPath
         static LoggingManager()
         {
-            // Use the Documents folder for storing logs, with a specific subfolder for the application
             string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string appLogFolder = "MGS3 CT Logs"; // Specific name for the log folder
+            string appLogFolder = "MGS3 CT Logs";
 
             logFolderPath = Path.Combine(documentsFolder, appLogFolder);
             logPath = Path.Combine(logFolderPath, logFileName);
@@ -30,7 +24,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         private LoggingManager()
         {
-            // Private constructor to prevent instance creation outside of this class
         }
 
         public static LoggingManager Instance
@@ -60,7 +53,6 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 using (var stream = File.Create(logPath))
                 {
-                    // Immediately close the stream to release the file
                 }
             }
         }
@@ -80,8 +72,8 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // This is mostly to help me stay ahead of game updates so I can log the offset differences quicker if anything gets shifted around
-        // Currently only logs the AOB addresses, but could be expanded to log other addresses as well
+        /* This is mostly to help me stay ahead of game updates so I can log the offset 
+           differences quicker if anything gets shifted around */
         public void LogAOBAddresses()
         {
             Process process = GetMGS3Process();
@@ -104,7 +96,7 @@ namespace MGS3_MC_Cheat_Trainer
             foreach (var aobEntry in AobManager.AOBs)
             {
                 string name = aobEntry.Key;
-                if (string.IsNullOrEmpty(name)) continue; // Skip empty placeholder entries
+                if (string.IsNullOrEmpty(name)) continue;
 
                 byte[] pattern = aobEntry.Value.Pattern;
                 string mask = aobEntry.Value.Mask;
@@ -117,7 +109,6 @@ namespace MGS3_MC_Cheat_Trainer
                     foreach (var address in foundAddresses)
                     {
                         long offset = address.ToInt64() - baseAddress.ToInt64();
-                        // Read the AOB bytes from the found address
                         byte[] aobBytes = new byte[pattern.Length];
                         if (NativeMethods.ReadProcessMemory(processHandle, address, aobBytes, (uint)aobBytes.Length,
                                 out _))
@@ -146,16 +137,13 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var LogMemoryAddresses = new Dictionary<string, Func<string>>()
             {
-                // Based on order within memory
                 { "CQC Slam Normal Damage", () => DebugMethodManager.Instance.CQCSlamNormalDamage() },
                 { "CQC Slam Extreme Damage", () => DebugMethodManager.Instance.CQCSlamExtremeDamage() },
                 { "Wp Grenade Damage", () => DebugMethodManager.Instance.WpNadeDamage() },
-                // The notes I had for the zzz stuff were a mess so I should reorganize this eventually
                 { "Zzz Drain Instructions", () => DebugMethodManager.Instance.ZzzDrain() },
                 { "Sleep Status Instructions 2", () => DebugMethodManager.Instance.SleepStatus2() },
                 { "Sleep Status Instructions 1", () => DebugMethodManager.Instance.SleepStatus1() },
                 { "Zzz Weapons Damage 1", () => DebugMethodManager.Instance.ZzzWeaponsDamage1() },
-                // End of zzz stuff
                 { "Shotgun Damage Instructions", () => DebugMethodManager.Instance.ShotgunDamage() },
                 { "M63 Damage", () => DebugMethodManager.Instance.M63Damage() },
                 { "Stun Grenade Damage", () => DebugMethodManager.Instance.StunNadeDamage() },
@@ -294,11 +282,9 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            // Get the base address of the game module
             Process process = MemoryManager.GetMGS3Process();
             IntPtr baseAddress = process.MainModule.BaseAddress;
 
-            // Log Weapons
             LoggingManager.Instance.Log("Weapons:");
             var weapons = typeof(MGS3UsableObjects).GetFields()
                 .Where(field => field.FieldType == typeof(Weapon))
@@ -343,7 +329,6 @@ namespace MGS3_MC_Cheat_Trainer
                 }
             }
 
-            // Log Items
             LoggingManager.Instance.Log("Items:");
             var items = typeof(MGS3UsableObjects).GetFields()
                 .Where(field => field.FieldType == typeof(Item))
@@ -355,7 +340,6 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr itemAddress = ItemAddresses.GetAddress(item.Index, MemoryManager.Instance);
                 if (itemAddress == IntPtr.Zero) continue;
 
-                // Calculate the offset relative to the base address
                 long relativeOffset = itemAddress.ToInt64() - baseAddress.ToInt64();
                 LoggingManager.Instance.Log($"{item.Name} - Address: {itemAddress.ToString("X")} (METAL GEAR SOLID 3.exe+{relativeOffset:X})");
 

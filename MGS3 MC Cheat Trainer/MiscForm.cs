@@ -7,6 +7,7 @@ namespace MGS3_MC_Cheat_Trainer
     public partial class MiscForm : Form
     {
         #region Form Load and Close
+
         private int userCamoIndex;
         const float MinFov = 0.5f;
         const float MaxFov = 1.5f;
@@ -24,7 +25,7 @@ namespace MGS3_MC_Cheat_Trainer
 
             ModelSlider.Minimum = 0;
             ModelSlider.Maximum = 255;
-            ModelSlider.Value = 40; // Default byte value and where the slider should start at
+            ModelSlider.Value = 40;
             ChangeModelNumber.Click += new EventHandler(ChangeModelNumber_Click);
             ModelSlider.Scroll += new EventHandler(ModelSlider_Scroll);
 
@@ -49,7 +50,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void MiscForm_Activated(object sender, EventArgs e)
         {
-            CamoIndexSlider.Value = Math.Max(CamoIndexSlider.Minimum, Math.Min(TimerManager.UserCamoIndex, CamoIndexSlider.Maximum));
+            CamoIndexSlider.Value = Math.Max(CamoIndexSlider.Minimum,
+                Math.Min(TimerManager.UserCamoIndex, CamoIndexSlider.Maximum));
         }
 
         private void MiscForm_Deactivate(object sender, EventArgs e)
@@ -92,7 +94,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ParseTextBoxesPositions_Click(object sender, EventArgs e)
         {
-            // Ensure all textboxes have valid float values
             if (float.TryParse(TextBoxSnakeX.Text, out float x) &&
                 float.TryParse(TextBoxSnakeY.Text, out float y) &&
                 float.TryParse(TextBoxSnakeZ.Text, out float z))
@@ -102,7 +103,8 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr snakePointerAddress = XyzManager.Instance.FindPointerMemory(11810, 0x130);
                 if (snakePointerAddress == IntPtr.Zero)
                 {
-                    MessageBox.Show("Failed to find Snake's position.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to find Snake's position.", "Error", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     return;
                 }
 
@@ -120,12 +122,14 @@ namespace MGS3_MC_Cheat_Trainer
                 }
                 else
                 {
-                    MessageBox.Show("Failed to open game process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to open game process.", "Error", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Invalid position values. Please enter valid numbers.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Invalid position values. Please enter valid numbers.", "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
@@ -136,12 +140,10 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 try
                 {
-                    // Get the updated Snake position
                     float[] position = XyzManager.Instance.ReadSnakePosition(processHandle);
 
                     if (position != null)
                     {
-                        // Always update the textboxes with the new position values
                         Invoke(new Action(() =>
                         {
                             ReadTextBoxSnakeX.Text = position[0].ToString("F2");
@@ -185,16 +187,14 @@ namespace MGS3_MC_Cheat_Trainer
             XyzManager.Instance.RaiseSnakeYBy4000();
         }
 
-        // Pretty hacky but, it'll work if the player is moving backwards when not on the ladder.
-        // We'll change this to force an area load then find those coordinates in the future.
+        /* Pretty hacky but, it'll work if the player is moving backwards when not on the ladder.
+           I'll change this to force an area load then find those coordinates in the future. */
         private async void LadderSkip_Click_1(object sender, EventArgs e)
         {
             // Define multiple sets of coordinates for successive teleportation
             float[][] coordinates = new float[][]
             {
-                // First set of coordinates
-                new float[] { -1273f, 901f, -30441f }, 
-                // Keep increasing the Y to test theory of how the ladder gcx works
+                new float[] { -1273f, 901f, -30441f },
                 new float[] { -1251f, 2000f, -30441f },
                 new float[] { -1251f, 154840f, -31441f },
                 new float[] { -1251f, 4000f, -30441f },
@@ -204,13 +204,12 @@ namespace MGS3_MC_Cheat_Trainer
 
             foreach (var coordSet in coordinates)
             {
-                // Execute the teleport to new position using the current set of coordinates
-                XyzManager.Instance.TeleportSnake(new float[][] { coordSet }); // Adjust the method if necessary
+                XyzManager.Instance.TeleportSnake(new float[][] { coordSet });
 
-                // Add a half-second delay between teleports
                 await Task.Delay(1000); // 500 milliseconds = 0.5 seconds
             }
         }
+
         #endregion
 
         private void Form4_FormClosing(object sender, FormClosingEventArgs e)
@@ -301,7 +300,7 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        #region Camo  
+        #region Camo
 
         private void CamoIndexSlider_Scroll(object sender, EventArgs e)
         {
@@ -314,7 +313,8 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
-                MessageBox.Show("Please check the box to enable camo index changes.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please check the box to enable camo index changes.", "Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -391,6 +391,7 @@ namespace MGS3_MC_Cheat_Trainer
         #endregion
 
         #region Model Manipulation
+
         private void UpdateModelValueTextBox()
         {
             ModelCurrentValue.Text = ModelSlider.Value.ToString();
@@ -448,6 +449,7 @@ namespace MGS3_MC_Cheat_Trainer
                 LoggingManager.Instance.Log("Model value increased by 1");
             }
         }
+
         #endregion
 
         private void PissFilterCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -550,6 +552,16 @@ namespace MGS3_MC_Cheat_Trainer
             this.Hide();
         }
 
+        private void SwapToDebugForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Debug form from the Misc form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "DebugForm");
+            DebugForm form8 = new();
+            form8.Show();
+            this.Hide();
+        }
+
         #region Damage Multiplier Controls
 
         private void UpdateDamageMultiplierTextBox()
@@ -558,7 +570,8 @@ namespace MGS3_MC_Cheat_Trainer
             {
                 if (multiplierValue < 1 || multiplierValue > 100)
                 {
-                    MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     LoggingManager.Instance.Log($"Invalid multiplier value entered: {multiplierValue}");
                     return;
                 }
@@ -568,7 +581,8 @@ namespace MGS3_MC_Cheat_Trainer
             }
             else
             {
-                MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 LoggingManager.Instance.Log("The user entered an invalid damage multiplier value.");
             }
         }
@@ -621,19 +635,23 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void ChangeDamageMultiNumberButton_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(DamageToSnakeMultiTextbox.Text, out int multiplierValue) && multiplierValue >= 1 && multiplierValue <= 100)
+            if (int.TryParse(DamageToSnakeMultiTextbox.Text, out int multiplierValue) && multiplierValue >= 1 &&
+                multiplierValue <= 100)
             {
                 MiscManager.AdjustDamageMultiplier((byte)multiplierValue);
                 LoggingManager.Instance.Log($"Damage Multiplier set to {multiplierValue}.");
             }
             else
             {
-                MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please enter a valid number between 1 and 100.", "Invalid Input", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 LoggingManager.Instance.Log("Invalid Damage Multiplier value entered.");
             }
         }
 
         #endregion
 
+
+        
     }
 }

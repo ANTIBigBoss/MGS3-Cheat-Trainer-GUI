@@ -143,22 +143,18 @@ namespace MGS3_MC_Cheat_Trainer
         {
             try
             {
-                // Get the process handle
                 IntPtr processHandle = HelperMethods.Instance.GetProcessHandle();
                 if (processHandle == IntPtr.Zero)
                     return "Error: Process handle is invalid.";
 
-                // Get the target memory address
                 IntPtr targetAddress = HelperMethods.Instance.GetTargetAddress(processHandle, aobKey, offset);
                 if (targetAddress == IntPtr.Zero)
                     return "Error: Target address is invalid.";
 
-                // Read the memory bytes
                 byte[] buffer = MemoryManager.ReadMemoryBytes(processHandle, targetAddress, bytesToRead);
                 if (buffer == null || buffer.Length != bytesToRead)
                     return "Error: Could not read memory.";
 
-                // Convert the bytes to the appropriate data type
                 return HelperMethods.Instance.FormatReadValueForTextboxes(buffer, dataType);
             }
             catch (Exception ex)
@@ -187,8 +183,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         public string FormatReadValueForTextboxes(byte[] buffer, DataType dataType)
         {
-            string rawBytes = BitConverter.ToString(buffer); // Convert raw bytes to a readable format
-            //LoggingManager.Instance.Log($"Raw Bytes: {rawBytes}");
+            string rawBytes = BitConverter.ToString(buffer);
 
             string result = dataType switch
             {
@@ -202,8 +197,7 @@ namespace MGS3_MC_Cheat_Trainer
                 _ => BitConverter.ToString(buffer).Replace("-", " "),
             };
 
-            result = result.Trim(); // Ensure no hidden characters exist
-            //LoggingManager.Instance.Log($"Cleaned Value: {result}");
+            result = result.Trim();
             return result;
         }
 

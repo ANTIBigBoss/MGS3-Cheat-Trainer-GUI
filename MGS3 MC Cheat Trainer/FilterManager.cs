@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms; // For MessageBox
-using static MGS3_MC_Cheat_Trainer.Constants;
-
-// Use MemoryManager
+﻿using static MGS3_MC_Cheat_Trainer.Constants;
 using static MGS3_MC_Cheat_Trainer.MemoryManager;
 
 namespace MGS3_MC_Cheat_Trainer
@@ -274,10 +269,10 @@ namespace MGS3_MC_Cheat_Trainer
         public void SetToNightMode()
         {
             SetTimeOfDayValues(
-                new byte[] { 0x40, 0x1C, 0xC8 }, // Light Near Snake
-                new byte[] { 0x00, 0x1B, 0x0A, 0x03 }, // Map Colour
-                new byte[] { 0x00, 0x1F, 0x13, 0x09 }, // Sky Colour
-                0x0F); // Sky Value
+                new byte[] { 0x40, 0x1C, 0xC8 },
+                new byte[] { 0x00, 0x1B, 0x0A, 0x03 },
+                new byte[] { 0x00, 0x1F, 0x13, 0x09 },
+                0x0F);
         }
 
         private void SetTimeOfDayValues(byte[] lightNearSnake, byte[] colourMap, byte[] skyColour, byte skyByte)
@@ -287,7 +282,6 @@ namespace MGS3_MC_Cheat_Trainer
 
             try
             {
-                // Subtract offsets to target correct addresses, mimicking reading logic
                 WriteTimeOfDayMemory(processHandle, "PissFilter", (int)TimeOfDayOffsets.ChangeLightNearSnakeSub, lightNearSnake);
                 WriteTimeOfDayMemory(processHandle, "PissFilter", (int)TimeOfDayOffsets.ColourMapChangingSub, colourMap);
                 WriteTimeOfDayMemory(processHandle, "PissFilter", (int)TimeOfDayOffsets.SkyColourChangingSub, skyColour);

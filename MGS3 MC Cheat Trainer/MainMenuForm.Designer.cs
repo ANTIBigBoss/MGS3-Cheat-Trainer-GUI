@@ -153,7 +153,7 @@
             LogAOBs.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             LogAOBs.ImageAlign = ContentAlignment.TopCenter;
             LogAOBs.ImeMode = ImeMode.NoControl;
-            LogAOBs.Location = new Point(730, 561);
+            LogAOBs.Location = new Point(730, 623);
             LogAOBs.Name = "LogAOBs";
             LogAOBs.Size = new Size(426, 41);
             LogAOBs.TabIndex = 560;
@@ -188,13 +188,12 @@
             DebugFormSwap.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             DebugFormSwap.ImageAlign = ContentAlignment.TopCenter;
             DebugFormSwap.ImeMode = ImeMode.NoControl;
-            DebugFormSwap.Location = new Point(730, 619);
+            DebugFormSwap.Location = new Point(730, 558);
             DebugFormSwap.Name = "DebugFormSwap";
             DebugFormSwap.Size = new Size(426, 45);
             DebugFormSwap.TabIndex = 561;
             DebugFormSwap.Text = "Debug/Modding Resources";
             DebugFormSwap.UseVisualStyleBackColor = true;
-            DebugFormSwap.Visible = false;
             DebugFormSwap.Click += DebugFormSwap_Click;
             // 
             // MainMenuForm
@@ -217,7 +216,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "MGS3 Cheat Trainer - Main Menu - ANTIBigBoss - Version 2.7";
+            Text = "MGS3 Cheat Trainer - Main Menu - ANTIBigBoss - Version 2.8";
             Load += MainMenuForm_Load;
             ResumeLayout(false);
         }

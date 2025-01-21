@@ -8,7 +8,7 @@ namespace MGS3_MC_Cheat_Trainer
     {
         private static StringManager instance;
         private static readonly object lockObj = new object();
-        private IntPtr processHandle = IntPtr.Zero; // Keep this handle open for the process
+        private IntPtr processHandle = IntPtr.Zero;
 
 
         private StringManager()
@@ -235,8 +235,6 @@ namespace MGS3_MC_Cheat_Trainer
                 { LocationString.ending, "Credits" }
             };
 
-        /* ChatGPT insists using an outdated method makes the most sense not sure
-         I get why since it doesn't dynamically find the address */
         public string FindLocationStringDirectlyInRange()
         {
             Process process = GetMGS3Process();
@@ -290,9 +288,6 @@ namespace MGS3_MC_Cheat_Trainer
             return "No Location String found in specified range.";
         }
 
-        /* Same as the above function but only to find the location string it
-           currently is only used in the BossForm use the player's area to
-           know which boss they can tamper with for the UI elements */
         public string ExtractLocationStringFromResult(string result)
         {
             string[] parts = result.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
@@ -369,7 +364,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         public string GetCurrentLocation()
         {
-            // Ensure process handle
             if (processHandle == IntPtr.Zero)
             {
                 Process process = GetMGS3Process();
@@ -379,7 +373,6 @@ namespace MGS3_MC_Cheat_Trainer
                 if (processHandle == IntPtr.Zero) return "Failed to open game process.";
             }
 
-            // If pointer not found, try once
             if (cachedPointerAddress == IntPtr.Zero || currentMapLocation == "Map string not found.")
             {
                 if (!AttemptPointerScan())
@@ -392,11 +385,9 @@ namespace MGS3_MC_Cheat_Trainer
             bool locationChanged = (locationInfo != currentMapLocation);
             bool suffixChanged = DetectSuffixChange(lastLoggedLocation, locationInfo);
 
-            // Update globals
             currentMapLocation = locationInfo;
             isInCutscene = cutsceneLocal;
 
-            // If cutscene started or ended, or suffix changed indicating a new area scenario
             if (suffixChanged)
             {
                 LoggingManager.Instance.Log("Cutscene suffix or scenario changed. Treating as new area. Rescanning pointer.");
@@ -408,12 +399,10 @@ namespace MGS3_MC_Cheat_Trainer
                     return "Pattern not found in the specified range.";
                 }
 
-                // Re-scan after pointer refresh
                 locationInfo = ScanCurrentLocation(out cutsceneLocal);
                 currentMapLocation = locationInfo;
                 isInCutscene = cutsceneLocal;
 
-                // Log final result after re-scan
                 if (locationInfo != "Location string not found." && locationInfo != "Map string not found.")
                 {
                     string cutsceneText = isInCutscene ? " (Cutscene)" : "";
@@ -518,110 +507,8 @@ namespace MGS3_MC_Cheat_Trainer
 
         public string GetCurrentPointerAddress() => cachedPointerAddress.ToString("X");
 
-        /* Constants.cs
-         public enum MainPointerAddresses
-           {
-               StartOfPointerSub = 2636, // Byte: will probably only use as a reference point
-               // Game Stats, some patterns here don't make sense so might need to confirm with Swiss:
-               DifficultySub = 2630, // Byte: 10 = V.Easy, 20 = Easy, 30 = Normal, 40 = Hard, 50 = Extreme, 60 = European Extreme
-               ContinuesSub = 2584, // Short
-               SavesSub = 2582, // Short
-               AlertsTriggeredSub = 2580, // Short
-               HumansKilledSub = 2578, // Short
-               SpecialItemsUsedSub = 2575, // Could be a byte or short I'll confirm with Swiss but: 0 = No, 1 = Yes
-               PlantsAndAnimalsCapturedSub = 2573, // Swiss had 2 bytes but a max of 48 would imply it's probably a byte
-               SeriousInjuriesSub = 2572, // Short
-               TotalDamageTakenSub = 2570, // Might be 4 bytes/Int32
-               PlayTimeSub = 2559, // Probably 4 bytes/Int32, MGS1 had 4 bytes for playtime
-               LifeMedsUsedSub = 1188, // Short: Weird this one is so far away, but confirmed it worked.
-               MealsEatenSub = 0, // Need to figure out where this is wasn't in the CT Swiss sent me
-               KerotansShotSub = 0, // Need to figure out where this is wasn't in the CT Swiss sent me
-           
-               // Misc Snake's Stats:
-               SnakesId_r_sna01Sub = 2616, // String: Not sure if will use in the trainer but good to have
-               MapStringSub = 2600, // String: This is the address that we are using for the map string
-               SnakesEquippedWeaponSub = 1144, // Byte: Careful not to equip something out of Snake's backpack or it will crash
-               SnakesEquippedItemSub = 1142, // Byte: Seems more relaxed on not crashing the game if out of Snake's backpack
-               SnakesEquippedFacepaintSub = 974, // Byte: Don't exceed max count or equip something not acquired yet
-               SnakesEquippedCamoSub = 973, // Byte: Don't exceed max count or equip something not acquired yet
-               SnakesCurrentHealthSub = 968, // Short: Can go to max of a short but I wouldn't advise going over 400
-               SnakesMaxHealthSub = 966, // Short: Same as above but healing an injury when over 400 will bring it back down to 400
-               SnakesCurrentStaminaSub = 2, // Short: Can go to max of a short but doesn't do much I'd advise the max being 30000
-           
-               // Serious Injuries (Each of these is 14 bytes after the other) based on the old logic I had 68 slots:
-               SeriousInjury1Sub = 964,
-               SeriousInjury2Sub = 950,
-               SeriousInjury3Sub = 936,
-               SeriousInjury4Sub = 922,
-               SeriousInjury5Sub = 908,
-               SeriousInjury6Sub = 894,
-               SeriousInjury7Sub = 880,
-               SeriousInjury8Sub = 866,
-               SeriousInjury9Sub = 852,
-               SeriousInjury10Sub = 838,
-               SeriousInjury11Sub = 824,
-               SeriousInjury12Sub = 810,
-               SeriousInjury13Sub = 796,
-               SeriousInjury14Sub = 782,
-               SeriousInjury15Sub = 768,
-               SeriousInjury16Sub = 754,
-               SeriousInjury17Sub = 740,
-               SeriousInjury18Sub = 726,
-               SeriousInjury19Sub = 712,
-               SeriousInjury20Sub = 698,
-               SeriousInjury21Sub = 684,
-               SeriousInjury22Sub = 670,
-               SeriousInjury23Sub = 656,
-               SeriousInjury24Sub = 642,
-               SeriousInjury25Sub = 628,
-               SeriousInjury26Sub = 614,
-               SeriousInjury27Sub = 600,
-               SeriousInjury28Sub = 586,
-               SeriousInjury29Sub = 572,
-               SeriousInjury30Sub = 558,
-               SeriousInjury31Sub = 544,
-               SeriousInjury32Sub = 530,
-               SeriousInjury33Sub = 516,
-               SeriousInjury34Sub = 502,
-               SeriousInjury35Sub = 488,
-               SeriousInjury36Sub = 474,
-               SeriousInjury37Sub = 460,
-               SeriousInjury38Sub = 446,
-               SeriousInjury39Sub = 432,
-               SeriousInjury40Sub = 418,
-               SeriousInjury41Sub = 404,
-               SeriousInjury42Sub = 390,
-               SeriousInjury43Sub = 376,
-               SeriousInjury44Sub = 362,
-               SeriousInjury45Sub = 348,
-               SeriousInjury46Sub = 334,
-               SeriousInjury47Sub = 320,
-               SeriousInjury48Sub = 306,
-               SeriousInjury49Sub = 292,
-               SeriousInjury50Sub = 278,
-               SeriousInjury51Sub = 264,
-               SeriousInjury52Sub = 250,
-               SeriousInjury53Sub = 236,
-               SeriousInjury54Sub = 222,
-               SeriousInjury55Sub = 208,
-               SeriousInjury56Sub = 194,
-               SeriousInjury57Sub = 180,
-               SeriousInjury58Sub = 166,
-               SeriousInjury59Sub = 152,
-               SeriousInjury60Sub = 138,
-               SeriousInjury61Sub = 124,
-               SeriousInjury62Sub = 110,
-               SeriousInjury63Sub = 96,
-               SeriousInjury64Sub = 82,
-               SeriousInjury65Sub = 68,
-               SeriousInjury66Sub = 54,
-               SeriousInjury67Sub = 40,
-               SeriousInjury68Sub = 26,
-           }
-        */
         public string DisplayEntirePointer()
         {
-            // Get the cached pointer address
             IntPtr pointerAddress = cachedPointerAddress;
 
             if (pointerAddress != IntPtr.Zero)
@@ -632,11 +519,10 @@ namespace MGS3_MC_Cheat_Trainer
                 {
                     IntPtr addressToRead = IntPtr.Subtract(pointerAddress, (int)address);
 
-                    // Use the existing method to read the value
                     string value = MemoryManager.ReadMemoryValueAsString(
                         processHandle: MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process()),
                         address: addressToRead,
-                        bytesToRead: 4, // 4 bytes for Int32
+                        bytesToRead: 4,
                         dataType: Constants.DataType.Int32
                     );
 
@@ -699,7 +585,7 @@ namespace MGS3_MC_Cheat_Trainer
                         foundLocationString = $"{locationString} - {areaName}";
                     }
 
-                    break; // Found a location
+                    break;
                 }
             }
 
@@ -724,7 +610,6 @@ namespace MGS3_MC_Cheat_Trainer
             return MemoryManager.Instance.ScanMemory(processHandle, startAddress, rangeSize, pattern, mask);
         }
 
-        // This one is if a save game hasn't been loaded yet. Aob is in the same location but with a different pattern.
         private IntPtr ScanForBackupPointerPattern()
         {
             Process processMain = GetMGS3Process();
@@ -768,7 +653,7 @@ namespace MGS3_MC_Cheat_Trainer
             if (deathStateBytes != null && deathStateBytes.Length > 0)
             {
                 int currentState = deathStateBytes[0];
-                isSnakeDead = (currentState == 16 || currentState == 208); // Modify the condition to check for both values
+                isSnakeDead = (currentState == 16 || currentState == 208);
             }
 
             return isSnakeDead;

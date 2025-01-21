@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace MGS3_MC_Cheat_Trainer
+﻿namespace MGS3_MC_Cheat_Trainer
 {
     internal class CustomMessageBoxManager
     {
@@ -21,7 +17,7 @@ namespace MGS3_MC_Cheat_Trainer
         {
 
             // Future implementation for sound effects:
-            // PlayMessageBoxSound("path_to_your_sound_file.wav");
+            // PlayMessageBoxSound("path_to_sound_file.wav");
 
             Form messageBoxForm = new Form()
             {
@@ -30,7 +26,7 @@ namespace MGS3_MC_Cheat_Trainer
                 StartPosition = FormStartPosition.CenterScreen,
                 MinimizeBox = false,
                 MaximizeBox = false,
-                BackColor = SurvivalViewerColor // Set background color
+                BackColor = SurvivalViewerColor
             };
 
             // Custom icon implementation for later use
@@ -51,11 +47,10 @@ namespace MGS3_MC_Cheat_Trainer
                 ForeColor = Color.Black,
                 BackColor = MGS3ButtonColor,
                 Font = new Font("Segoe UI", 11.25f, FontStyle.Bold),
-                Location = new Point(10, (titleBarPanel.Height - 20) / 2) // Center vertically
+                Location = new Point(10, (titleBarPanel.Height - 20) / 2)
             };
             titleBarPanel.Controls.Add(titleLabel);
 
-            // Mouse down event for form movement
             titleBarPanel.MouseDown += (sender, e) =>
             {
                 if (e.Button == MouseButtons.Left)
@@ -86,7 +81,6 @@ namespace MGS3_MC_Cheat_Trainer
             };
             messageBoxForm.Controls.Add(messageLabel);
 
-            // Calculate form width and height based on label size
             int formWidth = Math.Min(messageLabel.Width + 40, 500);
             int formHeight = Math.Min(messageLabel.Height + 120, 200);
 
@@ -114,7 +108,6 @@ namespace MGS3_MC_Cheat_Trainer
             };
             messageBoxForm.Controls.Add(copyButton);
 
-            // Create a close button
             Button okButton = new Button()
             {
                 Text = "Ok",
@@ -193,7 +186,6 @@ namespace MGS3_MC_Cheat_Trainer
             };
             editForm.Controls.Add(inputPanel);
 
-            // Current values
             string difficultyCurrent = pointerManager.ReadDifficulty();
             string playTimeCurrent = pointerManager.ReadPlayTime();
             string savesCurrent = pointerManager.ReadSaves();
@@ -204,7 +196,7 @@ namespace MGS3_MC_Cheat_Trainer
             string totalDamageCurrent = pointerManager.ReadTotalDamageTaken();
             string mealsCurrent = pointerManager.ReadMealsEaten();
             string lifeMedsCurrent = pointerManager.ReadLifeMedsUsed();
-            string specialItemsCurrent = pointerManager.ReadSpecialItemsUsed(); // Read current special items usage
+            string specialItemsCurrent = pointerManager.ReadSpecialItemsUsed();
 
             int topOffset = 40;
             int leftOffset = 20;
@@ -330,11 +322,9 @@ namespace MGS3_MC_Cheat_Trainer
             inputPanel.Controls.Add(mealsBox);
             topOffset += spacing;
 
-            // Special Items
             Label specialItemsLabel = CreateLabel("Special Items Used");
             inputPanel.Controls.Add(specialItemsLabel);
 
-            // Add the exact strings from the MainPointerManager dictionary to the ComboBox
             ComboBox specialItemsCombo = new ComboBox
             {
                 Location = new Point(leftOffset + 180, topOffset - 2),
@@ -358,11 +348,10 @@ namespace MGS3_MC_Cheat_Trainer
             inputPanel.Controls.Add(specialItemsCombo);
             topOffset += spacing;
 
-            // Set the combo to current special items
             if (specialItemsCombo.Items.Contains(specialItemsCurrent))
                 specialItemsCombo.SelectedItem = specialItemsCurrent;
             else
-                specialItemsCombo.SelectedIndex = 0; // Default if not recognized
+                specialItemsCombo.SelectedIndex = 0;
 
             Button submitButton = new Button
             {
@@ -408,7 +397,7 @@ namespace MGS3_MC_Cheat_Trainer
                     case "Hard": diffVal = 40; break;
                     case "Extreme": diffVal = 50; break;
                     case "European Extreme": diffVal = 60; break;
-                    default: diffVal = 30; break; // default Normal
+                    default: diffVal = 30; break;
                 }
 
                 if (!TimeSpan.TryParseExact(playTimeBox.Text, "hh\\:mm\\:ss", null, out TimeSpan newTime))
@@ -444,7 +433,6 @@ namespace MGS3_MC_Cheat_Trainer
                 if (!CheckUshortLimit(lifeMedsBox, "Life Meds Used", out ushort lifeMedsVal)) return;
                 if (!CheckUshortLimit(totalDamageBox, "Damage Taken", out ushort damageVal)) return;
 
-                // Special items
                 if (specialItemsCombo.SelectedItem == null)
                 {
                     CustomMessageBox("Please select a Special Items usage.", "Input Error");
@@ -452,9 +440,7 @@ namespace MGS3_MC_Cheat_Trainer
                 }
 
                 string selectedSpecialItems = (string)specialItemsCombo.SelectedItem;
-                // Map back to byte
                 byte specialItemsVal;
-                // We'll do a small switch or dictionary lookup
                 switch (selectedSpecialItems)
                 {
                     case "Not Used": specialItemsVal = 0; break;
@@ -465,7 +451,7 @@ namespace MGS3_MC_Cheat_Trainer
                     case "Stealth Camo + Ez Gun Used": specialItemsVal = 5; break;
                     case "Infinity Facepaint + Ez Gun Used": specialItemsVal = 6; break;
                     case "Stealth Camo + Infinity Facepaint + Ez Gun Used": specialItemsVal = 7; break;
-                    default: specialItemsVal = 0; break; // default to Not Used
+                    default: specialItemsVal = 0; break;
                 }
 
                 bool success = true;

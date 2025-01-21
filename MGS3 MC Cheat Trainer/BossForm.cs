@@ -1416,7 +1416,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToWeaponsForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Weapon form from the Game Stats form.\n");
+            LoggingManager.Instance.Log("User is changing to the Weapon form from the Boss form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "WeaponForm");
             WeaponForm form1 = new();
@@ -1426,7 +1426,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToItemsForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Item form from the Game Stats form.\n");
+            LoggingManager.Instance.Log("User is changing to the Item form from the Boss form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "ItemForm");
             ItemForm form2 = new();
@@ -1436,7 +1436,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToCamoForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Camo form from the Game Stats form.\n");
+            LoggingManager.Instance.Log("User is changing to the Camo form from the Boss form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "CamoForm");
             CamoForm form3 = new();
@@ -1446,7 +1446,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToMiscForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Misc form from the Game Stats form.\n");
+            LoggingManager.Instance.Log("User is changing to the Misc form from the Boss form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "MiscForm");
             MiscForm form4 = new();
@@ -1456,7 +1456,7 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToHealthAndAlertsForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Game Stats form.\n");
+            LoggingManager.Instance.Log("User is changing to the Stats and Alert form from the Boss form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "StatsAndAlertForm");
             StatsAndAlertForm form5 = new();
@@ -1466,12 +1466,23 @@ namespace MGS3_MC_Cheat_Trainer
 
         private void SwapToGameStatsForm_Click(object sender, EventArgs e)
         {
-            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Weapon form.\n");
+            LoggingManager.Instance.Log("User is changing to the Game Stats form from the Boss form.\n");
             MemoryManager.UpdateLastFormLocation(this.Location);
             MemoryManager.LogFormLocation(this, "GameStatsForm");
             GameStatsForm form7 = new();
             form7.Show();
             this.Hide();
+        }
+
+        private void SwapToDebugForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Debug form from the Boss form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "DebugForm");
+            DebugForm form8 = new();
+            form8.Show();
+            this.Hide();
+
         }
     }
 }

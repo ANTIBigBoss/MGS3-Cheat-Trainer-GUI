@@ -8,7 +8,6 @@ namespace MGS3_MC_Cheat_Trainer
 
         public static short FindOcelotAOB()
         {
-            // Try twice to find the Ocelot AOB if the first attempt fails
             if (!AobManager.Instance.FindAndStoreOcelotAOB())
             {
                 if (!AobManager.Instance.FindAndStoreOcelotAOB())
@@ -264,8 +263,8 @@ namespace MGS3_MC_Cheat_Trainer
         {
             var processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
             IntPtr healthAddress = IntPtr.Subtract(AobManager.Instance.FoundTheEnds063aAddress, (int)Constants.BossOffsets.Ends063aHealthSub);
-            // Interesting accident find but if we go back to 1384 instead of 1360 we can just make
-            // The End invincible maybe something to look into once everyone else is implemented
+            /* Interesting accident find but if we go back to 1384 instead of 1360 we can just make
+               The End invincible maybe something to look into once everyone else is implemented*/
             MemoryManager.WriteMemory(processHandle, healthAddress, value);
             MemoryManager.NativeMethods.CloseHandle(processHandle);
         }
@@ -322,7 +321,9 @@ namespace MGS3_MC_Cheat_Trainer
             return ReadTheEnds063aStamina() == 0;
         }
 
-        // This find will apply to s064a as well as s065a so the case in BossForm will use this but then use the offset differences that s064a has to get to The End's health and stamina
+        /* This find will apply to s064a as well as s065a so the Switch Case 
+         * in BossForm will use this but then use the offset differences 
+         * that s064a has to get to The End's health and stamina */
         public static short FindTheEnds065aAOB()
         {
             if (!AobManager.Instance.FindAndStoreTheEnds065aAOB())

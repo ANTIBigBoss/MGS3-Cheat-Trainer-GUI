@@ -90,6 +90,7 @@
             ActivateDamageMulti = new Button();
             textBox15 = new TextBox();
             DisableDamageMulti = new Button();
+            SwapToDebugForm = new Button();
             ((System.ComponentModel.ISupportInitialize)ModelSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FovSlider).BeginInit();
@@ -690,7 +691,7 @@
             SwapToBossForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToBossForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToBossForm.ImeMode = ImeMode.NoControl;
-            SwapToBossForm.Location = new Point(740, 12);
+            SwapToBossForm.Location = new Point(681, 12);
             SwapToBossForm.Name = "SwapToBossForm";
             SwapToBossForm.Size = new Size(130, 31);
             SwapToBossForm.TabIndex = 650;
@@ -706,7 +707,7 @@
             SwapToGameStatsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToGameStatsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToGameStatsForm.ImeMode = ImeMode.NoControl;
-            SwapToGameStatsForm.Location = new Point(876, 12);
+            SwapToGameStatsForm.Location = new Point(817, 12);
             SwapToGameStatsForm.Name = "SwapToGameStatsForm";
             SwapToGameStatsForm.Size = new Size(130, 31);
             SwapToGameStatsForm.TabIndex = 648;
@@ -722,7 +723,7 @@
             SwapToHealthAndAlertsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToHealthAndAlertsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToHealthAndAlertsForm.ImeMode = ImeMode.NoControl;
-            SwapToHealthAndAlertsForm.Location = new Point(604, 12);
+            SwapToHealthAndAlertsForm.Location = new Point(545, 12);
             SwapToHealthAndAlertsForm.Name = "SwapToHealthAndAlertsForm";
             SwapToHealthAndAlertsForm.Size = new Size(130, 31);
             SwapToHealthAndAlertsForm.TabIndex = 647;
@@ -738,7 +739,7 @@
             SwapToCamoForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToCamoForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToCamoForm.ImeMode = ImeMode.NoControl;
-            SwapToCamoForm.Location = new Point(468, 12);
+            SwapToCamoForm.Location = new Point(409, 12);
             SwapToCamoForm.Name = "SwapToCamoForm";
             SwapToCamoForm.Size = new Size(130, 31);
             SwapToCamoForm.TabIndex = 646;
@@ -754,7 +755,7 @@
             SwapToItemsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToItemsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToItemsForm.ImeMode = ImeMode.NoControl;
-            SwapToItemsForm.Location = new Point(332, 12);
+            SwapToItemsForm.Location = new Point(273, 12);
             SwapToItemsForm.Name = "SwapToItemsForm";
             SwapToItemsForm.Size = new Size(130, 31);
             SwapToItemsForm.TabIndex = 645;
@@ -770,7 +771,7 @@
             SwapToWeaponsForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
             SwapToWeaponsForm.ImageAlign = ContentAlignment.TopCenter;
             SwapToWeaponsForm.ImeMode = ImeMode.NoControl;
-            SwapToWeaponsForm.Location = new Point(196, 12);
+            SwapToWeaponsForm.Location = new Point(137, 12);
             SwapToWeaponsForm.Name = "SwapToWeaponsForm";
             SwapToWeaponsForm.Size = new Size(130, 31);
             SwapToWeaponsForm.TabIndex = 644;
@@ -876,12 +877,29 @@
             DisableDamageMulti.UseVisualStyleBackColor = true;
             DisableDamageMulti.Click += DisableDamageMulti_Click;
             // 
+            // SwapToDebugForm
+            // 
+            SwapToDebugForm.BackgroundImage = (Image)resources.GetObject("SwapToDebugForm.BackgroundImage");
+            SwapToDebugForm.Cursor = Cursors.Hand;
+            SwapToDebugForm.FlatStyle = FlatStyle.Flat;
+            SwapToDebugForm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            SwapToDebugForm.ImageAlign = ContentAlignment.TopCenter;
+            SwapToDebugForm.ImeMode = ImeMode.NoControl;
+            SwapToDebugForm.Location = new Point(953, 12);
+            SwapToDebugForm.Name = "SwapToDebugForm";
+            SwapToDebugForm.Size = new Size(130, 31);
+            SwapToDebugForm.TabIndex = 661;
+            SwapToDebugForm.Text = "Debug";
+            SwapToDebugForm.UseVisualStyleBackColor = true;
+            SwapToDebugForm.Click += SwapToDebugForm_Click;
+            // 
             // MiscForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1166, 707);
+            Controls.Add(SwapToDebugForm);
             Controls.Add(DisableDamageMulti);
             Controls.Add(Plus1MultiValue);
             Controls.Add(Minus1MultiValue);
@@ -943,7 +961,7 @@
             ForeColor = SystemColors.ControlText;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MiscForm";
-            Text = "MGS3 Cheat Trainer - Stats and Misc - ANTIBigBoss - Version 2.7";
+            Text = "MGS3 Cheat Trainer - Miscellaneous - ANTIBigBoss - Version 2.8";
             Load += Form4_Load;
             ((System.ComponentModel.ISupportInitialize)ModelSlider).EndInit();
             ((System.ComponentModel.ISupportInitialize)CamoIndexSlider).EndInit();
@@ -1014,5 +1032,6 @@
         private Button ActivateDamageMulti;
         private TextBox textBox15;
         private Button DisableDamageMulti;
+        private Button SwapToDebugForm;
     }
 }

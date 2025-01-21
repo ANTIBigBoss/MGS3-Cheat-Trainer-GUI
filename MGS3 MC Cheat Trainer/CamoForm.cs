@@ -620,5 +620,17 @@ namespace MGS3_MC_Cheat_Trainer
             form7.Show();
             this.Hide();
         }
+
+        private void SwapToDebugForm_Click(object sender, EventArgs e)
+        {
+            LoggingManager.Instance.Log("User is changing to the Debug form from the Camo form.\n");
+            MemoryManager.UpdateLastFormLocation(this.Location);
+            MemoryManager.LogFormLocation(this, "DebugForm");
+            DebugForm form8 = new();
+            form8.Show();
+            this.Hide();
+
+        }
+
     }
 }

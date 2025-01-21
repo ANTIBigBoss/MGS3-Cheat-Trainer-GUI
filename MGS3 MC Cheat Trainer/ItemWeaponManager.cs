@@ -60,27 +60,21 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            // Retrieve the updated address for the item
             IntPtr itemAddress = ItemAddresses.GetAddress(item.Index, MemoryManager.Instance);
 
             if (itemAddress != IntPtr.Zero)
             {
-                // Open the process handle
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
 
                 if (processHandle != IntPtr.Zero)
                 {
-                    // Calculate specific addresses for current capacity and maximum capacity
                     IntPtr currentCapacityAddress = IntPtr.Add(itemAddress, ItemAddresses.CurrentCapacityOffset);
                     IntPtr maxCapacityAddress = IntPtr.Add(itemAddress, item.MaxCapacityOffset.ToInt32());
-
-                    // Use the static WriteMemory method to write the new capacity value to the calculated addresses
                     MemoryManager.WriteMemory(processHandle, currentCapacityAddress, newCapacity);
                     MemoryManager.WriteMemory(processHandle, maxCapacityAddress, newCapacity);
 
                     LoggingManager.Instance.Log($"Updated capacity for {item.Name} to {newCapacity}.");
 
-                    // Close the process handle after use
                     MemoryManager.NativeMethods.CloseHandle(processHandle);
                 }
                 else
@@ -94,7 +88,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // Should try and implement in the ItemForm eventually
         internal static void ModifyMaxItemCapacity(Item item, string itemCountStr)
         {
             if (!short.TryParse(itemCountStr, out short newCapacity))
@@ -103,7 +96,6 @@ namespace MGS3_MC_Cheat_Trainer
                 return;
             }
 
-            // Retrieve the updated address for the item
             IntPtr itemAddress = ItemAddresses.GetAddress(item.Index, MemoryManager.Instance);
 
             if (itemAddress != IntPtr.Zero)
@@ -113,15 +105,12 @@ namespace MGS3_MC_Cheat_Trainer
                 {
                     if (item.MaxCapacityOffset != IntPtr.Zero)
                     {
-                        // Calculate the address for the maximum capacity
                         IntPtr maxCapacityAddress = IntPtr.Add(itemAddress, item.MaxCapacityOffset.ToInt32());
 
-                        // Use the generic WriteMemory method to write the new capacity
                         MemoryManager.WriteMemory(processHandle, maxCapacityAddress, newCapacity);
                     }
                     else
                     {
-                        // If the item doesn't have a maximum capacity, modify the short value at the item's address
                         MemoryManager.WriteMemory(processHandle, itemAddress, newCapacity);
                     }
 
@@ -213,11 +202,9 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
                 if (processHandle != IntPtr.Zero)
                 {
-                    // Calculate specific addresses for current and maximum clip size
                     IntPtr clipSizeAddress = IntPtr.Add(weaponAddress, weapon.ClipOffset.ToInt32());
                     IntPtr maxClipSizeAddress = IntPtr.Add(weaponAddress, weapon.MaxClipOffset.ToInt32());
 
-                    // Use the generic WriteMemory method to write the new size to both addresses
                     MemoryManager.WriteMemory(processHandle, clipSizeAddress, newSize);
                     MemoryManager.WriteMemory(processHandle, maxClipSizeAddress, newSize);
                     LoggingManager.Instance.Log($"Updated current and max clip sizes for {weapon.Name} to {newSize}.");
@@ -249,10 +236,8 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
                 if (processHandle != IntPtr.Zero)
                 {
-                    // Calculate specific address for current ammo
                     IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
 
-                    // Use the generic WriteMemory method to write the ammo value
                     MemoryManager.WriteMemory(processHandle, currentAmmoAddress, ammoValue);
                     LoggingManager.Instance.Log($"Updated ammo for {weapon.Name} to {ammoValue}.");
 
@@ -269,7 +254,6 @@ namespace MGS3_MC_Cheat_Trainer
             }
         }
 
-        // This Changes this max ammo but not the current ammo
         internal static void ModifyMaxAmmo(Weapon weapon, string ammoCount)
         {
             if (!short.TryParse(ammoCount, out short ammoValue))
@@ -284,11 +268,9 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
                 if (processHandle != IntPtr.Zero)
                 {
-                    // Calculate the specific address for max ammo
-                    int offset = weapon.MaxAmmoOffset.ToInt32(); // Convert IntPtr to int
+                    int offset = weapon.MaxAmmoOffset.ToInt32();
                     IntPtr ammoAddress = IntPtr.Add(weaponAddress, offset);
 
-                    // Use the generic WriteMemory method to write the max ammo value
                     MemoryManager.WriteMemory(processHandle, ammoAddress, ammoValue);
                     LoggingManager.Instance.Log($"Updated max ammo for {weapon.Name} to {ammoValue}.");
 
@@ -319,11 +301,8 @@ namespace MGS3_MC_Cheat_Trainer
                 IntPtr processHandle = MemoryManager.OpenGameProcess(MemoryManager.GetMGS3Process());
                 if (processHandle != IntPtr.Zero)
                 {
-                    // Calculate specific addresses for current ammo and max ammo
                     IntPtr currentAmmoAddress = IntPtr.Add(weaponAddress, WeaponAddresses.CurrentAmmoOffset);
                     IntPtr maxAmmoAddress = IntPtr.Add(weaponAddress, weapon.MaxAmmoOffset.ToInt32());
-
-                    // Use the generic WriteMemory method to write the ammo value to both addresses
                     MemoryManager.WriteMemory(processHandle, currentAmmoAddress, ammoValue);
                     MemoryManager.WriteMemory(processHandle, maxAmmoAddress, ammoValue);
                     LoggingManager.Instance.Log($"Updated current and max ammo for {weapon.Name} to {ammoValue}.");
@@ -344,8 +323,6 @@ namespace MGS3_MC_Cheat_Trainer
         internal static void ToggleSuppressor(Weapon suppressableWeapon)
         {
             IntPtr suppressorAddress = IntPtr.Zero;
-
-            // Retrieve the updated base address for the weapon
             IntPtr weaponAddress = WeaponAddresses.GetAddress(suppressableWeapon.Index, MemoryManager.Instance);
 
             if (weaponAddress != IntPtr.Zero)
